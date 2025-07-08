@@ -23,7 +23,7 @@ export default tseslint.config(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.app.json',
+        project: './tsconfig.json',
       },
       globals: globals.browser,
     },
@@ -35,6 +35,11 @@ export default tseslint.config(
       'unused-imports': unusedImportsPlugin,
       'jsx-a11y': jsxA11yPlugin,
       'react-refresh': reactRefresh,
+    },
+    settings: {
+      react: {
+        version: 'detect', // React 버전을 자동으로 감지합니다.
+      },
     },
     rules: {
       // ✅ 일반 규칙
@@ -113,7 +118,10 @@ export default tseslint.config(
       'react/jsx-uses-vars': 'warn', // JSX에서 사용된 변수는 unused로 처리하지 않음
       'react/jsx-key': 'warn', // 반복 JSX 요소에 key 필수
       'react/no-array-index-key': 'warn', // key로 index 사용 지양 (불안정한 key)
-      'react/jsx-max-props-per-line': ['warn', { maximum: 1, when: 'multiline' }], // props 한 줄에 하나씩
+      'react/jsx-max-props-per-line': [
+        'warn',
+        { maximum: 1, when: 'multiline' },
+      ], // props 한 줄에 하나씩
       'react/no-unescaped-entities': 'warn', // JSX에서 특수문자 직접 입력 금지
       'react/jsx-sort-props': [
         'warn',
@@ -136,7 +144,10 @@ export default tseslint.config(
       ],
       'react/jsx-boolean-value': ['warn', 'never'], // boolean props는 value 생략 (ex. <input disabled />)
       'react/jsx-no-useless-fragment': 'warn', // 불필요한 Fragment 제거
-      'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }], // 중괄호 최소화
+      'react/jsx-curly-brace-presence': [
+        'warn',
+        { props: 'never', children: 'never' },
+      ], // 중괄호 최소화
 
       // ✅ React Hooks 규칙
       'react-hooks/exhaustive-deps': 'warn', // useEffect 의존성 누락 경고
@@ -162,7 +173,10 @@ export default tseslint.config(
       'jsx-a11y/alt-text': 'warn', // <img>에는 alt 속성 필수
 
       // ✅ React Refresh
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
 
@@ -182,5 +196,5 @@ export default tseslint.config(
   },
 
   // 5. Prettier 설정: 포맷팅 충돌 방지
-  eslintConfigPrettier,
+  eslintConfigPrettier
 );
