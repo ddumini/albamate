@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+/* === Tailwind v4 테마 설정 === */
+@theme {
+  --color-black-100: hsl(0, 0, 42);
+  --color-black-200: hsl(0, 0, 32);
+  --color-black-300: hsl(0, 0, 22);
+  --color-black-400: hsl(0, 0, 12);
+  --color-black-500: hsl(0, 0, 2);
+  --color-gray-50: hsl(0, 0, 100);
+  --color-gray-100: hsl(0, 0, 87);
+  --color-gray-200: hsl(0, 0, 77);
+  --color-gray-300: hsl(0, 0, 67);
+  --color-gray-400: hsl(0, 0, 60);
+  --color-gray-500: hsl(0, 0, 50);
+  --color-blue-100: hsl(234, 19, 40);
+  --color-blue-200: hsl(234, 18, 30);
+  --color-blue-300: hsl(234, 18, 20);
+  --color-background-100: hsl(0, 0, 99);
+  --color-background-200: hsl(0, 0, 97);
+  --color-background-300: hsl(0, 0, 94);
+  --color-line-100: hsl(0, 0, 95);
+  --color-line-100: hsl(0, 0, 95);
+  --color-error: hsl(15, 100, 49);
+  --color-mint-50: hsl(171, 86, 88);
+  --color-mint-100: hsl(171, 86, 68);
+  --color-mint-200: hsl(171, 86, 58);
+  --color-mint-300: hsl(171, 86, 48);
+  --color-mint-400: hsl(171, 86, 38);
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.25rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.375rem;
+  --text-md: 0.875rem;
+  --text-md--line-height: 1.5rem;
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.625rem;
+  --text-2lg: 1.125rem;
+  --text-2lg--line-height: 1.625rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 2.625rem;
+
+  --spacing: 0.0625rem;
+
+  --breakpoint-tablet: 48rem;
+  --breakpoint-pc: 80rem;
+}
