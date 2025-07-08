@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import './globals.css';
+import { Providers } from './providers';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -8,14 +9,18 @@ const pretendard = localFont({
   weight: '100 900',
 });
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
-    <html lang='ko'>
-      <body className={pretendard.className}>{children}</body>
+    <html lang="ko">
+      <body className={pretendard.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
