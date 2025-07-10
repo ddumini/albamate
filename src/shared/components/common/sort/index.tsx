@@ -46,10 +46,10 @@ const Sort = ({
 
   return (
     <Dropdown
-      className="w-80 lg:w-126"
+      className="w-80 lg:w-132"
       trigger={
         <button
-          className={`text-black-100 lg:text-2lg flex h-30 w-full cursor-pointer items-center justify-between pr-10 pl-12 text-xs lg:h-42 ${className} `}
+          className={`text-black-300 flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap ${className} `}
         >
           <span>{selectedOption?.label || '최신순'}</span>
           <Image
@@ -64,12 +64,14 @@ const Sort = ({
       }
     >
       {/* 드롭다운 내용 */}
-      <ul className="p-3">
+      <ul>
         {options.map(option => (
-          <li key={option.value}>
+          <li key={option.value} className="p-3">
             <button
-              className={`font-regular lg:text-2lg flex h-34 w-full cursor-pointer items-center gap-2 px-10 text-left text-xs lg:h-52 lg:px-16 ${
-                selectedSort === option.value ? 'bg-mint-50/50' : ''
+              className={`h-28 w-full cursor-pointer items-center gap-2 rounded-lg text-center text-xs font-semibold ${
+                selectedSort === option.value
+                  ? 'bg-mint-50/50 text-black-300'
+                  : 'text-gray-400'
               }`}
               onClick={() => handleSortSelect(option.value)} // 외부에서 sort 선택 시 호출
             >
