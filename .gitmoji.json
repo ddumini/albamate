@@ -59,6 +59,29 @@
       "code": ":white_check_mark:",
       "description": "테스트 추가/수정",
       "name": "white_check_mark"
+    },
+    {
+      "emoji": "📦️",
+      "code": ":package:",
+      "description": "Add or update compiled files or packages",
+      "name": "package"
     }
-  ]
+  ],
+  "types": [
+    "feat",
+    "fix",
+    "docs",
+    "style",
+    "refactor",
+    "perf",
+    "test",
+    "chore",
+    "ci",
+    "build",
+    "revert"
+  ],
+  "commitMessageFormat": "{emoji} {type}{scope}: {description}",
+  "scopePrompt": true,
+  "messagePrompt": true,
+  "capitalizeTitle": true
 }
