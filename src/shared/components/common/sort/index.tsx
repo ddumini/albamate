@@ -49,7 +49,7 @@ const Sort = ({
       className="w-80 lg:w-132"
       trigger={
         <button
-          className={`text-black-300 flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap ${className} `}
+          className={`text-black-300 flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap lg:text-lg ${className} `}
         >
           <span>{selectedOption?.label || '최신순'}</span>
           <Image
@@ -66,9 +66,9 @@ const Sort = ({
       {/* 드롭다운 내용 */}
       <ul>
         {options.map(option => (
-          <li key={option.value} className="p-3">
+          <li key={option.value} className="p-3 lg:p-6">
             <button
-              className={`h-28 w-full cursor-pointer items-center gap-2 rounded-lg text-center text-xs font-semibold ${
+              className={`h-28 w-full cursor-pointer items-center gap-2 rounded-lg text-center text-xs font-semibold lg:h-38 lg:text-lg ${
                 selectedSort === option.value
                   ? 'bg-mint-50/50 text-black-300'
                   : 'text-gray-400'
