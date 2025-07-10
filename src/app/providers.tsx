@@ -2,7 +2,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ThemeProvider } from "next-themes";
 import React from "react";
 
 let browserQueryClient: QueryClient | undefined = undefined;
@@ -25,9 +24,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider enableSystem attribute="class" defaultTheme="system">
-        {children}
-      </ThemeProvider>
+      {children}
       {/* 개발 환경에서만 React Query Devtools 활성화 */}
       {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />
