@@ -1,9 +1,15 @@
-import Dropdown from "@/shared/components/ui/Dropdown";
-
 const Sumin = () => {
   return (
     <div>
-      <Dropdown />
+      <section>
+        <p>Dropdown - filter</p>
+      </section>
+      <section>
+        <p>Dropdown - sort</p>
+      </section>
+      <section>
+        <p>Dropdown - input</p>
+      </section>
     </div>
   );
 };
