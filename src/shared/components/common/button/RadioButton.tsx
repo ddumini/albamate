@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { JSX } from "react";
+import { JSX } from 'react';
 
 export interface RadioOption {
   value: string;
@@ -17,7 +17,7 @@ export interface RadioButtonProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   legend?: string;
-  size?: "sm" | "md";
+  size?: 'sm' | 'md';
 }
 
 /**
@@ -73,16 +73,16 @@ const RadioButton = ({
   onChange,
   disabled = false,
   legend,
-  size = "sm",
+  size = 'sm',
 }: RadioButtonProps): JSX.Element => {
   const sizeStyle = {
     sm: {
-      button: "p-14 text-sm rounded-lg w-[327px]",
-      text: "text-sm",
+      button: 'p-14 text-sm rounded-lg w-[327px]',
+      text: 'text-sm',
     },
     md: {
-      button: "px-24 py-17 text-lg rounded-lg w-[360px]",
-      text: "text-base",
+      button: 'px-24 py-17 text-lg rounded-lg w-[360px]',
+      text: 'text-base',
     },
   };
 
@@ -90,54 +90,36 @@ const RadioButton = ({
 
   return (
     <fieldset>
-      {legend && <legend className="sr-only">{legend}</legend>}
-      <div className="flex flex-col gap-8">
+      {legend && <legend className='sr-only'>{legend}</legend>}
+      <div className='flex flex-col gap-8'>
         {options.map((option) => {
           const isDisabled = disabled || option.disabled;
           const isChecked = value === option.value;
           return (
             <label
               key={option.value}
-              className={`
-                  ${currentSize.button}
-                  border-2 cursor-pointer transition-all duration-200 font-medium
-                  flex items-center justify-between
-                  ${
-                    isChecked
-                      ? "border-mint-300 bg-gray-50"
-                      : "border-line-100 bg-white hover:border-mint-300"
-                  }
-                  ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
-                `}
+              className={` ${currentSize.button} flex cursor-pointer items-center justify-between border-2 font-medium transition-all duration-200 ${
+                isChecked ? 'border-mint-300 bg-gray-50' : 'border-line-100 hover:border-mint-300 bg-white'
+              } ${isDisabled ? 'cursor-not-allowed opacity-50' : ''} `}
             >
               <span
-                className={`${currentSize.text} ${isDisabled ? "text-gray-400" : "text-gray-600"} flex-1 select-none`}
+                className={`${currentSize.text} ${isDisabled ? 'text-gray-400' : 'text-gray-600'} flex-1 select-none`}
               >
                 {option.label}
               </span>
-              <div className="relative inline-block">
+              <div className='relative inline-block'>
                 <input
                   checked={isChecked}
-                  className="
-                    w-22 h-22
-                    appearance-none rounded-full border border-gray-200 bg-white
-                    checked:border-mint-300 checked:bg-white
-                    disabled:opacity-50 disabled:cursor-not-allowed
-                    transition-all duration-200
-                    cursor-pointer
-                    block
-                  "
+                  className='w-22 h-22 checked:border-mint-300 block cursor-pointer appearance-none rounded-full border border-gray-200 bg-white transition-all duration-200 checked:bg-white disabled:cursor-not-allowed disabled:opacity-50'
                   disabled={isDisabled}
                   name={name}
-                  type="radio"
+                  type='radio'
                   value={option.value}
                   onChange={(e) => {
                     onChange(e.target.value);
                   }}
                 />
-                {isChecked && (
-                  <div className="absolute top-6 left-6 w-10 h-10 bg-mint-300 rounded-full" />
-                )}
+                {isChecked && <div className='bg-mint-300 absolute left-6 top-6 h-10 w-10 rounded-full' />}
               </div>
             </label>
           );
