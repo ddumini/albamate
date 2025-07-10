@@ -87,7 +87,7 @@ const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
       {isOpen && (
         <div
           aria-expanded={isOpen}
-          className="absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white"
+          className="absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white shadow-[4px_4px_4px_rgba(130,130,130,0.08)]"
           role="menu"
           onClick={() => setIsOpen(false)}
         >

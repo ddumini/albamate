@@ -48,10 +48,10 @@ const Filter = ({
 
   return (
     <Dropdown
-      className="w-80"
+      className="w-80 lg:w-126"
       trigger={
         <button
-          className={`text-black-100 flex h-30 w-full cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 pr-10 text-xs ${className} ${
+          className={`text-black-100 lg:text-2lg flex h-30 w-full cursor-pointer items-center justify-between rounded-sm border border-gray-100 pr-10 pl-12 text-xs lg:h-42 lg:pr-12 lg:pl-16 ${className} ${
             selectedFilter
               ? 'text-mint-300 bg-mint-50/50 border-mint-300'
               : 'text-black-100'
@@ -60,6 +60,7 @@ const Filter = ({
           <span>{selectedOption?.label || '전체'}</span>
           <Image
             alt="arrow-down"
+            className="lg:h-24 lg:w-24"
             height={16}
             loading="lazy"
             src={
@@ -77,7 +78,7 @@ const Filter = ({
         {options.map(option => (
           <li key={option.value}>
             <button
-              className={`font-regular flex h-34 w-full cursor-pointer items-center gap-2 px-10 text-left text-xs ${
+              className={`font-regular lg:text-2lg flex h-34 w-full cursor-pointer items-center gap-2 px-10 text-left text-xs lg:h-52 lg:px-16 ${
                 selectedFilter === option.value
                   ? 'bg-mint-50/50 text-mint-300'
                   : 'text-black-100'
