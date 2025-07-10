@@ -42,15 +42,15 @@ const ThemeToggle = () => {
 
       {/* Moon Icon */}
       <svg
-        className={`w-20 h-20 text-black absolute transition-opacity duration-500 ease-in-out transform ${
+        className={`w-22 h-30 text-black absolute transition-opacity duration-500 ease-in-out transform ${
           isDark
-            ? "opacity-100 scale-120 translate-x-[-2px] translate-y-[1px]"
+            ? "opacity-100 scale-110 translate-x-[-2px] translate-y-1"
             : "opacity-0 scale-90"
         }`}
         fill="currentColor"
         viewBox="0 0 24 24"
       >
-        <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79z" />
+        <path d="M23 15A13 13 0 0 1 11 2 8 8 0 1 0 23 15z" />
       </svg>
     </button>
   );
