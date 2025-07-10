@@ -17,7 +17,6 @@ export interface RadioButtonProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   legend?: string;
-  size?: 'sm' | 'md';
 }
 
 /**
@@ -46,7 +45,6 @@ export interface RadioButtonProps {
  *       legend="현재 진행상태를 알려주세요."
  *       name="applicationStatus"
  *       options={options}
- *       size="sm"
  *       value={selected}
  *       onChange={setSelected}
  *     />
@@ -66,28 +64,7 @@ export interface RadioButtonProps {
  * />
  * ```
  */
-const RadioButton = ({
-  name,
-  options,
-  value,
-  onChange,
-  disabled = false,
-  legend,
-  size = 'sm',
-}: RadioButtonProps): JSX.Element => {
-  const sizeStyle = {
-    sm: {
-      button: 'p-14 text-sm rounded-lg w-[327px]',
-      text: 'text-sm',
-    },
-    md: {
-      button: 'px-24 py-17 text-lg rounded-lg w-[360px]',
-      text: 'text-base',
-    },
-  };
-
-  const currentSize = sizeStyle[size];
-
+const RadioButton = ({ name, options, value, onChange, disabled = false, legend }: RadioButtonProps): JSX.Element => {
   return (
     <fieldset>
       {legend && <legend className='sr-only'>{legend}</legend>}
@@ -98,12 +75,12 @@ const RadioButton = ({
           return (
             <label
               key={option.value}
-              className={` ${currentSize.button} flex cursor-pointer items-center justify-between border-2 font-medium transition-all duration-200 ${
+              className={`lg:py-17 lg:w-360 w-327 flex cursor-pointer items-center justify-between rounded-lg border-2 p-14 font-medium transition-all duration-200 lg:px-24 ${
                 isChecked ? 'border-mint-300 bg-gray-50' : 'border-line-100 hover:border-mint-300 bg-white'
               } ${isDisabled ? 'cursor-not-allowed opacity-50' : ''} `}
             >
               <span
-                className={`${currentSize.text} ${isDisabled ? 'text-gray-400' : 'text-gray-600'} flex-1 select-none`}
+                className={`flex-1 select-none text-sm lg:text-base ${isDisabled ? 'text-gray-400' : 'text-gray-600'}`}
               >
                 {option.label}
               </span>
