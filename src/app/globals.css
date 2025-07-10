@@ -64,3 +64,8 @@
     transform: scale(1.2);
   }
 }
+
+html.dark {
+  --color-mint-100: hsl(171, 86%, 50%);
+  --color-mint-400: hsl(171, 86%, 28%);
+}
