@@ -1,7 +1,6 @@
 'use client';
 
-import Filter from '@/shared/components/common/filter';
-import Sort from '@/shared/components/common/sort';
+import Select from '@/shared/components/common/select';
 
 const filterOptions = [
   { value: 'latest', label: '전체' },
@@ -29,11 +28,20 @@ const Sumin = () => {
     <div>
       <section>
         <p>Dropdown - filter</p>
-        <Filter options={filterOptions} onFilterChange={handleFilterChange} />
+        <Select
+          options={filterOptions}
+          placeholder="전체"
+          variant="filter"
+          onSelect={handleFilterChange}
+        />
       </section>
       <section>
         <p>Dropdown - sort</p>
-        <Sort options={sortOptions} onSortChange={handleSortChange} />
+        <Select
+          options={sortOptions}
+          variant="sort"
+          onSelect={handleSortChange}
+        />
       </section>
       <section>
         <p>Dropdown - input</p>
