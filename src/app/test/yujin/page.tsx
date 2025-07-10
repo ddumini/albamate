@@ -1,6 +1,8 @@
+"use client";
+
 import ThemeToggle from "@/shared/components/ThemeToggle";
 
-const test = () => {
+const TestPage = () => {
   return (
     <div className="text-md bg-mint-100 dark:bg-mint-400">
       <div className="bg-gray-200">Hello Mint</div>
@@ -12,4 +14,4 @@ const test = () => {
   );
 };
 
-export default test;
+export default TestPage;
