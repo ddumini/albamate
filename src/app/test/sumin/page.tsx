@@ -3,9 +3,9 @@
 import Filter from '@/shared/components/common/filter';
 
 const filterOptions = [
-  { id: 'latest', label: '최신순' },
-  { id: 'popular', label: '인기순' },
-  { id: 'oldest', label: '오래된순' },
+  { value: 'latest', label: '전체' },
+  { value: 'popular', label: '공개' },
+  { value: 'oldest', label: '비공개' },
 ];
 const Sumin = () => {
   const handleFilterChange = (filterId: string) => {
@@ -17,11 +17,7 @@ const Sumin = () => {
     <div>
       <section>
         <p>Dropdown - filter</p>
-        <Filter
-          defaultFilter="latest"
-          options={filterOptions}
-          onFilterChange={handleFilterChange}
-        />
+        <Filter options={filterOptions} onFilterChange={handleFilterChange} />
       </section>
       <section>
         <p>Dropdown - sort</p>

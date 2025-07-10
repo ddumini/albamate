@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef, useState } from 'react';
 
 /**
@@ -89,8 +87,9 @@ const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
       {isOpen && (
         <div
           aria-expanded={isOpen}
-          className="absolute top-full left-0 z-50 mt-1 min-w-[200px] rounded-md border border-gray-200 bg-white shadow-lg"
+          className="absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white"
           role="menu"
+          onClick={() => setIsOpen(false)}
         >
           {children}
         </div>

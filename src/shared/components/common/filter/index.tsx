@@ -1,12 +1,25 @@
-'use client';
+import Image from 'next/image';
 import { useState } from 'react';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
 
+/**
+ * Filter 컴포넌트
+ * 필터 컴포넌트는 드롭다운 메뉴를 표시하고 사용자가 선택한 필터를 처리합니다.
+ * 필터 선택 시 동작할 함수를 외부에서 전달받아 처리합니다.
+ *
+ * @author sumin
+ * @date 2025-07-10
+ *
+ * @param {FilterProps} props
+ * @param {FilterOption[]} props.options - 필터 옵션 배열
+ * @param {string} [props.defaultFilter] - 기본 선택된 필터
+ * @param {string} [props.className] - 추가 커스텀 클래스
+ *
+ */
 interface FilterOption {
-  id: string;
+  value: string;
   label: string;
-  icon?: React.ReactNode;
 }
 
 interface FilterProps {
@@ -14,7 +27,6 @@ interface FilterProps {
   onFilterChange: (selectedFilter: string) => void;
   defaultFilter?: string;
   className?: string;
-  placeholder?: string; // trigger 대신 placeholder 사용
 }
 
 const Filter = ({
@@ -22,57 +34,57 @@ const Filter = ({
   onFilterChange,
   defaultFilter,
   className = '',
-  placeholder = '선택하세요',
 }: FilterProps) => {
-  const [selectedFilter, setSelectedFilter] = useState(
-    defaultFilter || options[0]?.id
-  );
+  const [selectedFilter, setSelectedFilter] = useState(defaultFilter || '');
 
   const handleFilterSelect = (filterId: string) => {
     setSelectedFilter(filterId);
     onFilterChange(filterId);
   };
 
-  const selectedOption = options.find(option => option.id === selectedFilter);
+  const selectedOption = options.find(
+    option => option.value === selectedFilter
+  );
 
   return (
     <Dropdown
+      className="w-80"
       trigger={
         <button
-          className={`flex cursor-pointer items-center gap-2 ${className}`}
+          className={`text-black-100 flex h-30 w-full cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 pr-10 text-xs ${className} ${
+            selectedFilter
+              ? 'text-mint-300 bg-mint-50/50 border-mint-300'
+              : 'text-black-100'
+          }`}
         >
-          <span>{selectedOption?.label || placeholder}</span>
-          {/* 화살표 아이콘 */}
+          <span>{selectedOption?.label || '전체'}</span>
+          <Image
+            alt="arrow-down"
+            height={16}
+            loading="lazy"
+            src={
+              selectedFilter
+                ? '/icons/chevron-down-mint.svg'
+                : '/icons/chevron-down.svg'
+            }
+            width={16}
+          />
         </button>
       }
     >
       {/* 드롭다운 내용 */}
-      <ul className="py-1">
+      <ul className="">
         {options.map(option => (
-          <li key={option.id}>
+          <li key={option.value}>
             <button
-              className={`flex w-full items-center gap-2 px-4 py-2 text-left hover:bg-gray-100 ${
-                selectedFilter === option.id
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-gray-700'
+              className={`font-regular flex h-34 w-full cursor-pointer items-center gap-2 px-10 text-left text-xs ${
+                selectedFilter === option.value
+                  ? 'bg-mint-50/50 text-mint-300'
+                  : 'text-black-100'
               }`}
-              onClick={() => handleFilterSelect(option.id)}
+              onClick={() => handleFilterSelect(option.value)} // 외부에서 필터 선택 시 호출
             >
-              {option.icon && <span className="h-4 w-4">{option.icon}</span>}
               {option.label}
-              {selectedFilter === option.id && (
-                <svg
-                  className="ml-auto h-4 w-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    clipRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    fillRule="evenodd"
-                  />
-                </svg>
-              )}
             </button>
           </li>
         ))}
