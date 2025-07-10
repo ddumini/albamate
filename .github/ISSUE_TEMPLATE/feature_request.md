@@ -1,9 +1,9 @@
 ---
-name: "✨ Feature"
+name: '✨ Feature'
 about: 새로운 기능을 추가할 때 사용
-title: "[feat] 작업 내용"
-labels: "feat"
-assignees: ""
+title: '[feat] 작업 내용'
+labels: 'feat'
+assignees: ''
 ---
 
 ## ✨ 기능 요약

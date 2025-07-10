@@ -1,4 +1,4 @@
-import Dropdown from "@/shared/components/ui/Dropdown";
+import Dropdown from '@/shared/components/ui/Dropdown';
 
 const Filter = () => {
   return (

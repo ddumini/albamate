@@ -1,0 +1,64 @@
+{
+  "gitmojis": [
+    {
+      "emoji": "✨",
+      "code": ":sparkles:",
+      "description": "새로운 기능 추가",
+      "name": "sparkles"
+    },
+    {
+      "emoji": "🐛",
+      "code": ":bug:",
+      "description": "버그 수정",
+      "name": "bug"
+    },
+    {
+      "emoji": "📝",
+      "code": ":memo:",
+      "description": "문서 추가/수정",
+      "name": "memo"
+    },
+    {
+      "emoji": "🎨",
+      "code": ":art:",
+      "description": "코드 구조/포맷 개선",
+      "name": "art"
+    },
+    {
+      "emoji": "♻️",
+      "code": ":recycle:",
+      "description": "코드 리팩토링",
+      "name": "recycle"
+    },
+    {
+      "emoji": "⚡️",
+      "code": ":zap:",
+      "description": "성능 개선",
+      "name": "zap"
+    },
+    {
+      "emoji": "🔥",
+      "code": ":fire:",
+      "description": "파일/코드 제거",
+      "name": "fire"
+    },
+    {
+      "emoji": "🚀",
+      "code": ":rocket:",
+      "description": "배포",
+      "name": "rocket"
+    },
+    {
+      "emoji": "🔧",
+      "code": ":wrench:",
+      "description": "설정 파일 수정",
+      "name": "wrench"
+    },
+    {
+      "emoji": "✅",
+      "code": ":white_check_mark:",
+      "description": "테스트 추가/수정",
+      "name": "white_check_mark"
+    }
+  ]
+}

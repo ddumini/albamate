@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Dropdown 컴포넌트
@@ -32,7 +32,7 @@ interface DropdownProps {
   id?: string; // 고유 식별자 추가
 }
 
-const Dropdown = ({ trigger, children, className = "", id }: DropdownProps) => {
+const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -48,31 +48,31 @@ const Dropdown = ({ trigger, children, className = "", id }: DropdownProps) => {
     };
 
     // 이벤트 리스너 등록
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // 클린업 함수
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   // ESC 키로 드롭다운 닫기
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener('keydown', handleEscape);
 
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, []);
 
   const handleToggle = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen(prev => !prev);
   };
 
   return (
@@ -86,7 +86,7 @@ const Dropdown = ({ trigger, children, className = "", id }: DropdownProps) => {
       {isOpen && (
         <div
           aria-expanded={isOpen}
-          className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-[200px]"
+          className="absolute top-full left-0 z-50 mt-1 min-w-[200px] rounded-md border border-gray-200 bg-white shadow-lg"
           role="menu"
         >
           {children}
