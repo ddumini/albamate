@@ -75,15 +75,9 @@ const RadioButton = ({ name, options, value, onChange, disabled = false, legend 
           return (
             <label
               key={option.value}
-              className={`lg:py-17 lg:w-360 w-327 flex cursor-pointer items-center justify-between rounded-lg border-2 p-14 font-medium transition-all duration-200 lg:px-24 ${
-                isChecked ? 'border-mint-300 bg-gray-50' : 'border-line-100 hover:border-mint-300 bg-white'
-              } ${isDisabled ? 'cursor-not-allowed opacity-50' : ''} `}
+              className='lg:py-17 w-327 lg:w-360 has-[:checked]:border-mint-300 border-line-100 has-[:disabled]:hover:border-line-100 hover:border-mint-300 flex cursor-pointer items-center justify-between rounded-lg border-2 bg-white p-14 font-medium transition-all duration-200 has-[:disabled]:cursor-not-allowed has-[:checked]:bg-gray-50 has-[:disabled]:opacity-50 lg:px-24'
             >
-              <span
-                className={`flex-1 select-none text-sm lg:text-base ${isDisabled ? 'text-gray-400' : 'text-gray-600'}`}
-              >
-                {option.label}
-              </span>
+              <span className='flex-1 select-none text-sm text-gray-600 lg:text-base'>{option.label}</span>
               <div className='relative inline-block'>
                 <input
                   checked={isChecked}
@@ -96,7 +90,7 @@ const RadioButton = ({ name, options, value, onChange, disabled = false, legend 
                     onChange(e.target.value);
                   }}
                 />
-                {isChecked && <div className='bg-mint-300 absolute left-6 top-6 h-10 w-10 rounded-full' />}
+                {isChecked && <div className='bg-mint-300 absolute left-6 top-6 size-10 rounded-full' />}
               </div>
             </label>
           );
