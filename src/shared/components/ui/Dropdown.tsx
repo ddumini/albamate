@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 
 /**
@@ -13,6 +15,7 @@ import { useEffect, useRef, useState } from 'react';
  * @param {React.ReactNode} props.trigger - 드롭다운을 여는 트리거 요소
  * @param {React.ReactNode} props.children - 드롭다운 내부에 표시될 내용
  * @param {string} [props.className] - 추가 커스텀 클래스
+ * @param {string} [props.id] - 고유 식별자
  *
  * @example
  * <Dropdown
@@ -79,7 +82,7 @@ const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
     <div
       ref={dropdownRef}
       className={`relative ${className}`}
-      data-dropdown-id={id} // 디버깅용 식별자
+      data-dropdown-id={id} // 고유 식별자
     >
       <div onClick={handleToggle}>{trigger}</div>
 
