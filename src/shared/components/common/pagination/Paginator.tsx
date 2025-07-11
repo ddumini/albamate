@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import useWindowWidth from "@/shared/hooks/useWindowWidth";
+import useViewport from "@/shared/hooks/useViewport";
 
 interface PaginatorProps {
   currentPage: number;
@@ -9,9 +9,8 @@ interface PaginatorProps {
 }
 
 const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
-  const width = useWindowWidth(); // 현재 화면 너비를 가져오는 훅 사용
-  const isSmallScreen = typeof width === "number" && width < 769;
-  const visiblePages = isSmallScreen ? 3 : 5; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
+  const { isTablet, isMobile } = useViewport(); // 현재 화면 너비를 가져오는 훅 사용
+  const visiblePages = isTablet || isMobile ? 3 : 5; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
 
   const renderPageNumbers = () => {
     // 페이지 번호 렌더링 함수
