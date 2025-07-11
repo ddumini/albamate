@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import CardPagination from "@/shared/components/common/pagination/CardPagination";
-import Indicator from "@/shared/components/common/pagination/Indicator";
-import Paginator from "@/shared/components/common/pagination/Paginator";
+import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import CardPagination from '@/shared/components/common/pagination/CardPagination';
+import Indicator from '@/shared/components/common/pagination/Indicator';
+import Paginator from '@/shared/components/common/pagination/Paginator';
 
 const TestPage = () => {
   const [page, setPage] = useState(1);
@@ -19,10 +20,99 @@ const TestPage = () => {
         totalPages={totalPages}
         onChange={setPage}
       />
-
       {/* CardPagination, Indicator - 임시로 커서값 사용, 실 사용에선 이미지 총 개수로 대체 */}
       <CardPagination currentPage={page} totalPage={totalPages} />
       <Indicator current={page - 1} total={totalPages} />
+
+      {/* Solid Button, Outline Button 구현 */}
+      <PrimaryButton
+        disabled={false}
+        label="solid"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="solid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled={false}
+        label="outline"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="outline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        label="cancelSolid"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelSolid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        label="cancelOutline"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelOutline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        iconSrc="/icons/trash-can.svg"
+        label="solid"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="solid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        iconSrc="/icons/trash-can.svg"
+        label="outline"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="outline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        iconSrc="/icons/trash-can.svg"
+        label="cancelSolid"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelSolid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        iconSrc="/icons/trash-can.svg"
+        label="cancelOutline"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelOutline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        responsiveLabel
+        iconSrc="/icons/trash-can.svg"
+        label="cancelSolid"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelSolid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        responsiveLabel
+        iconSrc="/icons/trash-can.svg"
+        label="cancelOutline"
+        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
+        type="button"
+        variant="cancelOutline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
     </div>
   );
 };
