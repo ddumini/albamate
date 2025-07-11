@@ -5,7 +5,7 @@ interface IndicatorProps {
 
 const Indicator = ({ current, total }: IndicatorProps) => {
   return (
-    <div className="hidden pc:flex items-center justify-center gap-22">
+    <div className="hidden lg:flex items-center justify-center gap-22">
       {Array.from({ length: total }, (_, i) => {
         return (
           <div

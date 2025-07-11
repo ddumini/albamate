@@ -58,14 +58,14 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
       return page === "..." ? (
         <div
           key={`ellipsis-${index}`} // ellipsis의 경우 변경 가능성이 낮다고 생각하여 index 사용
-          className="flex justify-center items-center w-34 h-34 pc:w-48 pc:h-48 text-md pc:text-2lg bg-background-200 rounded-md pc:rounded-lg text-gray-200 pb-1/3 font-medium"
+          className="flex justify-center items-center w-34 h-34 lg:w-48 lg:h-48 text-md lg:text-2lg bg-background-200 rounded-md lg:rounded-lg text-gray-200 pb-1/3 font-medium"
         >
           <span className="h-fit leading-none pb-9">...</span>
         </div>
       ) : (
         <button
           key={`page-${page}`}
-          className={`flex justify-center items-center w-34 h-34 pc:w-48 pc:h-48 cursor-pointer text-center text-md pc:text-2lg bg-background-200 rounded-md pc:rounded-lg ${pageClassName}`}
+          className={`flex justify-center items-center w-34 h-34 lg:w-48 lg:h-48 cursor-pointer text-center text-md lg:text-2lg bg-background-200 rounded-md lg:rounded-lg ${pageClassName}`}
           disabled={currentPage === page}
           onClick={() => onChange(Number(page))}
         >
@@ -78,7 +78,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
   return (
     <div className="flex items-center gap-4">
       <button
-        className="w-34 h-34 pc:w-48 pc:h-48 bg-background-200 p-9 pc:p-12 rounded-md pc:rounded-lg"
+        className="w-34 h-34 lg:w-48 lg:h-48 bg-background-200 p-9 lg:p-12 rounded-md lg:rounded-lg"
         disabled={currentPage === 1}
         onClick={() => onChange(currentPage - 1)}
       >
@@ -97,7 +97,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
       </button>
       {renderPageNumbers()}
       <button
-        className="w-34 h-34 pc:w-48 pc:h-48 bg-background-200 p-9 pc:p-12 rounded-md pc:rounded-lg"
+        className="w-34 h-34 lg:w-48 lg:h-48 bg-background-200 p-9 lg:p-12 rounded-md lg:rounded-lg"
         disabled={currentPage === totalPages}
         onClick={() => onChange(currentPage + 1)}
       >
