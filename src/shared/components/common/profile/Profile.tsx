@@ -41,6 +41,7 @@ const Profile = ({
       <Image
         fill
         alt="프로필 이미지"
+        className="object-cover object-center"
         sizes={sizes}
         src={imageUrl ?? '/icons/user-profile.svg'}
       />
