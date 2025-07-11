@@ -50,3 +50,23 @@
   --breakpoint-tablet: 48rem;
   --breakpoint-pc: 80rem;
 }
+
+/* 커스텀 유틸리티 클래스 */
+@layer utilities {
+  .dark-light-toggle svg {
+    transition:
+      transform 0.3s ease,
+      fill 0.5s ease,
+      opacity 0.5s ease-in-out;
+  }
+
+  .dark-light-toggle:hover svg {
+    fill: var(--btn-svg-hover, #10b981);
+    transform: scale(1.2);
+  }
+}
+
+html.dark {
+  --color-mint-100: hsl(171, 86%, 50%);
+  --color-mint-400: hsl(171, 86%, 28%);
+}

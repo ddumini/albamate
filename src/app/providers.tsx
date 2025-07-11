@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import React from 'react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import React from "react";
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
 const getQueryClient = (): QueryClient => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     // 서버 환경에서는 매 요청마다 새로운 QueryClient를 생성합니다.
     return new QueryClient();
   } else {
@@ -26,7 +26,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     <QueryClientProvider client={queryClient}>
       {children}
       {/* 개발 환경에서만 React Query Devtools 활성화 */}
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} />
       )}
     </QueryClientProvider>

@@ -13,11 +13,11 @@ const Hyeran = () => {
     { value: 'HIRED', label: '채용 완료', disabled: true },
   ];
   return (
-    <div className='flex flex-col gap-10'>
+    <div className="flex flex-col gap-10">
       <h1>라디오 버튼 컴포넌트</h1>
       <RadioButton
-        legend='현재 진행상태를 알려주세요.'
-        name='applicationStatus'
+        legend="현재 진행상태를 알려주세요."
+        name="applicationStatus"
         options={options}
         value={selected}
         onChange={setSelected}

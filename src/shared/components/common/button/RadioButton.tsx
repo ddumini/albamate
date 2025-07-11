@@ -64,33 +64,44 @@ export interface RadioButtonProps {
  * />
  * ```
  */
-const RadioButton = ({ name, options, value, onChange, disabled = false, legend }: RadioButtonProps): JSX.Element => {
+const RadioButton = ({
+  name,
+  options,
+  value,
+  onChange,
+  disabled = false,
+  legend,
+}: RadioButtonProps): JSX.Element => {
   return (
     <fieldset>
-      {legend && <legend className='sr-only'>{legend}</legend>}
-      <div className='flex flex-col gap-8'>
-        {options.map((option) => {
+      {legend && <legend className="sr-only">{legend}</legend>}
+      <div className="flex flex-col gap-8">
+        {options.map(option => {
           const isDisabled = disabled || option.disabled;
           const isChecked = value === option.value;
           return (
             <label
               key={option.value}
-              className='lg:py-17 w-327 lg:w-360 has-[:checked]:border-mint-300 border-line-100 has-[:disabled]:hover:border-line-100 hover:border-mint-300 flex cursor-pointer items-center justify-between rounded-lg border-2 bg-white p-14 font-medium transition-all duration-200 has-[:disabled]:cursor-not-allowed has-[:checked]:bg-gray-50 has-[:disabled]:opacity-50 lg:px-24'
+              className="has-[:checked]:border-mint-300 border-line-100 has-[:disabled]:hover:border-line-100 hover:border-mint-300 flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 bg-white p-14 font-medium transition-all duration-200 has-[:checked]:bg-gray-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 lg:w-360 lg:px-24 lg:py-17"
             >
-              <span className='flex-1 select-none text-sm text-gray-600 lg:text-base'>{option.label}</span>
-              <div className='relative inline-block'>
+              <span className="flex-1 text-sm text-gray-600 select-none lg:text-base">
+                {option.label}
+              </span>
+              <div className="relative inline-block">
                 <input
                   checked={isChecked}
-                  className='w-22 h-22 checked:border-mint-300 block cursor-pointer appearance-none rounded-full border border-gray-200 bg-white transition-all duration-200 checked:bg-white disabled:cursor-not-allowed disabled:opacity-50'
+                  className="checked:border-mint-300 block h-22 w-22 cursor-pointer appearance-none rounded-full border border-gray-200 bg-white transition-all duration-200 checked:bg-white disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={isDisabled}
                   name={name}
-                  type='radio'
+                  type="radio"
                   value={option.value}
-                  onChange={(e) => {
+                  onChange={e => {
                     onChange(e.target.value);
                   }}
                 />
-                {isChecked && <div className='bg-mint-300 absolute left-6 top-6 size-10 rounded-full' />}
+                {isChecked && (
+                  <div className="bg-mint-300 absolute top-6 left-6 size-10 rounded-full" />
+                )}
               </div>
             </label>
           );
