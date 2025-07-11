@@ -1,5 +1,6 @@
 'use client';
 
+import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
 
 const filterOptions = [
@@ -13,6 +14,7 @@ const sortOptions = [
   { value: 'many-applicants', label: '지원자 많은순' },
   { value: 'many-scraps', label: '스크랩 많은순' },
 ];
+const inputOptions = [{ value: '전체' }, { value: '없음' }];
 const Sumin = () => {
   const handleFilterChange = (filterId: string) => {
     console.log(filterId);
@@ -45,6 +47,7 @@ const Sumin = () => {
       </section>
       <section>
         <p>Dropdown - input</p>
+        <InputDropdown options={inputOptions} />
       </section>
     </div>
   );
