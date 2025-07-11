@@ -20,7 +20,7 @@ const TestPage = () => {
 
       <p className="">layer</p>
       <div className="bg-gray-200">Hello Mint</div>
-      <div className="bg-mint-100 dark:bg-mint-400">Mint</div>
+      <div className="BG-lightmint">Mint</div>
       <ThemeToggle />
     </div>
   );
