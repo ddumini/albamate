@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { useTheme } from "next-themes";
+import { useTheme } from 'next-themes';
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
   return (
     <div suppressHydrationWarning>
       <button
         aria-label="Toggle Dark Mode"
-        className="relative flex items-center cursor-pointer justify-center w-40 h-40 rounded-full bg-white transition-colors duration-500 dark-light-toggle"
+        className="dark-light-toggle relative flex h-40 w-40 cursor-pointer items-center justify-center rounded-full bg-white transition-colors duration-500"
         type="button"
-        onClick={() => setTheme(isDark ? "light" : "dark")}
+        onClick={() => setTheme(isDark ? 'light' : 'dark')}
       >
         {/* Sun Icon */}
         <svg
-          className={`w-20 h-20 text-black absolute transition-opacity duration-500 ease-in-out ${
-            isDark ? "opacity-0" : "opacity-100"
+          className={`absolute h-20 w-20 text-black transition-opacity duration-500 ease-in-out ${
+            isDark ? 'opacity-0' : 'opacity-100'
           }`}
           fill="currentColor"
           viewBox="0 0 24 24"
@@ -37,10 +37,10 @@ const ThemeToggle = () => {
 
         {/* Moon Icon */}
         <svg
-          className={`w-22 h-30 text-black absolute transition-opacity duration-500 ease-in-out transform ${
+          className={`absolute h-30 w-22 transform text-black transition-opacity duration-500 ease-in-out ${
             isDark
-              ? "opacity-100 scale-110 translate-x-[-2px] translate-y-1"
-              : "opacity-0 scale-90"
+              ? 'translate-x-[-2px] translate-y-1 scale-110 opacity-100'
+              : 'scale-90 opacity-0'
           }`}
           fill="currentColor"
           viewBox="0 0 24 24"
