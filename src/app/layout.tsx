@@ -3,7 +3,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 
-import { Providers } from "./providers";
+import { Providers } from "@/app/providers";
 
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
