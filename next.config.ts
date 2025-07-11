@@ -4,7 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
 
   images: {
-    remotePatterns: [new URL('https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/**')],
+    remotePatterns: [
+      new URL('https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/**'),
+    ],
   },
 };
 
