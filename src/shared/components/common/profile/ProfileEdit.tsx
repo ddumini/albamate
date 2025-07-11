@@ -15,10 +15,16 @@ interface ProfileEditProps {
  */
 const ProfileEdit = ({ imageUrl }: ProfileEditProps) => {
   return (
-    <div className='relative size-80 lg:size-100'>
-      <Profile className='size-full' imageUrl={imageUrl} />
-      <button className='absolute right-0 bottom-0 flex size-24 cursor-pointer items-center justify-center rounded-full bg-background-300 ring-2 ring-white lg:size-36 lg:ring-3'>
-        <Image alt='프로필 수정하기' className='size-20 lg:size-28' height={24} src='/icons/edit.svg' width={24} />
+    <div className="relative size-80 lg:size-100">
+      <Profile className="size-full" imageUrl={imageUrl} />
+      <button className="absolute right-0 bottom-0 flex size-24 cursor-pointer items-center justify-center rounded-full bg-background-300 ring-2 ring-white lg:size-36 lg:ring-3">
+        <Image
+          alt="프로필 수정하기"
+          className="size-20 lg:size-28"
+          height={24}
+          src="/icons/edit.svg"
+          width={24}
+        />
       </button>
     </div>
   );

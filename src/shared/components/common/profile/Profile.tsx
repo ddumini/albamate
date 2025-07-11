@@ -26,15 +26,24 @@ interface ProfileProps {
  * @example <Profile className='size-26 border-none lg:size-26' sizes='26px' />
  *
  */
-const Profile = ({ sizes = '(min-width:64rem) 100px, 80px', imageUrl, className }: ProfileProps) => {
+const Profile = ({
+  sizes = '(min-width:64rem) 100px, 80px',
+  imageUrl,
+  className,
+}: ProfileProps) => {
   return (
     <div
       className={twMerge(
         'relative size-80 overflow-hidden rounded-full border-3 border-line-200 lg:size-100 lg:border-4',
-        className,
+        className
       )}
     >
-      <Image fill alt='프로필 이미지' sizes={sizes} src={imageUrl ?? '/icons/user-profile.svg'} />
+      <Image
+        fill
+        alt="프로필 이미지"
+        sizes={sizes}
+        src={imageUrl ?? '/icons/user-profile.svg'}
+      />
     </div>
   );
 };
