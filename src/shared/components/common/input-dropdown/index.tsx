@@ -22,7 +22,6 @@ import Dropdown from '@/shared/components/ui/Dropdown';
 interface InputDropdownOption {
   value: string;
 }
-
 interface InputDropdownProps {
   options: InputDropdownOption[];
   placeholder?: string;
@@ -31,7 +30,9 @@ interface InputDropdownProps {
 }
 
 const BTN_STYLE =
-  'h-28 w-full cursor-pointer items-center gap-2 rounded-lg text-center text-xs font-semibold lg:h-38 lg:text-lg';
+  'w-full text-left px-24 h-54 text-lg font-regular text-black-100 cursor-pointer';
+const INPUT_STYLE =
+  'text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 focus:outline-gray-200 focus:outline-1 focus:ring-0';
 
 const InputDropdown = ({
   options,
@@ -39,25 +40,33 @@ const InputDropdown = ({
   defaultValue = '',
   onChange,
 }: InputDropdownProps) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(defaultValue);
+  const [directInputValue, setDirectInputValue] = useState('');
   const [isDirectInput, setIsDirectInput] = useState(false);
   const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const directInputRef = useRef<HTMLInputElement>(null);
+
+  const isDirectInputSelected = isDirectInput && inputValue === '직접입력';
+
+  // 직접입력 모드가 활성화되면 input에 focus
+  useEffect(() => {
+    if (isDirectInput && directInputRef.current) {
+      directInputRef.current.focus();
+    }
+  }, [isDirectInput]);
 
   const handleSelect = (value: string) => {
     setInputValue(value);
     setIsDirectInput(false);
     setCurrentPlaceholder(placeholder);
-    setIsOpen(false);
     onChange?.(value);
   };
 
   const handleDirectInput = () => {
-    setInputValue('');
+    setInputValue('직접입력');
     setIsDirectInput(true);
     setCurrentPlaceholder('직접입력');
-    setIsOpen(false);
+    onChange?.(inputValue);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,56 +75,82 @@ const InputDropdown = ({
     onChange?.(value);
   };
 
-  // 직접입력 모드가 활성화되면 input에 focus
-  useEffect(() => {
-    if (isDirectInput && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isDirectInput]);
+  const handleDirectInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDirectInputValue(value);
+    onChange?.(value);
+  };
+
+  const selectInput = (
+    <input
+      readOnly
+      className={INPUT_STYLE + ' cursor-pointer'}
+      placeholder={currentPlaceholder}
+      type="text"
+      value={inputValue}
+      onChange={handleInputChange}
+    />
+  );
+
+  const directInput = (
+    <input
+      ref={directInputRef}
+      className={INPUT_STYLE + ' mt-2'}
+      placeholder="직접입력"
+      type="text"
+      value={directInputValue}
+      onChange={handleDirectInputChange}
+    />
+  );
 
   return (
-    <Dropdown
-      className="w-80 lg:w-132"
-      trigger={
-        <div className="relative flex items-center">
-          <input
-            ref={inputRef}
-            className="h-28 w-full rounded-lg border border-gray-300 px-3 text-xs lg:h-38 lg:text-lg"
-            placeholder={currentPlaceholder}
-            readOnly={!isDirectInput}
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <Image
-            alt="arrow-down"
-            className="absolute right-3"
-            height={16}
-            loading="lazy"
-            src="/icons/drop-menu-down.svg"
-            width={16}
-          />
-        </div>
-      }
-    >
-      <ul>
-        {options.map(option => (
-          <li key={option.value}>
+    <>
+      <Dropdown
+        trigger={
+          <div className="relative">
+            {selectInput}
+            <Image
+              alt="arrow-down"
+              className="absolute top-1/2 right-24 -translate-y-1/2"
+              height={24}
+              loading="lazy"
+              src="/icons/drop-menu-down.svg"
+              width={24}
+            />
+          </div>
+        }
+      >
+        <ul>
+          {options.map(option => (
+            <li key={option.value}>
+              <button
+                className={
+                  BTN_STYLE +
+                  (option.value === inputValue && !isDirectInput
+                    ? ' bg-mint-50/50 text-mint-300'
+                    : '')
+                }
+                onClick={() => handleSelect(option.value)}
+              >
+                {option.value}
+              </button>
+            </li>
+          ))}
+          <li>
             <button
-              className={BTN_STYLE}
-              onClick={() => handleSelect(option.value)}
+              className={
+                BTN_STYLE +
+                (isDirectInputSelected ? ' bg-mint-50/50 text-mint-300' : '')
+              }
+              onClick={handleDirectInput}
             >
-              {option.value}
+              직접입력
             </button>
           </li>
-        ))}
-        <li>
-          <button className={BTN_STYLE} onClick={handleDirectInput}>
-            직접입력
-          </button>
-        </li>
-      </ul>
-    </Dropdown>
+        </ul>
+      </Dropdown>
+      <div className="mt-12">{isDirectInput && directInput}</div>
+    </>
   );
 };
 

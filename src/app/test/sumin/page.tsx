@@ -27,7 +27,7 @@ const Sumin = () => {
   };
 
   return (
-    <div>
+    <div className="mx-auto max-w-640">
       <section>
         <p>Dropdown - filter</p>
         <Select
@@ -45,7 +45,7 @@ const Sumin = () => {
           onSelect={handleSortChange}
         />
       </section>
-      <section>
+      <section className="w-327 lg:w-full">
         <p>Dropdown - input</p>
         <InputDropdown options={inputOptions} />
       </section>
