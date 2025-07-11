@@ -14,7 +14,7 @@ const pretendard = localFont({
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko">
+    <html suppressHydrationWarning lang="ko">
       <body className={pretendard.className}>
         <ThemeProvider enableSystem attribute="class" defaultTheme="system">
           <Providers>{children}</Providers>
