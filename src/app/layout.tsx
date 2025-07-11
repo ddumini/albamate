@@ -1,8 +1,9 @@
 import './globals.css';
 
 import localFont from 'next/font/local';
+import { ThemeProvider } from 'next-themes';
 
-import { Providers } from './providers';
+import { Providers } from '@/app/providers';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -11,15 +12,13 @@ const pretendard = localFont({
   weight: '100 900',
 });
 
-const RootLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
       <body className={pretendard.className}>
-        <Providers>{children}</Providers>
+        <ThemeProvider enableSystem attribute="class" defaultTheme="system">
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
