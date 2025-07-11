@@ -15,6 +15,7 @@ const sortOptions = [
   { value: 'many-scraps', label: '스크랩 많은순' },
 ];
 const inputOptions = [{ value: '전체' }, { value: '없음' }];
+
 const Sumin = () => {
   const handleFilterChange = (filterId: string) => {
     console.log(filterId);
@@ -27,9 +28,9 @@ const Sumin = () => {
   };
 
   return (
-    <div className="mx-auto max-w-640">
-      <section>
-        <p>Dropdown - filter</p>
+    <div className="mx-auto max-w-640 px-24 pt-120">
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">Dropdown - filter</p>
         <Select
           options={filterOptions}
           placeholder="전체"
@@ -37,16 +38,16 @@ const Sumin = () => {
           onSelect={handleFilterChange}
         />
       </section>
-      <section>
-        <p>Dropdown - sort</p>
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">Dropdown - sort</p>
         <Select
           options={sortOptions}
           variant="sort"
           onSelect={handleSortChange}
         />
       </section>
-      <section className="w-327 lg:w-full">
-        <p>Dropdown - input</p>
+      <section className="max-w-327 lg:max-w-none">
+        <p className="mb-24 text-2xl font-bold">Dropdown - input</p>
         <InputDropdown options={inputOptions} />
       </section>
     </div>
