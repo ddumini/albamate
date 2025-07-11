@@ -82,7 +82,7 @@ const RadioButton = ({
           return (
             <label
               key={option.value}
-              className="has-[:checked]:border-mint-300 border-line-100 has-[:disabled]:hover:border-line-100 hover:border-mint-300 flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 bg-white p-14 font-medium transition-all duration-200 has-[:checked]:bg-gray-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 lg:w-360 lg:px-24 lg:py-17"
+              className="flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 border-line-100 bg-white p-14 font-medium transition-all duration-200 hover:border-mint-300 has-[:checked]:border-mint-300 has-[:checked]:bg-gray-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:disabled]:hover:border-line-100 lg:w-360 lg:px-24 lg:py-17"
             >
               <span className="flex-1 text-sm text-gray-600 select-none lg:text-base">
                 {option.label}
@@ -90,7 +90,7 @@ const RadioButton = ({
               <div className="relative inline-block">
                 <input
                   checked={isChecked}
-                  className="checked:border-mint-300 block h-22 w-22 cursor-pointer appearance-none rounded-full border border-gray-200 bg-white transition-all duration-200 checked:bg-white disabled:cursor-not-allowed disabled:opacity-50"
+                  className="block h-22 w-22 cursor-pointer appearance-none rounded-full border border-gray-200 bg-white transition-all duration-200 checked:border-mint-300 checked:bg-white disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={isDisabled}
                   name={name}
                   type="radio"
@@ -100,7 +100,7 @@ const RadioButton = ({
                   }}
                 />
                 {isChecked && (
-                  <div className="bg-mint-300 absolute top-6 left-6 size-10 rounded-full" />
+                  <div className="absolute top-6 left-6 size-10 rounded-full bg-mint-300" />
                 )}
               </div>
             </label>
