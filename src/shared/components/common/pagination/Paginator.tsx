@@ -86,6 +86,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
           <Image
             fill
             alt="previous page"
+            sizes="(min-width: 1024px) 24px, 16px"
             src={
               currentPage === 1
                 ? "/icons/chevron-left.svg"
@@ -104,6 +105,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
           <Image
             fill
             alt="next page"
+            sizes="(min-width: 1024px) 24px, 16px"
             src={
               currentPage === totalPages
                 ? "/icons/chevron-right.svg"
