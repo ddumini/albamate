@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* 다크모드 클래스 사용을 위한 custom-varient 선언 */
 @custom-variant dark (&:is(.dark *));
@@ -49,9 +49,6 @@
   --text-3xl--line-height: 2.625rem;
 
   --spacing: 0.0625rem;
-
-  --breakpoint-tablet: 48rem;
-  --breakpoint-pc: 80rem;
 }
 
 /* 다크모드 토글 버튼 유틸리티 클래스 */

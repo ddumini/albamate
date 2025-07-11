@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Windows 환경에서 Git GUI 도구와의 호환성을 위한 처리
+# 터미널이 연결되어 있고 /dev/tty가 존재하는 경우에만 exec < /dev/tty 사용
+if [ -t 0 ] && [ -e /dev/tty ]; then
+  exec < /dev/tty && npx gitmoji -i "$1"
+elif [ -t 0 ]; then
+  # 터미널은 연결되어 있지만 /dev/tty가 없는 경우 (Windows)
+  npx gitmoji -i "$1"
+else
+  # 터미널이 연결되지 않은 경우 (Git GUI 도구)
+  # 기본 커밋 메시지 형식으로 처리
+  if ! grep -q "^[✨🐛📝🎨♻️⚡️🔥🚀🔧✅📦️]" "$1"; then
+    echo "💡 GUI 환경에서 커밋하실 때는 커밋 메시지 앞에 이모지를 추가해주세요:"
+    echo "   ✨ 새로운 기능"
+    echo "   🐛 버그 수정"
+    echo "   📝 문서 수정"
+    echo "   🎨 코드 스타일"
+    echo "   ♻️ 리팩토링"
+    echo "   ⚡️ 성능 개선"
+    echo "   🔥 코드 제거"
+    echo "   🚀 배포"
+    echo "   🔧 설정 변경"
+    echo "   ✅ 테스트"
+    echo "   📦️ 패키지"
+  fi
+fi

@@ -10,7 +10,7 @@ const ThemeToggle = () => {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
-
+    
   const isDark = theme === 'dark';
 
   return (
@@ -47,6 +47,7 @@ const ThemeToggle = () => {
           className={`absolute h-16 w-16 transform text-black transition-opacity duration-500 ease-in-out ${
             isDark
               ? 'translate-x-[-2px] translate-y-1 scale-105 opacity-100'
+
               : 'scale-90 opacity-0'
           }`}
           fill="currentColor"
