@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* === Tailwind v4 테마 설정 === */
 @theme {
@@ -20,6 +20,7 @@
   --color-background-200: hsl(0, 0%, 97%);
   --color-background-300: hsl(0, 0%, 94%);
   --color-line-100: hsl(0, 0%, 95%);
+  --color-line-200: hsl(0, 0%, 90%);
   --color-error: hsl(15, 100%, 49%);
   --color-mint-50: hsl(171, 86%, 88%);
   --color-mint-100: hsl(171, 86%, 68%);
