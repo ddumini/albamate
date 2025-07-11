@@ -15,7 +15,7 @@ const AuthGnb = () => {
 
   return (
     <header className="w-full border-b border-gray-200 px-12 md:px-32 dark:border-gray-500">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 md:py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-center px-4 md:justify-between md:py-3">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-24">
           {/* 로고 */}
