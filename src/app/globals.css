@@ -62,7 +62,7 @@
 
   .dark-light-toggle:hover svg {
     fill: var(--btn-svg-hover, #10b981);
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 }
 
