@@ -18,7 +18,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
       )}
 
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-90 shadow-lg transition-transform duration-300 ease-in-out md:w-300 ${
+        className={`dark:bg-black-400 fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-95 shadow-lg transition-transform duration-300 ease-in-out md:w-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -43,9 +43,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
               <div className="relative h-24 w-24">
                 <Image fill alt="마이페이지" src="/icons/mypage.svg" />
               </div>
-              <Link className="text-black" href="/mypage">
-                마이페이지
-              </Link>
+              <Link href="/mypage">마이페이지</Link>
             </div>
 
             {/* 로그아웃 */}
@@ -56,9 +54,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
               <div className="relative h-24 w-24">
                 <Image fill alt="로그아웃" src="/icons/logout.svg" />
               </div>
-              <Link className="text-black" href="/logout">
-                로그아웃
-              </Link>
+              <Link href="/logout">로그아웃</Link>
             </div>
           </div>
         </div>
