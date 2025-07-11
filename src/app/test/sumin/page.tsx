@@ -1,5 +1,6 @@
 'use client';
 
+import DatePicker from '@/shared/components/common/DatePicker';
 import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
 
@@ -49,6 +50,11 @@ const Sumin = () => {
       <section className="max-w-327 lg:max-w-none">
         <p className="mb-24 text-2xl font-bold">Dropdown - input</p>
         <InputDropdown options={inputOptions} />
+      </section>
+
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">DatePicker</p>
+        <DatePicker />
       </section>
     </div>
   );
