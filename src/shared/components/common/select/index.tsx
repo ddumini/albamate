@@ -117,12 +117,7 @@ const Select = ({
       trigger={
         <button className={getButtonStyles()}>
           <span>{getDefaultText()}</span>
-          <Image
-            alt="arrow-down"
-            loading="lazy"
-            src={getIconSrc()}
-            {...getIconProps()}
-          />
+          <Image alt="arrow-down" src={getIconSrc()} {...getIconProps()} />
         </button>
       }
     >

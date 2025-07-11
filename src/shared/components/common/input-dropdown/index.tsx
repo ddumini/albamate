@@ -113,7 +113,6 @@ const InputDropdown = ({
               alt="arrow-down"
               className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36"
               height={24}
-              loading="lazy"
               src="/icons/drop-menu-down.svg"
               width={24}
             />
@@ -149,7 +148,7 @@ const InputDropdown = ({
           </li>
         </ul>
       </Dropdown>
-      <div className="mt-12">{isDirectInput && directInput}</div>
+      {isDirectInput && <div className="mt-12">{directInput}</div>}
     </>
   );
 };
