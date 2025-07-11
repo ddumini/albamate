@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* 다크모드 클래스 사용을 위한 custom-varient 선언 */
+@custom-variant dark (&:is(.dark *));
+
 /* === Tailwind v4 테마 설정 === */
 @theme {
   --color-black-100: hsl(0, 0%, 42%);
@@ -66,7 +69,31 @@
   }
 }
 
-html.dark {
-  --color-mint-100: hsl(171, 86%, 50%);
-  --color-mint-400: hsl(171, 86%, 28%);
+/* 커스텀 유틸리티 클래스 선언 */
+.BG-mint {
+  @apply bg-[#3DDC97] hover:bg-[#2CA76B] dark:bg-[#2CA76B] dark:hover:bg-[#238153];
+}
+.BG-lightmint {
+  @apply bg-green-100 dark:bg-[#184d37]; /* bg-mint-100 → bg-green-100, 다크도 민트톤 어두운색 */
+}
+.BG-mint-disabled {
+  @apply cursor-not-allowed bg-[#9FA6B2];
+}
+.BG-solid-mint {
+  @apply bg-[#2CA76B]; /* 진한 민트 */
+}
+.Text-btn {
+  @apply text-[#2CA76B] dark:text-[#3DDC97];
+}
+.Text-deepmint {
+  @apply text-[#2CA76B] dark:text-[#3DDC97];
+}
+.Text-mint {
+  @apply text-[#3DDC97] dark:text-[#2CA76B];
+}
+.Border-mint {
+  @apply border border-[#3DDC97] dark:border-[#2CA76B];
+}
+.BG-drag-hovered {
+  @apply bg-green-100;
 }
