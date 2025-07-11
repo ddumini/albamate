@@ -7,6 +7,8 @@ import CardPagination from '@/shared/components/common/pagination/CardPagination
 import Indicator from '@/shared/components/common/pagination/Indicator';
 import Paginator from '@/shared/components/common/pagination/Paginator';
 
+import RoundedButton from '../../../shared/components/common/button/RoundedButton';
+
 const TestPage = () => {
   const [page, setPage] = useState(1);
   const nextCursor = 120; // 예시로 120일 사용 API연결 시 API 커서 값 사용
@@ -111,6 +113,20 @@ const TestPage = () => {
         sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelOutline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+
+      <RoundedButton
+        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 text-gray-100"
+        label="Rounded Button"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+
+      <RoundedButton
+        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 text-gray-100"
+        iconClassName="w-24 h-24"
+        iconSrc="/icons/trash-can.svg"
+        label="Rounded Button"
         onClick={() => setPage(prev => prev + 1)}
       />
     </div>
