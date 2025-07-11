@@ -9,14 +9,16 @@ interface PaginatorProps {
 }
 
 const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
-  const width = useWindowWidth();
+  const width = useWindowWidth(); // 현재 화면 너비를 가져오는 훅 사용
   const isSmallScreen = typeof width === "number" && width < 769;
-  const visiblePages = isSmallScreen ? 3 : 5;
+  const visiblePages = isSmallScreen ? 3 : 5; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
 
   const renderPageNumbers = () => {
+    // 페이지 번호 렌더링 함수
     const pages: (string | number)[] = [];
 
     const createRange = (start: number, end: number) => {
+      // 페이지 번호 범위를 생성하는 함수
       const range: number[] = [];
       for (let i = start; i <= end; i++) {
         range.push(i);
@@ -31,15 +33,15 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
       const showLeft = currentPage <= visiblePages - 1;
       const showRight = currentPage >= totalPages - (visiblePages - 2);
       if (showLeft) {
-        // 앞쪽 페이지 구간
+        // 앞쪽 페이지 구간(현재 페이지가 왼쪽에 가까운 경우)
         pages.push(...createRange(1, visiblePages));
         pages.push("...", totalPages);
       } else if (showRight) {
-        // 뒤쪽 페이지 구간
+        // 뒤쪽 페이지 구간(현재 페이지가 오른쪽에 가까운 경우)
         pages.push(1, "...");
         pages.push(...createRange(totalPages - visiblePages + 1, totalPages));
       } else {
-        // 중간 페이지 구간
+        // 중간 페이지 구간(현재 페이지가 중간에 있는 경우)
         const sidePages = Math.floor((visiblePages - 2) / 2); // 양쪽에 표시할 페이지 수
         pages.push(1, "...");
         pages.push(
@@ -56,7 +58,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
           : "text-gray-200 font-medium";
       return page === "..." ? (
         <div
-          key={`ellipsis-${index}`}
+          key={`ellipsis-${index}`} // ellipsis의 경우 변경 가능성이 낮다고 생각하여 index 사용
           className="flex justify-center items-center w-34 h-34 pc:w-48 pc:h-48 text-md pc:text-2lg bg-background-200 rounded-md pc:rounded-lg text-gray-200 pb-1/3 font-medium"
         >
           <span className="h-fit leading-none pb-9">...</span>

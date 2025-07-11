@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// 현재 창의 너비를 반환하는 커스텀 훅
 const useWindowWidth = () => {
   const [width, setWidth] = useState<number | null>(null);
 
