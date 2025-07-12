@@ -13,7 +13,6 @@ interface PrivateWrapperProps {
   isPrivate: boolean;
   /**
    * 래퍼 컴포넌트의 최상위 `div`에 추가로 적용할 클래스입니다.
-   * 기본 크기 (`h-390 w-327 lg:h-536 lg:w-477`)를 오버라이드하거나 확장할 수 있습니다.
    */
   className?: string;
   /**
@@ -28,6 +27,7 @@ interface PrivateWrapperProps {
  *
  * `isPrivate` prop이 `true`일 경우, 자물쇠 아이콘과 함께 설정된 메시지를 포함하는
  * 반투명 오버레이가 콘텐츠 위에 덮여 사용자 클릭을 방지합니다.
+ * `false`일 경우 children 요소만 반환 됩니다.
  *
  * @example
  * // 기본 메시지로 비공개 처리된 카드 렌더링
@@ -42,29 +42,29 @@ const PrivateWrapper = ({
   className,
   content = '비공개 처리된 알바폼이에요',
 }: PrivateWrapperProps) => {
-  return (
+  return isPrivate ? (
     <div
       className={twMerge(
-        'relative h-390 w-327 overflow-hidden rounded-xl lg:h-536 lg:w-477',
+        'relative inline-block overflow-hidden rounded-xl',
         className
       )}
     >
       {children}
-      {isPrivate && (
-        <div className="absolute inset-0 flex cursor-not-allowed flex-col items-center justify-center gap-16 rounded-xl border border-gray-200 bg-[#3e3e3e]/60 lg:gap-24 lg:rounded-2xl lg:border-2">
-          <Image
-            alt="비공개"
-            className="size-80 lg:size-120"
-            height={120}
-            src="/icons/private.svg"
-            width={120}
-          />
-          <p className="text-md font-medium text-gray-50 lg:text-2lg">
-            {content}
-          </p>
-        </div>
-      )}
+      <div className="absolute inset-0 flex cursor-not-allowed flex-col items-center justify-center gap-16 rounded-xl border border-gray-200 bg-[#3e3e3e]/60 backdrop-blur-md lg:gap-24 lg:rounded-2xl lg:border-2">
+        <Image
+          alt="비공개"
+          className="size-80 lg:size-120"
+          height={120}
+          src="/icons/private.svg"
+          width={120}
+        />
+        <p className="text-md font-medium text-gray-50 lg:text-2lg">
+          {content}
+        </p>
+      </div>
     </div>
+  ) : (
+    children
   );
 };
 export default PrivateWrapper;

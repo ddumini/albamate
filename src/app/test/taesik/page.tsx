@@ -1,15 +1,18 @@
+'use client';
 import Image from 'next/image';
+import { useState } from 'react';
 
 import PrivateWrapper from '@/shared/components/common/PrivateWrapper';
 import Profile from '@/shared/components/common/profile/Profile';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 
 const TaesikTest = () => {
+  const [isp, setIsp] = useState(true);
   return (
     <div className="bg-background-300">
       <div>태식 테스트 페이지</div>
       <Profile imageUrl="https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/415/1752142046479/15-2_5882_1752141901515.jpeg" />
-      <PrivateWrapper isPrivate>
+      <PrivateWrapper isPrivate={isp}>
         <div className="flex flex-col">
           <div className="relative h-208 w-327">
             <Image
@@ -35,6 +38,9 @@ const TaesikTest = () => {
           </p>
         </div>
       </PrivateWrapper>
+      <button className="block" onClick={() => setIsp(prev => !prev)}>
+        변환
+      </button>
       <Profile className="size-26 border-none lg:size-26" sizes="26px" />
       <Profile
         className="size-26 border-none lg:size-26"
