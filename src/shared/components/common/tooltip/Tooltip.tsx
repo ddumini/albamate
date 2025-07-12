@@ -2,11 +2,11 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface ClickTooltipProps {
-  content: React.ReactNode;
-  children: React.ReactNode; // 아이콘 등 트리거
+  content: React.ReactNode | ((args: { close: () => void }) => React.ReactNode);
+  children: React.ReactNode;
 }
 
-const ClickTooltip = ({ content, children }: ClickTooltipProps) => {
+const Tooltip = ({ content, children }: ClickTooltipProps) => {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -24,6 +24,8 @@ const ClickTooltip = ({ content, children }: ClickTooltipProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const close = () => setOpen(false);
+
   return (
     <div ref={wrapperRef} className="relative inline-block">
       <div className="cursor-pointer" onClick={() => setOpen(prev => !prev)}>
@@ -37,7 +39,7 @@ const ClickTooltip = ({ content, children }: ClickTooltipProps) => {
 
           {/* 툴팁 본문 */}
           <div className="BG-blueblack Text-white-gray relative z-10 rounded-lg px-3 py-2 shadow-lg">
-            {content}
+            {typeof content === 'function' ? content({ close }) : content}
           </div>
         </div>
       )}
@@ -45,4 +47,4 @@ const ClickTooltip = ({ content, children }: ClickTooltipProps) => {
   );
 };
 
-export default ClickTooltip;
+export default Tooltip;
