@@ -17,7 +17,6 @@ const defaultIcons = {
   info: '/icons/info.svg',
 };
 
-// 에러 아이콘만 크게 보이는 문제로 사이즈 객체 추가
 const iconSizes = {
   success: { width: 24, height: 24, lgWidth: 36, lgHeight: 36 },
   error: { width: 18, height: 18, lgWidth: 28, lgHeight: 28 },
@@ -33,16 +32,34 @@ const EditPopup = ({
   iconSrc,
 }: EditPopupProps) => {
   const [shouldRender, setShouldRender] = useState(visible);
+  const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
     if (visible) {
       setShouldRender(true);
-      const timer = setTimeout(() => {
+      setAnimationClass('opacity-0 -translate-y-12'); // 👈 초기 상태
+
+      requestAnimationFrame(() => {
+        setAnimationClass('opacity-95 translate-y-0');
+      });
+    } else {
+      setAnimationClass('opacity-0 -translate-y-12');
+      const timeout = setTimeout(() => setShouldRender(false), 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [visible]);
+
+  useEffect(() => {
+    if (!visible) return;
+    const timer = setTimeout(() => {
+      setAnimationClass('opacity-0 -translate-y-12');
+      const hideTimer = setTimeout(() => {
         setShouldRender(false);
         onClose();
-      }, duration);
-      return () => clearTimeout(timer);
-    }
+      }, 500);
+      return () => clearTimeout(hideTimer);
+    }, duration);
+    return () => clearTimeout(timer);
   }, [visible, duration, onClose]);
 
   if (!shouldRender) return null;
@@ -50,13 +67,12 @@ const EditPopup = ({
   const size = iconSizes[type];
 
   return (
-    <div className="BG-blueblack Text-white-gray fixed top-60 left-1/2 z-50 flex -translate-x-1/2 items-center gap-6 rounded-xl px-80 py-12 text-xs whitespace-nowrap opacity-95 shadow-lg md:px-120 md:text-md lg:px-150 lg:text-lg">
+    <div
+      className={`BG-blueblack Text-white-gray fixed top-60 left-1/2 z-50 flex -translate-x-1/2 items-center gap-6 rounded-xl px-80 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:px-120 md:text-md lg:px-150 lg:text-lg ${animationClass}`}
+    >
       <div
         className="relative"
-        style={{
-          width: size.width,
-          height: size.height,
-        }}
+        style={{ width: size.width, height: size.height }}
       >
         <Image
           fill
