@@ -1,9 +1,11 @@
 'use client';
 
 import MainGnb from '@components/common/gnb/MainGnb';
+import Image from 'next/image';
 
 import AuthGnb from '@/shared/components/common/gnb/AuthGnb';
 import Tab from '@/shared/components/common/tab/Tab';
+import Tooltip from '@/shared/components/common/tooltip/Tooltip';
 
 const TestPage = () => {
   return (
@@ -24,6 +26,35 @@ const TestPage = () => {
       <div className="BG-lightmint">Mint</div>
 
       <Tab />
+
+      <div className="relative flex justify-center">
+        <Tooltip
+          content={({ close }) => (
+            <div className="flex items-center gap-2 p-16">
+              <div className="relative h-24 w-24 md:h-36 md:w-36">
+                <Image fill alt="info" src="/icons/info.svg" />
+              </div>
+              <span className="text-xs md:text-lg">
+                알바폼 현재 진행상태를 변경할 수 있어요!
+              </span>
+              <button
+                className="relative h-24 w-24 cursor-pointer md:h-36 md:w-36"
+                type="button"
+                onClick={close}
+              >
+                <Image fill alt="닫기 버튼" src="/icons/x-thin.svg" />
+              </button>
+            </div>
+          )}
+        >
+          <Image
+            alt="수정 아이콘"
+            height={24}
+            src="/icons/edit.svg"
+            width={24}
+          />
+        </Tooltip>
+      </div>
     </div>
   );
 };
