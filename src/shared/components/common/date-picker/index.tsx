@@ -14,6 +14,7 @@ import { twMerge } from 'tailwind-merge';
  * DatePicker 컴포넌트
  *
  * 날짜 범위를 선택할 수 있는 컴포넌트
+ * 키보드 접근성 지원: Tab, Enter, Space, 화살표 키로 조작 가능
  *
  * @author sumin
  * @date 2025-07-12
@@ -48,6 +49,7 @@ const DatePicker = ({
   const [isOpen, setIsOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // 외부 클릭 시 닫기
   useEffect(() => {
@@ -63,12 +65,40 @@ const DatePicker = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // 키보드 이벤트 처리
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (disabled) return;
+
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        setIsOpen(!isOpen);
+        break;
+      case 'Escape':
+        setIsOpen(false);
+        buttonRef.current?.focus();
+        break;
+      case 'Tab':
+        // Tab 키로 포커스가 이동할 때 드롭다운이 열려있으면 닫기
+        if (isOpen) {
+          setTimeout(() => {
+            if (!containerRef.current?.contains(document.activeElement)) {
+              setIsOpen(false);
+            }
+          }, 0);
+        }
+        break;
+    }
+  };
+
   // 날짜 변경 처리
   const handleSelect = (range: DateRange | undefined) => {
     setDateRange(range);
     onDateRangeChange?.(range);
     if (range?.from && range?.to) {
       setIsOpen(false);
+      buttonRef.current?.focus();
     }
   };
 
@@ -84,6 +114,10 @@ const DatePicker = ({
   return (
     <div ref={containerRef} className="relative">
       <button
+        ref={buttonRef}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        aria-label={`날짜 범위 선택: ${getDisplayText()}`}
         className={twMerge(
           'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
           isOpen && 'border-gray-200',
@@ -91,7 +125,9 @@ const DatePicker = ({
           disabled && 'cursor-not-allowed'
         )}
         disabled={disabled}
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleKeyDown}
       >
         <Image
           alt="calendar"
@@ -107,8 +143,16 @@ const DatePicker = ({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 z-10 mt-8 rounded-lg border border-gray-200 bg-white p-16 shadow-md">
+        <div
+          aria-label="날짜 범위 선택"
+          aria-modal="true"
+          className="absolute top-full left-0 z-10 mt-8 rounded-lg border border-gray-200 bg-white p-16 shadow-md"
+          role="dialog"
+        >
           <DayPicker
+            fixedWeeks
+            showOutsideDays
+            captionLayout="dropdown"
             locale={ko}
             mode="range"
             numberOfMonths={1}
