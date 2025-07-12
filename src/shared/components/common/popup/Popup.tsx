@@ -1,24 +1,34 @@
 'use client';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 interface ToastLikePopupProps {
   message: string;
-  duration?: number; // 자동 사라짐 시간(ms)
 }
 
-const Popup = ({ message, duration = 30000 }: ToastLikePopupProps) => {
+const Popup = ({ message }: ToastLikePopupProps) => {
   const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), duration);
-    return () => clearTimeout(timer);
-  }, [duration]);
 
   if (!visible) return null;
 
   return (
-    <div className="fixed top-8 left-1/2 z-50 -translate-x-1/2 rounded-md bg-white px-4 py-3 text-sm shadow-lg">
-      {message}
+    <div className="BG-blueblack Text-white-gray fixed top-8 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 rounded-xl px-24 py-6 text-xs shadow-lg md:px-40 md:py-12 md:text-md">
+      {/* 아이콘 */}
+      <div className="relative h-24 w-24">
+        <Image fill alt="사용자 이미지" src="/icons/user.svg" />
+      </div>
+
+      {/* 메시지 */}
+      <span className="flex-1">{message}</span>
+
+      {/* 닫기 버튼 */}
+      <button
+        aria-label="닫기"
+        className="text-white-gray transition-colors hover:text-white"
+        onClick={() => setVisible(false)}
+      >
+        ✕
+      </button>
     </div>
   );
 };
