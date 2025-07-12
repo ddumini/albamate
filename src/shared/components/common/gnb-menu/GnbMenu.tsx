@@ -18,12 +18,12 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
       )}
 
       <div
-        className={`dark:bg-black-400 fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-95 shadow-lg transition-transform duration-300 ease-in-out md:w-300 ${
+        className={`fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-95 shadow-lg transition-transform duration-300 ease-in-out md:w-300 dark:bg-black-400 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="mt-32 flex flex-col gap-32 p-4">
-          <div className="border-b border-gray-200">
+        <div className="mt-32 flex flex-col gap-56 p-4">
+          <div className="border-b border-gray-500 pb-12">
             {/* 닫기 버튼 (우측 상단 고정) */}
             <button
               aria-label="메뉴 닫기"
