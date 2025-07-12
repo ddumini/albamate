@@ -14,7 +14,7 @@ const AuthGnb = () => {
   if (!mounted) return null;
 
   return (
-    <header className="w-full border-b border-gray-200 md:px-72 lg:px-120 dark:border-gray-500">
+    <header className="w-full border-b border-gray-400 md:px-72 lg:px-120 dark:border-gray-500">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-4 md:justify-between md:py-3">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-24">

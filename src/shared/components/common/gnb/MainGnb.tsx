@@ -20,7 +20,7 @@ const MainGnb = () => {
   if (!mounted) return null;
 
   return (
-    <header className="w-full border-b border-gray-200 px-24 md:px-72 dark:border-gray-500">
+    <header className="w-full border-b border-gray-400 px-24 md:px-72 dark:border-gray-500">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 md:py-3">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-32 lg:gap-48">
