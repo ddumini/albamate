@@ -85,7 +85,13 @@ const TimeSelect = ({
           <li
             key={t}
             className="flex h-34 w-full cursor-pointer items-center px-10 text-xs text-black-100 hover:bg-gray-100 lg:h-52 lg:text-2lg"
+            tabIndex={0}
             onClick={() => onChange(t)}
+            onKeyDown={event => {
+              if (event.key === 'Enter') {
+                onChange(t);
+              }
+            }}
           >
             {t}
           </li>
