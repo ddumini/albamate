@@ -64,27 +64,36 @@ const Dropdown = ({
       }
     };
 
-    // 이벤트 리스너 등록
     document.addEventListener('mousedown', handleClickOutside);
 
-    // 클린업 함수
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  // ESC 키로 드롭다운 닫기
+  // 키보드 이벤트 처리 (ESC, Enter, Space)
   useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsOpen(false);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        return;
+      }
+
+      switch (event.key) {
+        case 'Escape':
+          setIsOpen(false);
+          break;
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+          setIsOpen(prev => !prev);
+          break;
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
@@ -96,9 +105,23 @@ const Dropdown = ({
     <div
       ref={dropdownRef}
       className={`relative ${className}`}
-      data-dropdown-id={id} // 고유 식별자
+      data-dropdown-id={id}
     >
-      <div onClick={handleToggle}>{renderTrigger()}</div>
+      <div
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        role="button"
+        tabIndex={0}
+        onClick={handleToggle}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleToggle();
+          }
+        }}
+      >
+        {renderTrigger()}
+      </div>
 
       {isOpen && (
         <div
