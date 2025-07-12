@@ -31,14 +31,14 @@ const TestPage = () => {
         <Tooltip
           content={({ close }) => (
             <div className="flex items-center gap-2 p-16">
-              <div className="relative h-24 w-24 md:h-36 md:w-36">
+              <div className="relative h-24 w-24 md:h-30 md:w-30">
                 <Image fill alt="info" src="/icons/info.svg" />
               </div>
-              <span className="text-xs md:text-lg">
+              <span className="text-xs md:text-md">
                 알바폼 현재 진행상태를 변경할 수 있어요!
               </span>
               <button
-                className="relative h-24 w-24 cursor-pointer md:h-36 md:w-36"
+                className="relative h-24 w-24 cursor-pointer md:h-30 md:w-30"
                 type="button"
                 onClick={close}
               >
