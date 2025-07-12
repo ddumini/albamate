@@ -24,7 +24,7 @@ const Popup = ({
       setShouldRender(true);
       // 아래에서 위로 등장
       requestAnimationFrame(() => {
-        setAnimationClass('opacity-100 translate-y-0');
+        setAnimationClass('opacity-95 translate-y-0');
       });
     } else {
       // 위로 사라짐
@@ -45,7 +45,7 @@ const Popup = ({
 
   return (
     <div
-      className={`BG-blueblack Text-white-gray fixed top-50 left-1/2 z-50 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl px-24 py-12 text-xs whitespace-nowrap opacity-95 shadow-lg transition-all duration-500 ease-in-out md:px-80 md:text-md lg:px-[300px] lg:text-lg ${animationClass} `}
+      className={`BG-blueblack Text-white-gray fixed top-50 left-1/2 z-50 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl px-24 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:px-80 md:text-md lg:px-[300px] lg:text-lg ${animationClass} `}
       style={{ width: 'calc(100vw - 3rem * 2)' }}
     >
       {/* 아이콘 */}
