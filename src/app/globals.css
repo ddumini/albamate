@@ -111,6 +111,7 @@
 }
 
 .Text-white-gray {
+  /* 라이트 모드:흰색 - 다크모드:밝은 회색 */
   @apply text-white dark:text-gray-50;
 }
 
