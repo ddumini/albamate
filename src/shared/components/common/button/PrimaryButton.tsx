@@ -3,7 +3,63 @@ import { twMerge } from 'tailwind-merge';
 
 import ButtonBase from './ButtonBase';
 
-// PrimaryButton 컴포넌트의 props 타입 정의
+/**
+ * PrimaryButton 컴포넌트
+ *
+ * ✅ 용도:
+ * - 프로젝트 전반에서 일관된 스타일의 기본 버튼 역할을 합니다.
+ * - variant와 size, icon 등을 조합하여 다양한 형태의 버튼으로 사용할 수 있습니다.
+ *
+ * ✅ 특징:
+ * - `variant`: 버튼의 스타일을 지정합니다. (색상, 테두리 등)
+ * - `iconSrc`: 이미지 아이콘을 버튼 앞에 표시할 수 있습니다.
+ * - `responsiveLabel`: 작은 화면에서는 텍스트를 숨기고 아이콘만 보이도록 처리할 수 있습니다.
+ * - Tailwind 클래스를 props로 받아 사이즈와 여백 등 유연하게 조절할 수 있습니다.
+ * - solid의 배경색, outline의 테두리 및 텍스트 색상은 저희 시그니처 컬러로 고정했습니다.
+ * - cancelSolid와 cancelOutline은 회색 계열로 구분하여 사용합니다.
+ *
+ * ✅ 사용 예시:
+ * @example
+ * ```tsx
+ * // 텍스트만 있는 버튼
+ * <PrimaryButton
+ *   variant="solid"
+ *   sizeClassName="px-4 py-2 text-sm"
+ *   label="확인"
+ *   type="button"
+ *   onClick={() => alert('클릭됨')}
+ * />
+ *
+ * // 아이콘과 텍스트가 함께 있는 버튼
+ * <PrimaryButton
+ *   variant="outline"
+ *   sizeClassName="px-4 py-2 text-sm"
+ *   label="삭제"
+ *   iconSrc="/icons/trash.svg"
+ *   type="button"
+ * />
+ *
+ * // 반응형으로 텍스트를 숨기는 버튼 (모바일에선 아이콘만 표시)
+ * <PrimaryButton
+ *   variant="solid"
+ *   sizeClassName="p-2"
+ *   iconSrc="/icons/menu.svg"
+ *   responsiveLabel={true}
+ *   type="button"
+ * />
+ * ```
+ *
+ * @param variant - 버튼의 스타일 타입 (solid, outline, cancelSolid, cancelOutline)
+ * @param sizeClassName - Tailwind 클래스 문자열로 크기 및 텍스트 사이즈 조정
+ * @param label - 버튼에 표시될 텍스트 (생략 가능)
+ * @param disabled - 버튼 비활성화 여부 (true일 경우 클릭 불가)
+ * @param type - HTML 버튼 타입 ('button' | 'submit' | 'reset')
+ * @param iconSrc - 버튼 앞에 표시할 이미지 아이콘 경로 (Next.js Image 사용)
+ * @param responsiveLabel - true일 경우 버튼 텍스트를 숨기고 아이콘만 표시 (모바일 대응)
+ * @param onClick - 클릭 이벤트 핸들러 함수
+ */
+
+// 버튼의 스타일 담당
 interface ButtonProps {
   variant: 'solid' | 'outline' | 'cancelSolid' | 'cancelOutline'; // Variant로 버튼 스타일 구분 기본값은 'solid'
   sizeClassName: string; // sizeClassName로 버튼 크기 및 텍스트 사이즈 조정
@@ -46,7 +102,7 @@ const PrimaryButton = ({
   };
 
   // disabled 상태에 따라 커서 스타일 변경
-  const disabledStyles = disabled ? 'cursor-not-allowed' : 'cursor-pointer';
+  const disabledStyles = disabled ? '' : 'cursor-pointer';
 
   // 최종으로 적용될 클래스 병합
   const finalStyles = twMerge(
@@ -68,7 +124,7 @@ const PrimaryButton = ({
     >
       {/* iconSrc 여부에 따라 아이콘 표시 */}
       {iconSrc && (
-        <span className="relative inline-flex h-24 w-24 items-center justify-center lg:mr-1 lg:h-36 lg:w-36">
+        <span className="relative inline-flex h-24 w-24 items-center justify-center lg:h-36 lg:w-36">
           <Image fill alt="icon" sizes="36px" src={iconSrc} />
         </span>
       )}

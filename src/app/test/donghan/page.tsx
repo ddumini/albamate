@@ -117,16 +117,18 @@ const TestPage = () => {
       />
 
       <RoundedButton
-        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 text-gray-100"
+        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 hover:bg-mint-400 text-gray-100"
         label="Rounded Button"
+        type="button"
         onClick={() => setPage(prev => prev + 1)}
       />
 
       <RoundedButton
-        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 text-gray-100"
+        buttonClassName="w-full max-w-640 py-20 text-lg lg:text-xl bg-mint-300 hover:bg-mint-400 text-gray-100"
         iconClassName="w-24 h-24"
         iconSrc="/icons/trash-can.svg"
         label="Rounded Button"
+        type="button"
         onClick={() => setPage(prev => prev + 1)}
       />
     </div>
