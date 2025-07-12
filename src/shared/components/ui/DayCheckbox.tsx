@@ -68,6 +68,16 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
       }
     };
 
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (!disabled) {
+          const newChecked = !checked;
+          onChange?.(newChecked, value);
+        }
+      }
+    };
+
     return (
       <li>
         <input
@@ -95,8 +105,8 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
           htmlFor={inputId}
           id={descriptionId}
           role="checkbox"
-          tabIndex={disabled ? -1 : 0}
-          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          onKeyDown={handleInputKeyDown}
         >
           {day}
         </label>
