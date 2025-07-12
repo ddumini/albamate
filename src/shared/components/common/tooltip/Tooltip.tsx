@@ -31,8 +31,14 @@ const ClickTooltip = ({ content, children }: ClickTooltipProps) => {
       </div>
 
       {open && (
-        <div className="absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2 rounded bg-black px-3 py-2 text-sm whitespace-nowrap text-white shadow">
-          {content}
+        <div className="absolute left-1/2 z-50 mt-8 -translate-x-1/2 whitespace-nowrap">
+          {/* 꼬리 (세모) */}
+          <div className="BG-blueblack absolute -top-4.5 left-1/2 z-0 h-12 w-12 -translate-x-1/2 rotate-45" />
+
+          {/* 툴팁 본문 */}
+          <div className="BG-blueblack Text-white-gray relative z-10 rounded-lg px-3 py-2 shadow-lg">
+            {content}
+          </div>
         </div>
       )}
     </div>
