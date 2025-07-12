@@ -5,6 +5,7 @@ import '@/app/day-picker-override.css'; // react day picker 커스텀 오버라�
 
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import { twMerge } from 'tailwind-merge';
@@ -57,15 +58,27 @@ const DatePicker = ({
   };
 
   return (
-    <div ref={containerRef} className="relative inline-block">
+    <div ref={containerRef} className="relative">
       <button
         className={twMerge(
-          'rounded-md border border-gray-200 bg-white px-8 py-12',
+          'flex h-54 w-full items-center gap-8 rounded-lg bg-background-200 px-14 text-gray-400',
+          isOpen && 'border border-gray-200',
+          dateRange?.from && dateRange?.to && 'text-black-400',
           disabled && 'cursor-not-allowed'
         )}
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
       >
+        <Image
+          alt="calendar"
+          height={36}
+          src={
+            dateRange?.from && dateRange?.to
+              ? '/icons/calendar-gray.svg'
+              : '/icons/calendar-fill.svg'
+          }
+          width={36}
+        />
         {getDisplayText()}
       </button>
 
