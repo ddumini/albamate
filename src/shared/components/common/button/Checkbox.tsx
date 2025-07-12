@@ -54,25 +54,9 @@ const Checkbox = ({
     }
   };
 
-  const getCheckboxStyle = () => {
-    if (checked && disabled) {
-      return {
-        borderColor: 'var(--color-gray-300)',
-        backgroundColor: 'var(--color-gray-300)',
-      };
-    }
-    if (checked) {
-      return {
-        borderColor: 'var(--color-mint-300)',
-        backgroundColor: 'var(--color-mint-300)',
-      };
-    }
-    return {};
-  };
-
   return (
     <label
-      className="relative flex w-fit cursor-pointer items-center gap-10 has-[:disabled]:cursor-not-allowed"
+      className="relative flex w-fit cursor-pointer items-center gap-10 has-disabled:cursor-not-allowed"
       htmlFor={id}
     >
       <input
@@ -85,10 +69,7 @@ const Checkbox = ({
         onChange={handleChange}
       />
       {/* 체크박스 박스 */}
-      <div
-        className="relative flex size-22 cursor-pointer items-center justify-center rounded-sm border border-gray-200 transition-all duration-200 ease-in-out peer-disabled:cursor-not-allowed peer-disabled:opacity-50 lg:size-26"
-        style={getCheckboxStyle()}
-      >
+      <div className="relative flex size-22 cursor-pointer items-center justify-center rounded-sm border border-gray-200 transition-all duration-200 ease-in-out peer-checked:border-mint-300 peer-checked:bg-mint-300 peer-disabled:cursor-not-allowed peer-disabled:border-gray-300 peer-disabled:bg-gray-300 peer-disabled:opacity-50 lg:size-26">
         {/* 체크마크 아이콘 */}
         {checked && (
           <svg

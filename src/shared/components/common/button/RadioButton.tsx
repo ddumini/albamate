@@ -82,7 +82,7 @@ const RadioButton = ({
           return (
             <label
               key={option.value}
-              className="flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 border-line-100 bg-white p-14 font-medium transition-all duration-200 hover:border-mint-300 has-[:checked]:border-mint-300 has-[:checked]:bg-gray-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:disabled]:hover:border-line-100 lg:w-360 lg:px-24 lg:py-17"
+              className="flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 border-line-100 bg-white p-14 font-medium transition-all duration-200 hover:border-mint-300 has-checked:border-mint-300 has-checked:bg-gray-50 has-disabled:cursor-not-allowed has-disabled:opacity-50 has-disabled:hover:border-line-100 lg:w-360 lg:px-24 lg:py-17"
             >
               <span className="flex-1 text-sm text-gray-600 select-none lg:text-base">
                 {option.label}
