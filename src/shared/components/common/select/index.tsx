@@ -114,6 +114,7 @@ const Select = ({
   return (
     <Dropdown
       className={variant === 'sort' ? 'w-80 lg:w-132' : 'w-80 lg:w-126'}
+      isRight={variant === 'sort'}
       trigger={
         <button className={getButtonStyles()}>
           <span>{getDefaultText()}</span>

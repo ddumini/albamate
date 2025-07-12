@@ -85,8 +85,8 @@ const DatePicker = ({
     <div ref={containerRef} className="relative">
       <button
         className={twMerge(
-          'flex h-54 w-full items-center gap-8 rounded-lg bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
-          isOpen && 'border border-gray-200',
+          'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
+          isOpen && 'border-gray-200',
           dateRange?.from && dateRange?.to && 'text-black-400',
           disabled && 'cursor-not-allowed'
         )}
