@@ -1,12 +1,13 @@
 'use client';
 
+import MainGnb from '@components/common/gnb/MainGnb';
+
 import AuthGnb from '@/shared/components/common/gnb/AuthGnb';
-import MainGnb from '@/shared/components/common/gnb/MainGnb';
-import ThemeToggle from '@/shared/components/ThemeToggle';
+import Tab from '@/shared/components/common/tap/Tab';
 
 const TestPage = () => {
   return (
-    <div className="text-md m-16">
+    <div className="m-16 flex flex-col gap-24 text-md">
       <ul>
         <li className="mb-36">
           로그인 전 헤더
@@ -18,10 +19,11 @@ const TestPage = () => {
         </li>
       </ul>
 
-      <p className="">layer</p>
+      <p className="bg-blue-500">layer</p>
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
-      <ThemeToggle />
+
+      <Tab />
     </div>
   );
 };
