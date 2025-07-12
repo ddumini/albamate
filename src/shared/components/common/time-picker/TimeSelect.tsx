@@ -1,6 +1,4 @@
 'use client';
-import { ChevronDown, Clock } from 'lucide-react';
-
 import Dropdown from '@/shared/components/ui/Dropdown';
 
 const generateTimes = () => {
@@ -32,10 +30,8 @@ const TimeSelect = ({ label, value, onChange }: TimeSelectProps) => {
             type="button"
           >
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-gray-500" />
               <span>{value}</span>
             </div>
-            <ChevronDown className="h-4 w-4 text-gray-500" />
           </button>
         }
       >

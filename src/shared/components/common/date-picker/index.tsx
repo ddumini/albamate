@@ -10,6 +10,30 @@ import { useEffect, useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import { twMerge } from 'tailwind-merge';
 
+/**
+ * DatePicker 컴포넌트
+ *
+ * 날짜 범위를 선택할 수 있는 컴포넌트
+ *
+ * @author sumin
+ * @date 2025-07-12
+ *
+ * @param {DatePickerProps} props
+ * @param {DateRange | undefined} props.onDateRangeChange - 날짜 범위 변경 핸들러
+ * @param {string} [props.placeholder] - 표시 텍스트 플레이스홀더
+ * @param {boolean} [props.disabled] - 비활성화 상태
+ *
+ * @example
+ *
+ * <DatePicker /> // 기본 사용 예시
+ *
+ * <DatePicker
+ *   onDateRangeChange={handleDateRangeChange}
+ *   placeholder="시작일 - 종료일"
+ *   disabled={false}
+ * /> // 커스텀 사용 예시
+ */
+
 interface DatePickerProps {
   onDateRangeChange?: (range: DateRange | undefined) => void;
   placeholder?: string;

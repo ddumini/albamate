@@ -30,7 +30,7 @@ const Sumin = () => {
   };
 
   return (
-    <div className="mx-auto max-w-640 px-24 pt-120">
+    <div className="mx-auto max-w-640 px-24 py-200">
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">Dropdown - filter</p>
         <Select
