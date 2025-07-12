@@ -39,6 +39,7 @@ import ButtonBase from './ButtonBase';
 interface RoundedButtonProps {
   label: string;
   buttonClassName: string;
+  disabled?: boolean;
   iconSrc?: string;
   iconClassName?: string;
   type: 'button' | 'submit' | 'reset';
@@ -48,6 +49,7 @@ interface RoundedButtonProps {
 const RoundedButton = ({
   label,
   buttonClassName,
+  disabled = false,
   iconSrc,
   iconClassName,
   type,
@@ -62,7 +64,12 @@ const RoundedButton = ({
   const iconFinalStyles = twMerge(iconBaseStyles, iconClassName);
 
   return (
-    <ButtonBase className={buttonFinalStyles} type={type} onClick={onClick}>
+    <ButtonBase
+      className={buttonFinalStyles}
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+    >
       {iconSrc && (
         <span className={iconFinalStyles}>
           <Image fill alt="icon" src={iconSrc} />
