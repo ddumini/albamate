@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* 다크모드 클래스 사용을 위한 custom-varient 선언 */
 @custom-variant dark (&:is(.dark *));
@@ -10,7 +10,8 @@
   --color-black-300: hsl(0, 0%, 22%);
   --color-black-400: hsl(0, 0%, 12%);
   --color-black-500: hsl(0, 0%, 2%);
-  --color-gray-50: hsl(0, 0%, 92%);
+  --color-gray-25: hsl(0, 0%, 97%);
+  --color-gray-50: hsl(0, 0%, 93%);
   --color-gray-100: hsl(0, 0%, 87%);
   --color-gray-200: hsl(0, 0%, 77%);
   --color-gray-300: hsl(0, 0%, 67%);
