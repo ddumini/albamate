@@ -72,6 +72,11 @@
   @apply bg-white dark:bg-neutral-900;
 }
 
+.BG-blueblack {
+  /* 남색 계열 검은색 */
+  @apply bg-[#2A2C3D];
+}
+
 .BG-ToggleButton {
   /* 토글 버튼 전용 클래스 */
   @apply bg-gray-50 dark:bg-gray-500;
@@ -103,6 +108,10 @@
 
 .Text-white {
   @apply text-white dark:text-neutral-800;
+}
+
+.Text-white-gray {
+  @apply text-white dark:text-gray-50;
 }
 
 .Text-btn {
