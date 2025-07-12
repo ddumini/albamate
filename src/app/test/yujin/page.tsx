@@ -3,7 +3,7 @@
 import MainGnb from '@components/common/gnb/MainGnb';
 
 import AuthGnb from '@/shared/components/common/gnb/AuthGnb';
-import Tab from '@/shared/components/common/tap/Tab';
+import Tab from '@/shared/components/common/tab/Tab';
 
 const TestPage = () => {
   return (
