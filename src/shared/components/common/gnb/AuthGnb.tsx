@@ -24,10 +24,10 @@ const AuthGnb = () => {
             type="button"
             onClick={() => router.push('/')}
           >
-            <div className="relative mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-36 lg:w-36">
+            <div className="relative mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-40 lg:w-40">
               <Image fill alt="로고 이미지" src="/images/logo.svg" />
             </div>
-            <div className="relative h-24 w-124 lg:h-36 lg:w-212">
+            <div className="relative h-24 w-124 lg:h-36 lg:w-200">
               <Image fill alt="로고 명" src="/images/logo-typo.svg" />
             </div>
           </button>
