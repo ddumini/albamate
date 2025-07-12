@@ -4,6 +4,7 @@ import DatePicker from '@/shared/components/common/date-picker';
 import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
 import TimePicker from '@/shared/components/common/time-picker';
+import WeekPicker from '@/shared/components/common/week-picker';
 
 const Sumin = () => {
   const filterOptions = [
@@ -40,6 +41,7 @@ const Sumin = () => {
           onSelect={handleFilterChange}
         />
       </section>
+
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">Dropdown - sort</p>
         <Select
@@ -48,6 +50,7 @@ const Sumin = () => {
           onSelect={handleSortChange}
         />
       </section>
+
       <section className="mb-80 max-w-327 lg:max-w-none">
         <p className="mb-24 text-2xl font-bold">Dropdown - input</p>
         <InputDropdown options={inputOptions} />
@@ -61,6 +64,11 @@ const Sumin = () => {
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">TimePicker</p>
         <TimePicker />
+      </section>
+
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">WeekPicker</p>
+        <WeekPicker />
       </section>
     </div>
   );

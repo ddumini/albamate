@@ -171,7 +171,7 @@ export default tseslint.config(
 
       // ✅ JSX 접근성
       'jsx-a11y/alt-text': 'warn', // <img>에는 alt 속성 필수
-      'jsx-a11y/button-has-type': 'error', // button 태그에 type 속성 필수
+      'react/button-has-type': 'error', // button 태그에 type 속성 필수
 
       // ✅ React Refresh
       'react-refresh/only-export-components': [
