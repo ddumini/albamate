@@ -37,10 +37,13 @@ const EditPopup = ({
   useEffect(() => {
     if (visible) {
       setShouldRender(true);
-      setAnimationClass('opacity-0 -translate-y-12'); // 👈 초기 상태
+      setAnimationClass('opacity-0 -translate-y-12');
 
+      // ✅ 두 프레임 기다리기
       requestAnimationFrame(() => {
-        setAnimationClass('opacity-95 translate-y-0');
+        requestAnimationFrame(() => {
+          setAnimationClass('opacity-95 translate-y-0');
+        });
       });
     } else {
       setAnimationClass('opacity-0 -translate-y-12');
@@ -51,6 +54,7 @@ const EditPopup = ({
 
   useEffect(() => {
     if (!visible) return;
+
     const timer = setTimeout(() => {
       setAnimationClass('opacity-0 -translate-y-12');
       const hideTimer = setTimeout(() => {
@@ -59,6 +63,7 @@ const EditPopup = ({
       }, 500);
       return () => clearTimeout(hideTimer);
     }, duration);
+
     return () => clearTimeout(timer);
   }, [visible, duration, onClose]);
 
