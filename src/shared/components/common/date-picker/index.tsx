@@ -1,11 +1,13 @@
 'use client';
 
-import 'react-day-picker/dist/style.css';
+import 'react-day-picker/dist/style.css'; // react day picker 기본 스타일
+import '@/app/day-picker-override.css'; // react day picker 커스텀 오버라이드 스타일
 
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
+import { twMerge } from 'tailwind-merge';
 
 interface DatePickerProps {
   onDateRangeChange?: (range: DateRange | undefined) => void;
@@ -55,38 +57,20 @@ const DatePicker = ({
   };
 
   return (
-    <div
-      ref={containerRef}
-      style={{ position: 'relative', display: 'inline-block' }}
-    >
+    <div ref={containerRef} className="relative inline-block">
       <button
+        className={twMerge(
+          'rounded-md border border-gray-200 bg-white px-8 py-12',
+          disabled && 'cursor-not-allowed'
+        )}
         disabled={disabled}
-        style={{
-          padding: '8px 12px',
-          borderRadius: '6px',
-          border: '1px solid #ccc',
-          background: disabled ? '#f9f9f9' : 'white',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-        }}
         onClick={() => setIsOpen(!isOpen)}
       >
         {getDisplayText()}
       </button>
 
       {isOpen && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 'calc(100% + 4px)',
-            left: 0,
-            zIndex: 10,
-            background: 'white',
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            padding: '16px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          }}
-        >
+        <div className="absolute top-full left-0 z-10 mt-8 rounded-lg border border-gray-200 bg-white p-16 shadow-md">
           <DayPicker
             locale={ko}
             mode="range"
