@@ -15,8 +15,6 @@ import ButtonBase from './ButtonBase';
  * - `iconSrc`: 이미지 아이콘을 버튼 앞에 표시할 수 있습니다.
  * - `responsiveLabel`: 작은 화면에서는 텍스트를 숨기고 아이콘만 보이도록 처리할 수 있습니다.
  * - Tailwind 클래스를 props로 받아 사이즈와 여백 등 유연하게 조절할 수 있습니다.
- * - solid의 배경색, outline의 테두리 및 텍스트 색상은 저희 시그니처 컬러로 고정했습니다.
- * - cancelSolid와 cancelOutline은 회색 계열로 구분하여 사용합니다.
  *
  * ✅ 사용 예시:
  * @example
@@ -24,7 +22,7 @@ import ButtonBase from './ButtonBase';
  * // 텍스트만 있는 버튼
  * <PrimaryButton
  *   variant="solid"
- *   sizeClassName="px-4 py-2 text-sm"
+ *   className="px-4 py-2 text-sm"
  *   label="확인"
  *   type="button"
  *   onClick={() => alert('클릭됨')}
@@ -33,7 +31,7 @@ import ButtonBase from './ButtonBase';
  * // 아이콘과 텍스트가 함께 있는 버튼
  * <PrimaryButton
  *   variant="outline"
- *   sizeClassName="px-4 py-2 text-sm"
+ *   className="px-4 py-2 text-sm"
  *   label="삭제"
  *   iconSrc="/icons/trash.svg"
  *   type="button"
@@ -42,7 +40,7 @@ import ButtonBase from './ButtonBase';
  * // 반응형으로 텍스트를 숨기는 버튼 (모바일에선 아이콘만 표시)
  * <PrimaryButton
  *   variant="solid"
- *   sizeClassName="p-2"
+ *   className="p-2"
  *   iconSrc="/icons/menu.svg"
  *   responsiveLabel={true}
  *   type="button"
@@ -50,7 +48,7 @@ import ButtonBase from './ButtonBase';
  * ```
  *
  * @param variant - 버튼의 스타일 타입 (solid, outline, cancelSolid, cancelOutline)
- * @param sizeClassName - Tailwind 클래스 문자열로 크기 및 텍스트 사이즈 조정
+ * @param className - Tailwind 클래스 문자열로 크기 및 텍스트 사이즈, 색상 등  추가 스타일 추가 조정
  * @param label - 버튼에 표시될 텍스트 (생략 가능)
  * @param disabled - 버튼 비활성화 여부 (true일 경우 클릭 불가)
  * @param type - HTML 버튼 타입 ('button' | 'submit' | 'reset')
@@ -62,7 +60,7 @@ import ButtonBase from './ButtonBase';
 // 버튼의 스타일 담당
 interface ButtonProps {
   variant: 'solid' | 'outline' | 'cancelSolid' | 'cancelOutline'; // Variant로 버튼 스타일 구분 기본값은 'solid'
-  sizeClassName: string; // sizeClassName로 버튼 크기 및 텍스트 사이즈 조정
+  className: string; // className로 버튼 크기 및 텍스트 사이즈, 색상 등  추가 스타일 추가 가능
   label?: string; // 버튼에 표시될 텍스트
   disabled?: boolean; // disabled 상태 여부
   type: 'button' | 'submit' | 'reset';
@@ -73,9 +71,9 @@ interface ButtonProps {
 
 const PrimaryButton = ({
   variant = 'solid',
-  sizeClassName,
+  className,
   label,
-  disabled,
+  disabled = false,
   type,
   iconSrc,
   responsiveLabel = false,
@@ -108,7 +106,7 @@ const PrimaryButton = ({
   const finalStyles = twMerge(
     baseStyles,
     buttonStyle[variant],
-    sizeClassName,
+    className,
     disabledStyles
   );
 

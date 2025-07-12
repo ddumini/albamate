@@ -28,69 +28,67 @@ const TestPage = () => {
 
       {/* Solid Button, Outline Button 구현 */}
       <PrimaryButton
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         disabled={false}
         label="solid"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="solid"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         disabled={false}
         label="outline"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="outline"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
         disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         label="cancelSolid"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelSolid"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
         disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         label="cancelOutline"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelOutline"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
-        disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="solid"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="solid"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
-        disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="outline"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="outline"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
         disabled
+        className="w-full max-w-640 py-20 text-lg text-gray-300 lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="cancelSolid"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelSolid"
         onClick={() => setPage(prev => prev + 1)}
       />
       <PrimaryButton
         disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="cancelOutline"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelOutline"
         onClick={() => setPage(prev => prev + 1)}
@@ -98,9 +96,9 @@ const TestPage = () => {
       <PrimaryButton
         disabled
         responsiveLabel
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="cancelSolid"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelSolid"
         onClick={() => setPage(prev => prev + 1)}
@@ -108,9 +106,9 @@ const TestPage = () => {
       <PrimaryButton
         disabled
         responsiveLabel
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         iconSrc="/icons/trash-can.svg"
         label="cancelOutline"
-        sizeClassName="py-20 max-w-640 w-full text-lg lg:text-xl"
         type="button"
         variant="cancelOutline"
         onClick={() => setPage(prev => prev + 1)}
