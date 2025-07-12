@@ -14,7 +14,7 @@ const AuthGnb = () => {
   if (!mounted) return null;
 
   return (
-    <header className="w-full border-b border-gray-200 md:px-16 md:px-72 lg:px-120 dark:border-gray-500">
+    <header className="w-full border-b border-gray-200 md:px-72 lg:px-120 dark:border-gray-500">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-4 md:justify-between md:py-3">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-24">
@@ -24,7 +24,7 @@ const AuthGnb = () => {
             type="button"
             onClick={() => router.push('/')}
           >
-            <div className="relative mr-8 h-16 w-16 md:mr-6 md:h-24 md:w-24 lg:h-36 lg:w-36">
+            <div className="relative mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-36 lg:w-36">
               <Image fill alt="로고 이미지" src="/images/logo.svg" />
             </div>
             <div className="relative h-24 w-124 lg:h-36 lg:w-212">
