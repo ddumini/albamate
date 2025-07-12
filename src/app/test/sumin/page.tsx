@@ -3,6 +3,7 @@
 import DatePicker from '@/shared/components/common/date-picker';
 import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
+import TimePicker from '@/shared/components/common/time-picker';
 
 const Sumin = () => {
   const filterOptions = [
@@ -55,6 +56,11 @@ const Sumin = () => {
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">DatePicker</p>
         <DatePicker />
+      </section>
+
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">TimePicker</p>
+        <TimePicker />
       </section>
     </div>
   );
