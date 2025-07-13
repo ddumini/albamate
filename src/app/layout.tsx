@@ -1,10 +1,11 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
+
+import { metadata } from './metadata'; // ✅ 이렇게 불러오기
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -13,18 +14,11 @@ const pretendard = localFont({
   weight: '100 900',
 });
 
-export const metadata: Metadata = {
-  title: 'Albamate',
-  description: 'Albamate application', // 추후 변경
-};
+export { metadata }; // fast refresh 경고 무시해도 됨
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning lang="ko">
-      <meta
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-        name="viewport"
-      />
       <body className={pretendard.className}>
         <ThemeProvider enableSystem attribute="class" defaultTheme="system">
           <Providers>{children}</Providers>

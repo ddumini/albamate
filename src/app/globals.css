@@ -67,6 +67,28 @@
   }
 }
 
+/* 전역 CSS 기본 설정 */
+@layer base {
+  html {
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+      'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI',
+      'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      sans-serif;
+    font-size: 62.5%; /* 10px */
+    color: var(--color-black-400);
+    background-color: #ffffff;
+  }
+
+  body {
+    -ms-overflow-style: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
 /* 커스텀 유틸리티 클래스 선언(필요한 경우 아래와 같이 추가해주세요!) */
 .BG-white {
   @apply bg-white dark:bg-neutral-900;
