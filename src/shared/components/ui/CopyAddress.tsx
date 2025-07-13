@@ -27,12 +27,15 @@ const CopyAddress = ({ location }: CopyAddressProps) => {
 
   return (
     <div className="mb-16 flex items-center gap-30">
-      <span className="line-clamp-2 text-base font-medium" title={location}>
+      <span
+        className="line-clamp-2 text-md font-medium text-black-400 lg:text-2xl dark:text-gray-100"
+        title={location}
+      >
         {location}
       </span>
       <button
         aria-label="주소 복사"
-        className="flex-none text-lg font-bold text-mint-300 transition hover:text-mint-400 active:text-mint-400"
+        className="flex-none text-lg font-bold text-mint-300 transition hover:text-mint-400 active:text-mint-400 lg:text-xl"
         type="button"
         onClick={() => copyToClipboard(location)}
       >

@@ -148,7 +148,7 @@ const DatePicker = ({
         <div
           aria-label="날짜 범위 선택"
           aria-modal="true"
-          className="absolute top-full left-0 z-10 mt-8 rounded-lg border border-gray-200 bg-white p-16 shadow-md"
+          className="absolute top-full left-0 z-10 mt-8 rounded-lg border border-gray-200 bg-white p-16 shadow-md dark:bg-black-400"
           role="dialog"
         >
           <DayPicker

@@ -58,9 +58,9 @@ const Select = ({
     if (variant === 'sort') {
       return `text-black-300 dark:text-gray-200 flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap lg:text-lg ${className}`;
     }
-    return `text-black-100 flex h-30 w-80 lg:w-126 cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 text-xs lg:h-42 lg:text-2lg lg:px-16 ${className} ${
+    return `text-black-100 dark:text-gray-200 flex h-30 w-80 lg:w-126 cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 text-xs lg:h-42 lg:text-2lg lg:px-16 ${className} ${
       selectedValue
-        ? 'text-mint-300 bg-mint-50/50 border-mint-300'
+        ? 'text-mint-300 bg-mint-50/50 border-mint-300 dark:text-mint-300'
         : 'text-black-100'
     }`;
   };
