@@ -75,7 +75,6 @@
       'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI',
       'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
       sans-serif;
-    font-size: 62.5%; /* 10px */
     color: var(--color-black-400);
     background-color: #ffffff;
   }
