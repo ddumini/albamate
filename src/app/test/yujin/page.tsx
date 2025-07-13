@@ -3,7 +3,7 @@
 import AuthGnb from '@components/common/gnb/AuthGnb';
 import MainGnb from '@components/common/gnb/MainGnb';
 import EditPopup from '@components/common/popup/EditPopup';
-import Popup from '@components/common/popup/Popup';
+import ToastPopup from '@components/common/popup/ToastPopup';
 import Tab from '@components/common/tab/Tab';
 import Tooltip from '@components/common/tooltip/Tooltip';
 import Image from 'next/image';
@@ -13,7 +13,7 @@ const TestPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   // EditPopup용 상태들 따로 관리
-  const [editPopupVisible, setEditPopupVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
 
@@ -77,7 +77,7 @@ const TestPage = () => {
         <button
           className="hover:bg-mint-600 cursor-pointer rounded bg-mint-400 px-4 py-2 text-white transition"
           type="button"
-          onClick={() => setEditPopupVisible(true)}
+          onClick={() => setSuccessVisible(true)}
         >
           성공 팝업 열기
         </button>
@@ -86,8 +86,8 @@ const TestPage = () => {
           duration={3000}
           message="정보가 수정되었습니다."
           type="success"
-          visible={editPopupVisible}
-          onClose={() => setEditPopupVisible(false)}
+          visible={successVisible}
+          onClose={() => setSuccessVisible(false)}
         />
       </div>
 
@@ -129,7 +129,7 @@ const TestPage = () => {
         />
       </div>
 
-      <Popup
+      <ToastPopup
         count={5}
         duration={5000}
         visible={popupVisible}
