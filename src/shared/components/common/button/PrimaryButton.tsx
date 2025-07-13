@@ -75,7 +75,7 @@ const PrimaryButton = ({
 }: ButtonProps) => {
   // 공통 base 스타일 정의
   const baseStyles =
-    'rounded-lg font-semibold transition-colors duration-200 ease-in-out flex items-center justify-center text-center gap-1';
+    'rounded-lg font-semibold transition-colors duration-200 ease-in-out flex items-center justify-center text-center gap-1 cursor-pointer disabled:cursor-default';
 
   // variant별 스타일 정의
   const solidStyles = 'bg-mint-300 hover:bg-mint-400 text-gray-50';
@@ -93,15 +93,12 @@ const PrimaryButton = ({
     cancelOutline: cancelOutlineStyles,
   };
 
-  // disabled 상태에 따라 커서 스타일 변경
-  const disabledStyles = disabled ? '' : 'cursor-pointer';
-
   // 최종으로 적용될 클래스 병합
   const finalStyles = twMerge(
     baseStyles,
     buttonStyle[variant],
-    className,
-    disabledStyles
+    className
+    // disabledStyles
   );
 
   // responsiveLabel 여부에 따라 숨김 처리
