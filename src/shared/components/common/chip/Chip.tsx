@@ -15,7 +15,7 @@ export const Chip = ({
   active = false,
 }: ChipProps) => {
   const baseClasses = `
-    rounded-md font-medium border flex justify-center items-center gap-4 transition-all
+    rounded-sm font-medium border flex justify-center items-center gap-4 transition-all
     text-xs px-8 py-4 h-28
     md:text-sm md:px-10 md:py-4 md:h-32
     lg:text-base lg:px-12 lg:py-6 lg:h-38`;
