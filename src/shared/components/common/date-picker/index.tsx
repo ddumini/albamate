@@ -75,10 +75,12 @@ const DatePicker = ({
         event.preventDefault();
         setIsOpen(!isOpen);
         break;
+
       case 'Escape':
         setIsOpen(false);
         buttonRef.current?.focus();
         break;
+
       case 'Tab':
         // Tab 키로 포커스가 이동할 때 드롭다운이 열려있으면 닫기
         if (isOpen) {
