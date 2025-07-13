@@ -8,11 +8,12 @@ export interface FloatingButtonContainerProps {
   children: React.ReactNode;
   /** 화면에 고정할 위치 */
   position?: 'right-center' | 'right-bottom';
-  /** z-index 값 (기본: 1000) */
-  zIndex?: number;
   /** 추가 CSS 클래스명 */
   className?: string;
 }
+
+/** 플로팅 버튼의 z-index 상수 */
+const FLOATING_Z_INDEX = 1000;
 
 /**
  * 플로팅 버튼들을 담는 컨테이너 컴포넌트
@@ -47,7 +48,6 @@ export interface FloatingButtonContainerProps {
 const FloatingButtonContainer: React.FC<FloatingButtonContainerProps> = ({
   children,
   position = 'right-bottom',
-  zIndex = 1000,
   className = '',
 }) => {
   /**
@@ -56,12 +56,11 @@ const FloatingButtonContainer: React.FC<FloatingButtonContainerProps> = ({
    */
   const getPositionClasses = (): string => {
     const baseClasses = 'fixed flex flex-col gap-24';
-    const zIndexClass = `z-[${zIndex}]`;
 
     if (position === 'right-center') {
-      return `${baseClasses} right-23 top-1/2 lg:right-220 transform -translate-y-1/2 ${zIndexClass}`;
+      return `${baseClasses} right-23 top-1/2 lg:right-220 transform -translate-y-1/2 z-[${FLOATING_Z_INDEX}]`;
     } else {
-      return `${baseClasses} right-23 bottom-68 lg:right-220 lg:bottom-108 ${zIndexClass}`;
+      return `${baseClasses} right-23 bottom-68 lg:right-220 lg:bottom-108 z-[${FLOATING_Z_INDEX}]`;
     }
   };
 
