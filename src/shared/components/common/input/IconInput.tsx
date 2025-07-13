@@ -13,7 +13,6 @@ interface IconInput
   sizeClass?: IconProps['sizeClass'];
   inputClassName?: InputProps['className'];
   iconClassName?: IconProps['className'];
-  inputOnClick?: InputProps['onClick'];
   iconOnClick?: IconProps['onClick'];
 }
 
@@ -26,7 +25,6 @@ const IconInput = ({
   className,
   inputClassName,
   iconClassName,
-  inputOnClick,
   iconOnClick,
   ...props
 }: IconInput) => {
@@ -50,7 +48,6 @@ const IconInput = ({
           'h-full w-full lg:h-full lg:w-full',
           inputClassName
         )}
-        onClick={inputOnClick}
         {...props}
       />
     </div>
