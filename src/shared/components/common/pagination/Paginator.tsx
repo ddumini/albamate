@@ -10,44 +10,57 @@ interface PaginatorProps {
 
 const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
   const { isTablet, isMobile } = useViewport(); // 현재 화면 너비를 가져오는 훅 사용
-  const visiblePages = isTablet || isMobile ? 3 : 5; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
+  const MOBILE_MAX_PAGES = 3;
+  const DESKTOP_MAX_PAGES = 5;
+  const visiblePages =
+    isTablet || isMobile ? MOBILE_MAX_PAGES : DESKTOP_MAX_PAGES; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
 
   const renderPageNumbers = () => {
     // 페이지 번호 렌더링 함수
     const pages: (string | number)[] = [];
 
-    const createRange = (start: number, end: number) => {
-      // 페이지 번호 범위를 생성하는 함수
-      const range: number[] = [];
-      for (let i = start; i <= end; i++) {
-        range.push(i);
-      }
-      return range;
-    };
+    const createRange = (start: number, end: number) =>
+      Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
-    if (totalPages <= visiblePages) {
-      // 전체 페이지 수가 적으면 모두 표시
-      pages.push(...createRange(1, totalPages));
-    } else {
+    const getPageType = () => {
       const showLeft = currentPage <= visiblePages - 1;
       const showRight = currentPage >= totalPages - (visiblePages - 2);
-      if (showLeft) {
+      if (totalPages <= visiblePages) {
+        // 전체 페이지 수가 적으면 모두 표시
+        return 'all';
+      } else if (showLeft) {
         // 앞쪽 페이지 구간(현재 페이지가 왼쪽에 가까운 경우)
+        return 'left';
+      } else if (showRight) {
+        return 'right';
+      } else {
+        return 'middle';
+      }
+    };
+
+    switch (getPageType()) {
+      case 'all':
+        pages.push(...createRange(1, totalPages));
+        break;
+      case 'left':
         pages.push(...createRange(1, visiblePages));
         pages.push('...', totalPages);
-      } else if (showRight) {
-        // 뒤쪽 페이지 구간(현재 페이지가 오른쪽에 가까운 경우)
+        break;
+      case 'right':
         pages.push(1, '...');
         pages.push(...createRange(totalPages - visiblePages + 1, totalPages));
-      } else {
-        // 중간 페이지 구간(현재 페이지가 중간에 있는 경우)
+        break;
+      case 'middle': {
         const sidePages = Math.floor((visiblePages - 2) / 2); // 양쪽에 표시할 페이지 수
         pages.push(1, '...');
         pages.push(
           ...createRange(currentPage - sidePages, currentPage + sidePages)
         );
         pages.push('...', totalPages);
+        break;
       }
+      default:
+        break;
     }
 
     return pages.map((page, index) => {
