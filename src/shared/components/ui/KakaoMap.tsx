@@ -2,11 +2,13 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
+import { useCopy } from '@/shared/hooks/useCopy';
+
 /**
  * KakaoMap 컴포넌트
  *
  * - 카카오맵을 렌더링하고 지정된 위치에 마커를 표시합니다.
- * - 추후 실제 API 데이터 및 지오코딩 유틸로 대체 예정입니다.
+ * - 추후 실제 API 데이터 및 지오코딩 유틸 제작 필요합니다.
  *
  * @author sumin
  * @date 2025-07-13
@@ -42,6 +44,8 @@ interface KakaoMapProps {
 }
 
 export default function KakaoMap({ location }: KakaoMapProps) {
+  const { copyToClipboard } = useCopy();
+
   // TODO: 추후 geocoding util 함수 제작 필요
   // - 카카오맵 Geocoder API를 사용하여 주소 → 좌표 변환
   // - 에러 처리 및 캐싱 로직 추가 고려
@@ -119,7 +123,19 @@ export default function KakaoMap({ location }: KakaoMapProps) {
 
   return (
     <>
-      <p>{location}</p>
+      <div className="mb-16 flex items-center gap-30">
+        <span className="truncate text-base font-medium" title={location}>
+          {location}
+        </span>
+        <button
+          aria-label="주소 복사"
+          className="flex-none text-lg font-bold text-mint-300 transition hover:text-mint-400 active:text-mint-400"
+          type="button"
+          onClick={() => copyToClipboard(location)}
+        >
+          복사
+        </button>
+      </div>
       <Map
         center={{
           lat: coords.lat,
