@@ -5,6 +5,7 @@ import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
 import TimePicker from '@/shared/components/common/time-picker';
 import WeekPicker from '@/shared/components/common/week-picker';
+import CopyAddress from '@/shared/components/ui/CopyAddress';
 import KakaoMap from '@/shared/components/ui/KakaoMap';
 
 const Sumin = () => {
@@ -74,6 +75,7 @@ const Sumin = () => {
 
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">Map</p>
+        <CopyAddress location="서울특별시 중구 세종대로 110" />
         <KakaoMap location="서울특별시 중구 세종대로 110" />
       </section>
     </div>

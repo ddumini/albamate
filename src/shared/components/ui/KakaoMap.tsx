@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-import { useCopy } from '@/shared/hooks/useCopy';
-
 /**
  * KakaoMap 컴포넌트
  *
@@ -44,8 +42,6 @@ interface KakaoMapProps {
 }
 
 export default function KakaoMap({ location }: KakaoMapProps) {
-  const { copyToClipboard } = useCopy();
-
   // TODO: 추후 geocoding util 함수 제작 필요
   // - 카카오맵 Geocoder API를 사용하여 주소 → 좌표 변환
   // - 에러 처리 및 캐싱 로직 추가 고려
@@ -122,36 +118,21 @@ export default function KakaoMap({ location }: KakaoMapProps) {
   const coords = locationCoords[location];
 
   return (
-    <>
-      <div className="mb-16 flex items-center gap-30">
-        <span className="truncate text-base font-medium" title={location}>
-          {location}
-        </span>
-        <button
-          aria-label="주소 복사"
-          className="flex-none text-lg font-bold text-mint-300 transition hover:text-mint-400 active:text-mint-400"
-          type="button"
-          onClick={() => copyToClipboard(location)}
-        >
-          복사
-        </button>
-      </div>
-      <Map
-        center={{
+    <Map
+      center={{
+        lat: coords.lat,
+        lng: coords.lng,
+      }}
+      className="h-210 w-full rounded-lg lg:h-380"
+      level={3}
+    >
+      <MapMarker
+        position={{
           lat: coords.lat,
           lng: coords.lng,
         }}
-        className="h-210 w-full rounded-lg lg:h-380"
-        level={3}
-      >
-        <MapMarker
-          position={{
-            lat: coords.lat,
-            lng: coords.lng,
-          }}
-          title={location}
-        />
-      </Map>
-    </>
+        title={location}
+      />
+    </Map>
   );
 }
