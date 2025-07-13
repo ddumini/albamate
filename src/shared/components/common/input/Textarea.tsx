@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import {
@@ -6,25 +6,25 @@ import {
   inputVariants,
 } from '@/shared/components/common/input/inputStyles';
 
-export interface InputProps
+interface TextareaProps
   extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
   > {
   variant?: 'solid' | 'outlined';
   isInvalid?: boolean;
 }
 
-const Input = ({
+const Textarea = ({
   variant = 'solid',
   isInvalid,
   className,
   ...props
-}: InputProps) => {
+}: TextareaProps) => {
   return (
-    <input
+    <textarea
       className={twMerge(
-        'h-54 w-327 p-14 lg:h-64 lg:w-640',
+        'h-124 w-327 resize-none p-14 lg:h-192 lg:w-640 lg:p-18',
         inputStyle['default'],
         inputVariants[variant],
         isInvalid && inputStyle['invalid'],
@@ -34,4 +34,4 @@ const Input = ({
     />
   );
 };
-export default Input;
+export default Textarea;
