@@ -5,12 +5,12 @@ interface IndicatorProps {
 
 const Indicator = ({ current, total }: IndicatorProps) => {
   return (
-    <div className="hidden lg:flex items-center justify-center gap-22">
+    <div className="hidden items-center justify-center gap-22 lg:flex">
       {Array.from({ length: total }, (_, i) => {
         return (
           <div
-            key={`${i}c`}
-            className={`rounded-full ${current === i ? "w-16 h-16 bg-gray-300/60" : "w-12 h-12 bg-line-100/60"}`}
+            key={`${i}`}
+            className={`rounded-full ${current === i ? 'h-16 w-16 bg-gray-300/60' : 'h-12 w-12 bg-line-100/60'}`}
           />
         );
       })}
