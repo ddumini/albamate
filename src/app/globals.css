@@ -105,6 +105,11 @@
   @apply text-white dark:text-neutral-800;
 }
 
+.Text-white-gray {
+  /* 라이트 모드:흰색 - 다크모드:밝은 회색 */
+  @apply text-white dark:text-gray-50;
+}
+
 .Text-btn {
   @apply text-green-500 dark:text-green-400;
 }

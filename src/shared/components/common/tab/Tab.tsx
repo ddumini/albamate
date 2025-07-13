@@ -9,7 +9,7 @@ const Tab = () => {
       {tabs.map((label, idx) => (
         <button
           key={label}
-          className={`rounded-md px-23 py-4 md:px-35 md:py-8 ${activeTab === idx ? 'bg-white text-black' : 'bg-white text-gray-400'}`}
+          className={`cursor-pointer rounded-md px-23 py-4 md:px-35 md:py-8 ${activeTab === idx ? 'bg-white text-black' : 'bg-white text-gray-400'}`}
           onClick={() => setActiveTab(idx)}
         >
           {label}
