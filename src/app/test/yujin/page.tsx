@@ -55,7 +55,9 @@ const TestPage = () => {
           />
         </Tooltip>
         <Tooltip content="기본형 툴팁 테스트용 임시 버튼이에요!!">
-          <button>버튼</button>
+          <button className="cursor-pointer" type="button">
+            버튼
+          </button>
         </Tooltip>
       </div>
     </div>
