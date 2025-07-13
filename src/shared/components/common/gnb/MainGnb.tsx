@@ -20,29 +20,31 @@ const MainGnb = () => {
   if (!mounted) return null;
 
   return (
-    <header className="w-full border-b border-gray-200 px-12 md:px-32 dark:border-gray-500">
+    <header className="w-full border-b border-gray-400 px-24 md:px-72 dark:border-gray-500">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 md:py-3">
         {/* 좌측 영역 */}
-        <div className="flex items-center md:gap-24">
+        <div className="flex items-center md:gap-32 lg:gap-48">
           {/* 로고 */}
           <button
-            className="flex items-center space-x-2 text-xl font-bold"
+            className="flex cursor-pointer items-center space-x-2 py-15 text-xl font-bold md:py-24"
+            type="button"
             onClick={() => router.push('/')}
           >
-            <div className="relative mr-24 h-16 w-16 md:mr-6 md:h-24 md:w-24">
+            <div className="relative mr-24 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:mr-16 lg:h-36 lg:w-36">
               <Image fill alt="로고 이미지" src="/images/logo.svg" />
             </div>
-            <div className="md: relative hidden h-40 w-100 md:flex">
+            <div className="relative hidden h-24 w-124 md:flex lg:h-36 lg:w-200">
               <Image fill alt="로고 명" src="/images/logo-typo.svg" />
             </div>
           </button>
 
           {/* 네비게이션 메뉴 */}
-          <nav className="flex gap-6 text-[10px] font-medium md:text-xs lg:text-sm">
+          <nav className="flex gap-16 text-[14px] font-medium md:gap-24 md:text-[16px] lg:text-[20px]">
             <button
               className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
                 pathname === '/albalist' ? 'text-mint-100' : ''
               }`}
+              type="button"
               onClick={() => router.push('/albalist')}
             >
               알바 목록
@@ -67,11 +69,12 @@ const MainGnb = () => {
         </div>
 
         {/* 우측 영역 */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-12">
           <ThemeToggle />
           <button
             aria-label="메뉴 열기/닫기"
-            className="relative h-24 w-24 cursor-pointer"
+            className="relative h-24 w-24 cursor-pointer md:h-36 md:w-36"
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Image
