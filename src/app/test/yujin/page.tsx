@@ -27,10 +27,10 @@ const TestPage = () => {
 
       <Tab />
 
-      <div className="relative flex justify-center">
+      <div className="flex justify-center">
         <Tooltip
           content={({ close }) => (
-            <div className="flex items-center gap-2 px-16 py-12">
+            <div className="flex items-center gap-2">
               <div className="relative h-24 w-24 md:h-30 md:w-30">
                 <Image fill alt="info" src="/icons/info.svg" />
               </div>
@@ -54,7 +54,7 @@ const TestPage = () => {
             width={24}
           />
         </Tooltip>
-        <Tooltip content="알바폼 현재 진행상태를 변경할 수 있어요!">
+        <Tooltip content="기본형 툴팁 테스트용 임시 버튼이에요!!">
           <button>버튼</button>
         </Tooltip>
       </div>
