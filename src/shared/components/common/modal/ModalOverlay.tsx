@@ -21,7 +21,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-[${Z_INDEX.MODAL_BACKDROP}] flex items-center justify-center bg-black-100/50`}
+      className={`fixed inset-0 z-[${Z_INDEX.MODAL}] flex items-center justify-center bg-black-100/50`}
       onClick={closeOnOverlayClick ? onClose : undefined}
     >
       {children}
