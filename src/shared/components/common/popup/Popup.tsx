@@ -38,7 +38,7 @@ const Popup = ({
       setShouldRender(true);
       // 아래에서 위로 등장
       requestAnimationFrame(() => {
-        setAnimationClass('opacity-95 translate-y-0');
+        setAnimationClass('opacity-92 translate-y-0');
       });
     } else {
       // 위로 사라짐

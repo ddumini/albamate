@@ -61,7 +61,7 @@ const EditPopup = ({
       // requestAnimationFrame을 두 번 호출해 브라우저 렌더링 타이밍 맞춤
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setAnimationClass('opacity-95 translate-y-0');
+          setAnimationClass('opacity-90 translate-y-0');
         });
       });
     } else {
