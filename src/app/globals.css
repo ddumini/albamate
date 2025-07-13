@@ -1,5 +1,7 @@
 @import 'tailwindcss';
-@import './day-picker-override.css';
+
+/* 다크모드 클래스 사용을 위한 custom-varient 선언 */
+@custom-variant dark (&:is(.dark *));
 
 /* === Tailwind v4 테마 설정 === */
 @theme {
@@ -8,7 +10,8 @@
   --color-black-300: hsl(0, 0%, 22%);
   --color-black-400: hsl(0, 0%, 12%);
   --color-black-500: hsl(0, 0%, 2%);
-  --color-gray-50: hsl(0, 0%, 100%);
+  --color-gray-25: hsl(0, 0%, 97%);
+  --color-gray-50: hsl(0, 0%, 93%);
   --color-gray-100: hsl(0, 0%, 87%);
   --color-gray-200: hsl(0, 0%, 77%);
   --color-gray-300: hsl(0, 0%, 67%);
@@ -49,7 +52,7 @@
   --spacing: 0.0625rem;
 }
 
-/* 커스텀 유틸리티 클래스 */
+/* 다크모드 토글 버튼 유틸리티 클래스 */
 @layer utilities {
   .dark-light-toggle svg {
     transition:
@@ -60,11 +63,64 @@
 
   .dark-light-toggle:hover svg {
     fill: var(--btn-svg-hover, #10b981);
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 }
 
-html.dark {
-  --color-mint-100: hsl(171, 86%, 50%);
-  --color-mint-400: hsl(171, 86%, 28%);
+/* 커스텀 유틸리티 클래스 선언(필요한 경우 아래와 같이 추가해주세요!) */
+.BG-white {
+  @apply bg-white dark:bg-neutral-900;
+}
+
+.BG-ToggleButton {
+  /* 토글 버튼 전용 클래스 */
+  @apply bg-gray-50 dark:bg-gray-500;
+}
+
+.BG-mint {
+  @apply bg-green-400 hover:bg-green-500 dark:bg-green-500 dark:hover:bg-green-600;
+}
+
+.BG-lightmint {
+  @apply bg-green-100 dark:bg-green-900;
+}
+
+.BG-mint-disabled {
+  @apply cursor-not-allowed bg-gray-400;
+}
+
+.BG-solid-mint {
+  @apply bg-green-500;
+}
+
+.Text-black {
+  @apply text-neutral-800 dark:text-white;
+}
+
+.Text-gray {
+  @apply text-gray-400 dark:text-gray-200;
+}
+
+.Text-white {
+  @apply text-white dark:text-neutral-800;
+}
+
+.Text-btn {
+  @apply text-green-500 dark:text-green-400;
+}
+
+.Text-deepmint {
+  @apply text-green-500 dark:text-green-400;
+}
+
+.Text-mint {
+  @apply text-green-400 dark:text-green-500;
+}
+
+.Border-mint {
+  @apply border border-green-400 dark:border-green-500;
+}
+
+.BG-drag-hovered {
+  @apply bg-green-100;
 }

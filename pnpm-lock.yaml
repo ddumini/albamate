@@ -75,6 +75,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.1.6(@types/react@19.1.8)
+      commitlint:
+        specifier: 19.8.1
+        version: 19.8.1(@types/node@20.19.4)(typescript@5.8.3)
       eslint:
         specifier: ^9.30.1
         version: 9.30.1(jiti@2.4.2)
@@ -1086,6 +1089,11 @@ packages:
   commander@14.0.0:
     resolution: {integrity: sha512-2uM9rYjPvyq39NwLRqaiLtWHyDC1FvryJDa2ATTVims5YAS4PupsEQsDvP14FqhFr0P49CYDugi59xaxJlTXRA==}
     engines: {node: '>=20'}
+
+  commitlint@19.8.1:
+    resolution: {integrity: sha512-j7jojdmHrVOZ16gnjK2nbQuzdwA9TpxS9iNb9Q9QS3ytgt3JZVIGmsNbCuhmnsJWGspotlQ34yH8n1HvIKImiQ==}
+    engines: {node: '>=v18'}
+    hasBin: true
 
   compare-func@2.0.0:
     resolution: {integrity: sha512-zHig5N+tPWARooBnb0Zx1MFcdfpyJrfTJ3Y5L+IFvUm8rM74hHz66z0gw0x4tijh5CorKkKUCnW82R2vmpeCRA==}
@@ -4002,6 +4010,14 @@ snapshots:
       delayed-stream: 1.0.0
 
   commander@14.0.0: {}
+
+  commitlint@19.8.1(@types/node@20.19.4)(typescript@5.8.3):
+    dependencies:
+      '@commitlint/cli': 19.8.1(@types/node@20.19.4)(typescript@5.8.3)
+      '@commitlint/types': 19.8.1
+    transitivePeerDependencies:
+      - '@types/node'
+      - typescript
 
   compare-func@2.0.0:
     dependencies:
