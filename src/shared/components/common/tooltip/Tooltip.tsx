@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
+import TooltipContentWrapper from './TooltipContentWrapper';
+
 interface ClickTooltipProps {
   content: React.ReactNode | ((args: { close: () => void }) => React.ReactNode);
   children: React.ReactNode;
@@ -38,9 +40,13 @@ const Tooltip = ({ content, children }: ClickTooltipProps) => {
           <div className="BG-blueblack absolute -top-4.5 left-1/4 z-0 h-12 w-12 -translate-x-1/2 rotate-45" />
 
           {/* 툴팁 본문 */}
-          <div className="BG-blueblack Text-white-gray relative z-10 rounded-lg shadow-lg">
-            {typeof content === 'function' ? content({ close }) : content}
-          </div>
+          {typeof content === 'function' ? (
+            <TooltipContentWrapper>{content({ close })}</TooltipContentWrapper>
+          ) : (
+            <TooltipContentWrapper>
+              <span>{content}</span>
+            </TooltipContentWrapper>
+          )}
         </div>
       )}
     </div>
