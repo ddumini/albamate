@@ -15,7 +15,7 @@ export const Chip = ({
   active = false,
 }: ChipProps) => {
   const baseClasses = `
-    rounded-md font-medium border flex justify-center items-center gap-1 transition-all
+    rounded-md font-medium border flex justify-center items-center gap-4 transition-all
     text-xs px-8 py-4 h-28
     md:text-sm md:px-10 md:py-4 md:h-32
     lg:text-base lg:px-12 lg:py-6 lg:h-38`;
@@ -23,7 +23,7 @@ export const Chip = ({
   const widthClasses = {
     default: 'w-47 md:w-56 lg:w-65',
     filled: 'w-47 md:w-56 lg:w-65',
-    icon: 'w-76 md:w-88 lg:w-100', // ← 북마크용 너비 확장
+    icon: 'w-69 md:w-85 lg:w-91', // ← 북마크용 너비 확장
   };
 
   const variants = {
