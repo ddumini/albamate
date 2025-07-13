@@ -1,12 +1,13 @@
 'use client';
 
+import AuthGnb from '@components/common/gnb/AuthGnb';
 import MainGnb from '@components/common/gnb/MainGnb';
+import EditPopup from '@components/common/popup/EditPopup';
+import Popup from '@components/common/popup/Popup';
+import Tab from '@components/common/tab/Tab';
+import Tooltip from '@components/common/tooltip/Tooltip';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
-import AuthGnb from '@/shared/components/common/gnb/AuthGnb';
-import EditPopup from '@/shared/components/common/popup/EditPopup';
-import Popup from '@/shared/components/common/popup/Popup';
-import Tab from '@/shared/components/common/tap/Tab';
 
 const TestPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -36,6 +37,40 @@ const TestPage = () => {
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
       <Tab />
+
+      <div className="flex justify-center">
+        <Tooltip
+          content={({ close }) => (
+            <div className="flex items-center gap-2">
+              <div className="relative h-24 w-24 md:h-30 md:w-30">
+                <Image fill alt="info" src="/icons/info.svg" />
+              </div>
+              <span className="text-xs md:text-md">
+                알바폼 현재 진행상태를 변경할 수 있어요!
+              </span>
+              <button
+                className="relative h-24 w-24 cursor-pointer md:h-30 md:w-30"
+                type="button"
+                onClick={close}
+              >
+                <Image fill alt="닫기 버튼" src="/icons/x-thin.svg" />
+              </button>
+            </div>
+          )}
+        >
+          <Image
+            alt="수정 아이콘"
+            height={24}
+            src="/icons/edit.svg"
+            width={24}
+          />
+        </Tooltip>
+        <Tooltip content="기본형 툴팁 테스트용 임시 버튼이에요!!">
+          <button className="cursor-pointer" type="button">
+            버튼
+          </button>
+        </Tooltip>
+      </div>
 
       {/* 성공 팝업 */}
       <div className="p-8">

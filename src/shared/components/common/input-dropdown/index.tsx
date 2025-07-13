@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
 
@@ -32,7 +33,7 @@ interface InputDropdownProps {
 const BTN_STYLE =
   'w-full text-left px-24 h-54 text-lg font-regular text-black-100 cursor-pointer lg:text-xl lg:h-64 lg:px-32';
 const INPUT_STYLE =
-  'text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 focus:outline-gray-200 focus:outline-1 focus:ring-0 lg:text-xl lg:h-64 lg:px-32 min-w-none';
+  'border-1 border-transparent text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 lg:text-xl lg:h-64 lg:px-32 min-w-none';
 
 const InputDropdown = ({
   options,
@@ -81,10 +82,17 @@ const InputDropdown = ({
     onChange?.(value);
   };
 
-  const selectInput = (
+  const selectInput = (isOpen: boolean) => (
     <input
       readOnly
-      className={INPUT_STYLE + ' cursor-pointer'}
+      className={twMerge(
+        INPUT_STYLE,
+        'cursor-pointer',
+        // 드롭다운이 열려있을 때는 border만 표시
+        isOpen && 'border-gray-200 focus:ring-0 focus:outline-none',
+        // 드롭다운이 닫혀있을 때는 기본 포커스 스타일 허용
+        !isOpen && ''
+      )}
       placeholder={currentPlaceholder}
       type="text"
       value={inputValue}
@@ -106,9 +114,9 @@ const InputDropdown = ({
   return (
     <>
       <Dropdown
-        trigger={
+        trigger={isOpen => (
           <div className="relative">
-            {selectInput}
+            {selectInput(isOpen)}
             <Image
               alt="arrow-down"
               className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36"
@@ -117,7 +125,7 @@ const InputDropdown = ({
               width={24}
             />
           </div>
-        }
+        )}
       >
         <ul>
           {options.map(option => (
@@ -129,6 +137,7 @@ const InputDropdown = ({
                     ? ' bg-mint-50/50 text-mint-300'
                     : '')
                 }
+                type="button"
                 onClick={() => handleSelect(option.value)}
               >
                 {option.value}
@@ -141,6 +150,7 @@ const InputDropdown = ({
                 BTN_STYLE +
                 (isDirectInputSelected ? ' bg-mint-50/50 text-mint-300' : '')
               }
+              type="button"
               onClick={handleDirectInput}
             >
               직접입력

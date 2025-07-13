@@ -114,8 +114,9 @@ const Select = ({
   return (
     <Dropdown
       className={variant === 'sort' ? 'w-80 lg:w-132' : 'w-80 lg:w-126'}
+      isRight={variant === 'sort'}
       trigger={
-        <button className={getButtonStyles()}>
+        <button className={getButtonStyles()} type="button">
           <span>{getDefaultText()}</span>
           <Image alt="arrow-down" src={getIconSrc()} {...getIconProps()} />
         </button>
@@ -126,6 +127,7 @@ const Select = ({
           <li key={option.value} className={getOptionWrapperStyles()}>
             <button
               className={getOptionStyles(selectedValue === option.value)}
+              type="button"
               onClick={() => handleSelect(option.value)}
             >
               {option.label}
