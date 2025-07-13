@@ -74,7 +74,7 @@ const Sumin = () => {
 
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">Map</p>
-        <KakaoMap />
+        <KakaoMap location="서울특별시 중구 세종대로 110" />
       </section>
     </div>
   );
