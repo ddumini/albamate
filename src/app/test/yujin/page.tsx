@@ -1,5 +1,6 @@
 'use client';
 
+import { Chip } from '@components/common/chip/Chip';
 import AuthGnb from '@components/common/gnb/AuthGnb';
 import MainGnb from '@components/common/gnb/MainGnb';
 import EditPopup from '@components/common/popup/EditPopup';
@@ -135,6 +136,12 @@ const TestPage = () => {
         visible={popupVisible}
         onClose={() => setPopupVisible(false)}
       />
+      <div className="flex flex-wrap gap-4 bg-neutral-800 p-6">
+        <Chip active label="Label" variant="filled" />
+        <Chip label="Label" variant="filled" />
+
+        <Chip label="Label" variant="icon" />
+      </div>
     </div>
   );
 };
