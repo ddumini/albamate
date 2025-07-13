@@ -5,6 +5,7 @@ import InputDropdown from '@/shared/components/common/input-dropdown';
 import Select from '@/shared/components/common/select';
 import TimePicker from '@/shared/components/common/time-picker';
 import WeekPicker from '@/shared/components/common/week-picker';
+import KakaoMap from '@/shared/components/ui/KakaoMap';
 
 const Sumin = () => {
   const filterOptions = [
@@ -69,6 +70,11 @@ const Sumin = () => {
       <section className="mb-80">
         <p className="mb-24 text-2xl font-bold">WeekPicker</p>
         <WeekPicker />
+      </section>
+
+      <section className="mb-80">
+        <p className="mb-24 text-2xl font-bold">Map</p>
+        <KakaoMap />
       </section>
     </div>
   );
