@@ -23,7 +23,7 @@ interface ToastLikePopupProps {
  * @component
  * @param {ToastLikePopupProps} props - 팝업에 전달되는 props
  */
-const Popup = ({
+const ToastPopup = ({
   count = 3,
   duration = 3000,
   visible,
@@ -59,7 +59,7 @@ const Popup = ({
 
   return (
     <div
-      className={`BG-blueblack Text-white-gray fixed top-50 left-1/2 z-50 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl px-24 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:px-80 md:text-md lg:px-300 lg:text-lg ${animationClass} `}
+      className={`Text-white-gray fixed top-50 left-1/2 z-50 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl bg-blue-300 px-40 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:text-md lg:text-lg ${animationClass} `}
       style={{ width: 'calc(100vw - 3rem * 2)' }}
     >
       {/* 아이콘 */}
@@ -86,4 +86,4 @@ const Popup = ({
   );
 };
 
-export default Popup;
+export default ToastPopup;
