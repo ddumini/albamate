@@ -6,17 +6,11 @@ import ButtonBase from './ButtonBase';
 /**
  * PrimaryButton 컴포넌트
  *
- * ✅ 용도:
- * - 프로젝트 전반에서 일관된 스타일의 기본 버튼 역할을 합니다.
- * - variant와 size, icon 등을 조합하여 다양한 형태의 버튼으로 사용할 수 있습니다.
+ * @description
+ * 프로젝트 전반에서 공통적으로 사용하는 기본 버튼 컴포넌트입니다.
+ * variant, size, icon 등의 조합을 통해 다양한 형태로 확장할 수 있으며,
+ * 반응형 대응 및 스타일 유연성을 고려해 설계되었습니다.
  *
- * ✅ 특징:
- * - `variant`: 버튼의 스타일을 지정합니다. (색상, 테두리 등)
- * - `iconSrc`: 이미지 아이콘을 버튼 앞에 표시할 수 있습니다.
- * - `responsiveLabel`: 작은 화면에서는 텍스트를 숨기고 아이콘만 보이도록 처리할 수 있습니다.
- * - Tailwind 클래스를 props로 받아 사이즈와 여백 등 유연하게 조절할 수 있습니다.
- *
- * ✅ 사용 예시:
  * @example
  * ```tsx
  * // 텍스트만 있는 버튼
@@ -47,14 +41,14 @@ import ButtonBase from './ButtonBase';
  * />
  * ```
  *
- * @param variant - 버튼의 스타일 타입 (solid, outline, cancelSolid, cancelOutline)
- * @param className - Tailwind 클래스 문자열로 크기 및 텍스트 사이즈, 색상 등  추가 스타일 추가 조정
+ * @param variant - 버튼의 스타일 타입 (`solid`, `outline`, `cancelSolid`, `cancelOutline`)
+ * @param className - Tailwind 클래스 문자열 (크기, 여백, 색상 등의 스타일 조정용)
  * @param label - 버튼에 표시될 텍스트 (생략 가능)
  * @param disabled - 버튼 비활성화 여부 (true일 경우 클릭 불가)
- * @param type - HTML 버튼 타입 ('button' | 'submit' | 'reset')
- * @param iconSrc - 버튼 앞에 표시할 이미지 아이콘 경로 (Next.js Image 사용)
- * @param responsiveLabel - true일 경우 버튼 텍스트를 숨기고 아이콘만 표시 (모바일 대응)
- * @param onClick - 클릭 이벤트 핸들러 함수
+ * @param type - HTML 버튼 타입 (`button` | `submit` | `reset`)
+ * @param iconSrc - 버튼 앞에 표시할 이미지 아이콘 경로 (Next.js `Image` 컴포넌트 사용)
+ * @param responsiveLabel - true일 경우 작은 화면에서 텍스트를 숨기고 아이콘만 표시
+ * @param onClick - 버튼 클릭 시 실행될 이벤트 핸들러 함수
  */
 
 // 버튼의 스타일 담당

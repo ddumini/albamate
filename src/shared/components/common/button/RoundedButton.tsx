@@ -6,17 +6,12 @@ import ButtonBase from './ButtonBase';
 /**
  * RoundedButton 컴포넌트
  *
- * ✅ 용도:
- * - 아이콘과 텍스트가 함께 있는 **둥근 스타일(rounded-full)**의 버튼을 만들기 위해 사용됩니다.
- * - Tailwind 클래스와 props를 통해 버튼과 아이콘 스타일을 커스터마이징할 수 있습니다.
+ * @description
+ * 아이콘과 텍스트가 함께 있는 둥근 형태(`rounded-full`)의 버튼을 렌더링하는 컴포넌트입니다.
+ * 버튼 및 아이콘의 스타일을 커스터마이징할 수 있으며,
+ * 내부적으로 `ButtonBase`를 사용해 기본 HTML `<button>` 속성을 모두 지원합니다.
  *
- * ✅ 특징:
- * - `rounded-full` 스타일을 기본으로 적용하여 pill-shaped 버튼 형태로 렌더링됩니다.
- * - `iconSrc`를 전달하면 Next.js의 `<Image>`를 통해 아이콘이 함께 표시됩니다.
- * - `buttonClassName`, `iconClassName`을 통해 스타일 확장이 가능합니다.
- * - 내부적으로 `ButtonBase`를 사용하여 HTML `<button>` 속성을 모두 지원합니다.
- *
- * ✅ 사용 예시:
+ * @example
  * ```tsx
  * <RoundedButton
  *   label="구독하기"
@@ -29,11 +24,11 @@ import ButtonBase from './ButtonBase';
  * ```
  *
  * @param label - 버튼에 표시할 텍스트
- * @param buttonClassName - 버튼 스타일을 위한 Tailwind 클래스 문자열
- * @param iconSrc - 아이콘 이미지 경로 (Next.js Image 사용) (선택)
- * @param iconClassName - 아이콘 스타일을 위한 클래스 문자열 (선택)
- * @param type - HTML 버튼 타입 ('button' | 'submit' | 'reset')
- * @param onClick - 버튼 클릭 시 호출될 이벤트 핸들러
+ * @param buttonClassName - 버튼에 적용할 Tailwind 클래스 문자열
+ * @param iconSrc - 버튼 앞에 표시할 아이콘 이미지 경로 (Next.js `Image` 사용, 선택)
+ * @param iconClassName - 아이콘에 적용할 Tailwind 클래스 문자열 (선택)
+ * @param type - HTML 버튼 타입 (`button` | `submit` | `reset`)
+ * @param onClick - 버튼 클릭 시 실행될 이벤트 핸들러 함수
  */
 
 interface RoundedButtonProps {
