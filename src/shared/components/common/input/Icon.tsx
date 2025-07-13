@@ -3,10 +3,11 @@ import Image from 'next/image';
 import { MouseEventHandler } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface IconProps {
+export interface IconProps {
   src: string | StaticImport;
   alt: string;
   sizes?: string;
+  sizeClass?: string;
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
 }
@@ -15,6 +16,7 @@ const Icon = ({
   src,
   alt,
   sizes = '(min-width:64rem) 36px, 24px',
+  sizeClass = 'size-24 lg:size-36',
   className,
   onClick,
 }: IconProps) => {
@@ -22,7 +24,7 @@ const Icon = ({
   return (
     <Component
       className={twMerge(
-        'relative size-24 lg:size-36',
+        'inline-block',
         Component === 'button' ? 'cursor-pointer' : 'pointer-events-none',
         className
       )}
@@ -30,11 +32,12 @@ const Icon = ({
       onClick={onClick}
     >
       <Image
-        fill
         alt={alt}
-        className="object-cover object-center"
+        className={twMerge('object-cover object-center', sizeClass)}
+        height={36}
         sizes={sizes}
         src={src}
+        width={36}
       />
     </Component>
   );
