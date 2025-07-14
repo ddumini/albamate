@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import InputFileImage from '@/shared/components/common/input/InputFileImage';
 
@@ -20,10 +20,17 @@ interface UploadMultipleImageProps {
 const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const previewImagesRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    previewImagesRef.current = previewImages;
+  }, [previewImages]);
 
   useEffect(() => {
     return () => {
-      previewImages.forEach(previewImage => URL.revokeObjectURL(previewImage));
+      previewImagesRef.current.forEach(previewImage =>
+        URL.revokeObjectURL(previewImage)
+      );
     };
   }, []);
 
