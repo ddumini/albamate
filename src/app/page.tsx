@@ -1,5 +1,11 @@
+import HeroSection from '@/features/landing/HeroSection';
+
 const Home = () => {
-  return <div>랜딩 페이지</div>;
+  return (
+    <main>
+      <HeroSection />
+    </main>
+  );
 };
 
 export default Home;
