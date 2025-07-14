@@ -11,7 +11,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   // 1. 무시할 경로 지정 (.eslintignore 대체)
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.next'] },
 
   // 2. JavaScript + TypeScript 추천 규칙
   js.configs.recommended,

@@ -53,6 +53,7 @@ const MainGnb = () => {
               className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
                 pathname === '/albatalk' ? 'text-mint-100' : ''
               }`}
+              type="button"
               onClick={() => router.push('/albatalk')}
             >
               알바토크
@@ -61,6 +62,7 @@ const MainGnb = () => {
               className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
                 pathname === '/myalbaform' ? 'text-mint-100' : ''
               }`}
+              type="button"
               onClick={() => router.push('/myalbaform')}
             >
               내 알바폼

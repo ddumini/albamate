@@ -30,7 +30,7 @@ interface DayCheckboxProps {
   onChange?: (checked: boolean, value: string) => void;
   disabled?: boolean;
   required?: boolean;
-  'aria-label'?: string;
+  ariaLabel?: string;
 }
 
 const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
@@ -43,7 +43,7 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
       onChange,
       disabled = false,
       required = false,
-      'aria-label': ariaLabel,
+      ariaLabel: ariaLabel,
       ...props
     },
     ref
@@ -53,19 +53,6 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange?.(e.target.checked, value);
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const input = e.currentTarget.querySelector(
-          'input'
-        ) as HTMLInputElement;
-        if (input && !disabled) {
-          input.checked = !input.checked;
-          onChange?.(input.checked, value);
-        }
-      }
     };
 
     const handleInputKeyDown = (e: React.KeyboardEvent<HTMLLabelElement>) => {

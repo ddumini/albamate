@@ -31,7 +31,7 @@ interface ButtonBaseProps
 // 버튼의 렌더링 담당
 const ButtonBase = ({ children, className, ...props }: ButtonBaseProps) => {
   return (
-    <button className={className} {...props}>
+    <button className={className} type="button" {...props}>
       {children}
     </button>
   );
