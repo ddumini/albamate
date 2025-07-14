@@ -11,9 +11,9 @@ import { ModalProps } from '@/shared/types/modal';
 
 import ModalContent from './ModalContent';
 import ModalOverlay from './ModalOverlay';
-import { ModalProvider } from './ModalProvider';
+import ModalProvider from './ModalProvider';
 
-export const ModalManager: React.FC<ModalProps> = ({
+const ModalManager: React.FC<ModalProps> = ({
   closeOnOverlayClick = true,
   closeOnEsc = true,
   className = '',
@@ -61,3 +61,5 @@ export const ModalManager: React.FC<ModalProps> = ({
     document.body
   );
 };
+
+export default ModalManager;

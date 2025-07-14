@@ -11,7 +11,7 @@ interface ModalFooterProps {
   direction?: 'horizontal' | 'vertical';
 }
 
-export const ModalFooter: React.FC<ModalFooterProps> = ({
+const ModalFooter: React.FC<ModalFooterProps> = ({
   children,
   className = '',
   direction = 'horizontal',
@@ -28,3 +28,5 @@ export const ModalFooter: React.FC<ModalFooterProps> = ({
     </div>
   );
 };
+
+export default ModalFooter;

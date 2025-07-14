@@ -6,11 +6,13 @@
 'use client';
 import React from 'react';
 
-import { ModalContext } from './context';
+import ModalContext from './context';
 
-export const ModalProvider: React.FC<{
+const ModalProvider: React.FC<{
   children: React.ReactNode;
   onClose: () => void;
 }> = ({ children, onClose }) => (
   <ModalContext.Provider value={{ onClose }}>{children}</ModalContext.Provider>
 );
+
+export default ModalProvider;
