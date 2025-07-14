@@ -47,7 +47,7 @@ const Textarea = ({
   return (
     <textarea
       className={twMerge(
-        'h-124 w-327 resize-none p-14 lg:h-192 lg:w-640 lg:p-18',
+        'h-124 w-full resize-none p-14 lg:h-192 lg:p-18',
         inputStyle['default'],
         inputVariants[variant],
         isInvalid && inputStyle['invalid'],

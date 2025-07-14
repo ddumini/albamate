@@ -46,7 +46,7 @@ const Input = ({
   return (
     <input
       className={twMerge(
-        'h-54 w-327 p-14 lg:h-64 lg:w-640',
+        'h-54 w-full p-14 lg:h-64',
         inputStyle['default'],
         inputVariants[variant],
         isInvalid && inputStyle['invalid'],

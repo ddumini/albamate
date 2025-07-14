@@ -77,7 +77,7 @@ const IconInput = ({
   ...props
 }: IconInput) => {
   return (
-    <div className={twMerge('relative h-54 w-327 lg:h-64 lg:w-640', className)}>
+    <div className={twMerge('relative h-54 w-full lg:h-64', className)}>
       <Icon
         alt={alt}
         className={twMerge(
@@ -93,7 +93,7 @@ const IconInput = ({
       <Input
         className={twMerge(
           position === 'left' ? 'pl-46 lg:pl-58' : 'pr-46 lg:pr-58',
-          'h-full w-full lg:h-full lg:w-full',
+          'h-full lg:h-full',
           inputClassName
         )}
         {...props}
