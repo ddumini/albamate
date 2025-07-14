@@ -1,0 +1,49 @@
+/* React Day Picker 색상 오버라이드 */
+/* 프로젝트의 디자인 시스템에 맞춰 mint 색상 사용 */
+
+.rdp-root {
+  /* 기본 액센트 색상 - mint 색상 사용 */
+  --rdp-accent-color: hsl(171, 86%, 48%); /* --color-mint-300 */
+  --rdp-accent-background-color: hsl(171, 86%, 88%); /* --color-mint-50 */
+
+  /* 선택된 날짜의 배경색 */
+  --rdp-range_start-date-background-color: hsl(
+    171,
+    86%,
+    48%
+  ); /* --color-mint-300 */
+  --rdp-range_end-date-background-color: hsl(
+    171,
+    86%,
+    48%
+  ); /* --color-mint-300 */
+
+  /* 범위 중간 배경색 */
+  --rdp-range_middle-background-color: hsla(
+    171,
+    87%,
+    88%,
+    0.5
+  ); /* --color-mint-50 */
+
+  /* 오늘 날짜 색상 */
+  --rdp-today-color: hsl(171, 86%, 48%); /* --color-mint-300 */
+
+  /* 선택된 날짜 테두리 */
+  --rdp-selected-border: 2px solid hsl(171, 86%, 48%); /* --color-mint-300 */
+}
+
+/* 다크 모드 지원 */
+html.dark .rdp-root {
+  --rdp-accent-color: hsl(171, 86%, 50%); /* 다크모드 mint-100 */
+  --rdp-accent-background-color: hsl(171, 86%, 28%); /* 다크모드 mint-400 */
+
+  --rdp-range_start-date-background-color: hsl(171, 86%, 50%);
+  --rdp-range_end-date-background-color: hsl(171, 86%, 50%);
+
+  --rdp-range_middle-background-color: hsl(171, 86%, 28%);
+
+  --rdp-today-color: hsl(171, 86%, 50%);
+
+  --rdp-selected-border: 2px solid hsl(171, 86%, 50%);
+}

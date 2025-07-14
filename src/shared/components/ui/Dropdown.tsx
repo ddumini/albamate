@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * Dropdown 컴포넌트
@@ -14,6 +15,7 @@ import { useEffect, useRef, useState } from 'react';
  * @param {React.ReactNode} props.children - 드롭다운 내부에 표시될 내용
  * @param {string} [props.className] - 추가 커스텀 클래스
  * @param {string} [props.id] - 고유 식별자
+ * @param {boolean} [props.isRight] - 우측 드롭다운 여부
  *
  * @example
  * <Dropdown
@@ -27,15 +29,29 @@ import { useEffect, useRef, useState } from 'react';
  */
 
 interface DropdownProps {
-  trigger: React.ReactNode;
+  trigger: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   children: React.ReactNode;
   className?: string;
-  id?: string; // 고유 식별자 추가
+  id?: string;
+  isRight?: boolean;
 }
 
-const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
+const Dropdown = ({
+  trigger,
+  children,
+  className = '',
+  id,
+  isRight = false,
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const renderTrigger = () => {
+    if (typeof trigger === 'function') {
+      return trigger(isOpen);
+    }
+    return trigger;
+  };
 
   // 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
@@ -82,12 +98,26 @@ const Dropdown = ({ trigger, children, className = '', id }: DropdownProps) => {
       className={`relative ${className}`}
       data-dropdown-id={id} // 고유 식별자
     >
-      <div onClick={handleToggle}>{trigger}</div>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={handleToggle}
+        onKeyDown={event => {
+          if (event.key === 'Enter') {
+            setIsOpen(true);
+          }
+        }}
+      >
+        {renderTrigger()}
+      </div>
 
       {isOpen && (
         <div
           aria-expanded={isOpen}
-          className="absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white shadow-[4px_4px_4px_rgba(130,130,130,0.08)]"
+          className={twMerge(
+            'absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white shadow-[4px_4px_4px_rgba(130,130,130,0.08)]',
+            isRight && 'left-auto'
+          )}
           role="menu"
           onClick={() => setIsOpen(false)}
         >
