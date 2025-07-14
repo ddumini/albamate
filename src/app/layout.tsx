@@ -1,10 +1,11 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
+
+import { metadata } from './metadata';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -13,10 +14,7 @@ const pretendard = localFont({
   weight: '100 900',
 });
 
-export const metadata: Metadata = {
-  title: 'Albamate',
-  description: 'Albamate application', // 추후 변경
-};
+export { metadata };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
