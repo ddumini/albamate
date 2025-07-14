@@ -104,7 +104,6 @@ const EditPopup = ({
           alt={`${type} 아이콘`}
           sizes={`${size.width}px`}
           src={iconSrc ?? defaultIcons[type]}
-          style={{ objectFit: 'contain' }}
         />
       </div>
       <span className="flex-1">{message}</span>
