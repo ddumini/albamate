@@ -38,15 +38,21 @@ const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
     if (!files[0]) return;
     const urls = files.map(file => URL.createObjectURL(file));
     setPreviewImages(prev => [...prev, ...urls]);
-    setCurrentFiles(prev => [...prev, ...files]);
-    onImageChange([...currentFiles, ...files]);
+    setCurrentFiles(prev => {
+      const newFiles = [...prev, ...files];
+      onImageChange(newFiles);
+      return newFiles;
+    });
   };
 
   const removeImage = (idx: number) => {
     if (previewImages[idx]) URL.revokeObjectURL(previewImages[idx]);
     setPreviewImages(prev => prev.filter((_, index) => index !== idx));
-    setCurrentFiles(prev => prev.filter((_, index) => index !== idx));
-    onImageChange(currentFiles.filter((_, index) => index !== idx));
+    setCurrentFiles(prev => {
+      const newFiles = prev.filter((_, index) => index !== idx);
+      onImageChange(newFiles);
+      return newFiles;
+    });
   };
 
   return (
