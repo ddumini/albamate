@@ -22,7 +22,10 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/shared/components/*"],
       "@lib/*": ["./src/shared/lib/*"]
-    }
+    },
+    // Turbopack 호환성 설정
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

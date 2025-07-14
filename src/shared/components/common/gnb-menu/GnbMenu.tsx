@@ -28,6 +28,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
             <button
               aria-label="메뉴 닫기"
               className="absolute top-4 right-4 h-36 w-36 cursor-pointer"
+              type="button"
               onClick={() => setIsOpen(false)}
             >
               <Image fill alt="닫기 버튼" src="/icons/x-thin.svg" />

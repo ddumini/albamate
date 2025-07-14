@@ -63,14 +63,14 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
         break;
     }
 
-    return pages.map((page, index) => {
+    return pages.map((page, _index) => {
       const pageClassName =
         currentPage === page
           ? 'text-black-400 font-semibold'
           : 'text-gray-200 font-medium';
       return page === '...' ? (
         <div
-          key={`ellipsis-${index}`} // ellipsis의 경우 변경 가능성이 낮다고 생각하여 index 사용
+          key={`ellipsis-${page === '...' ? 'left' : 'right'}`} // ellipsis의 위치로 고유한 key 생성
           className="pb-1/3 flex h-34 w-34 items-center justify-center rounded-md bg-background-200 text-md font-medium text-gray-200 lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg"
         >
           <span className="h-fit pb-9 leading-none">...</span>
@@ -80,6 +80,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
           key={`page-${page}`}
           className={`flex h-34 w-34 cursor-pointer items-center justify-center rounded-md bg-background-200 text-center text-md lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg ${pageClassName}`}
           disabled={currentPage === page}
+          type="button"
           onClick={() => onChange(Number(page))}
         >
           {page}
@@ -93,6 +94,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
       <button
         className="h-34 w-34 cursor-pointer rounded-md bg-background-200 p-9 disabled:cursor-default lg:h-48 lg:w-48 lg:rounded-lg lg:p-12"
         disabled={currentPage === 1}
+        type="button"
         onClick={() => onChange(currentPage - 1)}
       >
         <div className="relative h-full w-full">
@@ -112,6 +114,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
       <button
         className="h-34 w-34 cursor-pointer rounded-md bg-background-200 p-9 disabled:cursor-default lg:h-48 lg:w-48 lg:rounded-lg lg:p-12"
         disabled={currentPage === totalPages}
+        type="button"
         onClick={() => onChange(currentPage + 1)}
       >
         <div className="relative h-full w-full">

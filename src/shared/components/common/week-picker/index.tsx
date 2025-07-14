@@ -23,7 +23,7 @@ const WeekPicker = () => {
         className="flex gap-11 lg:gap-18"
         role="group"
       >
-        {weekDays.map((day, index) => (
+        {weekDays.map((day, _index) => (
           <DayCheckbox
             key={day}
             aria-label={`${day}요일 선택`}

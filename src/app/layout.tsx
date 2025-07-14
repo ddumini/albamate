@@ -15,6 +15,7 @@ const pretendard = localFont({
   weight: '100 900',
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { metadata };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
