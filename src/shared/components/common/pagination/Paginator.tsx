@@ -8,16 +8,19 @@ interface PaginatorProps {
   onChange: (page: number) => void;
 }
 
+const PAGINATOR_LIMITS = {
+  // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
+  MOBILE: 3,
+  DESKTOP: 5,
+};
+
 const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
   const { isTablet, isMobile } = useViewport(); // 현재 화면 너비를 가져오는 훅 사용
-  const MOBILE_MAX_PAGES = 3;
-  const DESKTOP_MAX_PAGES = 5;
   const visiblePages =
-    isTablet || isMobile ? MOBILE_MAX_PAGES : DESKTOP_MAX_PAGES; // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
-
+    isTablet || isMobile ? PAGINATOR_LIMITS.MOBILE : PAGINATOR_LIMITS.DESKTOP;
   const renderPageNumbers = () => {
     // 페이지 번호 렌더링 함수
-    const pages: (string | number)[] = [];
+    const pages: ({ type: string; position: string } | number)[] = [];
 
     const createRange = (start: number, end: number) =>
       Array.from({ length: end - start + 1 }, (_, i) => start + i);
@@ -44,46 +47,50 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
         break;
       case 'left':
         pages.push(...createRange(1, visiblePages));
-        pages.push('...', totalPages);
+        pages.push({ type: 'ellipsis', position: 'end' }, totalPages);
         break;
       case 'right':
-        pages.push(1, '...');
+        pages.push(1, { type: 'ellipsis', position: 'start' });
         pages.push(...createRange(totalPages - visiblePages + 1, totalPages));
         break;
       case 'middle': {
         const sidePages = Math.floor((visiblePages - 2) / 2); // 양쪽에 표시할 페이지 수
-        pages.push(1, '...');
+        pages.push(1, { type: 'ellipsis', position: 'middle-start' });
         pages.push(
           ...createRange(currentPage - sidePages, currentPage + sidePages)
         );
-        pages.push('...', totalPages);
+        pages.push({ type: 'ellipsis', position: 'middle-end' }, totalPages);
         break;
       }
       default:
         break;
     }
 
-    return pages.map((page, _index) => {
+    return pages.map(page => {
+      const pageNumber = page as number;
       const pageClassName =
-        currentPage === page
+        currentPage === pageNumber
           ? 'text-black-400 font-semibold'
           : 'text-gray-200 font-medium';
-      return page === '...' ? (
-        <div
-          key={`ellipsis-${page === '...' ? 'left' : 'right'}`} // ellipsis의 위치로 고유한 key 생성
-          className="pb-1/3 flex h-34 w-34 items-center justify-center rounded-md bg-background-200 text-md font-medium text-gray-200 lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg"
-        >
-          <span className="h-fit pb-9 leading-none">...</span>
-        </div>
-      ) : (
+      if (typeof page === 'object' && page.type === 'ellipsis') {
+        return (
+          <div
+            key={`ellipsis-${page.position}`} // ellipsis의 위치로 고유한 key 생성
+            className="pb-1/3 flex h-34 w-34 items-center justify-center rounded-md bg-background-200 text-md font-medium text-gray-200 lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg"
+          >
+            <span className="h-fit pb-9 leading-none">...</span>
+          </div>
+        );
+      }
+      return (
         <button
           key={`page-${page}`}
           className={`flex h-34 w-34 cursor-pointer items-center justify-center rounded-md bg-background-200 text-center text-md lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg ${pageClassName}`}
-          disabled={currentPage === page}
+          disabled={currentPage === pageNumber}
           type="button"
           onClick={() => onChange(Number(page))}
         >
-          {page}
+          {pageNumber}
         </button>
       );
     });
