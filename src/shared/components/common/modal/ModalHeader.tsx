@@ -22,7 +22,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({
   const { onClose } = useModalContext();
   return (
     <div className={`relative flex justify-center ${className}`}>
-      <div className="text-2lg font-semibold text-gray-900 lg:text-2xl">
+      <div className="text-lg font-semibold text-gray-900 lg:text-2xl">
         {children}
       </div>
       {showCloseButton && (
