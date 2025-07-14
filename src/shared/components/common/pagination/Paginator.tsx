@@ -8,6 +8,11 @@ interface PaginatorProps {
   onChange: (page: number) => void;
 }
 
+interface PageEllipsis {
+  type: string;
+  position: string;
+}
+
 const PAGINATOR_LIMITS = {
   // 769px 이하는 3개, 그 이상은 5개 페이지 버튼 표시
   MOBILE: 3,
@@ -20,7 +25,7 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
     isTablet || isMobile ? PAGINATOR_LIMITS.MOBILE : PAGINATOR_LIMITS.DESKTOP;
   const renderPageNumbers = () => {
     // 페이지 번호 렌더링 함수
-    const pages: ({ type: string; position: string } | number)[] = [];
+    const pages: (PageEllipsis | number)[] = [];
 
     const createRange = (start: number, end: number) =>
       Array.from({ length: end - start + 1 }, (_, i) => start + i);
@@ -35,8 +40,10 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
         // 앞쪽 페이지 구간(현재 페이지가 왼쪽에 가까운 경우)
         return 'left';
       } else if (showRight) {
+        // 뒤쪽 페이지 구간(현재 페이지가 오른쪽에 가까운 경우)
         return 'right';
       } else {
+        // 중간 페이지 구간(현재 페이지가 중간에 가까운 경우)
         return 'middle';
       }
     };
@@ -67,11 +74,6 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
     }
 
     return pages.map(page => {
-      const pageNumber = page as number;
-      const pageClassName =
-        currentPage === pageNumber
-          ? 'text-black-400 font-semibold'
-          : 'text-gray-200 font-medium';
       if (typeof page === 'object' && page.type === 'ellipsis') {
         return (
           <div
@@ -82,13 +84,20 @@ const Paginator = ({ currentPage, totalPages, onChange }: PaginatorProps) => {
           </div>
         );
       }
+
+      const pageNumber = page as number;
+      const pageClassName =
+        currentPage === pageNumber
+          ? 'text-black-400 font-semibold'
+          : 'text-gray-200 font-medium';
+
       return (
         <button
           key={`page-${page}`}
           className={`flex h-34 w-34 cursor-pointer items-center justify-center rounded-md bg-background-200 text-center text-md lg:h-48 lg:w-48 lg:rounded-lg lg:text-2lg ${pageClassName}`}
           disabled={currentPage === pageNumber}
           type="button"
-          onClick={() => onChange(Number(page))}
+          onClick={() => onChange(pageNumber)}
         >
           {pageNumber}
         </button>
