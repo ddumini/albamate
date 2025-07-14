@@ -64,7 +64,7 @@ const Icon = ({
     <Component
       className={twMerge(
         'inline-block',
-        Component === 'button' ? 'cursor-pointer' : 'pointer-events-none',
+        Component === 'button' ? '' : 'pointer-events-none',
         className
       )}
       type={Component === 'button' ? 'button' : undefined}
