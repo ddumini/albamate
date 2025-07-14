@@ -10,9 +10,8 @@ interface ModalBodyProps {
   className?: string;
 }
 
-export const ModalBody: React.FC<ModalBodyProps> = ({
-  children,
-  className = '',
-}) => {
+const ModalBody: React.FC<ModalBodyProps> = ({ children, className = '' }) => {
   return <div className={`${className}`}>{children}</div>;
 };
+
+export default ModalBody;

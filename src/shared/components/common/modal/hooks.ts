@@ -7,9 +7,9 @@ import { useContext } from 'react';
 
 import { ModalContextType } from '@/shared/types/modal';
 
-import { ModalContext } from './context';
+import ModalContext from './context';
 
-export const useModalContext = (): ModalContextType => {
+const useModalContext = (): ModalContextType => {
   const context = useContext(ModalContext);
   if (!context) {
     throw new Error(
@@ -18,3 +18,5 @@ export const useModalContext = (): ModalContextType => {
   }
   return context;
 };
+
+export default useModalContext;

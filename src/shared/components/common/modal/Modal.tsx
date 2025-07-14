@@ -4,10 +4,10 @@
  */
 'use client';
 
-import { ModalBody } from './ModalBody';
-import { ModalFooter } from './ModalFooter';
+import ModalBody from './ModalBody';
+import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
-import { ModalManager } from './ModalManager';
+import ModalManager from './ModalManager';
 
 const Modal = {
   Header: ModalHeader,

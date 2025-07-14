@@ -9,4 +9,5 @@ import { createContext } from 'react';
 
 import { ModalContextType } from '@/shared/types/modal';
 
-export const ModalContext = createContext<ModalContextType | null>(null);
+const ModalContext = createContext<ModalContextType | null>(null);
+export default ModalContext;

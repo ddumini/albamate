@@ -4,7 +4,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
-import { ModalManager } from '@/shared/components/common/modal/ModalManager';
+import ModalManager from '@/shared/components/common/modal/ModalManager';
 
 import { metadata } from './metadata';
 
