@@ -9,6 +9,9 @@ export const Z_INDEX = {
   /** 플로팅 버튼 */
   FLOATING_BUTTON: 1000,
 
+  /** 모달 */
+  MODAL: 1040,
+
   /** 최상위 (긴급 알림 등) */
   MAXIMUM: 9999,
 } as const;

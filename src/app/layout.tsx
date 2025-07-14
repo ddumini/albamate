@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
+import { ModalManager } from '@/shared/components/common/modal/ModalManager';
 
 import { metadata } from './metadata';
 
@@ -26,6 +27,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className={pretendard.className}>
         <ThemeProvider enableSystem attribute="class" defaultTheme="system">
           <Providers>{children}</Providers>
+          <ModalManager />
         </ThemeProvider>
       </body>
     </html>
