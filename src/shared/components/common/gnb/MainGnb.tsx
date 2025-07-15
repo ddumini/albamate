@@ -1,5 +1,6 @@
 'use client';
 
+import IconInput from '@components/common/input/IconInput';
 import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -8,7 +9,11 @@ import { useEffect, useState } from 'react';
 
 import GnbMenu from '../gnb-menu/GnbMenu';
 
-const MainGnb = () => {
+interface MainGnbProps {
+  showSearch?: boolean;
+}
+
+const MainGnb = ({ showSearch = false }: MainGnbProps) => {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -20,7 +25,7 @@ const MainGnb = () => {
   if (!mounted) return null;
 
   return (
-    <header className="w-full border-b border-gray-400 px-24 md:px-72 dark:border-gray-500">
+    <header className="w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-32 lg:gap-48">
@@ -40,33 +45,22 @@ const MainGnb = () => {
 
           {/* 네비게이션 메뉴 */}
           <nav className="flex gap-16 text-[14px] font-medium md:gap-24 md:text-[16px] lg:text-[20px]">
-            <button
-              className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-                pathname === '/albalist' ? 'text-mint-100' : ''
-              }`}
-              type="button"
-              onClick={() => router.push('/albalist')}
-            >
-              알바 목록
-            </button>
-            <button
-              className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-                pathname === '/albatalk' ? 'text-mint-100' : ''
-              }`}
-              type="button"
-              onClick={() => router.push('/albatalk')}
-            >
-              알바토크
-            </button>
-            <button
-              className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-                pathname === '/myalbaform' ? 'text-mint-100' : ''
-              }`}
-              type="button"
-              onClick={() => router.push('/myalbaform')}
-            >
-              내 알바폼
-            </button>
+            {[
+              { href: '/albalist', label: '알바 목록' },
+              { href: '/albatalk', label: '알바토크' },
+              { href: '/myalbaform', label: '내 알바폼' },
+            ].map(({ href, label }) => (
+              <button
+                key={href}
+                className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
+                  pathname === href ? 'text-mint-100' : ''
+                }`}
+                type="button"
+                onClick={() => router.push(href)}
+              >
+                {label}
+              </button>
+            ))}
           </nav>
         </div>
 
@@ -88,7 +82,22 @@ const MainGnb = () => {
         </div>
       </div>
 
-      {/* 사이드 바 */}
+      {/* 🔍 조건부 검색창 */}
+      {showSearch && (
+        <div className="my-8 flex justify-center px-4">
+          <IconInput
+            alt="검색"
+            className="w-327 lg:w-728"
+            iconClassName="pl-24"
+            iconOnClick={() => alert('검색 버튼 클릭')}
+            inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
+            placeholder="어떤 알바를 찾고 계세요?"
+            src="/icons/search.svg"
+          />
+        </div>
+      )}
+
+      {/* 사이드 메뉴 */}
       <GnbMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
