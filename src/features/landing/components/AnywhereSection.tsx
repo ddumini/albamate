@@ -3,6 +3,13 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import SubTitle from './SubTitle';
+
+const subTitles = [
+  '다양한 사이트, SNS, 문자까지',
+  '언제 어디서든 알바생을 구해보세요.',
+];
+
 const AnywhereSection = () => {
   return (
     <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
@@ -24,28 +31,7 @@ const AnywhereSection = () => {
           >
             어디서든 지원받으세요
           </motion.h2>
-          <p className="h-32 overflow-hidden">
-            <motion.span
-              className="block text-2xl font-semibold text-[#8C9ECC]"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
-              viewport={{ once: true, amount: 0.1 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              다양한 사이트, SNS, 문자까지
-            </motion.span>
-          </p>
-          <p className="h-32 overflow-hidden">
-            <motion.span
-              className="block text-2xl font-semibold text-[#8C9ECC]"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-              viewport={{ once: true, amount: 0.1 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              언제 어디서든 알바생을 구해보세요.
-            </motion.span>
-          </p>
+          <SubTitle className="text-[#8C9ECC]" subTitles={subTitles} />
         </div>
         <div className="relative mt-126 flex flex-col gap-2">
           <motion.div

@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+import SubTitle from './SubTitle';
+
 /**
  * 아날로그 시계 UI 컴포넌트
  */
@@ -134,6 +136,11 @@ const DiagonalLine = [
   { top: 350, left: '-40%' },
 ];
 
+const subTitles = [
+  '1분만에 알바폼을 만들어 보세요!',
+  '링크를 복사하여 어디서든지 사용하세요.',
+];
+
 const AlbaformSection = () => {
   return (
     <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
@@ -148,34 +155,13 @@ const AlbaformSection = () => {
           >
             쉽고 빨라요
           </motion.h2>
-          <p className="h-32 overflow-hidden">
-            <motion.span
-              className="block text-2xl font-semibold text-gray-100"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
-              viewport={{ once: true, amount: 0.1 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              1분만에 알바폼을 만들어 보세요!
-            </motion.span>
-          </p>
-          <p className="h-32 overflow-hidden">
-            <motion.span
-              className="block text-2xl font-semibold text-gray-100"
-              initial={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-              viewport={{ once: true, amount: 0.1 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              링크를 복사하여 어디서든지 사용하세요.
-            </motion.span>
-          </p>
+          <SubTitle className="text-gray-100" subTitles={subTitles} />
         </div>
         <div className="relative mt-126 flex flex-col gap-2">
           <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
             {[...Array(4)].map((_, i) => (
               <motion.div
-                key={`animation-line-${i}`}
+                key={`animation-line-${DiagonalLine[i]?.top}`}
                 animate={{
                   scaleX: [0.2, 1, 0.2],
                   opacity: [0.3, 1, 0.3],
