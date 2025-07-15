@@ -21,7 +21,7 @@ const MainGnb = () => {
 
   return (
     <header className="w-full border-b border-gray-400 px-24 md:px-72 dark:border-gray-500">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 md:py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
         {/* 좌측 영역 */}
         <div className="flex items-center md:gap-32 lg:gap-48">
           {/* 로고 */}
@@ -30,7 +30,7 @@ const MainGnb = () => {
             type="button"
             onClick={() => router.push('/')}
           >
-            <div className="relative mr-24 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:mr-16 lg:h-36 lg:w-36">
+            <div className="relative mr-24 h-22 w-22 md:mr-12 md:h-24 md:w-24 lg:mr-16 lg:h-36 lg:w-36">
               <Image fill alt="로고 이미지" src="/images/logo.svg" />
             </div>
             <div className="relative hidden h-24 w-124 md:flex lg:h-36 lg:w-200">
