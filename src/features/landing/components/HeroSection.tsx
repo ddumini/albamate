@@ -65,7 +65,7 @@ const HeroSection = () => {
         >
           <RoundedButton
             buttonClassName="bg-blue-300 text-gray-50 h-80 w-223 text-2xl font-bold"
-            label="알바폼 시작하기"
+            label="시작하기"
             type="button"
           />
         </motion.div>

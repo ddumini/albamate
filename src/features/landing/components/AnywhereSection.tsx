@@ -1,53 +1,97 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const AnywhereSection = () => {
   return (
     <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
-      <div className="mx-auto w-640">
-        <motion.span
-          className="absolute right-0 bottom-0 -z-10 h-[120vw] w-[120vw] translate-x-1/2 translate-y-1/2 rounded-full bg-[rgb(220,230,255)]"
-          initial={{ scale: 0, originX: 1, originY: 1 }}
-          transition={{
-            duration: 1,
-            delay: 0.5,
-            ease: 'easeInOut',
-          }}
-          viewport={{ amount: 0.5 }}
-          whileInView={{ scale: 3 }}
-        />
-
-        <motion.h2
-          className="text-5xl font-bold text-[#3A5497]"
-          initial={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.7 }}
-          whileInView={{ opacity: 1 }}
-        >
-          어디서든 지원받으세요
-        </motion.h2>
-        <div className="mt-40 flex flex-col gap-2">
-          {[
-            '다양한 사이트, SNS, 문자까지',
-            '언제 어디서든 알바생을 구해보세요.',
-          ].map((text, idx) => (
-            <p key={text} className="overflow-hidden">
-              <motion.span
-                className="block text-2xl font-semibold text-[#8C9ECC]"
-                initial={{ y: 40, opacity: 0 }}
-                transition={{
-                  duration: 0.7,
-                  ease: 'easeOut',
-                  delay: 0.2 + idx * 0.2,
-                }}
-                viewport={{ once: true, amount: 0.3 }}
-                whileInView={{ y: 0, opacity: 1 }}
-              >
-                {text}
-              </motion.span>
-            </p>
-          ))}
+      {/* <motion.div
+        className="pointer-events-none absolute right-5 bottom-5 -z-10 h-[100vh] w-[100vh] rounded-full bg-[rgb(220,230,255)]"
+        initial={{ scale: 0 }}
+        transition={{ duration: 2, ease: 'easeOut', delay: 0.3 }}
+        viewport={{ once: false, margin: '-10px' }}
+        whileInView={{ scale: 4 }}
+      /> */}
+      <div className="mx-auto flex w-1140 justify-between">
+        <div className="flex flex-col gap-2">
+          <motion.h2
+            className="mb-40 text-5xl font-bold text-[#3A5497]"
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.7 }}
+            whileInView={{ opacity: 1 }}
+          >
+            어디서든 지원받으세요
+          </motion.h2>
+          <p className="h-32 overflow-hidden">
+            <motion.span
+              className="block text-2xl font-semibold text-[#8C9ECC]"
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
+              viewport={{ once: true, amount: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              다양한 사이트, SNS, 문자까지
+            </motion.span>
+          </p>
+          <p className="h-32 overflow-hidden">
+            <motion.span
+              className="block text-2xl font-semibold text-[#8C9ECC]"
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
+              viewport={{ once: true, amount: 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              언제 어디서든 알바생을 구해보세요.
+            </motion.span>
+          </p>
+        </div>
+        <div className="relative mt-126 flex flex-col gap-2">
+          <motion.div
+            className="absolute -top-92 -left-30 -translate-x-full"
+            initial={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <Image
+              alt="anywhere-1"
+              height={137}
+              src="/images/landing/anywhere-icon01.png"
+              width={147}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <Image
+              alt="anywhere-1"
+              height={462}
+              loading="lazy"
+              quality={90}
+              src="/images/landing/anywhere-application.png"
+              style={{ width: '100%', height: 'auto' }}
+              width={354}
+            />
+          </motion.div>
+          <motion.div
+            className="absolute top-114 -left-54 -translate-x-full"
+            initial={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileInView={{ opacity: 1, y: 0 }}
+          >
+            <Image
+              alt="anywhere-1"
+              height={133}
+              src="/images/landing/anywhere-icon02.png"
+              width={157}
+            />
+          </motion.div>
         </div>
       </div>
     </section>

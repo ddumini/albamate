@@ -5,10 +5,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
-// 섹션별 배경색 정의 (RGB)
+// 섹션별 배경색 정의 (RGB) - 섹션 순서대로 정의
 const SECTION_COLORS = [
   { r: 31, g: 31, b: 31 }, // black-400 (HeroSection)
-  { r: 255, g: 255, b: 255 }, // white (AnywhereSection)
+  { r: 220, g: 230, b: 255 }, // white (AnywhereSection)
+  { r: 70, g: 114, b: 225 }, // white (AlbaformSection)
 ];
 
 // 두 RGB 색상 간의 보간
@@ -74,17 +75,41 @@ const LandingBg = () => {
     };
   }, [handleScroll, calculateScrollProgress]);
 
-  // 스크롤 진행률에 따른 배경색 계산
+  // 스크롤 진행률에 따른 배경색 계산 (동적 섹션 지원)
   const getBackgroundColor = () => {
-    if (sections.length < 2) {
-      return `rgb(${SECTION_COLORS[0]?.r}, ${SECTION_COLORS[0]?.g}, ${SECTION_COLORS[0]?.b})`;
+    if (sections.length === 0) {
+      return `rgb(${SECTION_COLORS[0]?.r || 31}, ${SECTION_COLORS[0]?.g || 31}, ${SECTION_COLORS[0]?.b || 31})`;
     }
 
-    return interpolateRgb(
-      SECTION_COLORS[0]!,
-      SECTION_COLORS[1]!,
-      scrollProgress
+    if (sections.length === 1) {
+      const color = SECTION_COLORS[0] || { r: 31, g: 31, b: 31 };
+      return `rgb(${color.r}, ${color.g}, ${color.b})`;
+    }
+
+    // 섹션이 2개 이상인 경우
+    const totalSections = sections.length;
+    const totalColorSegments = totalSections - 1;
+
+    // 전체 스크롤 진행률을 섹션별 세그먼트로 변환
+    const segmentProgress = scrollProgress * totalColorSegments;
+    const currentSegmentIndex = Math.floor(segmentProgress);
+    const nextSegmentIndex = Math.min(
+      currentSegmentIndex + 1,
+      totalColorSegments
     );
+
+    // 현재 세그먼트 내에서의 진행률 (0~1)
+    const segmentLocalProgress = segmentProgress - currentSegmentIndex;
+
+    // 색상 배열에서 해당하는 색상 가져오기
+    const currentColor = SECTION_COLORS[currentSegmentIndex] ||
+      SECTION_COLORS[0] || { r: 31, g: 31, b: 31 };
+    const nextColor =
+      SECTION_COLORS[nextSegmentIndex] ||
+      SECTION_COLORS[totalColorSegments] ||
+      currentColor;
+
+    return interpolateRgb(currentColor, nextColor, segmentLocalProgress);
   };
 
   const backgroundColor = getBackgroundColor();
