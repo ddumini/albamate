@@ -18,7 +18,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
       )}
 
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-95 shadow-lg transition-transform duration-300 ease-in-out md:w-300 dark:bg-black-400 ${
+        className={`fixed top-0 right-0 z-50 h-full w-220 transform bg-white opacity-95 shadow-lg transition-transform duration-300 ease-in-out md:w-300 lg:w-400 dark:bg-black-400 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
