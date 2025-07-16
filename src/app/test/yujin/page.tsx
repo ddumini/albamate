@@ -1,6 +1,6 @@
 'use client';
 
-import { Chip } from '@components/common/chip/Chip';
+import Chip from '@components/common/chip/Chip';
 import AuthGnb from '@components/common/gnb/AuthGnb';
 import MainGnb from '@components/common/gnb/MainGnb';
 import EditPopup from '@components/common/popup/EditPopup';
@@ -37,7 +37,7 @@ const TestPage = () => {
 
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
-      <Tab />
+      <Tab tabs={['내가 쓴 글', '내가 쓴 댓글', '스크랩']} />
 
       <div className="flex justify-center">
         <Tooltip
