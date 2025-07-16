@@ -5,7 +5,7 @@ import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import GnbMenu from '../gnb-menu/GnbMenu';
 
@@ -14,15 +14,11 @@ interface MainGnbProps {
 }
 
 const MainGnb = ({ showSearch = false }: MainGnbProps) => {
-  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
   const isDark = resolvedTheme === 'dark';
-
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
 
   return (
     <header className="w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">

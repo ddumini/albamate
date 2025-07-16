@@ -3,17 +3,12 @@
 import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 import MobileNav from './MobileNav';
 
 const AuthGnb = () => {
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
 
   return (
     <>
