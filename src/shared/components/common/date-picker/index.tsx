@@ -8,7 +8,8 @@ import { ko } from 'date-fns/locale';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 /**
  * DatePicker 컴포넌트
@@ -39,12 +40,14 @@ interface DatePickerProps {
   onDateRangeChange?: (range: DateRange | undefined) => void;
   placeholder?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 const DatePicker = ({
   onDateRangeChange,
   placeholder = '시작일 - 종료일',
   disabled = false,
+  className,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
@@ -114,13 +117,13 @@ const DatePicker = ({
   };
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className={cn('relative', className)}>
       <button
         ref={buttonRef}
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={`날짜 범위 선택: ${getDisplayText()}`}
-        className={twMerge(
+        className={cn(
           'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
           isOpen && 'border-gray-200',
           dateRange?.from && dateRange?.to && 'text-black-400',

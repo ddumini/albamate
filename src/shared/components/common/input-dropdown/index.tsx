@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
+import { cn } from '@/shared/lib/cn';
 
 /**
  * InputDropdown 컴포넌트
@@ -40,6 +40,7 @@ interface InputDropdownProps {
   name?: string; // form에서 사용할 name 속성 추가
   onChange?: (value: string) => void;
   required?: boolean; // 필수 필드 여부
+  className?: string; // 추가 커스텀 클래스
 }
 
 const BTN_STYLE =
@@ -54,6 +55,7 @@ const InputDropdown = ({
   name,
   onChange,
   required = false,
+  className,
 }: InputDropdownProps) => {
   const [inputValue, setInputValue] = useState(defaultValue);
   const [directInputValue, setDirectInputValue] = useState('');
@@ -102,7 +104,7 @@ const InputDropdown = ({
 
   const selectInput = (isOpen: boolean) => (
     <div
-      className={twMerge(
+      className={cn(
         INPUT_STYLE,
         'flex cursor-pointer items-center',
         // 드롭다운이 열려있을 때는 border만 표시
@@ -139,7 +141,7 @@ const InputDropdown = ({
 
       <Dropdown
         trigger={isOpen => (
-          <div className="relative">
+          <div className={cn('relative', className)}>
             {selectInput(isOpen)}
             <Image
               alt="arrow-down"

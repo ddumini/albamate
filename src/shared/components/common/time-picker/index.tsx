@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { cn } from '@/shared/lib/cn';
+
 import TimeSelect from './TimeSelect';
 /**
  * @module TimePicker
@@ -21,7 +23,11 @@ import TimeSelect from './TimeSelect';
  * - 내부적으로 TimeSelect 컴포넌트를 사용합니다.
  */
 
-const TimePicker = () => {
+interface TimePickerProps {
+  className?: string;
+}
+
+const TimePicker = ({ className }: TimePickerProps) => {
   const [startTime, setStartTime] = useState<string | null>(null);
   const [endTime, setEndTime] = useState<string | null>(null);
 
@@ -34,7 +40,7 @@ const TimePicker = () => {
   const isEndTimeSelected = endTime !== null;
 
   return (
-    <div className="flex gap-27 lg:gap-36">
+    <div className={cn('flex gap-27 lg:gap-36', className)}>
       <TimeSelect
         isSelected={isStartTimeSelected}
         label="근무 시작"

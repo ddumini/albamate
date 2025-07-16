@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
+import { cn } from '@/shared/lib/cn';
 
 /**
  * Select 컴포넌트
@@ -115,7 +116,10 @@ const Select = ({
 
   return (
     <Dropdown
-      className={variant === 'sort' ? 'w-80 lg:w-132' : 'w-80 lg:w-126'}
+      className={cn(
+        variant === 'sort' ? 'w-80 lg:w-132' : 'w-80 lg:w-126',
+        className
+      )}
       isRight={variant === 'sort'}
       trigger={
         <button className={getButtonStyles()} type="button">
