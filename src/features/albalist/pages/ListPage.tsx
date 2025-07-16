@@ -1,6 +1,6 @@
 'use client';
 
-import AlbaListPage from '../components/AlbaListPage';
+import AlbaListPage from '@features/albalist/components/AlbaListPage';
 
 const ListPage = () => {
   return <AlbaListPage />;
