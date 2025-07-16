@@ -15,16 +15,12 @@ export const Chip = ({
   active = false,
 }: ChipProps) => {
   const baseClasses = `
-    rounded-sm font-medium border flex justify-center items-center gap-4 transition-all
+    inline-flex rounded-sm font-medium border items-center gap-4 transition-all
     text-xs px-8 py-4 h-28
-    md:text-sm md:px-10 md:py-4 md:h-32
-    lg:text-base lg:px-12 lg:py-6 lg:h-38`;
-
-  const widthClasses = {
-    default: 'w-47 md:w-56 lg:w-65',
-    filled: 'w-47 md:w-56 lg:w-65',
-    icon: 'w-69 md:w-85 lg:w-91', // ← 북마크용 너비 확장
-  };
+    md:px-10 md:py-4 md:h-32
+    lg:text-md md:text-sm 
+    min-w-fit
+  `;
 
   const variants = {
     default: 'bg-white text-gray-500 border-gray-300',
@@ -35,7 +31,7 @@ export const Chip = ({
   };
 
   return (
-    <span className={cn(baseClasses, widthClasses[variant], variants[variant])}>
+    <span className={cn(baseClasses, variants[variant])}>
       {variant === 'icon' && (
         <Image
           alt="북마크"
