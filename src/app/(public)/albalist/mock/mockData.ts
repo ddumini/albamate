@@ -1,0 +1,132 @@
+export interface AlbaItem {
+  id: number;
+  title: string;
+  recruitmentStartDate: string;
+  recruitmentEndDate: string;
+  imageUrls: string[];
+  applyCount: number;
+  scrapCount: number;
+  isPublic: boolean;
+  createdAt: string;
+}
+
+export const albaMockData: AlbaItem[] = [
+  {
+    id: 452,
+    title: '홀서빙 알바 모집해요',
+    recruitmentStartDate: '2025-05-22T06:02:04.727Z',
+    recruitmentEndDate: '2025-07-26T06:02:04.727Z',
+    imageUrls: [''],
+    applyCount: 2,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2025-07-16T08:00:00.000Z', // 최신
+  },
+  {
+    id: 451,
+    title: '제목입니다',
+    recruitmentStartDate: '2025-05-12T04:50:34.859Z',
+    recruitmentEndDate: '2025-07-20T04:50:34.859Z',
+    imageUrls: [''],
+    applyCount: 1,
+    scrapCount: 0,
+    isPublic: true,
+    createdAt: '2025-07-15T13:00:00.000Z', // 최신
+  },
+  {
+    id: 450,
+    title: '제목입니다',
+    recruitmentStartDate: '2025-05-14T04:50:34.859Z',
+    recruitmentEndDate: '2025-08-12T04:50:34.859Z',
+    imageUrls: [''],
+    applyCount: 0,
+    scrapCount: 0,
+    isPublic: true,
+    createdAt: '2025-07-14T11:30:00.000Z', // 최신
+  },
+  {
+    id: 366,
+    title: '테스트가게',
+    recruitmentStartDate: '2024-12-29T00:00:00.000Z',
+    recruitmentEndDate: '2025-01-04T15:00:00.000Z',
+    imageUrls: [
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/190/1735469134492/christmas-3809544_1920.jpg',
+    ],
+    applyCount: 0,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2024-12-29T10:45:36.834Z',
+  },
+  {
+    id: 365,
+    title: 'test',
+    recruitmentStartDate: '2024-12-29T00:00:00.000Z',
+    recruitmentEndDate: '2024-12-31T00:00:00.000Z',
+    imageUrls: [],
+    applyCount: 0,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2024-12-28T07:05:10.980Z',
+  },
+  {
+    id: 363,
+    title: '주방보조 알바 구인글',
+    recruitmentStartDate: '2024-12-01T15:00:00.000Z',
+    recruitmentEndDate: '2024-12-01T15:00:00.000Z',
+    imageUrls: [],
+    applyCount: 0,
+    scrapCount: 0,
+    isPublic: true,
+    createdAt: '2024-12-27T00:37:12.749Z',
+  },
+  {
+    id: 357,
+    title: '크리스마스 당일알바 구해요',
+    recruitmentStartDate: '2024-12-25T00:00:00.000Z',
+    recruitmentEndDate: '2024-12-25T00:00:00.000Z',
+    imageUrls: [
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/190/1735116403263/star-6860582_1920.jpg',
+    ],
+    applyCount: 0,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2024-12-25T08:46:45.947Z',
+  },
+  {
+    id: 355,
+    title: '연말 알바 구해요',
+    recruitmentStartDate: '2024-12-25T00:00:00.000Z',
+    recruitmentEndDate: '2024-12-31T00:00:00.000Z',
+    imageUrls: [
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/197/1735022949655/image.webp',
+    ],
+    applyCount: 15,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2024-12-24T06:49:13.067Z',
+  },
+  {
+    id: 354,
+    title: 'TEST',
+    recruitmentStartDate: '2024-12-24T00:00:00.000Z',
+    recruitmentEndDate: '2024-12-31T00:00:00.000Z',
+    imageUrls: [
+      'https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/197/1735021022321/maksym-mazur-vF6pZCsMXpQ-unsplash.jpg',
+    ],
+    applyCount: 0,
+    scrapCount: 1,
+    isPublic: true,
+    createdAt: '2024-12-24T06:17:04.872Z',
+  },
+  {
+    id: 353,
+    title: '제목 - 수정',
+    recruitmentStartDate: '2024-12-01T15:00:00.000Z',
+    recruitmentEndDate: '2024-12-02T15:00:00.000Z',
+    imageUrls: [],
+    applyCount: 0,
+    scrapCount: 0,
+    isPublic: true,
+    createdAt: '2024-12-24T04:28:44.515Z',
+  },
+];
