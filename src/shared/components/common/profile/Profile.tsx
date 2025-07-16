@@ -14,7 +14,7 @@ interface ProfileProps {
   /**
    * 프로필 이미지 URL입니다. 없을 경우 기본 프로필 이미지가 보여집니다.
    */
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 /**

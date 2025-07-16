@@ -9,13 +9,15 @@ import Textarea from '@/shared/components/common/input/Textarea';
 import PrivateWrapper from '@/shared/components/common/PrivateWrapper';
 import Profile from '@/shared/components/common/profile/Profile';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
+import UploadMultipleImage from '@/shared/components/common/uploadImage/UploadMultipleImage';
+import UploadSingleImage from '@/shared/components/common/uploadImage/UploadSingleImage';
 
 const TaesikTest = () => {
   const [isp, setIsp] = useState(true);
   const inputRef1 = useRef<HTMLInputElement>(null);
   const [isPass, setIsPass] = useState(true);
   return (
-    <div className="bg-background-300">
+    <div className="bg-background-300 p-50">
       <div>태식 테스트 페이지</div>
       <Icon alt="위치" src="/icons/pin-solid.svg" />
       <Icon
@@ -142,8 +144,18 @@ const TaesikTest = () => {
         imageUrl="https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/415/1752142046479/15-2_5882_1752141901515.jpeg"
         sizes="26px"
       />
-      <ProfileEdit />
-      <ProfileEdit imageUrl="https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/415/1752142046479/15-2_5882_1752141901515.jpeg" />
+      <ProfileEdit onImageChange={() => {}} />
+      <ProfileEdit
+        id="editProfile2"
+        imageUrl="https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Albaform/user/415/1752142046479/15-2_5882_1752141901515.jpeg"
+        onImageChange={() => {}}
+      />
+      <div className="p-20">
+        <UploadSingleImage onImageChange={() => {}} />
+      </div>
+      <div className="p-20">
+        <UploadMultipleImage onImageChange={() => {}} />
+      </div>
     </div>
   );
 };
