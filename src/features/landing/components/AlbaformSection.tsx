@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+import LandingContainer from './LandingContainer';
 import SubTitle from './SubTitle';
 
 /**
@@ -144,7 +145,7 @@ const subTitles = [
 const AlbaformSection = () => {
   return (
     <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
-      <div className="mx-auto flex w-1140 justify-between">
+      <LandingContainer>
         <div className="flex flex-col gap-2">
           <motion.h2
             className="mb-40 text-5xl font-bold text-gray-50"
@@ -184,7 +185,7 @@ const AlbaformSection = () => {
           </div>
           <AnalogClock />
         </div>
-      </div>
+      </LandingContainer>
     </section>
   );
 };

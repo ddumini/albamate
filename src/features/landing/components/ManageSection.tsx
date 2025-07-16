@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import LandingContainer from './LandingContainer';
 import SubTitle from './SubTitle';
 
 const subTitles = [
@@ -29,7 +30,7 @@ const cardList = [
 const ManageSection = () => {
   return (
     <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
-      <div className="mx-auto flex w-1140 justify-between">
+      <LandingContainer>
         <div>
           <h2 className="mb-40 text-5xl font-bold text-[#EE893F]">
             한 곳에서 쉽게 관리하세요
@@ -131,7 +132,7 @@ const ManageSection = () => {
             </motion.ul>
           </div>
         </div>
-      </div>
+      </LandingContainer>
     </section>
   );
 };

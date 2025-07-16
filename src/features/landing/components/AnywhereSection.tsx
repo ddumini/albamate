@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import LandingContainer from './LandingContainer';
 import SubTitle from './SubTitle';
 
 const subTitles = [
@@ -20,7 +21,7 @@ const AnywhereSection = () => {
         viewport={{ once: false, margin: '-10px' }}
         whileInView={{ scale: 4 }}
       /> */}
-      <div className="mx-auto flex w-1140 justify-between">
+      <LandingContainer>
         <div className="flex flex-col gap-2">
           <motion.h2
             className="mb-40 text-5xl font-bold text-[#3A5497]"
@@ -79,7 +80,7 @@ const AnywhereSection = () => {
             />
           </motion.div>
         </div>
-      </div>
+      </LandingContainer>
     </section>
   );
 };
