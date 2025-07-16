@@ -84,7 +84,7 @@ const MainGnb = ({ showSearch = false }: MainGnbProps) => {
 
       {/* 🔍 조건부 검색창 */}
       {showSearch && (
-        <div className="my-8 flex justify-center px-4">
+        <div className="mx-auto my-8 flex max-w-7xl justify-start px-4">
           <IconInput
             alt="검색"
             className="w-327 lg:w-728"
