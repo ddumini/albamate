@@ -46,7 +46,7 @@ const AlbaCard = ({ item, onClick }: Props) => {
 
   return (
     <div
-      className="w-360 cursor-pointer flex-col gap-8 rounded-xl border border-gray-200 p-24 transition-shadow hover:shadow-md lg:w-477"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-xl border p-24 transition-shadow hover:shadow-lg lg:w-477"
       onClick={onClick}
     >
       <div className="relative flex h-180 w-full justify-end overflow-hidden rounded-lg">
@@ -54,18 +54,18 @@ const AlbaCard = ({ item, onClick }: Props) => {
           fill
           alt="알바 이미지"
           className="object-cover"
-          src={item.imageUrls?.[0] || '/images/logo.svg'}
+          src={item.imageUrls?.[0] || '/icons/user.svg'}
         />
       </div>
 
-      <div className="relative mt-12 flex items-center gap-8 text-sm text-gray-600">
+      <div className="relative mt-12 flex items-center gap-8 text-sm">
         {item.isPublic && <Chip active label="공개" variant="filled" />}
         <Chip
           active
           label={isRecruiting ? '모집 중' : '모집 완료'}
           variant="filled"
         />
-        <span className="ml-8 whitespace-nowrap text-black">
+        <span className="Text-gray ml-8 whitespace-nowrap">
           {format(start, 'yyyy.MM.dd')} ~ {format(end, 'yyyy.MM.dd')}
         </span>
 
@@ -85,9 +85,9 @@ const AlbaCard = ({ item, onClick }: Props) => {
         </div>
       </div>
 
-      <h3 className="mt-12 text-lg font-semibold text-black">{item.title}</h3>
+      <h3 className="Text-black mt-12 text-lg font-semibold">{item.title}</h3>
 
-      <div className="mt-12 flex w-full justify-center rounded-lg bg-gray-25 py-6 text-xs text-gray-600 dark:bg-gray-100">
+      <div className="mt-12 flex w-full justify-center rounded-lg bg-gray-25 py-6 text-xs text-gray-600 dark:bg-gray-50">
         <span className="border-r border-gray-200 px-24 whitespace-nowrap hover:text-gray-900 lg:px-48">
           지원자 <span>{item.applyCount}명</span>
         </span>
