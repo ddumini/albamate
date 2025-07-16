@@ -3,17 +3,23 @@
 import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import MobileNav from './MobileNav';
 
 const AuthGnb = () => {
   const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
+
+  const isDark = resolvedTheme === 'dark';
+  const isDarkLogo = isDark ? '/logos/logo-dark.svg' : '/logos/logo.svg';
+  const isDarkSymbol = isDark ? '/logos/symbol-dark.svg' : '/logos/symbol.svg';
 
   return (
     <>
@@ -28,10 +34,10 @@ const AuthGnb = () => {
               onClick={() => router.push('/')}
             >
               <div className="relative mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-40 lg:w-40">
-                <Image fill alt="로고 이미지" src="/images/logo.svg" />
+                <Image fill alt="로고 이미지" src={isDarkSymbol} />
               </div>
               <div className="relative h-24 w-124 lg:h-36 lg:w-200">
-                <Image fill alt="로고 명" src="/images/logo-typo.svg" />
+                <Image fill alt="로고 명" src={isDarkLogo} />
               </div>
             </button>
           </div>
