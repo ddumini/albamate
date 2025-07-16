@@ -78,7 +78,7 @@ const LandingBg = () => {
     };
   }, [handleScroll, calculateScrollProgress]);
 
-  // 스크롤 진행률에 따른 배경색 계산 (동적 섹션 지원)
+  // 스크롤 진행률에 따른 배경색 계산
   const getBackgroundColor = () => {
     if (sections.length === 0) {
       return `rgb(${SECTION_COLORS[0]?.r || 31}, ${SECTION_COLORS[0]?.g || 31}, ${SECTION_COLORS[0]?.b || 31})`;

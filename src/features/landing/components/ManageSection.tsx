@@ -88,48 +88,25 @@ const ManageSection = () => {
                   </div>
                 </motion.li>
               ))}
-              <li className="filter-grayscale flex items-center gap-25 rounded-2xl bg-gray-100 px-33 py-23">
-                <Image
-                  alt="manage-4"
-                  className="flex-shrink-0"
-                  height={61}
-                  src="/icons/user-profile.svg"
-                  width={61}
-                />
-                <div className="w-full">
-                  <div className="mb-28 h-8 w-60 rounded-full bg-gray-200" />
-                  <div className="mb-16 h-8 w-full rounded-full bg-gray-200" />
-                  <div className="h-8 w-121 rounded-full bg-gray-200" />
-                </div>
-              </li>
-              <li className="filter-grayscale flex items-center gap-25 rounded-2xl bg-gray-100 px-33 py-23">
-                <Image
-                  alt="manage-4"
-                  className="flex-shrink-0"
-                  height={61}
-                  src="/icons/user-profile.svg"
-                  width={61}
-                />
-                <div className="w-full">
-                  <div className="mb-28 h-8 w-60 rounded-full bg-gray-200" />
-                  <div className="mb-16 h-8 w-full rounded-full bg-gray-200" />
-                  <div className="h-8 w-121 rounded-full bg-gray-200" />
-                </div>
-              </li>
-              <li className="filter-grayscale flex items-center gap-25 rounded-2xl bg-gray-100 px-33 py-23">
-                <Image
-                  alt="manage-4"
-                  className="flex-shrink-0"
-                  height={61}
-                  src="/icons/user-profile.svg"
-                  width={61}
-                />
-                <div className="w-full">
-                  <div className="mb-28 h-8 w-60 rounded-full bg-gray-200" />
-                  <div className="mb-16 h-8 w-full rounded-full bg-gray-200" />
-                  <div className="h-8 w-121 rounded-full bg-gray-200" />
-                </div>
-              </li>
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <li
+                  key={crypto.randomUUID()}
+                  className="filter-grayscale flex items-center gap-25 rounded-2xl bg-gray-100 px-33 py-23"
+                >
+                  <Image
+                    alt={`manage-placeholder-${idx + 1}`}
+                    className="flex-shrink-0"
+                    height={61}
+                    src="/icons/user-profile.svg"
+                    width={61}
+                  />
+                  <div className="w-full">
+                    <div className="mb-28 h-8 w-60 rounded-full bg-gray-200" />
+                    <div className="mb-16 h-8 w-full rounded-full bg-gray-200" />
+                    <div className="h-8 w-121 rounded-full bg-gray-200" />
+                  </div>
+                </li>
+              ))}
             </motion.ul>
           </div>
         </div>

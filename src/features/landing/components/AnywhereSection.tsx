@@ -15,13 +15,6 @@ const subTitles = [
 const AnywhereSection = () => {
   return (
     <LandingSection>
-      {/* <motion.div
-        className="pointer-events-none absolute right-5 bottom-5 -z-10 h-[100vh] w-[100vh] rounded-full bg-[rgb(220,230,255)]"
-        initial={{ scale: 0 }}
-        transition={{ duration: 2, ease: 'easeOut', delay: 0.3 }}
-        viewport={{ once: false, margin: '-10px' }}
-        whileInView={{ scale: 4 }}
-      /> */}
       <LandingContainer>
         <div className="flex flex-col gap-2">
           <motion.h2
