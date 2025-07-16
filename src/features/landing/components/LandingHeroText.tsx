@@ -44,7 +44,7 @@ const LandingHeroText = ({ isWhite = false }: LandingHeroTextProps) => {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}
-        transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.2 }}
+        transition={{ duration: 0.8, ease: 'easeInOut' }}
       >
         한 곳에서 관리하는
       </motion.p>
@@ -71,7 +71,7 @@ const LandingHeroText = ({ isWhite = false }: LandingHeroTextProps) => {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}
-        transition={{ duration: 1.2, ease: 'easeInOut', delay: 1 }}
+        transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.6 }}
       >
         알바 구인 플랫폼
       </motion.p>

@@ -2,8 +2,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import RoundedButton from '@/shared/components/common/button/RoundedButton';
-
+import LandingButton from './LandingButton';
 import LandingHeroText from './LandingHeroText';
 import LandingSection from './LandingSection';
 
@@ -37,7 +36,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           className="relative mb-50 h-29 w-204"
           initial={{ opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
           <span className="sr-only">알바메이트</span>
           <Image fill alt="알바메이트" src="/logos/logo.svg" />
@@ -47,13 +46,9 @@ const HeroSection = () => {
           animate={{ opacity: 1 }}
           className="mt-50"
           initial={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: 'easeInOut', delay: 2.8 }}
+          transition={{ duration: 0.5, ease: 'easeInOut', delay: 2 }}
         >
-          <RoundedButton
-            buttonClassName="bg-blue-300 text-gray-50 h-80 w-223 text-2xl font-bold"
-            label="시작하기"
-            type="button"
-          />
+          <LandingButton content="시작하기" />
         </motion.div>
       </hgroup>
       <div className="relative h-610 w-964">
@@ -83,7 +78,7 @@ const HeroSection = () => {
               }}
               transition={{
                 duration: 0.5,
-                delay: index * 0.15 + 2,
+                delay: index * 0.15 + 1,
                 ease: 'easeInOut',
                 type: 'spring',
                 stiffness: 120,

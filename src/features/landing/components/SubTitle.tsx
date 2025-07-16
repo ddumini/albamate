@@ -19,7 +19,7 @@ const SubTitle = ({
             transition={{
               duration: 0.7,
               ease: 'easeOut',
-              delay: index * 0.1,
+              delay: index * 0.1 + 0.5,
             }}
             viewport={{ once: true, amount: 0.1 }}
             whileInView={{ opacity: 1, y: 0 }}
