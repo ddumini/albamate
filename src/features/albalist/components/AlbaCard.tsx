@@ -44,6 +44,22 @@ const AlbaCard = ({ item, onClick }: Props) => {
     dDay > 3 && 'text-gray-600 hover:text-gray-900'
   );
 
+  // map용 stats 배열 생성
+  const stats = [
+    {
+      label: '지원자',
+      value: `${item.applyCount}명`,
+    },
+    {
+      label: '스크랩',
+      value: `${item.scrapCount}명`,
+    },
+    {
+      label: dDay < 0 ? '마감 완료' : `마감 D-${dDay}`,
+      isDeadline: true,
+    },
+  ];
+
   return (
     <div
       className="Border-Card cursor-pointer flex-col gap-8 rounded-xl border p-24 transition-shadow hover:shadow-lg lg:w-477"
@@ -87,20 +103,27 @@ const AlbaCard = ({ item, onClick }: Props) => {
 
       <h3 className="Text-black mt-12 text-lg font-semibold">{item.title}</h3>
 
+      {/* map으로 리팩터링한 stats 영역 */}
       <div className="mt-12 flex w-full justify-center rounded-lg bg-gray-25 py-6 text-xs text-gray-600 dark:bg-gray-50">
-        <span className="border-r border-gray-200 px-24 whitespace-nowrap hover:text-gray-900 lg:px-48">
-          지원자 <span>{item.applyCount}명</span>
-        </span>
-        <span className="border-r border-gray-200 px-24 whitespace-nowrap lg:px-48">
-          스크랩 <span>{item.scrapCount}명</span>
-        </span>
-        <span
-          className={cn(
-            `last:border-0 ${dDayClass} px-25 whitespace-nowrap lg:px-48`
-          )}
-        >
-          {dDay < 0 ? '마감 완료' : `마감 D-${dDay}`}
-        </span>
+        {stats.map((stat, idx) => (
+          <span
+            key={stat.label}
+            className={cn(
+              'px-24 whitespace-nowrap lg:px-48',
+              idx !== stats.length - 1 && 'border-r border-gray-200',
+              stat.isDeadline && dDayClass
+            )}
+          >
+            {!stat.isDeadline ? (
+              <>
+                {stat.label}{' '}
+                <span className="hover:brightness-150">{stat.value}</span>
+              </>
+            ) : (
+              stat.label
+            )}
+          </span>
+        ))}
       </div>
     </div>
   );
