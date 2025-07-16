@@ -50,9 +50,9 @@ const ApplySection = () => {
       <motion.div
         className="absolute right-5 bottom-5 -z-10 h-[100vh] w-[100vh] rounded-full bg-[#F89A05]"
         initial={{ scale: 0 }}
-        transition={{ duration: 2.5, ease: 'easeOut', delay: 0.3 }}
-        viewport={{ once: false, margin: '-10px' }}
-        whileInView={{ scale: 4 }}
+        transition={{ duration: 2, ease: 'easeOut', delay: 0.3 }}
+        viewport={{ once: true, margin: '-10px' }}
+        whileInView={{ scale: 4.3 }}
       />
       <LandingContainer>
         <div className="flex flex-col gap-2">
