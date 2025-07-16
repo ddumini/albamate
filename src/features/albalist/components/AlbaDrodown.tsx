@@ -15,13 +15,13 @@ const AlbaDropdown = ({ item }: Props) => {
   ];
 
   return (
-    <div className="absolute top-full right-0 z-10 mt-4 w-120 rounded-md border border-gray-200 bg-white py-8 shadow-md">
+    <div className="BG-white absolute top-full right-0 z-30 mt-4 w-90 rounded-md border border-gray-200 p-4 shadow-md lg:w-110">
       {options.map(({ label, onClick }) => (
         <button
           key={label}
           className={cn(
             'relative z-10 inline-block w-full py-8 text-center text-sm transition-all duration-150',
-            'hover:scale-[0.98] hover:rounded-md hover:bg-mint-50 hover:font-medium'
+            'hover:scale-[0.98] hover:rounded-lg hover:bg-mint-50 hover:font-medium dark:hover:bg-mint-400'
           )}
           type="button"
           onClick={e => {
