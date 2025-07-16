@@ -9,11 +9,7 @@ interface ChipProps {
   active?: boolean;
 }
 
-export const Chip = ({
-  label,
-  variant = 'default',
-  active = false,
-}: ChipProps) => {
+const Chip = ({ label, variant = 'default', active = false }: ChipProps) => {
   const baseClasses = `
     inline-flex rounded-sm font-medium border items-center gap-4 transition-all
     text-xs px-8 py-4 h-28
@@ -45,3 +41,5 @@ export const Chip = ({
     </span>
   );
 };
+
+export default Chip;
