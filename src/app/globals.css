@@ -88,7 +88,7 @@
 
 /* 커스텀 유틸리티 클래스 선언(필요한 경우 아래와 같이 추가해주세요!) */
 .BG-white {
-  @apply bg-white dark:bg-neutral-900;
+  @apply bg-gray-50 dark:bg-neutral-900;
 }
 
 .BG-ToggleButton {
