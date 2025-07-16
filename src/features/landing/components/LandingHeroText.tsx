@@ -19,60 +19,35 @@ const LandingHeroText = ({ isWhite = false }: LandingHeroTextProps) => {
           to: 'linear-gradient(90deg, #000000 0%, #000000 100%, #9CA3AF 100%)',
         };
 
+  const getAnimationProps = (delay: number = 0) => ({
+    animate: isInView
+      ? {
+          background: colors.to,
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }
+      : {
+          background: colors.from,
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        },
+    initial: {
+      background: colors.from,
+      backgroundClip: 'text',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+    },
+    transition: { duration: 0.8, ease: 'easeInOut', delay },
+  });
+
   return (
     <motion.div ref={ref} className="text-center text-5xl leading-68 font-bold">
-      <motion.p
-        animate={
-          isInView
-            ? {
-                background: colors.to,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }
-            : {
-                background: colors.from,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }
-        }
-        className="relative"
-        initial={{
-          background: colors.from,
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
-      >
+      <motion.p className="relative" {...getAnimationProps()}>
         한 곳에서 관리하는
       </motion.p>
-      <motion.p
-        animate={
-          isInView
-            ? {
-                background: colors.to,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }
-            : {
-                background: colors.from,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }
-        }
-        className="relative"
-        initial={{
-          background: colors.from,
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-        transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.6 }}
-      >
+      <motion.p className="relative" {...getAnimationProps(0.6)}>
         알바 구인 플랫폼
       </motion.p>
     </motion.div>

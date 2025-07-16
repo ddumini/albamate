@@ -10,14 +10,14 @@ import MobileNav from './MobileNav';
 
 const AuthGnb = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  const isDark = theme === 'dark';
+  const isDark = resolvedTheme === 'dark';
   const isDarkLogo = isDark ? '/logos/logo-dark.svg' : '/logos/logo.svg';
   const isDarkSymbol = isDark ? '/logos/symbol-dark.svg' : '/logos/symbol.svg';
 

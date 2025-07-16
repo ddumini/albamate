@@ -37,7 +37,7 @@ const AnywhereSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <Image
-              alt="anywhere-1"
+              alt="파일 아이콘"
               height={137}
               src="/images/landing/anywhere-icon01.png"
               width={147}
@@ -50,7 +50,7 @@ const AnywhereSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <Image
-              alt="anywhere-1"
+              alt="알바 지원 이미지"
               height={462}
               loading="lazy"
               quality={90}
@@ -67,7 +67,7 @@ const AnywhereSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <Image
-              alt="anywhere-1"
+              alt="메일 아이콘"
               height={133}
               src="/images/landing/anywhere-icon02.png"
               width={157}

@@ -56,6 +56,11 @@ const AlbaformSection = () => {
                   duration: 0.8,
                   delay: i * 0.1,
                   ease: 'easeInOut',
+                  repeatType: 'reverse',
+                }}
+                viewport={{ once: false }}
+                whileInView={{
+                  transition: { repeat: Infinity },
                 }}
               />
             ))}

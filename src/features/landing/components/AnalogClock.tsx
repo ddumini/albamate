@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const AnalogClock = () => {
   const [time, setTime] = useState({
@@ -61,7 +62,7 @@ const AnalogClock = () => {
 
           return (
             <line
-              key={crypto.randomUUID()}
+              key={uuidv4()}
               stroke="#1B53DF"
               strokeWidth={i % 3 === 0 ? 8 : 3}
               x1={x1}

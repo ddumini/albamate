@@ -7,7 +7,11 @@ import LandingSection from './LandingSection';
 const FooterSection = () => {
   return (
     <LandingSection className="items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-80">
+      <div
+        aria-label="서비스 시작 섹션"
+        className="flex flex-col items-center justify-center gap-80"
+        role="contentinfo"
+      >
         <LandingHeroText />
         <LandingButton content="알바메이트 시작하기" />
       </div>

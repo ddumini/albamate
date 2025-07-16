@@ -2,33 +2,42 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 
 import LandingContainer from './LandingContainer';
 import LandingSection from './LandingSection';
 import SubTitle from './SubTitle';
 
-const subTitles = [
-  '알바폼 관리 페이지에서',
-  '지원 현황을 확인하고',
-  '지원자별 상태를 관리할 수 있습니다.',
-];
-
-const cardList = [
-  {
-    bg: '#EE893F',
-    bar: '#FCC369',
-  },
-  {
-    bg: '#F9C675',
-    bar: '#F6E2B3',
-  },
-  {
-    bg: '#F7BFA0',
-    bar: '#E6D6F7',
-  },
-];
+interface CardItem {
+  bg: string;
+  bar: string;
+}
 
 const ManageSection = () => {
+  const subTitles = [
+    '알바폼 관리 페이지에서',
+    '지원 현황을 확인하고',
+    '지원자별 상태를 관리할 수 있습니다.',
+  ];
+
+  const cardList: CardItem[] = [
+    {
+      bg: '#EE893F',
+      bar: '#FCC369',
+    },
+    {
+      bg: '#F9C675',
+      bar: '#F6E2B3',
+    },
+    {
+      bg: '#F7BFA0',
+      bar: '#E6D6F7',
+    },
+  ];
+
+  const CARD_HEIGHT = 154;
+  const ANIMATION_STEPS = [0, -CARD_HEIGHT * 1, -CARD_HEIGHT * 2];
+
   return (
     <LandingSection>
       <LandingContainer>
@@ -49,13 +58,13 @@ const ManageSection = () => {
               }}
               viewport={{ once: true, amount: 0.1 }}
               whileInView={{
-                y: [-0, -154 * 1, -154 * 2],
+                y: ANIMATION_STEPS,
               }}
             >
               {cardList.map(({ bg, bar }, idx) => (
                 <motion.li
                   key={bg}
-                  className="flex items-center gap-25 rounded-2xl px-33 py-23"
+                  className="flex items-center gap-25 rounded-2xl px-33 py-23 will-change-transform"
                   initial={{ opacity: 0.6, filter: 'grayscale(100%)' }}
                   style={{ backgroundColor: bg }}
                   transition={{ duration: 1, delay: idx }}
@@ -90,7 +99,7 @@ const ManageSection = () => {
               ))}
               {Array.from({ length: 3 }).map((_, idx) => (
                 <li
-                  key={crypto.randomUUID()}
+                  key={uuidv4()}
                   className="filter-grayscale flex items-center gap-25 rounded-2xl bg-gray-100 px-33 py-23"
                 >
                   <Image

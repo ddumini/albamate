@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
 
 import LandingContainer from './LandingContainer';
 import LandingSection from './LandingSection';
@@ -71,7 +72,7 @@ const ApplySection = () => {
           <ul className="flex h-140 w-full justify-between px-50">
             {floatingAnimations.map((animation, idx) => (
               <motion.li
-                key={crypto.randomUUID()}
+                key={uuidv4()}
                 animate={{
                   y: animation.y,
                   x: animation.x,
@@ -111,7 +112,7 @@ const ApplySection = () => {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <Image
-              alt="anywhere-1"
+              alt="여성 지원자 캐릭터"
               height={360}
               loading="lazy"
               src="/images/landing/apply-girl.png"
