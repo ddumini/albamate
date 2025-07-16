@@ -1,6 +1,5 @@
 'use client';
 
-import IconInput from '@components/common/input/IconInput';
 import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -9,11 +8,7 @@ import { useState } from 'react';
 
 import GnbMenu from '../gnb-menu/GnbMenu';
 
-interface MainGnbProps {
-  showSearch?: boolean;
-}
-
-const MainGnb = ({ showSearch = false }: MainGnbProps) => {
+const MainGnb = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
@@ -77,21 +72,6 @@ const MainGnb = ({ showSearch = false }: MainGnbProps) => {
           </button>
         </div>
       </div>
-
-      {/* 🔍 조건부 검색창 */}
-      {showSearch && (
-        <div className="mx-auto my-8 flex max-w-7xl justify-start px-4">
-          <IconInput
-            alt="검색"
-            className="w-327 lg:w-728"
-            iconClassName="pl-24"
-            iconOnClick={() => alert('검색 버튼 클릭')}
-            inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
-            placeholder="어떤 알바를 찾고 계세요?"
-            src="/icons/search.svg"
-          />
-        </div>
-      )}
 
       {/* 사이드 메뉴 */}
       <GnbMenu isOpen={isOpen} setIsOpen={setIsOpen} />
