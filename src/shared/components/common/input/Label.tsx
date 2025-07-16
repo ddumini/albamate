@@ -28,7 +28,14 @@ const Label = ({ children, isRequired, className, ...props }: LabelProps) => {
       {...props}
     >
       {children}
-      {isRequired && <span className="ml-4 text-mint-300">*</span>}
+      {isRequired && (
+        <>
+          <span aria-hidden="true" className="ml-4 text-mint-300">
+            *
+          </span>
+          <span className="sr-only">필수</span>
+        </>
+      )}
     </label>
   );
 };
