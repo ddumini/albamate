@@ -113,7 +113,7 @@
 }
 
 .Text-black {
-  @apply text-neutral-800 dark:text-white;
+  @apply text-neutral-800 dark:text-gray-100;
 }
 
 .Text-gray {
