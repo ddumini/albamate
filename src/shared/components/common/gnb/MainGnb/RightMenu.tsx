@@ -20,9 +20,10 @@ const RightMenu = ({ isOpen, setIsOpen, isDark }: RightMenuProps) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <Image
-          fill
           alt="메뉴 아이콘"
+          height={24}
           src={isDark ? '/icons/menu-white.svg' : '/icons/menu.svg'}
+          width={24}
         />
       </button>
     </div>

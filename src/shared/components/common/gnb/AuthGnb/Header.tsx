@@ -18,11 +18,23 @@ const Header = () => {
             className="flex cursor-pointer items-center space-x-2 py-15 text-xl font-bold md:py-24"
             href="/"
           >
-            <div className="relative mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-40 lg:w-40">
-              <Image fill alt="로고 이미지" src="/images/logo.svg" />
+            <div className="mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-40 lg:w-40">
+              <Image
+                alt="로고 이미지"
+                className="h-full w-full"
+                height={40}
+                src="/images/logo.svg"
+                width={40}
+              />
             </div>
-            <div className="relative h-24 w-124 lg:h-36 lg:w-200">
-              <Image fill alt="로고 명" src="/images/logo-typo.svg" />
+            <div className="h-24 w-124 lg:h-36 lg:w-200">
+              <Image
+                alt="로고 명"
+                className="h-full w-full"
+                height={36}
+                src="/images/logo-typo.svg"
+                width={200}
+              />
             </div>
           </Link>
         </div>
