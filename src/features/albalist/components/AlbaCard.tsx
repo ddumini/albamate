@@ -62,7 +62,7 @@ const AlbaCard = ({ item, onClick }: Props) => {
 
   return (
     <div
-      className="Border-Card cursor-pointer flex-col gap-8 rounded-xl p-24 transition-shadow hover:shadow-lg lg:w-477"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-477"
       onClick={onClick}
     >
       <div className="relative flex h-180 w-full justify-end overflow-hidden rounded-lg">
