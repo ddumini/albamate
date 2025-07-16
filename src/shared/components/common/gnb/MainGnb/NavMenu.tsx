@@ -16,12 +16,12 @@ const NavMenu = ({ pathname }: NavMenuProps) => {
   const router = useRouter();
 
   return (
-    <nav className="Text-black flex gap-16 text-sm font-medium md:gap-24 md:text-base lg:text-xl">
+    <nav className="Text-black flex gap-16 font-medium md:gap-24">
       {NAV_ITEMS.map(({ href, label }) => (
         <button
           key={href}
-          className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-            pathname === href ? 'text-mint-100' : ''
+          className={`text-sm transition-colors md:gap-24 md:text-base lg:text-xl ${
+            pathname === href && 'text-mint-100'
           }`}
           type="button"
           onClick={() => router.push(href)}

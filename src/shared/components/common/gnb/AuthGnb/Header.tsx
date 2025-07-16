@@ -41,10 +41,10 @@ const Header = () => {
 
         {/* 우측 (데스크탑용) */}
         <div className="hidden items-center gap-24 md:flex">
-          <nav className="text-16 mr-16 flex gap-24 font-medium md:text-xs lg:text-sm lg:text-[20px]">
+          <nav className="mr-16 flex gap-24 text-sm font-medium md:text-md lg:text-[18px]">
             <button
-              className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-                pathname === '/owner' ? 'text-mint-100' : ''
+              className={`transition-colors ${
+                pathname === '/owner' && 'text-mint-100'
               }`}
               type="button"
               onClick={() => router.push('/owner')}
@@ -52,8 +52,8 @@ const Header = () => {
               사장님 전용
             </button>
             <button
-              className={`hover:text-primary cursor-pointer border-none bg-transparent p-0 text-inherit transition-colors ${
-                pathname === '/worker' ? 'text-mint-100' : ''
+              className={`transition-colors ${
+                pathname === '/worker' && 'text-mint-100'
               }`}
               type="button"
               onClick={() => router.push('/worker')}
