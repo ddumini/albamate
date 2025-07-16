@@ -16,7 +16,7 @@ const NavMenu = ({ pathname }: NavMenuProps) => {
   const router = useRouter();
 
   return (
-    <nav className="flex gap-16 text-[14px] font-medium md:gap-24 md:text-[16px] lg:text-[20px]">
+    <nav className="Text-black flex gap-16 text-sm font-medium md:gap-24 md:text-base lg:text-xl">
       {NAV_ITEMS.map(({ href, label }) => (
         <button
           key={href}
