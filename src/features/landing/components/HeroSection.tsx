@@ -4,10 +4,10 @@ import Image from 'next/image';
 
 import RoundedButton from '@/shared/components/common/button/RoundedButton';
 
+import LandingHeroText from './LandingHeroText';
 import LandingSection from './LandingSection';
 
 const HeroSection = () => {
-  const phrases = ['한 곳에서 관리하는', '알바 구인 플랫폼'];
   const fileList = [
     {
       src: '/images/landing/hero-file01.png',
@@ -42,23 +42,7 @@ const HeroSection = () => {
           <span className="sr-only">알바메이트</span>
           <Image fill alt="알바메이트" src="/logos/logo.svg" />
         </motion.h1>
-        <p className="font-regular text-center text-[56px] text-gray-50">
-          {phrases.map((phrase, idx) => (
-            <motion.span
-              key={crypto.randomUUID()}
-              animate={{ opacity: 1, x: 0 }}
-              aria-hidden="true"
-              className="block"
-              initial={{ opacity: 0, x: -100 }}
-              transition={{
-                duration: 1,
-                delay: idx * 0.3 + 1,
-              }}
-            >
-              {phrase}
-            </motion.span>
-          ))}
-        </p>
+        <LandingHeroText isWhite />
         <motion.div
           animate={{ opacity: 1 }}
           className="mt-50"

@@ -8,10 +8,11 @@ import { cn } from '@/shared/lib/cn';
 // 섹션별 배경색 정의 (RGB) - 섹션 순서대로 정의
 const SECTION_COLORS = [
   { r: 31, g: 31, b: 31 }, // black-400 (HeroSection)
-  { r: 220, g: 230, b: 255 }, // white (AnywhereSection)
-  { r: 70, g: 114, b: 225 }, // white (AlbaformSection)
-  { r: 254, g: 242, b: 221 }, // white (AlbaformSection)
-  { r: 254, g: 242, b: 221 }, // white (AlbaformSection)
+  { r: 220, g: 230, b: 255 }, // blue (AnywhereSection)
+  { r: 70, g: 114, b: 225 }, // deep blue (AlbaformSection)
+  { r: 254, g: 242, b: 221 }, // orange (ApplySection)
+  { r: 254, g: 242, b: 221 }, // orange (ManageSection)
+  { r: 255, g: 255, b: 255 }, // white (FooterSection)
 ];
 
 // 두 RGB 색상 간의 보간

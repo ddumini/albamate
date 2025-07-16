@@ -1,22 +1,21 @@
+'use client';
+
 import RoundedButton from '@/shared/components/common/button/RoundedButton';
 
-import LandingContainer from './LandingContainer';
+import LandingHeroText from './LandingHeroText';
 import LandingSection from './LandingSection';
 
 const FooterSection = () => {
   return (
-    <LandingSection>
-      <LandingContainer>
-        <p>한 곳에서 관리하는</p>
-        <p>알바 구인 플랫폼</p>
+    <LandingSection className="items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-80">
+        <LandingHeroText />
         <RoundedButton
-          buttonClassName="bg-blue-500 text-white px-4 py-2"
-          iconClassName="w-4 h-4 mr-2"
-          iconSrc="/icons/bell.svg"
-          label="구독하기"
+          buttonClassName="bg-blue-300 text-white w-300 h-80 text-2xl font-bold"
+          label="알바메이트 시작하기"
           type="button"
         />
-      </LandingContainer>
+      </div>
     </LandingSection>
   );
 };
