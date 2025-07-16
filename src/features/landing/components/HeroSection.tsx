@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import RoundedButton from '@/shared/components/common/button/RoundedButton';
 
+import LandingSection from './LandingSection';
+
 const HeroSection = () => {
   const phrases = ['한 곳에서 관리하는', '알바 구인 플랫폼'];
   const fileList = [
@@ -29,7 +31,7 @@ const HeroSection = () => {
     },
   ];
   return (
-    <section className="flex h-screen flex-col items-center justify-end gap-50">
+    <LandingSection className="items-center justify-end gap-50">
       <hgroup className="relative z-5 flex flex-col items-center">
         <motion.h1
           animate={{ opacity: 1, y: 0 }}
@@ -116,7 +118,7 @@ const HeroSection = () => {
           width={798}
         />
       </div>
-    </section>
+    </LandingSection>
   );
 };
 

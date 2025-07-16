@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import LandingContainer from './LandingContainer';
+import LandingSection from './LandingSection';
 import SubTitle from './SubTitle';
 
 const subTitles = [
@@ -13,7 +14,7 @@ const subTitles = [
 
 const AnywhereSection = () => {
   return (
-    <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
+    <LandingSection>
       {/* <motion.div
         className="pointer-events-none absolute right-5 bottom-5 -z-10 h-[100vh] w-[100vh] rounded-full bg-[rgb(220,230,255)]"
         initial={{ scale: 0 }}
@@ -81,7 +82,7 @@ const AnywhereSection = () => {
           </motion.div>
         </div>
       </LandingContainer>
-    </section>
+    </LandingSection>
   );
 };
 

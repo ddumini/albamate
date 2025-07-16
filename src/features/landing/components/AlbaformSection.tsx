@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import AnalogClock from './AnalogClock';
 import LandingContainer from './LandingContainer';
+import LandingSection from './LandingSection';
 import SubTitle from './SubTitle';
 
 const DiagonalLine = [
@@ -20,7 +21,7 @@ const subTitles = [
 
 const AlbaformSection = () => {
   return (
-    <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
+    <LandingSection>
       <LandingContainer>
         <div className="flex flex-col gap-2">
           <motion.h2
@@ -62,7 +63,7 @@ const AlbaformSection = () => {
           <AnalogClock />
         </div>
       </LandingContainer>
-    </section>
+    </LandingSection>
   );
 };
 

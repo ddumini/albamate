@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import LandingContainer from './LandingContainer';
+import LandingSection from './LandingSection';
 import SubTitle from './SubTitle';
 
 const subTitles = ['간단한 정보만 입력해도', '알바 지원이 가능합니다'];
@@ -45,7 +46,7 @@ const floatingAnimations = [
 
 const ApplySection = () => {
   return (
-    <section className="relative z-10 flex h-screen flex-col justify-center overflow-hidden bg-transparent">
+    <LandingSection>
       <motion.div
         className="absolute right-5 bottom-5 -z-10 h-[100vh] w-[100vh] rounded-full bg-[#F89A05]"
         initial={{ scale: 0 }}
@@ -120,7 +121,7 @@ const ApplySection = () => {
           </motion.div>
         </div>
       </LandingContainer>
-    </section>
+    </LandingSection>
   );
 };
 
