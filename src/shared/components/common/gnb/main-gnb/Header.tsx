@@ -7,15 +7,17 @@ import {
   innerWrapper,
   leftGroup,
 } from '@common/gnb/styles/Header.styles';
-import GnbMenu from '@common/gnb-menu/GnbMenu';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
 
 import RightMenu from './RightMenu';
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface HeaderProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
+
+const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const isDark = resolvedTheme === 'dark';
@@ -29,7 +31,6 @@ const Header = () => {
         </div>
         <RightMenu isDark={isDark} isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
-      <GnbMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };
