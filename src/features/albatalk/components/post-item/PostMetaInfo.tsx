@@ -30,9 +30,12 @@ const PostMetaInfo = ({
   const handleLikeToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    setIsLiked(prev => !prev);
-    setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
-    console.log(`좋아요 ${isLiked ? '취소' : '추가'} : ${postId}`);
+    setIsLiked(prev => {
+      const newIsLiked = !prev;
+      setLikeCount(prevCount => (prev ? prevCount - 1 : prevCount + 1));
+      console.log(`좋아요 ${prev ? '취소' : '추가'} : ${postId}`);
+      return newIsLiked;
+    });
   };
 
   return (
@@ -41,7 +44,7 @@ const PostMetaInfo = ({
     >
       <div className="flex items-center gap-7">
         {/* 프로필 이미지 */}
-        <div className="size-24">
+        <div className="size-26">
           {writer.imageUrl ? (
             <Profile
               className="size-26 border-none lg:size-26"

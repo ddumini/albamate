@@ -8,7 +8,7 @@ export interface Post {
   id: number;
   title: string;
   content: string;
-  imageUrl: string;
+  imageUrl: string | null;
   likeCount: number;
   commentCount: number;
   createdAt: string;

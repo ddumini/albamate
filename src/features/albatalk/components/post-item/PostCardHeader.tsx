@@ -29,11 +29,10 @@ const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
 
   const handleActionClick = (option: string) => {
     if (option === 'edit') {
-      console.log('수정하기:', postId);
-      // 수정 로직
+      //TODO: 수정 로직
+      alert(postId);
     } else if (option === 'delete') {
-      console.log('삭제하기:', postId);
-      // 삭제 로직
+      //TODO: 삭제 로직
     }
     setOpen(false); // 클릭 후 드롭다운 닫기
   };
@@ -53,6 +52,7 @@ const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
           alt="드롭다운 아이콘"
           className="cursor-pointer"
           height={24}
+          role="button"
           src="/icons/kebab-menu.svg"
           width={24}
           onClick={e => {
