@@ -4,15 +4,13 @@ import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
+
+import { useThemeLogo } from '@/shared/hooks/useThemeLogo';
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
-  const isDarkLogo = isDark ? '/logos/logo-dark.svg' : '/logos/logo.svg';
-  const isDarkSymbol = isDark ? '/logos/symbol-dark.svg' : '/logos/symbol.svg';
+  const { logoSrc, symbolSrc } = useThemeLogo();
 
   return (
     <header className="w-full border-b border-gray-100 md:px-72 lg:px-120 dark:border-gray-500">
@@ -28,7 +26,7 @@ const Header = () => {
                 alt="로고 이미지"
                 className="h-full w-full"
                 height={40}
-                src={isDarkSymbol}
+                src={logoSrc}
                 width={40}
               />
             </div>
@@ -37,7 +35,7 @@ const Header = () => {
                 alt="로고 명"
                 className="h-full w-full"
                 height={36}
-                src={isDarkLogo}
+                src={symbolSrc}
                 width={200}
               />
             </div>
