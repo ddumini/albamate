@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from '@common/gnb/main-gnb/Logo';
+import Logo from '@common/gnb/Logo';
 import NavMenu from '@common/gnb/main-gnb/NavMenu';
 import {
   headerWrapper,

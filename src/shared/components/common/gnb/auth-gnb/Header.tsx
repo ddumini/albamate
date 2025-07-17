@@ -1,21 +1,15 @@
 'use client';
 
-import {
-  headerWrapper,
-  innerWrapper,
-  navButton,
-} from '@common/gnb/styles/Header.styles';
-import Image from 'next/image';
-import Link from 'next/link';
+import { headerWrapper, innerWrapper } from '@common/gnb/styles/Header.styles';
 import { usePathname, useRouter } from 'next/navigation';
 
-import ThemeToggle from '@/shared/components/ThemeToggle';
-import { useThemeLogo } from '@/shared/hooks/useThemeLogo';
+import Logo from '@/shared/components/common/gnb/Logo';
+
+import RightMenu from './RightMenu';
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { logoSrc, symbolSrc } = useThemeLogo();
 
   return (
     <header className={headerWrapper}>
@@ -24,51 +18,11 @@ const Header = () => {
       >
         {/* 좌측 로고 */}
         <div className="flex items-center md:gap-24">
-          <Link
-            className="flex cursor-pointer items-center space-x-2 py-15 text-xl font-bold md:py-24"
-            href="/"
-          >
-            <div className="mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-36 lg:w-36">
-              <Image
-                alt="로고 이미지"
-                className="h-full w-full"
-                height={36}
-                src={symbolSrc}
-                width={200}
-              />
-            </div>
-            <div className="h-24 w-124 lg:h-36 lg:w-200">
-              <Image
-                alt="로고 명"
-                className="h-full w-full"
-                height={40}
-                src={logoSrc}
-                width={40}
-              />
-            </div>
-          </Link>
+          <Logo />
         </div>
 
         {/* 우측 */}
-        <div className="hidden items-center gap-24 md:flex">
-          <nav className="mr-16 flex gap-24 text-sm font-medium md:text-md lg:text-2lg">
-            <button
-              className={navButton(pathname === '/owner')}
-              type="button"
-              onClick={() => router.push('/owner')}
-            >
-              사장님 전용
-            </button>
-            <button
-              className={navButton(pathname === '/worker')}
-              type="button"
-              onClick={() => router.push('/worker')}
-            >
-              지원자 전용
-            </button>
-          </nav>
-          <ThemeToggle />
-        </div>
+        <RightMenu />
       </div>
     </header>
   );
