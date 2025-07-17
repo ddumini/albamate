@@ -1,4 +1,3 @@
-// components/common/header/Header.tsx
 'use client';
 
 import Logo from '@common/gnb/main-gnb/Logo';
