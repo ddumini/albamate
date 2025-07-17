@@ -1,11 +1,10 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
+import { Writer } from '@/features/albatalk/types/albatalk';
 import Profile from '@/shared/components/common/profile/Profile';
 import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/utils/date';
-
-import { Writer } from '../../types/albatalk';
 
 interface PostMetaInfoProps {
   writer: Writer;
