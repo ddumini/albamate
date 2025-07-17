@@ -20,9 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/shared/components/*"],
       "@lib/*": ["./src/shared/lib/*"],
-      "@features/*": ["./src/features/*"]
+      "@common/*": ["./src/shared/components/common/*"]
     },
     // Turbopack 호환성 설정
     "forceConsistentCasingInFileNames": true,
