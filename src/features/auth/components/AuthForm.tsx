@@ -15,8 +15,14 @@ const AuthForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
-  } = useForm<IFormInput>();
+    formState: { isValid, errors },
+  } = useForm<IFormInput>({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     console.log(data);
@@ -25,11 +31,19 @@ const AuthForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-16 lg:gap-32">
-        <AuthFormItem label="이메일" type="email" {...register('email')} />
         <AuthFormItem
+          errors={errors}
+          label="이메일"
+          name="email"
+          register={register}
+          type="email"
+        />
+        <AuthFormItem
+          errors={errors}
           label="비밀번호"
+          name="password"
+          register={register}
           type="password"
-          {...register('password')}
         />
       </div>
       <PrimaryButton

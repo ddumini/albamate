@@ -1,5 +1,3 @@
-import AuthForm from '@/features/auth/components/AuthForm';
-import AuthSns from '@/features/auth/components/AuthSns';
 import AuthTitleArea from '@/features/auth/components/AuthTitleArea';
 import { AuthProvider } from '@/features/auth/context/AuthContext';
 import InnerContainer from '@/shared/components/container/InnerContainer';
@@ -14,8 +12,6 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         >
           <AuthTitleArea />
           {children}
-          <AuthForm />
-          <AuthSns />
         </InnerContainer>
       </main>
     </AuthProvider>

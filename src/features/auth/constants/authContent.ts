@@ -32,8 +32,6 @@ export const AUTH_CONTENT_TEMPLATES: Record<
     accountInfo: {
       title: '사장님 계정 정보',
       description: ['계정 정보를 입력해주세요.'],
-      link: AUTH_ROUTES.SIGNIN,
-      linkText: '로그인 하기',
     },
   },
   applicant: {
@@ -49,17 +47,15 @@ export const AUTH_CONTENT_TEMPLATES: Record<
     signup: {
       title: '지원자 회원가입',
       description: [
-        '아직 계정이 없으신가요?',
-        '사장님 로그인은 사장님 전용 페이지에서 할 수 있습니다.',
+        '이미 계정이 있으신가요?',
+        '사장님 회원가입은 사장님 전용 페이지에서 할 수 있습니다.',
       ],
       link: AUTH_ROUTES.SIGNIN,
-      linkText: '로그인 하기',
+      linkText: '회원가입 하기',
     },
     accountInfo: {
       title: '지원자 계정 정보',
       description: ['계정 정보를 입력해주세요.'],
-      link: AUTH_ROUTES.SIGNIN,
-      linkText: '로그인 하기',
     },
   },
 };
@@ -78,7 +74,7 @@ export const DEFAULT_AUTH_CONTENT: Record<AuthPageType, AuthContent> = {
   signup: {
     title: '지원자 회원가입',
     description: [
-      '아직 계정이 없으신가요?',
+      '이미 계정이 있으신가요?',
       '사장님 로그인은 사장님 전용 페이지에서 할 수 있습니다.',
     ],
     link: AUTH_ROUTES.SIGNIN,
@@ -87,7 +83,5 @@ export const DEFAULT_AUTH_CONTENT: Record<AuthPageType, AuthContent> = {
   accountInfo: {
     title: '지원자 계정 정보',
     description: ['계정 정보를 입력해주세요.'],
-    link: AUTH_ROUTES.SIGNIN,
-    linkText: '로그인 하기',
   },
 };

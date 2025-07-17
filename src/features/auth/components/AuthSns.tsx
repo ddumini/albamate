@@ -4,11 +4,11 @@ import Link from 'next/link';
 const snsList = [
   {
     name: 'google',
-    href: '/auth/sns/google',
+    href: '/api/auth/signin/google',
   },
   {
     name: 'kakao',
-    href: '/auth/sns/kakao',
+    href: '/api/auth/signin/kakao',
   },
 ];
 
@@ -27,10 +27,10 @@ const AuthSns = () => {
             >
               <Image
                 alt={name}
-                className="lg:h-27 lg:w-27"
-                height={18}
+                className="h-18 w-18 lg:h-27 lg:w-27"
+                height={27}
                 src={`/logos/${name}.svg`}
-                width={18}
+                width={27}
               />
             </Link>
           </li>

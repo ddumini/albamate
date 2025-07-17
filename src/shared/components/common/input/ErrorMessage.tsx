@@ -1,7 +1,25 @@
-const ErrorMessage = () => {
+import { cn } from '@/shared/lib/cn';
+
+interface ErrorMessageProps {
+  message: string;
+  isVisible?: boolean;
+  className?: string;
+}
+
+const ErrorMessage = ({
+  message = '이메일 형식이 아닙니다.',
+  isVisible = false,
+  className = '',
+}: ErrorMessageProps) => {
   return (
-    <div className="mt-8 hidden text-right text-sm font-medium text-error lg:text-lg">
-      이메일 형식이 아닙니다.
+    <div
+      className={cn(
+        'mt-8 hidden text-right text-sm font-medium text-error lg:text-lg',
+        isVisible && 'block',
+        className
+      )}
+    >
+      {message}
     </div>
   );
 };
