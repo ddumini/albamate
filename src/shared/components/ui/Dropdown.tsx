@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
+
 /**
  * Dropdown 컴포넌트
  *
@@ -29,7 +31,6 @@ import { twMerge } from 'tailwind-merge';
  *   </ul>
  * </Dropdown>
  */
-
 interface DropdownProps {
   trigger: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   children: React.ReactNode;
@@ -46,7 +47,7 @@ const Dropdown = ({
   isRight = false,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null); // 드롭다운 영역 감지용 ref
 
   const renderTrigger = () => {
     if (typeof trigger === 'function') {
@@ -56,24 +57,7 @@ const Dropdown = ({
   };
 
   // 외부 클릭 시 드롭다운 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    // 이벤트 리스너 등록
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // 클린업 함수
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   // ESC 키로 드롭다운 닫기
   useEffect(() => {
@@ -97,7 +81,7 @@ const Dropdown = ({
   return (
     <div
       ref={dropdownRef}
-      className={`relative ${className}`}
+      className={twMerge('relative', className)}
       data-dropdown-id={id} // 고유 식별자
     >
       <div
