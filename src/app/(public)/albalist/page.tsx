@@ -1,3 +1,7 @@
-import ListPage from '@/features/albalist/pages/ListPage';
+import AlbaListPage from '@/features/albalist/components/AlbaListPage';
 
-export default ListPage;
+const Page = () => {
+  return <AlbaListPage />;
+};
+
+export default Page;
