@@ -33,7 +33,7 @@ const AuthForm = () => {
         />
       </div>
       <PrimaryButton
-        className="mt-16 h-58 w-full"
+        className="mt-24 h-58 w-full lg:mt-56"
         disabled={!isValid}
         label="로그인 하기"
         type="submit"
