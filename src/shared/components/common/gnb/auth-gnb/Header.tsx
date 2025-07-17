@@ -28,22 +28,22 @@ const Header = () => {
             className="flex cursor-pointer items-center space-x-2 py-15 text-xl font-bold md:py-24"
             href="/"
           >
-            <div className="mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-40 lg:w-40">
+            <div className="mr-16 h-20 w-20 md:mr-12 md:h-24 md:w-24 lg:h-36 lg:w-36">
               <Image
                 alt="로고 이미지"
                 className="h-full w-full"
-                height={40}
-                src={logoSrc}
-                width={40}
+                height={36}
+                src={symbolSrc}
+                width={200}
               />
             </div>
             <div className="h-24 w-124 lg:h-36 lg:w-200">
               <Image
                 alt="로고 명"
                 className="h-full w-full"
-                height={36}
-                src={symbolSrc}
-                width={200}
+                height={40}
+                src={logoSrc}
+                width={40}
               />
             </div>
           </Link>
@@ -51,7 +51,7 @@ const Header = () => {
 
         {/* 우측 */}
         <div className="hidden items-center gap-24 md:flex">
-          <nav className="mr-16 flex gap-24 text-sm font-medium md:text-md lg:text-[18px]">
+          <nav className="mr-16 flex gap-24 text-sm font-medium md:text-md lg:text-2lg">
             <button
               className={navButton(pathname === '/owner')}
               type="button"
