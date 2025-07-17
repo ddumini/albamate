@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 interface ProfileProps {
   /**
@@ -14,7 +15,7 @@ interface ProfileProps {
   /**
    * 프로필 이미지 URL입니다. 없을 경우 기본 프로필 이미지가 보여집니다.
    */
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 /**
@@ -33,7 +34,7 @@ const Profile = ({
 }: ProfileProps) => {
   return (
     <div
-      className={twMerge(
+      className={cn(
         'relative size-80 overflow-hidden rounded-full border-3 border-line-200 lg:size-100 lg:border-4',
         className
       )}

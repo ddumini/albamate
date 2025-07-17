@@ -1,10 +1,11 @@
+import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import {
   inputStyle,
   inputVariants,
 } from '@/shared/components/common/input/inputStyles';
+import { cn } from '@/shared/lib/cn';
 
 interface TextareaProps
   extends DetailedHTMLProps<
@@ -46,7 +47,7 @@ const Textarea = ({
 }: TextareaProps) => {
   return (
     <textarea
-      className={twMerge(
+      className={cn(
         'h-124 w-full resize-none p-14 lg:h-192 lg:p-18',
         inputStyle['default'],
         inputVariants[variant],

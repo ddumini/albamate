@@ -1,13 +1,11 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
+import RoundedButton from '@common/button/RoundedButton';
+import CardPagination from '@common/pagination/CardPagination';
+import Indicator from '@common/pagination/Indicator';
+import Paginator from '@common/pagination/Paginator';
 import { useState } from 'react';
-
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import CardPagination from '@/shared/components/common/pagination/CardPagination';
-import Indicator from '@/shared/components/common/pagination/Indicator';
-import Paginator from '@/shared/components/common/pagination/Paginator';
-
-import RoundedButton from '../../../shared/components/common/button/RoundedButton';
 
 const TestPage = () => {
   const [page, setPage] = useState(1);

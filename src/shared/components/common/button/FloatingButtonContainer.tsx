@@ -59,7 +59,7 @@ const FloatingButtonContainer: React.FC<FloatingButtonContainerProps> = ({
     if (position === 'right-center') {
       return `${baseClasses} right-23 top-1/2 lg:right-220 transform -translate-y-1/2`;
     } else {
-      return `${baseClasses} right-23 bottom-68 lg:right-220 lg:bottom-108`;
+      return `${baseClasses} right-23 bottom-68 lg:right-100 lg:bottom-50`;
     }
   };
 

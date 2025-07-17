@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 import ButtonBase from './ButtonBase';
 
@@ -53,10 +54,10 @@ const RoundedButton = ({
   const baseStyles =
     'rounded-full cursor-pointer flex items-center justify-center';
 
-  const buttonFinalStyles = twMerge(baseStyles, buttonClassName);
+  const buttonFinalStyles = cn(baseStyles, buttonClassName);
 
   const iconBaseStyles = 'relative';
-  const iconFinalStyles = twMerge(iconBaseStyles, iconClassName);
+  const iconFinalStyles = cn(iconBaseStyles, iconClassName);
 
   return (
     <ButtonBase

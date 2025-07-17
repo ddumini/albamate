@@ -10,10 +10,20 @@ const MobileNav = () => {
   const hiddenRoutes = ['/owner/info', '/worker/info'];
 
   // prefix 방식으로 처리
-  const shouldHide =
-    hiddenRoutes.includes(pathname) || pathname.includes('/info');
+  const isHide = hiddenRoutes.includes(pathname) || pathname.includes('/info');
 
-  if (shouldHide) return null;
+  const destination: Record<Role, string> = {
+    owner: '/owner',
+    worker: '/worker',
+  };
+
+  const onClickButton = (role: Role) => {
+    const path = destination[role];
+
+    router.push(path);
+  };
+
+  if (isHide) return null;
 
   return (
     <nav className="flex justify-center gap-32 py-12 md:hidden dark:border-gray-500">
@@ -24,7 +34,7 @@ const MobileNav = () => {
             : 'text-gray-700 dark:text-white'
         }`}
         type="button"
-        onClick={() => router.push('/owner')}
+        onClick={() => onClickButton('owner')}
       >
         사장님 전용
       </button>
@@ -35,12 +45,14 @@ const MobileNav = () => {
             : 'text-gray-700 dark:text-white'
         }`}
         type="button"
-        onClick={() => router.push('/worker')}
+        onClick={() => onClickButton('worker')}
       >
         지원자 전용
       </button>
     </nav>
   );
 };
+
+type Role = 'owner' | 'worker';
 
 export default MobileNav;

@@ -1,12 +1,13 @@
 import './globals.css';
 
+import ModalManager from '@common/modal/ModalManager';
 import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
-import ModalManager from '@/shared/components/common/modal/ModalManager';
 
 import { metadata } from './metadata';
+import { viewport } from './viewport';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -17,6 +18,7 @@ const pretendard = localFont({
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata };
+export { viewport };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (

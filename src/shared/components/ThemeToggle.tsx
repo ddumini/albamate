@@ -7,9 +7,11 @@ const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return null; // 마운트 전 렌더링 안 함
 
   const isDark = theme === 'dark';
 

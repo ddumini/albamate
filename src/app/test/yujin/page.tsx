@@ -1,12 +1,11 @@
 'use client';
 
-import { Chip } from '@components/common/chip/Chip';
-import AuthGnb from '@components/common/gnb/AuthGnb';
-import MainGnb from '@components/common/gnb/MainGnb';
-import EditPopup from '@components/common/popup/EditPopup';
-import ToastPopup from '@components/common/popup/ToastPopup';
-import Tab from '@components/common/tab/Tab';
-import Tooltip from '@components/common/tooltip/Tooltip';
+import Chip from '@common/chip/Chip';
+import AuthGnb from '@common/gnb/auth-gnb';
+import EditPopup from '@common/popup/EditPopup';
+import ToastPopup from '@common/popup/ToastPopup';
+import Tab from '@common/tab/Tab';
+import Tooltip from '@common/tooltip/Tooltip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -29,15 +28,11 @@ const TestPage = () => {
           로그인 전 헤더
           <AuthGnb />
         </li>
-        <li>
-          메인 헤더
-          <MainGnb />
-        </li>
       </ul>
 
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
-      <Tab />
+      <Tab tabs={['내가 쓴 글', '내가 쓴 댓글', '스크랩']} />
 
       <div className="flex justify-center">
         <Tooltip
@@ -142,6 +137,8 @@ const TestPage = () => {
 
         <Chip label="Label" variant="icon" />
       </div>
+
+      <div className="bg-red">red</div>
     </div>
   );
 };
