@@ -1,5 +1,11 @@
+import AuthFormItem from './AuthFormItem';
+
 const AuthForm = () => {
-  return <div>AuthForm</div>;
+  return (
+    <form action="">
+      <AuthFormItem label="이메일" type="email" />
+    </form>
+  );
 };
 
 export default AuthForm;
