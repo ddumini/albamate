@@ -9,9 +9,9 @@ interface AuthFormItemProps {
 
 const AuthFormItem = ({ label, type }: AuthFormItemProps) => {
   return (
-    <div className="relative mb-8 pb-26 last:mb-0">
+    <div>
       <Label>{label}</Label>
-      <div>
+      <div className="mt-8 lg:mt-16">
         <Input type={type} variant="outlined" />
         <ErrorMessage />
       </div>
