@@ -1,6 +1,12 @@
 import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
+
+
+import {
+  inputStyle,
+  inputVariants,
+} from '@/shared/components/common/input/inputStyles';
+import { cn } from '@/shared/lib/cn';
 
 export interface InputProps
   extends DetailedHTMLProps<
@@ -41,8 +47,8 @@ const Input = ({
 }: InputProps) => {
   return (
     <input
-      className={twMerge(
-        'h-54 w-full p-14 lg:h-64 dark:bg-gray-800 dark:text-gray-200',
+      className={cn(
+        'h-54 w-full p-14 lg:h-64',
         inputStyle['default'],
         inputVariants[variant],
         isInvalid && inputStyle['invalid'],

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 interface PrivateWrapperProps {
   /**
@@ -44,7 +45,7 @@ const PrivateWrapper = ({
 }: PrivateWrapperProps) => {
   return isPrivate ? (
     <div
-      className={twMerge(
+      className={cn(
         'relative inline-block overflow-hidden rounded-xl',
         className
       )}

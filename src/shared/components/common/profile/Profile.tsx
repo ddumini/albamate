@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 interface ProfileProps {
   /**
@@ -33,7 +34,7 @@ const Profile = ({
 }: ProfileProps) => {
   return (
     <div
-      className={twMerge(
+      className={cn(
         'relative size-80 overflow-hidden rounded-full border-3 border-line-200 lg:size-100 lg:border-4',
         className
       )}
