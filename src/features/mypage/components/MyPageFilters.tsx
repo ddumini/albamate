@@ -10,16 +10,20 @@ const MyPageFilters = () => {
     { value: 'like', label: '좋아요순' },
   ];
   return (
-    <section className="flex items-center justify-between">
-      <Tab />
-      <Select
-        options={sortOption}
-        placeholder="최신순"
-        variant="sort"
-        onSelect={value => {
-          console.log('.정렬:', value);
-        }}
-      />
+    <section className="flex flex-col justify-between xl:mb-24 xl:flex-row xl:items-center">
+      <span className="h-60">
+        <Tab tabs={['내가 쓴 글', '내가 쓴 댓글', '스크랩']} />
+      </span>
+      <span className="h-34 self-end">
+        <Select
+          options={sortOption}
+          placeholder="최신순"
+          variant="sort"
+          onSelect={value => {
+            console.log('.정렬:', value);
+          }}
+        />
+      </span>
     </section>
   );
 };
