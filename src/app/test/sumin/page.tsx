@@ -9,6 +9,7 @@ import WeekPicker from '@/shared/components/common/week-picker';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 import CopyAddress from '@/shared/components/ui/CopyAddress';
 import KakaoMap from '@/shared/components/ui/KakaoMap';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 
 const Sumin = () => {
   const inputOptions = [{ value: '전체' }, { value: '없음' }];
@@ -159,6 +160,8 @@ const Sumin = () => {
         </div>
       </InnerContainer>
       <div className="mx-auto max-w-640 px-24 py-200">
+        <LoadingSpinner size="sm" />
+        <LoadingSpinner size="lg" />
         <section className="mb-80 max-w-327 lg:max-w-none">
           <p className="mb-24 text-2xl font-bold">Dropdown - input</p>
           <InputDropdown options={inputOptions} />
