@@ -5,5 +5,3 @@ review:
     - pattern: '**/*'
       approve: true
       comment: true
-      conditions:
-        - '!has_merge_conflict'
