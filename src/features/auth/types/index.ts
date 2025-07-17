@@ -7,3 +7,17 @@ export interface AuthContent {
   link?: string;
   linkText?: string;
 }
+
+export type UserRole = 'OWNER' | 'APPLICANT';
+
+export interface User {
+  email: string;
+  password: string;
+  name: string;
+  nickname: string;
+  role: UserRole;
+  storeName?: string;
+  storePhoneNumber?: string;
+  phoneNumber?: string;
+  location?: string;
+}

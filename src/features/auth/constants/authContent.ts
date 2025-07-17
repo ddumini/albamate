@@ -38,10 +38,10 @@ export const AUTH_CONTENT_TEMPLATES: Record<
   },
   applicant: {
     signin: {
-      title: '사장님 로그인',
+      title: '지원자 로그인',
       description: [
         '아직 계정이 없으신가요?',
-        '지원자 로그인은 지원자 전용 페이지에서 할 수 있습니다.',
+        '사장님 로그인은 사장님 전용 페이지에서 할 수 있습니다.',
       ],
       link: AUTH_ROUTES.SIGNUP,
       linkText: '회원가입 하기',
@@ -64,22 +64,28 @@ export const AUTH_CONTENT_TEMPLATES: Record<
   },
 };
 
-// 기본 콘텐츠 (사용자 타입이 명확하지 않을 때 사용)
+// 기본 콘텐츠 (사용자 타입이 명확하지 않을 때 - UI 개발 시 사용)
 export const DEFAULT_AUTH_CONTENT: Record<AuthPageType, AuthContent> = {
   signin: {
-    title: '로그인',
-    description: ['로그인 후 이용해주세요.'],
-    link: AUTH_ROUTES.SIGNIN,
-    linkText: '로그인 하기',
-  },
-  signup: {
-    title: '회원가입',
-    description: ['회원가입 후 이용해주세요.'],
+    title: '지원자 로그인',
+    description: [
+      '아직 계정이 없으신가요?',
+      '사장님 로그인은 사장님 전용 페이지에서 할 수 있습니다.',
+    ],
     link: AUTH_ROUTES.SIGNUP,
     linkText: '회원가입 하기',
   },
+  signup: {
+    title: '지원자 회원가입',
+    description: [
+      '아직 계정이 없으신가요?',
+      '사장님 로그인은 사장님 전용 페이지에서 할 수 있습니다.',
+    ],
+    link: AUTH_ROUTES.SIGNIN,
+    linkText: '로그인 하기',
+  },
   accountInfo: {
-    title: '계정 정보',
+    title: '지원자 계정 정보',
     description: ['계정 정보를 입력해주세요.'],
     link: AUTH_ROUTES.SIGNIN,
     linkText: '로그인 하기',

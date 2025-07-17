@@ -32,11 +32,17 @@ const AuthTitleArea = () => {
 
   return (
     <div className="flex flex-col gap-16 text-center">
-      <h2 className="text-2xl font-semibold text-black-500">{title}</h2>
-      <p>
+      <h2 className="text-2xl font-semibold text-black-500">
+        로그인
+        <span className="sr-only">{title}</span>
+      </h2>
+      <p className="font-regular text-xs text-black-100">
         {description[0]}
         {link && linkText && (
-          <Link className="inline-block" href={link}>
+          <Link
+            className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500"
+            href={link}
+          >
             {linkText}
           </Link>
         )}
