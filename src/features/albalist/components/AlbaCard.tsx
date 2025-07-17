@@ -1,14 +1,14 @@
 'use client';
 
+import Chip from '@common/chip/Chip';
 import { differenceInCalendarDays, format, isAfter } from 'date-fns';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-import Chip from '@/shared/components/common/chip/Chip';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 
-import AlbaDropdown from './AlbaDrodown';
+import AlbaDropdown from './AlbaDropdown';
 
 interface Props {
   item: AlbaItem;
@@ -44,7 +44,7 @@ const AlbaCard = ({ item, onClick }: Props) => {
     dDay > 3 && 'text-gray-600 hover:text-gray-900'
   );
 
-  // map용 stats 배열 생성
+  // stats 정보
   const stats = [
     {
       label: '지원자',
@@ -58,6 +58,15 @@ const AlbaCard = ({ item, onClick }: Props) => {
       label: dDay < 0 ? '마감 완료' : `마감 D-${dDay}`,
       isDeadline: true,
     },
+  ];
+
+  // 드롭다운 옵션
+  const handleApply = () => alert(`지원 - ${item.title}`);
+  const handleScrap = () => alert(`스크랩 - ${item.title}`);
+
+  const options = [
+    { label: '지원하기', onClick: handleApply },
+    { label: '스크랩', onClick: handleScrap },
   ];
 
   return (
@@ -84,7 +93,6 @@ const AlbaCard = ({ item, onClick }: Props) => {
         <span className="Text-gray ml-8 whitespace-nowrap">
           {format(start, 'yyyy.MM.dd')} ~ {format(end, 'yyyy.MM.dd')}
         </span>
-
         <div ref={dropdownRef} className="relative ml-auto">
           <Image
             alt="드롭다운 아이콘"
@@ -97,13 +105,12 @@ const AlbaCard = ({ item, onClick }: Props) => {
               setOpen(prev => !prev);
             }}
           />
-          {open && <AlbaDropdown item={item} />}
+          {open && <AlbaDropdown options={options} />}
         </div>
       </div>
 
       <h3 className="Text-black mt-12 text-lg font-semibold">{item.title}</h3>
 
-      {/* map으로 리팩터링한 stats 영역 */}
       <div className="mt-12 flex w-full justify-center rounded-lg bg-gray-25 py-6 text-xs text-gray-600 dark:bg-gray-50">
         {stats.map((stat, idx) => (
           <span
