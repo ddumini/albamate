@@ -1,4 +1,4 @@
-import MainGnb from '@components/common/gnb/MainGnb';
+import MainGnb from '@/shared/components/common/gnb/main-gnb';
 
 const AlbaTalkPage = () => {
   return (

@@ -1,10 +1,16 @@
+// components/common/header/Header.tsx
 'use client';
 
-import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
+import {
+  headerWrapper,
+  innerWrapper,
+  navButton,
+} from '@/shared/components/common/gnb/styles/Header.styles';
+import ThemeToggle from '@/shared/components/ThemeToggle';
 import { useThemeLogo } from '@/shared/hooks/useThemeLogo';
 
 const Header = () => {
@@ -13,8 +19,10 @@ const Header = () => {
   const { logoSrc, symbolSrc } = useThemeLogo();
 
   return (
-    <header className="w-full border-b border-gray-100 md:px-72 lg:px-120 dark:border-gray-500">
-      <div className="mx-auto flex max-w-1479 items-center justify-center px-4 md:justify-between md:py-3">
+    <header className={headerWrapper}>
+      <div
+        className={`${innerWrapper} justify-center md:justify-between md:py-3`}
+      >
         {/* 좌측 로고 */}
         <div className="flex items-center md:gap-24">
           <Link
@@ -42,22 +50,18 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* 우측 (데스크탑용) */}
+        {/* 우측 */}
         <div className="hidden items-center gap-24 md:flex">
           <nav className="mr-16 flex gap-24 text-sm font-medium md:text-md lg:text-[18px]">
             <button
-              className={`transition-colors ${
-                pathname === '/owner' && 'text-mint-100'
-              }`}
+              className={navButton(pathname === '/owner')}
               type="button"
               onClick={() => router.push('/owner')}
             >
               사장님 전용
             </button>
             <button
-              className={`transition-colors ${
-                pathname === '/worker' && 'text-mint-100'
-              }`}
+              className={navButton(pathname === '/worker')}
               type="button"
               onClick={() => router.push('/worker')}
             >
