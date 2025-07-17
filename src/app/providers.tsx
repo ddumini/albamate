@@ -2,10 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { SessionProvider } from 'next-auth/react';
 import React from 'react';
-
-import { mockUser } from '@/features/auth/mocks';
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
@@ -22,24 +19,16 @@ const getQueryClient = (): QueryClient => {
   }
 };
 
-// mock 세션 객체
-const mockSession = {
-  user: mockUser,
-  expires: '2099-12-31T23:59:59.999Z',
-};
-
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   const queryClient = getQueryClient();
 
   return (
-    <SessionProvider session={mockSession}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        {/* 개발 환경에서만 React Query Devtools 활성화 */}
-        {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools initialIsOpen={false} />
-        )}
-      </QueryClientProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      {/* 개발 환경에서만 React Query Devtools 활성화 */}
+      {process.env.NODE_ENV === 'development' && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
+    </QueryClientProvider>
   );
 };

@@ -1,13 +1,13 @@
 import { cn } from '@/shared/lib/cn';
 
 interface ErrorMessageProps {
-  message: string;
+  message?: string;
   isVisible?: boolean;
   className?: string;
 }
 
 const ErrorMessage = ({
-  message = '이메일 형식이 아닙니다.',
+  message,
   isVisible = false,
   className = '',
 }: ErrorMessageProps) => {

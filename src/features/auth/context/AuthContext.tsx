@@ -1,10 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 import { AUTH_ROUTES } from '../constants/route';
+import { mockUser } from '../mocks';
 import type { AuthPageType } from '../types';
 import {
   getAuthContentFromPath,
@@ -15,7 +15,12 @@ import { AuthContext, type AuthContextValue } from './AuthContextValue';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-  const { data: session } = useSession();
+
+  // 임시로 mock 세션 사용
+  const session = {
+    user: mockUser,
+    expires: '2099-12-31T23:59:59.999Z',
+  };
 
   const getAuthPageType = (pathname: string): AuthPageType => {
     switch (pathname) {
