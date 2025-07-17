@@ -4,14 +4,19 @@ import ThemeToggle from '@components/ThemeToggle';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+  const isDarkLogo = isDark ? '/logos/logo-dark.svg' : '/logos/logo.svg';
+  const isDarkSymbol = isDark ? '/logos/symbol-dark.svg' : '/logos/symbol.svg';
 
   return (
     <header className="w-full border-b border-gray-100 md:px-72 lg:px-120 dark:border-gray-500">
-      <div className="mx-auto flex max-w-7xl items-center justify-center px-4 md:justify-between md:py-3">
+      <div className="mx-auto flex max-w-1479 items-center justify-center px-4 md:justify-between md:py-3">
         {/* 좌측 로고 */}
         <div className="flex items-center md:gap-24">
           <Link
@@ -23,7 +28,7 @@ const Header = () => {
                 alt="로고 이미지"
                 className="h-full w-full"
                 height={40}
-                src="/images/logo.svg"
+                src={isDarkSymbol}
                 width={40}
               />
             </div>
@@ -32,7 +37,7 @@ const Header = () => {
                 alt="로고 명"
                 className="h-full w-full"
                 height={36}
-                src="/images/logo-typo.svg"
+                src={isDarkLogo}
                 width={200}
               />
             </div>

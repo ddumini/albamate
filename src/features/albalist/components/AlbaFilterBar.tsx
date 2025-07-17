@@ -30,7 +30,7 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
 
   return (
     <div className="mb-24 w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">
-      <div className="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-20 lg:gap-20">
+      <div className="mx-auto flex max-w-1479 flex-col gap-16 px-4 py-20 lg:gap-20">
         <IconInput
           alt="검색"
           className="w-327 lg:w-728"

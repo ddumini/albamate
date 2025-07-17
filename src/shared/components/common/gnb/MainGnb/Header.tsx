@@ -17,9 +17,9 @@ const Header = () => {
 
   return (
     <header className="w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+      <div className="mx-auto flex max-w-1479 items-center justify-between px-4">
         <div className="flex items-center md:gap-32 lg:gap-48">
-          <Logo />
+          <Logo isDark={isDark} />
           <NavMenu pathname={pathname} />
         </div>
         <RightMenu isDark={isDark} isOpen={isOpen} setIsOpen={setIsOpen} />
