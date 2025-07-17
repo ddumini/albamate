@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 import ButtonBase from './ButtonBase';
 
@@ -94,7 +95,7 @@ const PrimaryButton = ({
   };
 
   // 최종으로 적용될 클래스 병합
-  const finalStyles = twMerge(
+  const finalStyles = cn(
     baseStyles,
     buttonStyle[variant],
     className

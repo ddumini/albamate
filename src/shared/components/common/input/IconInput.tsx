@@ -1,7 +1,6 @@
-import { twMerge } from 'tailwind-merge';
-
 import Icon, { IconProps } from '@/shared/components/common/input/Icon';
 import Input, { InputProps } from '@/shared/components/common/input/Input';
+import { cn } from '@/shared/lib/cn';
 
 interface IconInput
   extends Omit<InputProps, 'className' | 'onClick' | 'alt' | 'src'> {
@@ -77,10 +76,10 @@ const IconInput = ({
   ...props
 }: IconInput) => {
   return (
-    <div className={twMerge('relative h-54 w-full lg:h-64', className)}>
+    <div className={cn('relative h-54 w-full lg:h-64', className)}>
       <Icon
         alt={alt}
-        className={twMerge(
+        className={cn(
           'absolute p-14',
           position === 'left' ? 'left-0 pr-8' : 'right-0',
           iconClassName
@@ -91,7 +90,7 @@ const IconInput = ({
         onClick={iconOnClick}
       />
       <Input
-        className={twMerge(
+        className={cn(
           position === 'left' ? 'pl-46 lg:pl-58' : 'pr-46 lg:pr-58',
           'h-full lg:h-full',
           inputClassName
