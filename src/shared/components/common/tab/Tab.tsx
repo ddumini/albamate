@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
-const Tab = () => {
-  const tabs = ['내가 쓴 글', '내가 쓴 댓글', '스크랩'];
+interface TabProps {
+  tabs: string[];
+}
+
+const Tab = ({ tabs }: TabProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (

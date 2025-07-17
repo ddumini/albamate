@@ -1,6 +1,6 @@
-import MainGnb from '@components/common/gnb/MainGnb';
+import MainGnb from '@common/gnb/main-gnb';
 
-export default function DashBoardEditPage() {
+const AlbaTalkPage = () => {
   return (
     <div>
       <MainGnb />
@@ -8,4 +8,6 @@ export default function DashBoardEditPage() {
       <div>알바토크</div>
     </div>
   );
-}
+};
+
+export default AlbaTalkPage;

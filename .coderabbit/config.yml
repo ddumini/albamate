@@ -1,0 +1,9 @@
+review:
+  enable: true
+  approve_automatically: true
+  rules:
+    - pattern: '**/*'
+      approve: true
+      comment: true
+      conditions:
+        - '!has_merge_conflict'

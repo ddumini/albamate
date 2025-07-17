@@ -1,7 +1,6 @@
+import InputFileImage from '@common/input/InputFileImage';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
-import InputFileImage from '@/shared/components/common/input/InputFileImage';
 
 interface UploadSingleImageProps {
   /**

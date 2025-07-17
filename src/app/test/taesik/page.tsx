@@ -1,16 +1,15 @@
 'use client';
+import Icon from '@common/input/Icon';
+import IconInput from '@common/input/IconInput';
+import Input from '@common/input/Input';
+import Textarea from '@common/input/Textarea';
+import PrivateWrapper from '@common/PrivateWrapper';
+import Profile from '@common/profile/Profile';
+import ProfileEdit from '@common/profile/ProfileEdit';
+import UploadMultipleImage from '@common/uploadImage/UploadMultipleImage';
+import UploadSingleImage from '@common/uploadImage/UploadSingleImage';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-
-import Icon from '@/shared/components/common/input/Icon';
-import IconInput from '@/shared/components/common/input/IconInput';
-import Input from '@/shared/components/common/input/Input';
-import Textarea from '@/shared/components/common/input/Textarea';
-import PrivateWrapper from '@/shared/components/common/PrivateWrapper';
-import Profile from '@/shared/components/common/profile/Profile';
-import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
-import UploadMultipleImage from '@/shared/components/common/uploadImage/UploadMultipleImage';
-import UploadSingleImage from '@/shared/components/common/uploadImage/UploadSingleImage';
 
 const TaesikTest = () => {
   const [isp, setIsp] = useState(true);

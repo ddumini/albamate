@@ -1,6 +1,10 @@
 'use client';
 
-import MainGnb from '@components/common/gnb/MainGnb';
+import DatePicker from '@common/date-picker';
+import MainGnb from '@common/gnb/main-gnb';
+import InputDropdown from '@common/input-dropdown';
+import TimePicker from '@common/time-picker';
+import WeekPicker from '@common/week-picker';
 
 import DatePicker from '@/shared/components/common/date-picker';
 import InputDropdown from '@/shared/components/common/input-dropdown';

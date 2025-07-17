@@ -1,16 +1,14 @@
 'use client';
 
+import Checkbox from '@common/button/Checkbox';
+import FloatingButton from '@common/button/FloatingButton';
+import FloatingButtonContainer from '@common/button/FloatingButtonContainer';
+import PrimaryButton from '@common/button/PrimaryButton';
+import RadioButton, { RadioOption } from '@common/button/RadioButton';
+import Modal from '@common/modal/Modal';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import Checkbox from '@/shared/components/common/button/Checkbox';
-import FloatingButton from '@/shared/components/common/button/FloatingButton';
-import FloatingButtonContainer from '@/shared/components/common/button/FloatingButtonContainer';
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import RadioButton, {
-  RadioOption,
-} from '@/shared/components/common/button/RadioButton';
-import Modal from '@/shared/components/common/modal/Modal';
 import ThemeToggle from '@/shared/components/ThemeToggle';
 import useModalStore from '@/shared/store/useModalStore';
 const RADIO_OPTIONS: RadioOption[] = [

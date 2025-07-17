@@ -1,3 +1,4 @@
+import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 
 import {
