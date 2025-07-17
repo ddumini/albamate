@@ -1,7 +1,7 @@
 'use client';
 
-import FloatingButton from '@/shared/components/common/button/FloatingButton';
-import FloatingButtonContainer from '@/shared/components/common/button/FloatingButtonContainer';
+import FloatingButton from '@common/button/FloatingButton';
+import FloatingButtonContainer from '@common/button/FloatingButtonContainer';
 
 const FloatingFormButton = () => (
   <FloatingButtonContainer>

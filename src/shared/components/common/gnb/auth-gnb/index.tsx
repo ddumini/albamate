@@ -1,5 +1,5 @@
-import Header from '@/shared/components/common/gnb/auth-gnb/Header';
-import MobileNav from '@/shared/components/common/gnb/auth-gnb/MobileNav';
+import Header from '@common/gnb/auth-gnb/Header';
+import MobileNav from '@common/gnb/auth-gnb/MobileNav';
 
 const AuthGnb = () => {
   return (

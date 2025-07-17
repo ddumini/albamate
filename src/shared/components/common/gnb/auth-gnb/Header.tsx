@@ -1,15 +1,15 @@
 // components/common/header/Header.tsx
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
 import {
   headerWrapper,
   innerWrapper,
   navButton,
-} from '@/shared/components/common/gnb/styles/Header.styles';
+} from '@common/gnb/styles/Header.styles';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
 import ThemeToggle from '@/shared/components/ThemeToggle';
 import { useThemeLogo } from '@/shared/hooks/useThemeLogo';
 

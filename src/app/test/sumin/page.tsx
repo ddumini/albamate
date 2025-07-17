@@ -1,10 +1,11 @@
 'use client';
 
-import DatePicker from '@/shared/components/common/date-picker';
-import MainGnb from '@/shared/components/common/gnb/main-gnb';
-import InputDropdown from '@/shared/components/common/input-dropdown';
-import TimePicker from '@/shared/components/common/time-picker';
-import WeekPicker from '@/shared/components/common/week-picker';
+import DatePicker from '@common/date-picker';
+import MainGnb from '@common/gnb/main-gnb';
+import InputDropdown from '@common/input-dropdown';
+import TimePicker from '@common/time-picker';
+import WeekPicker from '@common/week-picker';
+
 import CopyAddress from '@/shared/components/ui/CopyAddress';
 import KakaoMap from '@/shared/components/ui/KakaoMap';
 

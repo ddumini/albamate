@@ -1,18 +1,17 @@
 // components/common/header/Header.tsx
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
-import { useState } from 'react';
-
-import Logo from '@/shared/components/common/gnb/main-gnb/Logo';
-import NavMenu from '@/shared/components/common/gnb/main-gnb/NavMenu';
+import Logo from '@common/gnb/main-gnb/Logo';
+import NavMenu from '@common/gnb/main-gnb/NavMenu';
 import {
   headerWrapper,
   innerWrapper,
   leftGroup,
-} from '@/shared/components/common/gnb/styles/Header.styles';
-import GnbMenu from '@/shared/components/common/gnb-menu/GnbMenu';
+} from '@common/gnb/styles/Header.styles';
+import GnbMenu from '@common/gnb-menu/GnbMenu';
+import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { useState } from 'react';
 
 import RightMenu from './RightMenu';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import MainGnb from '@/shared/components/common/gnb/main-gnb';
+import MainGnb from '@common/gnb/main-gnb';
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (

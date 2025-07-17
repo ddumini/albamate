@@ -1,10 +1,6 @@
+import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-
-import {
-  inputStyle,
-  inputVariants,
-} from '@/shared/components/common/input/inputStyles';
 
 export interface InputProps
   extends DetailedHTMLProps<

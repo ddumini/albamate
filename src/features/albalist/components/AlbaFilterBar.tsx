@@ -1,7 +1,7 @@
 'use client';
 
-import IconInput from '@components/common/input/IconInput';
-import Select from '@components/common/select';
+import IconInput from '@/shared/components/common/input/IconInput';
+import Select from '@/shared/components/common/select';
 
 interface Props {
   isOwner: boolean;

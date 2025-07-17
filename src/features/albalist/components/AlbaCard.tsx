@@ -1,12 +1,12 @@
 'use client';
 
-import Chip from '@components/common/chip/Chip';
-import { AlbaItem } from '@features/albalist/mock/mockData';
 import { differenceInCalendarDays, format, isAfter } from 'date-fns';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
+import Chip from '@/shared/components/common/chip/Chip';
 import { cn } from '@/shared/lib/cn';
+import { AlbaItem } from '@/shared/types/alba';
 
 import AlbaDropdown from './AlbaDrodown';
 

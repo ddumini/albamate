@@ -1,8 +1,6 @@
 'use client';
 
-import InputFile, {
-  InputFileProps,
-} from '@/shared/components/common/input/InputFile';
+import InputFile, { InputFileProps } from '@common/input/InputFile';
 
 interface InputFileImageProps
   extends Pick<InputFileProps, 'id' | 'multiple' | 'className'> {

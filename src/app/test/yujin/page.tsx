@@ -1,12 +1,12 @@
 'use client';
 
-import Chip from '@components/common/chip/Chip';
-import AuthGnb from '@components/common/gnb/AuthGnb';
-import MainGnb from '@components/common/gnb/MainGnb';
-import EditPopup from '@components/common/popup/EditPopup';
-import ToastPopup from '@components/common/popup/ToastPopup';
-import Tab from '@components/common/tab/Tab';
-import Tooltip from '@components/common/tooltip/Tooltip';
+import Chip from '@common/chip/Chip';
+import AuthGnb from '@common/gnb/auth-gnb';
+import MainGnb from '@common/gnb/main-gnb';
+import EditPopup from '@common/popup/EditPopup';
+import ToastPopup from '@common/popup/ToastPopup';
+import Tab from '@common/tab/Tab';
+import Tooltip from '@common/tooltip/Tooltip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 

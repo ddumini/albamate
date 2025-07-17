@@ -1,7 +1,6 @@
+import Icon, { IconProps } from '@common/input/Icon';
+import Input, { InputProps } from '@common/input/Input';
 import { twMerge } from 'tailwind-merge';
-
-import Icon, { IconProps } from '@/shared/components/common/input/Icon';
-import Input, { InputProps } from '@/shared/components/common/input/Input';
 
 interface IconInput
   extends Omit<InputProps, 'className' | 'onClick' | 'alt' | 'src'> {

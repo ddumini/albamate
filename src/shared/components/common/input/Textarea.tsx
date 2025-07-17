@@ -1,10 +1,6 @@
+import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-
-import {
-  inputStyle,
-  inputVariants,
-} from '@/shared/components/common/input/inputStyles';
 
 interface TextareaProps
   extends DetailedHTMLProps<
