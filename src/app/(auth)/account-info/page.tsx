@@ -1,7 +1,7 @@
 import AuthLayout from '@/features/auth/components/AuthLayout';
 
-const SignInPage = () => {
+const AccountInfoPage = () => {
   return <AuthLayout />;
 };
 
-export default SignInPage;
+export default AccountInfoPage;
