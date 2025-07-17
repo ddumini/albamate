@@ -8,6 +8,7 @@ import TimePicker from '@/shared/components/common/time-picker';
 import WeekPicker from '@/shared/components/common/week-picker';
 import CopyAddress from '@/shared/components/ui/CopyAddress';
 import KakaoMap from '@/shared/components/ui/KakaoMap';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 
 const Sumin = () => {
   const inputOptions = [{ value: '전체' }, { value: '없음' }];
@@ -16,6 +17,8 @@ const Sumin = () => {
     <>
       <MainGnb /> {/* dark mode 테스트용 헤더 */}
       <div className="mx-auto max-w-640 px-24 py-200">
+        <LoadingSpinner size="sm" />
+        <LoadingSpinner size="lg" />
         <section className="mb-80 max-w-327 lg:max-w-none">
           <p className="mb-24 text-2xl font-bold">Dropdown - input</p>
           <InputDropdown options={inputOptions} />
