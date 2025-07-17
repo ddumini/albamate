@@ -2,7 +2,6 @@
 
 import Chip from '@common/chip/Chip';
 import AuthGnb from '@common/gnb/auth-gnb';
-import MainGnb from '@common/gnb/main-gnb';
 import EditPopup from '@common/popup/EditPopup';
 import ToastPopup from '@common/popup/ToastPopup';
 import Tab from '@common/tab/Tab';
@@ -28,10 +27,6 @@ const TestPage = () => {
         <li className="mb-36">
           로그인 전 헤더
           <AuthGnb />
-        </li>
-        <li>
-          메인 헤더
-          <MainGnb />
         </li>
       </ul>
 
@@ -142,6 +137,8 @@ const TestPage = () => {
 
         <Chip label="Label" variant="icon" />
       </div>
+
+      <div className="bg-red">red</div>
     </div>
   );
 };
