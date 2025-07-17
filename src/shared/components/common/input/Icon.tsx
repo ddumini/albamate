@@ -1,7 +1,8 @@
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import { MouseEventHandler } from 'react';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 export interface IconProps {
   /**
@@ -62,7 +63,7 @@ const Icon = ({
   const Component = onClick ? 'button' : 'div';
   return (
     <Component
-      className={twMerge(
+      className={cn(
         'inline-block',
         Component === 'button' ? '' : 'pointer-events-none',
         className
@@ -72,7 +73,7 @@ const Icon = ({
     >
       <Image
         alt={alt}
-        className={twMerge('object-cover object-center', sizeClass)}
+        className={cn('object-cover object-center', sizeClass)}
         height={36}
         sizes={sizes}
         src={src}

@@ -1,7 +1,8 @@
 'use client';
 
 import { ChangeEvent } from 'react';
-import { twMerge } from 'tailwind-merge';
+
+import { cn } from '@/shared/lib/cn';
 
 export interface InputFileProps {
   /**
@@ -78,7 +79,7 @@ const InputFile = ({
   return (
     <input
       accept={accept}
-      className={twMerge('opacity-0', className)}
+      className={cn('opacity-0', className)}
       id={id}
       multiple={multiple}
       type="file"
