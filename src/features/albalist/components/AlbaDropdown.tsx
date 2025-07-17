@@ -2,18 +2,16 @@
 
 import { cn } from '@/shared/lib/cn';
 
-import { AlbaItem } from '../mock/mockData';
-
-interface Props {
-  item: AlbaItem;
+interface DropdownOption {
+  label: string;
+  onClick: () => void;
 }
 
-const AlbaDropdown = ({ item }: Props) => {
-  const options = [
-    { label: '지원하기', onClick: () => alert(`지원 - ${item.title}`) },
-    { label: '스크랩', onClick: () => alert(`스크랩 - ${item.title}`) },
-  ];
+interface Props {
+  options: DropdownOption[];
+}
 
+const AlbaDropdown = ({ options }: Props) => {
   return (
     <div className="BG-white absolute top-full right-0 z-30 mt-4 w-90 rounded-md border border-gray-200 p-4 shadow-md lg:w-110">
       {options.map(({ label, onClick }) => (
