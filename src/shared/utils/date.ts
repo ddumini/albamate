@@ -1,26 +1,42 @@
 /**
+ * 날짜 간 일수 차이 계산 (시간 제외, 날짜만 비교)
+ */
+const getDaysDifference = (dateString: string): number => {
+  const date = new Date(dateString);
+  const now = new Date();
+
+  // 시간 부분 제거하고 날짜만 비교
+  const dateOnly = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  const diffTime = nowOnly.getTime() - dateOnly.getTime();
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+};
+
+/**
  * 상대적 시간 포맷팅 (오늘, 어제, n일 전)
  */
 export const formatRelativeTime = (dateString: string): string => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = getDaysDifference(dateString);
 
-  if (diffDays === 1) {
+  if (diffDays === 0) {
     return '오늘';
-  } else if (diffDays === 2) {
+  } else if (diffDays === 1) {
     return '어제';
   } else if (diffDays <= 7) {
-    return `${diffDays - 1}일 전`;
+    return `${diffDays}일 전`;
   } else if (diffDays <= 30) {
-    const weeks = Math.floor((diffDays - 1) / 7);
+    const weeks = Math.floor(diffDays / 7);
     return `${weeks}주 전`;
   } else if (diffDays <= 365) {
-    const months = Math.floor((diffDays - 1) / 30);
+    const months = Math.floor(diffDays / 30);
     return `${months}개월 전`;
   } else {
-    const years = Math.floor((diffDays - 1) / 365);
+    const years = Math.floor(diffDays / 365);
     return `${years}년 전`;
   }
 };
@@ -70,10 +86,7 @@ export const formatKoreanDate = (dateString: string): string => {
  * 게시글 목록용 포맷팅 (상대적 시간 우선, 오래된 건 절대 날짜)
  */
 export const formatPostDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - date.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = getDaysDifference(dateString);
 
   // 7일 이내는 상대적 시간
   if (diffDays <= 7) {
