@@ -6,10 +6,6 @@ import InputDropdown from '@common/input-dropdown';
 import TimePicker from '@common/time-picker';
 import WeekPicker from '@common/week-picker';
 
-import DatePicker from '@/shared/components/common/date-picker';
-import InputDropdown from '@/shared/components/common/input-dropdown';
-import TimePicker from '@/shared/components/common/time-picker';
-import WeekPicker from '@/shared/components/common/week-picker';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 import CopyAddress from '@/shared/components/ui/CopyAddress';
 import KakaoMap from '@/shared/components/ui/KakaoMap';
