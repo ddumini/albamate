@@ -2,14 +2,13 @@
 
 import MainGnb from '@components/common/gnb/MainGnb';
 
-const AlbalistLayout = ({ children }: { children: React.ReactNode }) => {
+const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <MainGnb />
-
       <main>{children}</main>
     </div>
   );
 };
 
-export default AlbalistLayout;
+export default PublicLayout;
