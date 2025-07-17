@@ -3,16 +3,17 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { AlbaItem, albaMockData } from '../mock/mockData';
+import { albaMockData } from '@/features/albalist/mock/mockData';
+import type { User } from '@/shared/types/alba';
+import { AlbaItem } from '@/shared/types/alba';
+
 import AlbaCard from './AlbaCard';
 import AlbaFilterBar from './AlbaFilterBar';
 import FloatingFormButton from './FloatingFormButton';
 
 const AlbaListPage = () => {
   const [albaList, setAlbaList] = useState<AlbaItem[]>([]);
-  const [user, setUser] = useState<{ role: 'APPLICANT' | 'OWNER' } | null>(
-    null
-  );
+  const [user, setUser] = useState<User | null>(null);
 
   const router = useRouter();
 
