@@ -2,7 +2,7 @@ import AuthForm from '@/features/auth/components/AuthForm';
 import AuthTitleArea from '@/features/auth/components/AuthTitleArea';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 
-const SignInPage = () => {
+const ApplicantInfoPage = () => {
   return (
     <InnerContainer className="flex flex-col gap-48" size="sm">
       <AuthTitleArea />
@@ -11,4 +11,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default ApplicantInfoPage;

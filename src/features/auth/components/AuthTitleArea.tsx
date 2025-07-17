@@ -2,42 +2,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-// 상수 분리
-const AUTH_ROUTES = {
-  SIGNIN: '/signin',
-  SIGNUP: '/signup',
-  APPLICANT_INFO: '/applicant-info',
-} as const;
-
-// 타입 정의 개선
-type AuthPageType = 'signin' | 'signup' | 'applicantInfo';
-
-interface AuthContent {
-  title: string;
-  description: string;
-  link?: string;
-  linkText?: string;
-}
-
-// 상수 객체로 분리 (성능 최적화)
-const AUTH_CONTENT: Record<AuthPageType, AuthContent> = {
-  signin: {
-    title: '로그인',
-    description: '아직 계정이 없으신가요?',
-    link: AUTH_ROUTES.SIGNUP,
-    linkText: '회원가입 하기',
-  },
-  signup: {
-    title: '회원가입',
-    description: '이미 계정이 있으신가요?',
-    link: AUTH_ROUTES.SIGNIN,
-    linkText: '로그인 하기',
-  },
-  applicantInfo: {
-    title: '지원자 정보 입력',
-    description: '추가 정보를 입력하여 회원가입을 완료해주세요.',
-  },
-} as const;
+import {
+  AUTH_CONTENT,
+  AUTH_ROUTES,
+  type AuthPageType,
+} from '@/features/auth/constants';
 
 const AuthTitleArea = () => {
   const pathname = usePathname();
@@ -60,10 +29,22 @@ const AuthTitleArea = () => {
   const { title, description, link, linkText } = AUTH_CONTENT[authPageType];
 
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{description}</p>
-      {link && linkText && <Link href={link}>{linkText}</Link>}
+    <div className="flex flex-col gap-16">
+      <h2 className="text-2xl font-semibold text-black-500">{title}</h2>
+      <p>
+        {description[0]}
+        {link && linkText && (
+          <Link className="inline-block" href={link}>
+            {linkText}
+          </Link>
+        )}
+        {description[1] && (
+          <>
+            <br />
+            {description[1]}
+          </>
+        )}
+      </p>
     </div>
   );
 };
