@@ -7,7 +7,7 @@ const ApplyPage = () => {
     <section className="pb-68">
       <h1 className="sr-only">알바메이트 지원하기 페이지</h1>
       <InnerContainer size="sm">
-        <div className="flex items-center justify-between py-20 pb-35 lg:mt-40 lg:pt-75">
+        <div className="flex items-center justify-between py-20 lg:mt-40 lg:pt-75 lg:pb-35">
           <h2 className="text-xl font-semibold lg:text-3xl">
             알바메이트 지원하기
           </h2>
