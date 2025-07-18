@@ -29,7 +29,7 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
   const handleSortChange = (value: string) => console.log('정렬:', value);
 
   return (
-    <div className="mb-24 w-full px-24 md:px-72 dark:border-gray-500">
+    <div className="w-full px-24 py-12 md:px-72 md:py-24 dark:border-gray-500">
       <div className="mx-auto flex max-w-1479 flex-col gap-16 px-4 py-20 lg:gap-20">
         <IconInput
           alt="검색"
