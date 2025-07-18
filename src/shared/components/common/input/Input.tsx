@@ -1,9 +1,6 @@
+import { inputStyle, inputVariants } from '@common/input/inputStyles';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
-import {
-  inputStyle,
-  inputVariants,
-} from '@/shared/components/common/input/inputStyles';
 import { cn } from '@/shared/lib/cn';
 
 export interface InputProps

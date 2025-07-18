@@ -1,7 +1,6 @@
+import InputFileImage from '@common/input/InputFileImage';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-
-import InputFileImage from '@/shared/components/common/input/InputFileImage';
 
 interface UploadMultipleImageProps {
   /**

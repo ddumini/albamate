@@ -56,13 +56,15 @@ const LandingButton = ({ content }: LandingButtonProps) => {
       onMouseLeave={handleMouseLeave}
     >
       <span
-        className="pointer-events-none absolute z-0 block h-80 w-80 rounded-full bg-blue-100"
+        // 동적 애니메이션을 위한 인라인 스타일
+        // tailwind로 처리할 수 없는 transform, opacity, transition 값들을 동적으로 제어
         style={{
           position: 'absolute',
           width: 320,
           height: 320,
           borderRadius: '50%',
           pointerEvents: 'none',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
           zIndex: 0,
           ...circleStyle,
           transform: circleStyle.transform || 'scale(0)',

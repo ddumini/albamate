@@ -7,9 +7,11 @@ const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return null; // 마운트 전 렌더링 안 함
 
   const isDark = theme === 'dark';
 
@@ -17,7 +19,7 @@ const ThemeToggle = () => {
     <div>
       <button
         aria-label="Toggle Dark Mode"
-        className="dark-light-toggle BG-ToggleButton relative flex h-26 w-26 cursor-pointer items-center justify-center rounded-full transition-colors duration-500 md:h-32 md:w-32 lg:h-36 lg:w-36"
+        className="dark-light-toggle BG-ToggleButton relative flex h-26 w-26 cursor-pointer items-center justify-center rounded-full text-black transition-colors duration-500 md:h-32 md:w-32 lg:h-36 lg:w-36"
         type="button"
         onClick={() => setTheme(isDark ? 'light' : 'dark')}
       >

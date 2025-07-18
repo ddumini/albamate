@@ -1,14 +1,16 @@
 'use client';
 
-import { Chip } from '@components/common/chip/Chip';
-import AuthGnb from '@components/common/gnb/AuthGnb';
-import MainGnb from '@components/common/gnb/MainGnb';
-import EditPopup from '@components/common/popup/EditPopup';
-import ToastPopup from '@components/common/popup/ToastPopup';
-import Tab from '@components/common/tab/Tab';
-import Tooltip from '@components/common/tooltip/Tooltip';
+import Chip from '@common/chip/Chip';
+import EditPopup from '@common/popup/EditPopup';
+import ToastPopup from '@common/popup/ToastPopup';
+import Tab from '@common/tab/Tab';
+import Tooltip from '@common/tooltip/Tooltip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
+import DatePicker from '@/shared/components/common/date-picker';
+import MainGnb from '@/shared/components/common/gnb/main-gnb';
+import Dropdown from '@/shared/components/ui/Dropdown';
 
 const TestPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -25,19 +27,14 @@ const TestPage = () => {
   return (
     <div className="m-16 flex flex-col gap-24 text-md">
       <ul>
-        <li className="mb-36">
-          로그인 전 헤더
-          <AuthGnb />
-        </li>
-        <li>
-          메인 헤더
+        <li className="mb-72">
           <MainGnb />
         </li>
       </ul>
 
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
-      <Tab />
+      <Tab tabs={['내가 쓴 글', '내가 쓴 댓글', '스크랩']} />
 
       <div className="flex justify-center">
         <Tooltip
@@ -142,6 +139,29 @@ const TestPage = () => {
 
         <Chip label="Label" variant="icon" />
       </div>
+
+      <div className="bg-red">red</div>
+
+      <Dropdown
+        className="w-48"
+        id="example-menu"
+        trigger={
+          <button
+            className="w-full rounded bg-blue-500 px-4 py-2 text-white"
+            type="button"
+          >
+            메뉴 열기
+          </button>
+        }
+      >
+        <ul className="flex flex-col gap-2 p-4">
+          <li className="cursor-pointer hover:text-blue-500">옵션 1</li>
+          <li className="cursor-pointer hover:text-blue-500">옵션 2</li>
+          <li className="cursor-pointer hover:text-blue-500">옵션 3</li>
+        </ul>
+      </Dropdown>
+
+      <DatePicker />
     </div>
   );
 };
