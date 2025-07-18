@@ -19,19 +19,12 @@ const DEFAULT_NAV_ITEMS: NavItem[] = [
   { href: '/albatalk', label: '알바토크' },
 ];
 
-const NavMenu = ({
-  items = DEFAULT_NAV_ITEMS,
-  isLandingStyle = false,
-}: NavMenuProps) => {
+const NavMenu = ({ items = DEFAULT_NAV_ITEMS }: NavMenuProps) => {
   const router = useRouter();
-  const pathname = usePathname(); // ✅ 클라이언트에서 가져오기
-  const isLanding = pathname === '/';
-
-  const navTextColor =
-    isLandingStyle && isLanding ? 'text-white' : 'Text-black';
+  const pathname = usePathname();
 
   return (
-    <nav className={cn('flex gap-16 font-medium md:gap-24', navTextColor)}>
+    <nav className="flex gap-16 font-medium md:gap-24">
       {items.map(({ href, label }) => (
         <button
           key={href}
