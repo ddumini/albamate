@@ -17,7 +17,7 @@ const MyPageDropDown = ({ items, className }: MyPageDropdownProps) => {
   return (
     <div className={cn('relative flex items-center justify-center', className)}>
       <Dropdown
-        className="relative flex w-96 justify-end"
+        className="relative flex w-80 justify-end lg:w-96"
         trigger={isOpen => (
           <button
             className="relative h-24 w-24"
@@ -33,7 +33,7 @@ const MyPageDropDown = ({ items, className }: MyPageDropdownProps) => {
           </button>
         )}
       >
-        <ul className="flex h-68 w-full flex-col items-center justify-between rounded-lg border border-solid border-line-100 p-4 [box-shadow:4px_4px_4px_rgba(228,228,228,0.1)]">
+        <ul className="relative z-10 flex h-68 w-full flex-col items-center justify-between rounded-lg border border-solid border-line-100 p-4 [box-shadow:4px_4px_4px_rgba(228,228,228,0.1)]">
           {items.map(item => {
             return (
               <li

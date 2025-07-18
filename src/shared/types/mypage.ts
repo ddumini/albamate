@@ -21,8 +21,25 @@ export interface PostCardItem {
   };
 }
 
-export interface CardInfo {
+export interface PostCardProps {
   cardInfo: PostCardItem[];
+}
+
+// Comment
+export interface CommentCardItem {
+  post: {
+    content: string;
+    title: string;
+    id: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  content: string;
+  id: number;
+}
+
+export interface CommentCardProps {
+  cardInfo: CommentCardItem[];
 }
 
 // Scrap
@@ -39,7 +56,6 @@ export interface ScrapItem {
   id: number;
 }
 
-export interface ScrapInfo {
-  nextCursor: number;
-  data: ScrapItem[];
+export interface ScrapCardProps {
+  cardInfo: ScrapItem[];
 }

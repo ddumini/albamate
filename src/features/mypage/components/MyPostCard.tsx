@@ -2,25 +2,9 @@
 
 import Image from 'next/image';
 
-import CardContainer from './CardContainer';
+import { PostCardItem } from '../../../shared/types/mypage';
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
-
-interface CardItem {
-  id: number;
-  title: string;
-  content: string;
-  imageUrl: string;
-  likeCount: number;
-  commentCount: number;
-  createdAt: string;
-  updatedAt: string;
-  writer: {
-    id: number;
-    nickname: string;
-    imageUrl: string | null;
-  };
-}
 
 interface DropdownValue {
   value: string;
@@ -28,93 +12,81 @@ interface DropdownValue {
 }
 
 interface MyPostCardProps {
-  cardContent: CardItem[];
+  cardContent: PostCardItem;
   dropdownItem: DropdownValue[];
+  key?: string | number;
 }
 
 const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
   return (
-    <>
-      {cardContent.map(item => {
-        return (
-          <CardContainer
-            key={item.id}
-            className="flex h-264 w-full flex-col items-start justify-between border border-line-100 bg-white p-24 shadow-[4px_4px_6px_rgba(212,212,212,0.1)] xl:max-w-476"
-          >
-            <section className="flex w-full items-center justify-between">
-              <div className="inline-flex items-center">
-                <span className="relative inline-flex h-24 w-24 items-center justify-center lg:h-36 lg:w-36">
-                  <Image
-                    fill
-                    alt="제목"
-                    sizes="36px"
-                    src="/icons/apply-list.svg"
-                  />
-                </span>
-                <h3 className="text-lg font-medium text-black-400">
-                  {item.title}
-                </h3>
-              </div>
-              <MyPageDropDown items={dropdownItem} />
-            </section>
-            <section>
-              <p className="text-lg font-normal text-gray-500">
-                {item.content}
-              </p>
-            </section>
-            <section className="flex w-full items-center justify-between">
-              <div className="flex items-center gap-16 text-lg font-normal text-gray-500">
-                <div className="flex items-center gap-4">
-                  <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
-                    <Image
-                      fill
-                      alt="프로필 이미지"
-                      sizes="36px"
-                      src={
-                        item.imageUrl
-                          ? item.imageUrl
-                          : '/icons/user-profile.svg'
-                      }
-                    />
-                  </span>
-                  <span className="text-xs lg:text-lg">
-                    {item.writer.nickname}
-                  </span>
-                </div>
-                <span className="inline-flex h-16 w-1 bg-line-200" />
-                <span className="text-xs lg:text-lg">
-                  {DateFormatter(item.updatedAt)}
-                </span>
-              </div>
-              <div className="inline-flex items-center gap-12 text-gray-500">
-                <div className="inline-flex items-center gap-2">
-                  <span className="relative inline-flex h-24 w-24 items-center justify-center gap-2 overflow-hidden rounded-full lg:h-36 lg:w-36">
-                    <Image
-                      fill
-                      alt="프로필 이미지"
-                      sizes="36px"
-                      src="/icons/comment.svg"
-                    />
-                  </span>
-                  <p>{item.commentCount}</p>
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
-                    <Image
-                      fill
-                      alt="프로필 이미지"
-                      sizes="36px"
-                      src="/icons/like.svg"
-                    />
-                  </span>
-                  <p>{item.likeCount}</p>
-                </div>
-              </div>
-            </section>
-          </CardContainer>
-        );
-      })}
-    </>
+    <div
+      key={cardContent.id}
+      className="Border-Card flex h-264 w-full flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg xl:max-w-476"
+    >
+      <section className="flex w-full items-center justify-between">
+        <div className="inline-flex items-center">
+          <span className="relative inline-flex h-24 w-24 items-center justify-center lg:h-36 lg:w-36">
+            <Image fill alt="제목" sizes="36px" src="/icons/apply-list.svg" />
+          </span>
+          <h3 className="Text-black text-lg font-medium">
+            {cardContent.title}
+          </h3>
+        </div>
+        <MyPageDropDown items={dropdownItem} />
+      </section>
+      <section>
+        <p className="Text-gray text-lg font-normal">{cardContent.content}</p>
+      </section>
+      <section className="flex w-full items-center justify-between">
+        <div className="Text-gray flex items-center gap-16 text-lg font-normal">
+          <div className="flex items-center gap-4">
+            <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
+              <Image
+                fill
+                alt="프로필 이미지"
+                sizes="36px"
+                src={
+                  cardContent.imageUrl
+                    ? cardContent.imageUrl
+                    : '/icons/user-profile.svg'
+                }
+              />
+            </span>
+            <span className="text-xs lg:text-lg">
+              {cardContent.writer.nickname}
+            </span>
+          </div>
+          <span className="inline-flex h-16 w-1 bg-line-200" />
+          <span className="text-xs lg:text-lg">
+            {DateFormatter(cardContent.updatedAt)}
+          </span>
+        </div>
+        <div className="Text-gray inline-flex items-center gap-12">
+          <div className="inline-flex items-center gap-2">
+            <span className="relative inline-flex h-24 w-24 items-center justify-center gap-2 overflow-hidden rounded-full lg:h-36 lg:w-36">
+              <Image
+                fill
+                alt="프로필 이미지"
+                sizes="36px"
+                src="/icons/comment.svg"
+              />
+            </span>
+            <p>{cardContent.commentCount}</p>
+          </div>
+          <div className="inline-flex items-center gap-2">
+            <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
+              <Image
+                fill
+                alt="프로필 이미지"
+                sizes="36px"
+                src="/icons/like.svg"
+              />
+            </span>
+            <p>{cardContent.likeCount}</p>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 

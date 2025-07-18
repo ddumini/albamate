@@ -6,11 +6,12 @@ interface CardContainer {
   children: ReactNode;
   className?: string;
   key?: string | number;
+  itemId?: string | number;
 }
 
-const CardContainer = ({ children, className, key }: CardContainer) => {
+const CardContainer = ({ children, className, key, itemId }: CardContainer) => {
   return (
-    <div key={key} className={cn('rounded-2xl dark:bg-gray-50', className)}>
+    <div key={itemId} className={cn('rounded-2xl dark:bg-gray-50', className)}>
       {children}
     </div>
   );
