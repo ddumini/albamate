@@ -3,8 +3,6 @@
 import { motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { cn } from '@/shared/lib/cn';
-
 // 섹션별 배경색 정의 (RGB) - 섹션 순서대로 정의
 const SECTION_COLORS = [
   { r: 31, g: 31, b: 31 }, // black-400 (HeroSection)
@@ -120,7 +118,7 @@ const LandingBg = () => {
   return (
     <motion.div
       ref={containerRef}
-      className={cn('fixed inset-0 z-0 h-full w-full')}
+      className="fixed inset-0 z-0 h-full w-full"
       style={{ backgroundColor }}
       transition={{
         duration: 0.1,

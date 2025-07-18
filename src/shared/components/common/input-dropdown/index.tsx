@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
+import { cn } from '@/shared/lib/cn';
 
 /**
  * InputDropdown 컴포넌트
@@ -20,16 +20,27 @@ import Dropdown from '@/shared/components/ui/Dropdown';
  * @param {string} [props.placeholder] - 선택 시 표시될 텍스트
  * @param {string} [props.className] - 추가 커스텀 클래스
  *
+ * 개선사항 (2025-07-16)
+ * 1. Hidden input 추가: 실제 form 제출 시 사용할 단일 input 필드
+ * 2. name 속성 지원: form에서 필드 식별 가능
+ * 3. required 옵셔널 속성 추가
+ * 4. selectInput을 div로 변경: 실제 input이 아닌 표시용 요소로 변경
+ * 5. 실제 값 동기화: hidden input의 값이 항상 현재 선택된 실제 값과 동기화
+ *
  */
 
 interface InputDropdownOption {
   value: string;
 }
+
 interface InputDropdownProps {
   options: InputDropdownOption[];
   placeholder?: string;
   defaultValue?: string;
+  name?: string; // form에서 사용할 name 속성 추가
   onChange?: (value: string) => void;
+  required?: boolean; // 필수 필드 여부
+  className?: string; // 추가 커스텀 클래스
 }
 
 const BTN_STYLE =
@@ -41,13 +52,17 @@ const InputDropdown = ({
   options,
   placeholder = '선택',
   defaultValue = '',
+  name,
   onChange,
+  required = false,
+  className,
 }: InputDropdownProps) => {
   const [inputValue, setInputValue] = useState(defaultValue);
   const [directInputValue, setDirectInputValue] = useState('');
   const [isDirectInput, setIsDirectInput] = useState(false);
   const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
   const directInputRef = useRef<HTMLInputElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   const isDirectInputSelected = isDirectInput && inputValue === '직접입력';
 
@@ -58,10 +73,19 @@ const InputDropdown = ({
     }
   }, [isDirectInput]);
 
+  // 실제 form 값 업데이트
+  useEffect(() => {
+    if (hiddenInputRef.current) {
+      const actualValue = isDirectInput ? directInputValue : inputValue;
+      hiddenInputRef.current.value = actualValue;
+    }
+  }, [inputValue, directInputValue, isDirectInput]);
+
   const handleSelect = (value: string) => {
     setInputValue(value);
     setIsDirectInput(false);
     setCurrentPlaceholder(placeholder);
+    setDirectInputValue('');
     onChange?.(value);
   };
 
@@ -69,13 +93,7 @@ const InputDropdown = ({
     setInputValue('직접입력');
     setIsDirectInput(true);
     setCurrentPlaceholder('직접입력');
-    onChange?.(inputValue);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-    onChange?.(value);
+    onChange?.(directInputValue);
   };
 
   const handleDirectInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,21 +103,18 @@ const InputDropdown = ({
   };
 
   const selectInput = (isOpen: boolean) => (
-    <input
-      readOnly
-      className={twMerge(
+    <div
+      className={cn(
         INPUT_STYLE,
-        'cursor-pointer',
+        'flex cursor-pointer items-center',
         // 드롭다운이 열려있을 때는 border만 표시
         isOpen && 'border-gray-200 focus:ring-0 focus:outline-none',
         // 드롭다운이 닫혀있을 때는 기본 포커스 스타일 허용
         !isOpen && ''
       )}
-      placeholder={currentPlaceholder}
-      type="text"
-      value={inputValue}
-      onChange={handleInputChange}
-    />
+    >
+      <span className="flex-1">{inputValue || currentPlaceholder}</span>
+    </div>
   );
 
   const directInput = (
@@ -115,9 +130,18 @@ const InputDropdown = ({
 
   return (
     <>
+      {/* 실제 form에서 사용할 hidden input */}
+      <input
+        ref={hiddenInputRef}
+        name={name}
+        required={required}
+        type="hidden"
+        value={isDirectInput ? directInputValue : inputValue}
+      />
+
       <Dropdown
         trigger={isOpen => (
-          <div className="relative">
+          <div className={cn('relative', className)}>
             {selectInput(isOpen)}
             <Image
               alt="arrow-down"

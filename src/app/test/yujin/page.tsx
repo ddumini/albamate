@@ -9,6 +9,9 @@ import Tooltip from '@common/tooltip/Tooltip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import DatePicker from '@/shared/components/common/date-picker';
+import Dropdown from '@/shared/components/ui/Dropdown';
+
 const TestPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -139,6 +142,27 @@ const TestPage = () => {
       </div>
 
       <div className="bg-red">red</div>
+
+      <Dropdown
+        className="w-48"
+        id="example-menu"
+        trigger={
+          <button
+            className="w-full rounded bg-blue-500 px-4 py-2 text-white"
+            type="button"
+          >
+            메뉴 열기
+          </button>
+        }
+      >
+        <ul className="flex flex-col gap-2 p-4">
+          <li className="cursor-pointer hover:text-blue-500">옵션 1</li>
+          <li className="cursor-pointer hover:text-blue-500">옵션 2</li>
+          <li className="cursor-pointer hover:text-blue-500">옵션 3</li>
+        </ul>
+      </Dropdown>
+
+      <DatePicker />
     </div>
   );
 };

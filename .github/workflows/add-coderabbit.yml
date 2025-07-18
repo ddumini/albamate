@@ -1,0 +1,20 @@
+name: Auto add CodeRabbit as reviewer
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  add-reviewer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add CodeRabbit as reviewer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers: ['coderabbitai']
+            })
