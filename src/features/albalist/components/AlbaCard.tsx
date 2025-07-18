@@ -3,8 +3,9 @@
 import Chip from '@common/chip/Chip';
 import { differenceInCalendarDays, format, isAfter } from 'date-fns';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 
@@ -24,19 +25,9 @@ const AlbaCard = ({ item, onClick }: Props) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, () => setOpen(false));
 
+  // 마감일에 따른 클래스 설정
   const dDayClass = cn(
     'px-25 whitespace-nowrap lg:px-48',
     dDay < 0 && 'text-gray-400',
