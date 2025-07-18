@@ -1,32 +1,27 @@
 'use client';
 
-import ButtonBase from '@common/button/ButtonBase';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import ThemeToggle from '@/shared/components/ThemeToggle';
 
+import PrimaryButton from '../../button/PrimaryButton';
+
 const RightMenu = () => {
-  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // 마운트 되기 전까지는 null 혹은 로딩 상태로 처리
-  if (!mounted) {
-    // 선택: 로딩 아이콘, 빈 div, 혹은 기본 라이트모드 아이콘 렌더링 가능
-    return null;
-  }
+  const handleLoginClick = () => {
+    router.push('/login'); // 로그인 페이지로 이동
+  };
 
   return (
     <div className="flex items-center gap-12">
-      <ButtonBase
-        className="BG-solid-mint rounded-sm px-4 py-2 text-white hover:brightness-90 md:px-8 md:py-4"
-        type="submit"
-        onClick={() => console.log('클릭')}
-      >
-        로그인
-      </ButtonBase>
+      <PrimaryButton
+        className="BG-solid-mint rounded-sm px-4 py-2 text-white hover:brightness-90 active:brightness-80 md:px-8 md:py-4"
+        label="로그인"
+        type="button"
+        variant="solid"
+        onClick={handleLoginClick}
+      />
       <ThemeToggle />
     </div>
   );
