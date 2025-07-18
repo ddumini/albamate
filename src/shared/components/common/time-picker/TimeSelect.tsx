@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
 
 import Dropdown from '@/shared/components/ui/Dropdown';
+import { cn } from '@/shared/lib/cn';
 
 /**
  * @module TimeSelect
@@ -35,6 +35,7 @@ interface TimeSelectProps {
   onChange: (value: string) => void;
   isSelected?: boolean; // 선택 여부 추가
   placeholder?: string; // 플레이스홀더 추가
+  className?: string;
 }
 
 const TimeSelect = ({
@@ -43,6 +44,7 @@ const TimeSelect = ({
   onChange,
   isSelected = false, // 기본값 false
   placeholder = '00:00', // 기본값 '00:00'
+  className,
 }: TimeSelectProps) => {
   return (
     <Dropdown
@@ -50,10 +52,11 @@ const TimeSelect = ({
       trigger={isOpen => (
         <button
           aria-label={label}
-          className={twMerge(
+          className={cn(
             'flex h-54 w-150 items-center gap-8 rounded-lg border-1 border-transparent bg-background-200 px-14 text-lg transition-colors lg:h-64 lg:w-210 lg:gap-16 lg:text-xl',
             isOpen ? 'border-gray-200' : '',
-            isSelected ? 'text-black' : 'text-gray-400' // 선택되지 않았으면 회색으로 표시
+            isSelected ? 'text-black' : 'text-gray-400', // 선택되지 않았으면 회색으로 표시
+            className
           )}
           type="button" // ESLint 에러 해결
         >
