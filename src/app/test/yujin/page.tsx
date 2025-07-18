@@ -1,7 +1,6 @@
 'use client';
 
 import Chip from '@common/chip/Chip';
-import AuthGnb from '@common/gnb/auth-gnb';
 import EditPopup from '@common/popup/EditPopup';
 import ToastPopup from '@common/popup/ToastPopup';
 import Tab from '@common/tab/Tab';
@@ -10,6 +9,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import DatePicker from '@/shared/components/common/date-picker';
+import MainGnb from '@/shared/components/common/gnb/main-gnb';
 import Dropdown from '@/shared/components/ui/Dropdown';
 
 const TestPage = () => {
@@ -27,9 +27,8 @@ const TestPage = () => {
   return (
     <div className="m-16 flex flex-col gap-24 text-md">
       <ul>
-        <li className="mb-36">
-          로그인 전 헤더
-          <AuthGnb />
+        <li className="mb-72">
+          <MainGnb />
         </li>
       </ul>
 
