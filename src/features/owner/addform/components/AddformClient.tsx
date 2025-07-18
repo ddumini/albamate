@@ -25,7 +25,7 @@ const AddformClient = ({ formId }: { formId?: number }) => {
     setCurrentMenu(menuIndex);
   };
   return (
-    <div className="relative flex w-full justify-center lg:pl-20">
+    <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
       {isDesktop && (
         <Sidebar
           className="3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
