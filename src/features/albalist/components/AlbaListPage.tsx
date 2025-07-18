@@ -31,7 +31,7 @@ const AlbaListPage = () => {
   return (
     <div>
       <AlbaFilterBar isOwner={isOwner} />
-      <div className="flex flex-wrap justify-center gap-24 px-24">
+      <div className="flex flex-wrap justify-start gap-24">
         {albaList.map(item => (
           <AlbaCard
             key={item.id}
