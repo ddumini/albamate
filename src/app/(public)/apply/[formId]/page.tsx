@@ -4,7 +4,7 @@ import InnerContainer from '@/shared/components/container/InnerContainer';
 
 const ApplyPage = () => {
   return (
-    <section>
+    <section className="pb-68">
       <h1 className="sr-only">알바메이트 지원하기 페이지</h1>
       <InnerContainer size="sm">
         <div className="flex items-center justify-between py-20 pb-35 lg:mt-40 lg:pt-75">
@@ -13,7 +13,7 @@ const ApplyPage = () => {
           </h2>
           <PrimaryButton
             disabled
-            className="text-semibold h-40 w-80 text-lg lg:h-56 lg:w-122 lg:text-xl"
+            className="h-40 w-80 text-lg font-semibold lg:h-56 lg:w-122 lg:text-xl"
             label="작성 취소"
             type="button"
             variant="solid"
