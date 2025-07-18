@@ -25,6 +25,17 @@ import { FilterBarProps } from '@/shared/types/filter';
  * @param {(value: string) => void} props.onSortChange - 정렬 옵션 변경 시 호출되는 콜백
  *
  * @returns {JSX.Element} 필터 바 UI를 렌더링하는 React 컴포넌트
+ * 
+ * 사용 예시
+ * <FilterBar
+    isOwner={isOwner}
+    searchPlaceholder="어떤 알바를 찾고 계세요?"
+    onIconClick={alert('검색 아이콘 클릭');}
+    onInputChange={console.log('검색어 입력:', e.target.value);}
+    onPublicFilterChange={console.log('공개/비공개 필터 변경:', value);}
+    onRecruitFilterChange={console.log('모집 여부 필터 변경:', value);}
+    onSortChange={console.log('정렬 변경:', value);}
+    />
  */
 const FilterBar = ({
   isOwner,
