@@ -59,7 +59,7 @@ const Select = ({
   // variant에 따른 스타일 분기
   const getButtonStyles = () => {
     if (variant === 'sort') {
-      return `text-black-300 dark:text-gray-200 flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap lg:text-lg ${buttonClassName}`;
+      return `flex w-full cursor-pointer items-center justify-end gap-2 text-xs font-semibold whitespace-nowrap lg:text-lg ${buttonClassName}`;
     }
     return `text-black-100 dark:text-gray-200 flex h-30 w-80 lg:w-126 cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 text-xs lg:h-42 lg:text-2lg lg:px-16 ${buttonClassName} ${
       selectedValue
@@ -94,11 +94,15 @@ const Select = ({
   const getOptionStyles = (isSelected: boolean) => {
     if (variant === 'sort') {
       return `h-28 w-full cursor-pointer items-center gap-2 rounded-lg text-center text-xs font-semibold lg:h-38 lg:text-lg ${
-        isSelected ? 'bg-mint-50/50 text-black-300' : 'text-gray-400'
+        isSelected
+          ? 'bg-mint-50/50 text-black-300 dark:bg-mint-400 dark:text-white'
+          : 'text-gray-400 dark:text-white'
       }`;
     }
     return `flex w-full cursor-pointer items-center gap-2 px-10 h-34 text-left text-xs lg:text-2lg lg:h-52 lg:px-16 ${
-      isSelected ? 'bg-mint-50/50 text-mint-400' : 'text-gray-700'
+      isSelected
+        ? 'bg-mint-50/50 text-black-300 dark:bg-mint-400 dark:text-white'
+        : 'text-gray-400 dark:text-white'
     }`;
   };
 
