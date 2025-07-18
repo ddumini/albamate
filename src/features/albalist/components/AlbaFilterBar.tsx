@@ -9,7 +9,7 @@ interface Props {
 const AlbaFilterBar = ({ isOwner }: Props) => {
   // 추후 API 연동 시 검색, 필터, 정렬 기능 구현
   const handleFilterChange = (value: string) => {
-    console.log('필터 변경:', value);
+    console.log('모집 여부 필터 변경:', value);
   };
   const handlePublicFilterChange = (value: string) => {
     console.log('공개/비공개 필터 변경:', value);
