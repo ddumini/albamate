@@ -101,7 +101,7 @@ const Dropdown = ({
         <div
           aria-expanded={isOpen}
           className={twMerge(
-            'absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 bg-white shadow-[4px_4px_4px_rgba(130,130,130,0.08)]',
+            'BG-white absolute top-full right-0 left-0 z-50 mt-4 overflow-hidden rounded-sm border border-gray-100 shadow-[4px_4px_4px_rgba(130,130,130,0.08)]',
             isRight && 'left-auto'
           )}
           role="menu"
