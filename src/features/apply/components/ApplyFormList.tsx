@@ -61,8 +61,10 @@ const ApplyFormList = () => {
         </Label>
         <Input
           id="career"
+          min={0}
           placeholder="숫자만 입력해주세요."
-          type="text"
+          step={1}
+          type="number"
           variant="solid"
         />
       </li>
@@ -94,6 +96,7 @@ const ApplyFormList = () => {
         <Label htmlFor="introduction">자기소개</Label>
         <Textarea
           id="introduction"
+          maxLength={200}
           placeholder="최대 200자까지 입력 가능합니다."
           variant="solid"
         />
