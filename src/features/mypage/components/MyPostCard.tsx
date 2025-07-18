@@ -34,12 +34,12 @@ interface MyPostCardProps {
 
 const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
   return (
-    <CardContainer className="grid-rows-auto grid grid-cols-1 items-center lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3">
+    <>
       {cardContent.map(item => {
         return (
-          <div
+          <CardContainer
             key={item.id}
-            className="flex h-264 w-full flex-col items-start justify-between rounded-2xl border border-line-100 bg-white p-24 shadow-[4px_4px_6px_rgba(212,212,212,0.1)] xl:max-w-476"
+            className="flex h-264 w-full flex-col items-start justify-between border border-line-100 bg-white p-24 shadow-[4px_4px_6px_rgba(212,212,212,0.1)] xl:max-w-476"
           >
             <section className="flex w-full items-center justify-between">
               <div className="inline-flex items-center">
@@ -77,10 +77,14 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
                       }
                     />
                   </span>
-                  <span>{item.writer.nickname}</span>
+                  <span className="text-xs lg:text-lg">
+                    {item.writer.nickname}
+                  </span>
                 </div>
                 <span className="inline-flex h-16 w-1 bg-line-200" />
-                <span>{DateFormatter(item.updatedAt)}</span>
+                <span className="text-xs lg:text-lg">
+                  {DateFormatter(item.updatedAt)}
+                </span>
               </div>
               <div className="inline-flex items-center gap-12 text-gray-500">
                 <div className="inline-flex items-center gap-2">
@@ -107,10 +111,10 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
                 </div>
               </div>
             </section>
-          </div>
+          </CardContainer>
         );
       })}
-    </CardContainer>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-const dummy = {
+export const post = {
   data: [
     {
       id: 370,
@@ -102,4 +102,94 @@ const dummy = {
   nextCursor: 218,
 };
 
-export default dummy;
+export const comment = {
+  totalPages: 0,
+  currentPage: 0,
+  totalItemCount: 0,
+  data: [
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 1,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 1,
+    },
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 2,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 2,
+    },
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 3,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 3,
+    },
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 4,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 4,
+    },
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 5,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 5,
+    },
+    {
+      post: {
+        content: 'string',
+        title: 'string',
+        id: 6,
+      },
+      updatedAt: '2025-07-17T23:08:00.734Z',
+      createdAt: '2025-07-17T23:08:00.734Z',
+      content: 'string',
+      id: 6,
+    },
+  ],
+};
+
+export const scrap = {
+  nextCursor: 0,
+  data: [
+    {
+      updatedAt: '2025-07-18T04:11:55.579Z',
+      createdAt: '2025-07-18T04:11:55.579Z',
+      isPublic: true,
+      scrapCount: 0,
+      applyCount: 0,
+      imageUrls: [],
+      recruitmentEndDate: '2025-07-18T04:11:55.579Z',
+      recruitmentStartDate: '2025-07-18T04:11:55.579Z',
+      title: 'string',
+      id: 0,
+    },
+  ],
+};

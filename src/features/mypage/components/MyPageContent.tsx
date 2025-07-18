@@ -1,15 +1,18 @@
-import dummy from './dummy';
-import MyPageCardSection from './MyPageCardSection';
+import CommentCardSection from './CommentCardSection';
+import { comment, post, scrap } from './dummy';
 import MyPageFilters from './MyPageFilters';
 import MyPageTop from './MyPageTop';
+import PostCardSection from './PostCardSection';
+import ScrapCardSection from './ScrapCardSection';
 
 const MyPageContent = () => {
-  const data = dummy.data;
   return (
     <div className="max-w-1480 px-24 pt-85 md:px-72 lg:mx-auto">
       <MyPageTop />
       <MyPageFilters />
-      <MyPageCardSection cardInfo={data} />
+      <PostCardSection cardInfo={post.data} />
+      <CommentCardSection cardInfo={comment} />
+      <ScrapCardSection cardInfo={scrap} />
     </div>
   );
 };

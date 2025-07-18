@@ -5,11 +5,12 @@ import { cn } from '@/shared/lib/cn';
 interface CardContainer {
   children: ReactNode;
   className?: string;
+  key?: string | number;
 }
 
-const CardContainer = ({ children, className }: CardContainer) => {
+const CardContainer = ({ children, className, key }: CardContainer) => {
   return (
-    <div className={cn('rounded-2xl dark:bg-gray-50', className)}>
+    <div key={key} className={cn('rounded-2xl dark:bg-gray-50', className)}>
       {children}
     </div>
   );
