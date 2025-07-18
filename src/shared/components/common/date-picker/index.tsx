@@ -6,10 +6,12 @@ import '@/app/day-picker-override.css'; // react day picker 커스텀 오버라�
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 
 import { cn } from '@/shared/lib/cn';
+
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 /**
  * DatePicker 컴포넌트
@@ -55,18 +57,9 @@ const DatePicker = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   // 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(containerRef, () => {
+    setIsOpen(false);
+  });
 
   // 키보드 이벤트 처리
   const handleKeyDown = (event: React.KeyboardEvent) => {
