@@ -44,6 +44,22 @@ const TestPage = () => {
       <PrimaryButton
         disabled
         className="w-full max-w-640 py-20 text-lg lg:text-xl"
+        label="solid disabled"
+        type="button"
+        variant="solid"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
+        label="outline disabled"
+        type="button"
+        variant="outline"
+        onClick={() => setPage(prev => prev + 1)}
+      />
+      <PrimaryButton
+        disabled
+        className="w-full max-w-640 py-20 text-lg lg:text-xl"
         label="cancelSolid"
         type="button"
         variant="cancelSolid"
