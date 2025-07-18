@@ -54,10 +54,18 @@ const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
           height={24}
           role="button"
           src="/icons/kebab-menu.svg"
+          tabIndex={0}
           width={24}
           onClick={e => {
             e.stopPropagation();
             setOpen(prev => !prev);
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.stopPropagation();
+              setOpen(prev => !prev);
+            }
           }}
         />
         {open && <AlbaDropdown options={menuOptions} />}
