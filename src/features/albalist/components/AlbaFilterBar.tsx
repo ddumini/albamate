@@ -29,12 +29,12 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
   const handleSortChange = (value: string) => console.log('정렬:', value);
 
   return (
-    <div className="mb-24 w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">
+    <div className="mb-24 w-full px-24 md:px-72 dark:border-gray-500">
       <div className="mx-auto flex max-w-1479 flex-col gap-16 px-4 py-20 lg:gap-20">
         <IconInput
           alt="검색"
           className="w-327 lg:w-728"
-          iconClassName="pl-24"
+          iconClassName="pl-16"
           iconOnClick={() => alert('검색')}
           inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
           placeholder="어떤 알바를 찾고 계세요?"
@@ -58,9 +58,9 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
             )}
           </div>
           <Select
-            className="mt-8"
             options={sortOptions}
             variant="sort"
+            wrapperClassName="mt-8"
             onSelect={handleSortChange}
           />
         </div>
