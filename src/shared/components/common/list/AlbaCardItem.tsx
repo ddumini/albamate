@@ -10,12 +10,18 @@ import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 
-interface Props {
-  item: AlbaItem;
+export interface DropdownOption {
+  label: string;
   onClick: () => void;
 }
 
-const AlbaCardItem = ({ item, onClick }: Props) => {
+interface Props {
+  item: AlbaItem;
+  onClick: () => void;
+  dropdownOptions: DropdownOption[];
+}
+
+const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
   const start = new Date(item.recruitmentStartDate);
   const end = new Date(item.recruitmentEndDate);
   const dDay = differenceInCalendarDays(end, new Date());
@@ -26,6 +32,7 @@ const AlbaCardItem = ({ item, onClick }: Props) => {
 
   useClickOutside(dropdownRef, () => setOpen(false));
 
+  // 마감일에 따른 클래스 설정
   const dDayClass = cn(
     'px-25 whitespace-nowrap lg:px-48',
     dDay < 0 && 'text-gray-400',
@@ -33,23 +40,25 @@ const AlbaCardItem = ({ item, onClick }: Props) => {
     dDay > 3 && 'text-gray-600 hover:text-gray-900'
   );
 
+  // 알바 카드의 통계 정보
   const stats = [
-    { label: '지원자', value: `${item.applyCount}명` },
-    { label: '스크랩', value: `${item.scrapCount}명` },
-    { label: dDay < 0 ? '마감 완료' : `마감 D-${dDay}`, isDeadline: true },
-  ];
-
-  const handleApply = () => alert(`지원 - ${item.title}`);
-  const handleScrap = () => alert(`스크랩 - ${item.title}`);
-
-  const options = [
-    { label: '지원하기', onClick: handleApply },
-    { label: '스크랩', onClick: handleScrap },
+    {
+      label: '지원자',
+      value: `${item.applyCount}명`,
+    },
+    {
+      label: '스크랩',
+      value: `${item.scrapCount}명`,
+    },
+    {
+      label: dDay < 0 ? '마감 완료' : `마감 D-${dDay}`,
+      isDeadline: true,
+    },
   ];
 
   return (
     <div
-      className="Border-Card cursor-pointer flex-col gap-8 rounded-xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
       onClick={onClick}
     >
       <div className="relative flex h-180 w-full justify-end overflow-hidden rounded-lg">
@@ -83,7 +92,7 @@ const AlbaCardItem = ({ item, onClick }: Props) => {
               setOpen(prev => !prev);
             }}
           />
-          {open && <AlbaDropdown options={options} />}
+          {open && <AlbaDropdown options={dropdownOptions} />}
         </div>
       </div>
 
