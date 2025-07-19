@@ -39,7 +39,7 @@ const ListWrapper = <T extends Identifiable>({
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-x-24 gap-y-64 sm:grid-cols-2 lg:grid-cols-3',
+        'grid grid-cols-1 gap-x-12 gap-y-32 sm:grid-cols-2 md:gap-x-24 md:gap-y-48 lg:grid-cols-3 lg:gap-y-64',
         className
       )}
     >

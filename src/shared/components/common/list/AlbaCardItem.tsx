@@ -68,7 +68,7 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
   return (
     <div
-      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-16 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
       onClick={onClick}
     >
       <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-lg border border-line-200 dark:border-transparent">
@@ -80,17 +80,17 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
         />
       </div>
 
-      <div className="relative mt-12 flex items-center gap-8 text-sm">
+      <div className="relative mt-12 flex items-center gap-8 pb-30 text-sm xs:pt-0">
         {item.isPublic && <Chip active label="공개" variant="filled" />}
         <Chip
           active
           label={isRecruiting ? '모집 중' : '모집 완료'}
           variant="filled"
         />
-        <span className="Text-gray ml-8 whitespace-nowrap">
+        <span className="Text-gray absolute bottom-0 left-0 whitespace-nowrap xs:static">
           {format(start, 'yyyy.MM.dd')} ~ {format(end, 'yyyy.MM.dd')}
         </span>
-        <div ref={dropdownRef} className="relative ml-auto">
+        <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
           <Image
             alt="드롭다운 아이콘"
             className="cursor-pointer"
