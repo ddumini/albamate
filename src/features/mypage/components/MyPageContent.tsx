@@ -21,18 +21,45 @@ interface MyPageContentProps {
   tapOption: TabOption[];
 }
 
+interface SortOption {
+  value: string;
+  label: string;
+}
+
 const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
   const [tabValue, setTabValue] = useState('post');
+  const [sortValue, setSortValue] = useState('latest');
+  const [publicValue, setPublicValue] = useState('all');
+  const [recruitValue, setRecruitValue] = useState('all');
 
   const filterWrapClassName = `${tabValue === 'scrap' ? 'lg:flex-col' : 'lg:flex-row lg:items-center'}`;
   const selectWrapClassName = `${tabValue === 'scrap' ? 'w-full flex items-center justify-between' : ''}`;
   const tabClassName = `${tabValue === 'scrap' ? 'flex items-center lg:justify-start w-full mb-16' : ''}`;
 
-  const sortOption = [
-    { value: 'latest', label: '최신순' },
-    { value: 'comments', label: '댓글많은순' },
-    { value: 'like', label: '좋아요순' },
-  ];
+  let sortOption: SortOption[] = [];
+
+  switch (tabValue) {
+    case 'post':
+      sortOption = [
+        { value: 'latest', label: '최신순' },
+        { value: 'comments', label: '댓글 많은 순' },
+        { value: 'like', label: '좋아요 순' },
+      ];
+      break;
+    case 'comment':
+      sortOption = [{ value: 'latest', label: '최신순' }];
+      break;
+    case 'scrap':
+      sortOption = [
+        { value: 'latest', label: '최신순' },
+        { value: 'scrap', label: '스크랩 많은 순' },
+        { value: 'apply', label: '지원 많은 순' },
+      ];
+      break;
+    default:
+      sortOption = [];
+  }
+
   const publicOption = [
     { value: 'all', label: '전체' },
     { value: 'public', label: '공개' },
@@ -48,8 +75,82 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
     setTabValue(value);
   };
 
-  const handleSort = (value: string) => {
-    console.error('임시', value);
+  const getFilterPostData = () => {
+    let filtered = [...post.data];
+
+    switch (sortValue) {
+      case 'latest':
+        filtered = filtered.sort(
+          (a, b) =>
+            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime() -
+            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime()
+        );
+        break;
+
+      case 'comments':
+        filtered = filtered.sort((a, b) => b.commentCount - a.commentCount);
+        break;
+
+      case 'like':
+        filtered = filtered.sort((a, b) => b.likeCount - a.likeCount);
+        break;
+    }
+
+    return filtered;
+  };
+  const getFilterCommentData = () => {
+    let filtered = [...comment.data];
+
+    switch (sortValue) {
+      case 'latest':
+        filtered = filtered.sort(
+          (a, b) =>
+            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime() -
+            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime()
+        );
+        break;
+    }
+
+    return filtered;
+  };
+  const getFilterScrapData = () => {
+    let filtered = [...scrap.data];
+
+    if (publicValue !== 'all' && publicValue === 'public') {
+      filtered = filtered.filter(item => item.isPublic === true);
+    }
+    if (publicValue !== 'all' && publicValue === 'private') {
+      filtered = filtered.filter(item => item.isPublic === false);
+    }
+
+    if (recruitValue !== 'all' && recruitValue === 'recruit') {
+      filtered = filtered.filter(
+        item => new Date(item.recruitmentEndDate) >= new Date()
+      );
+    }
+
+    if (recruitValue !== 'all' && recruitValue === 'close') {
+      filtered = filtered.filter(
+        item => new Date(item.recruitmentEndDate) < new Date()
+      );
+    }
+
+    switch (sortValue) {
+      case 'latest':
+        filtered.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        break;
+      case 'scrap':
+        filtered.sort((a, b) => b.scrapCount - a.scrapCount);
+        break;
+      case 'apply':
+        filtered.sort((a, b) => b.applyCount - a.applyCount);
+        break;
+    }
+
+    return filtered;
   };
 
   return (
@@ -70,7 +171,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
                   placeholder="전체"
                   variant="filter"
                   onSelect={value => {
-                    handleSort(value);
+                    setPublicValue(value);
                   }}
                 />
               </div>
@@ -80,7 +181,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
                   placeholder="전체"
                   variant="filter"
                   onSelect={value => {
-                    handleSort(value);
+                    setRecruitValue(value);
                   }}
                 />
               </div>
@@ -91,14 +192,20 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
             placeholder="최신순"
             variant="sort"
             onSelect={value => {
-              handleSort(value);
+              setSortValue(value);
             }}
           />
         </div>
       </section>
-      {tabValue === 'post' && <PostCardSection cardInfo={post.data} />}
-      {tabValue === 'comment' && <CommentCardSection cardInfo={comment.data} />}
-      {tabValue === 'scrap' && <ScrapCardSection cardInfo={scrap.data} />}
+      {tabValue === 'post' && (
+        <PostCardSection cardInfo={getFilterPostData()} />
+      )}
+      {tabValue === 'comment' && (
+        <CommentCardSection cardInfo={getFilterCommentData()} />
+      )}
+      {tabValue === 'scrap' && (
+        <ScrapCardSection cardInfo={getFilterScrapData()} />
+      )}
     </div>
   );
 };
