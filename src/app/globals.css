@@ -50,6 +50,8 @@
   --text-3xl--line-height: 2.625rem;
 
   --spacing: 0.0625rem;
+
+  --breakpoint-3xl: 120rem;
 }
 
 /* 다크모드 토글 버튼 유틸리티 클래스 */
