@@ -6,7 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import LandingContainer from './LandingContainer';
 import LandingSection from './LandingSection';
+import LandingSectionImage from './LandingSectionImage';
 import SubTitle from './SubTitle';
+import Title from './Title';
 
 const subTitles = ['간단한 정보만 입력해도', '알바 지원이 가능합니다'];
 
@@ -57,19 +59,11 @@ const ApplySection = () => {
       />
       <LandingContainer>
         <div className="flex flex-col gap-2">
-          <motion.h2
-            className="mb-40 text-5xl font-bold text-[#FFF7EB]"
-            initial={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: true, amount: 0.7 }}
-            whileInView={{ opacity: 1 }}
-          >
-            쉽고 빠르게 알바 지원
-          </motion.h2>
+          <Title className="text-[#FFF7EB]">쉽고 빠르게 알바 지원</Title>
           <SubTitle className="text-[#FFE1B2]" subTitles={subTitles} />
         </div>
-        <div className="relative mt-126 flex flex-col gap-2">
-          <ul className="flex h-140 w-full justify-between px-50">
+        <LandingSectionImage className="mt-30 md:mt-40 lg:mt-126">
+          <ul className="flex h-40 w-full justify-between px-30 md:h-75 md:px-50 lg:h-140">
             {floatingAnimations.map((animation, idx) => (
               <motion.li
                 key={uuidv4()}
@@ -95,12 +89,12 @@ const ApplySection = () => {
               >
                 <Image
                   alt={`apply-${idx + 1}`}
-                  height={70}
+                  className="h-28 w-28 md:h-35 md:w-35 lg:h-70 lg:w-70"
+                  height={28}
                   loading="lazy"
                   quality={90}
-                  sizes="70px"
                   src={`/images/landing/apply-icon0${idx + 1}.png`}
-                  width={70}
+                  width={28}
                 />
               </motion.li>
             ))}
@@ -113,14 +107,14 @@ const ApplySection = () => {
           >
             <Image
               alt="여성 지원자 캐릭터"
-              height={360}
+              className="h-144 w-222 md:h-180 md:w-277 lg:h-360 lg:w-555"
+              height={144}
               loading="lazy"
               src="/images/landing/apply-girl.png"
-              style={{ width: '100%', height: 'auto' }}
-              width={555}
+              width={222}
             />
           </motion.div>
-        </div>
+        </LandingSectionImage>
       </LandingContainer>
     </LandingSection>
   );

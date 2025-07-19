@@ -9,7 +9,7 @@ const FooterSection = () => {
     <LandingSection className="items-center justify-center">
       <div
         aria-label="서비스 시작 섹션"
-        className="flex flex-col items-center justify-center gap-80"
+        className="flex flex-col items-center justify-center gap-56 lg:gap-80"
         role="contentinfo"
       >
         <LandingHeroText />
