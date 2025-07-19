@@ -58,9 +58,9 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
             )}
           </div>
           <Select
-            className="mt-8"
             options={sortOptions}
             variant="sort"
+            wrapperClassName="mt-8"
             onSelect={handleSortChange}
           />
         </div>
