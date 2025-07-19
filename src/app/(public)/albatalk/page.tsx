@@ -1,12 +1,11 @@
-import MainGnb from '@common/gnb/main-gnb';
+import PostList from '@/features/albatalk/components/post-list';
+import InnerContainer from '@/shared/components/container/InnerContainer';
 
 const AlbaTalkPage = () => {
   return (
-    <div>
-      <MainGnb />
-      {/* 콘텐츠 영역 */}
-      <div>알바토크</div>
-    </div>
+    <InnerContainer>
+      <PostList />
+    </InnerContainer>
   );
 };
 
