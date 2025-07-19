@@ -23,16 +23,27 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('검색어 입력:', e.target.value);
   };
+  // 'Enter' 키를 눌렀을 때 검색을 실행하는 핸들러 추가
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      alert('Enter 키로 검색!');
+    }
+  };
 
   return (
     <FilterBar
+      filterHandlers={{
+        handleRecruitChange: handleFilterChange,
+        handlePublicChange: handlePublicFilterChange,
+        handleSortChange: handleSortChange,
+      }}
       isOwner={isOwner}
+      searchHandlers={{
+        onIconClick: handleIconClick,
+        onInputChange: handleInputChange,
+        onInputKeyDown: handleInputKeyDown,
+      }}
       searchPlaceholder="어떤 알바를 찾고 계세요?"
-      onIconClick={handleIconClick}
-      onInputChange={handleInputChange}
-      onPublicFilterChange={handlePublicFilterChange}
-      onRecruitFilterChange={handleFilterChange}
-      onSortChange={handleSortChange}
     />
   );
 };
