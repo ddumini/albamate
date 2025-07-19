@@ -1,9 +1,20 @@
+// types/filter.ts
+
+export interface SearchHandlers {
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onIconClick?: () => void;
+  onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+export interface FilterHandlers {
+  handleRecruitChange: (value: string) => void;
+  handlePublicChange: (value: string) => void;
+  handleSortChange: (value: string) => void;
+}
+
 export interface FilterBarProps {
   isOwner: boolean;
   searchPlaceholder?: string;
-  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onIconClick?: () => void;
-  onRecruitFilterChange: (value: string) => void;
-  onPublicFilterChange: (value: string) => void;
-  onSortChange: (value: string) => void;
+  searchHandlers?: SearchHandlers;
+  filterHandlers: FilterHandlers;
 }
