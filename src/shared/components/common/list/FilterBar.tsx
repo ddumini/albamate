@@ -11,31 +11,41 @@ import {
 import { FilterBarProps } from '@/shared/types/filter';
 
 /**
- * 필터 바 컴포넌트
- * - 알바 리스트 페이지, 내 알바폼 등에서 검색, 필터, 정렬 기능을 담당하는 UI를 렌더링합니다.
- * - 모집 상태 필터, 공개 여부 필터, 정렬 옵션을 포함하며, 검색 입력창과 아이콘 클릭 이벤트를 지원합니다.
+ * @component FilterBar
  *
- * @param {FilterBarProps} props
- * @param {boolean} props.isOwner - 사장(OWNER) 여부에 따라 공개/비공개 필터를 노출 여부 결정
+ * 알바 리스트, 마이 알바폼 등의 페이지에서 사용하는 필터 바 UI 컴포넌트입니다.
+ * 검색창, 모집 상태 필터, 공개 여부 필터(사장일 경우), 정렬 옵션 등을 포함하며,
+ * 사용자 입력 이벤트를 처리하기 위한 핸들러 객체를 props로 전달받습니다.
+ *
+ * @param {FilterBarProps} props - 필터 바에 필요한 모든 속성을 포함하는 props 객체
+ * @param {boolean} props.isOwner - 사용자가 사장(OWNER)인지 여부 (공개/비공개 필터 노출 여부 결정)
  * @param {string} [props.searchPlaceholder] - 검색 입력창에 표시될 플레이스홀더 텍스트
- * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} [props.onInputChange] - 검색창 입력값 변경 시 호출되는 콜백
- * @param {() => void} [props.onIconClick] - 검색 아이콘 클릭 시 호출되는 콜백
- * @param {(value: string) => void} props.onRecruitFilterChange - 모집 상태 필터 변경 시 호출되는 콜백
- * @param {(value: string) => void} props.onPublicFilterChange - 공개 여부 필터 변경 시 호출되는 콜백
- * @param {(value: string) => void} props.onSortChange - 정렬 옵션 변경 시 호출되는 콜백
+ * @param {SearchHandlers} [props.searchHandlers] - 검색창 관련 이벤트 핸들러들을 모은 객체
+ * @param {() => void} [props.searchHandlers.onIconClick] - 검색 아이콘 클릭 시 실행되는 핸들러
+ * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} [props.searchHandlers.onInputChange] - 검색창 입력 변경 시 실행되는 핸들러
+ * @param {(e: React.KeyboardEvent<HTMLInputElement>) => void} [props.searchHandlers.onInputKeyDown] - 키보드 입력 시 실행되는 핸들러 (예: Enter 검색)
+ * @param {FilterHandlers} [props.filterHandlers] - 필터 관련 이벤트 핸들러들을 모은 객체
+ * @param {(value: string) => void} [props.filterHandlers.handleRecruitChange] - 모집 상태 필터 변경 시 실행되는 핸들러
+ * @param {(value: string) => void} [props.filterHandlers.handlePublicChange] - 공개 여부 필터 변경 시 실행되는 핸들러
+ * @param {(value: string) => void} [props.filterHandlers.handleSortChange] - 정렬 옵션 변경 시 실행되는 핸들러
  *
- * @returns {JSX.Element} 필터 바 UI를 렌더링하는 React 컴포넌트
- * 
- * 사용 예시
+ * @returns {JSX.Element} 필터 바 UI 요소를 포함한 JSX 컴포넌트
+ *
+ * @example
  * <FilterBar
-    isOwner={isOwner}
-    searchPlaceholder="어떤 알바를 찾고 계세요?"
-    onIconClick={alert('검색 아이콘 클릭');}
-    onInputChange={console.log('검색어 입력:', e.target.value);}
-    onPublicFilterChange={console.log('공개/비공개 필터 변경:', value);}
-    onRecruitFilterChange={console.log('모집 여부 필터 변경:', value);}
-    onSortChange={console.log('정렬 변경:', value);}
-    />
+ *   isOwner={true}
+ *   searchPlaceholder="어떤 알바를 찾고 계세요?"
+ *   searchHandlers={{
+ *     onIconClick: handleIconClick,
+ *     onInputChange: handleInputChange,
+ *     onInputKeyDown: handleInputKeyDown,
+ *   }}
+ *   filterHandlers={{
+ *     handleRecruitChange: handleRecruitChange,
+ *     handlePublicChange: handlePublicChange,
+ *     handleSortChange: handleSortChange,
+ *   }}
+ * />
  */
 const FilterBar = ({
   isOwner,
