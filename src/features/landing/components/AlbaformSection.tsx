@@ -2,16 +2,20 @@
 
 import { motion } from 'framer-motion';
 
+import { cn } from '@/shared/lib/cn';
+
 import AnalogClock from './AnalogClock';
 import LandingContainer from './LandingContainer';
 import LandingSection from './LandingSection';
+import LandingSectionImage from './LandingSectionImage';
 import SubTitle from './SubTitle';
+import Title from './Title';
 
 const DiagonalLine = [
-  { top: -110, left: '55%' },
-  { top: -80, left: '50%' },
-  { top: 320, left: '-30%' },
-  { top: 350, left: '-40%' },
+  '-top-[25%] left-[55%]',
+  '-top-[15%] left-[50%]',
+  'top-[70%] -left-[30%]',
+  'top-[75%] -left-[40%]',
 ];
 
 const subTitles = [
@@ -24,33 +28,24 @@ const AlbaformSection = () => {
     <LandingSection>
       <LandingContainer>
         <div className="flex flex-col gap-2">
-          <motion.h2
-            className="mb-40 text-5xl font-bold text-gray-50"
-            initial={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: true, amount: 0.7 }}
-            whileInView={{ opacity: 1 }}
-          >
-            쉽고 빨라요
-          </motion.h2>
+          <Title className="text-gray-50">쉽고 빨라요</Title>
           <SubTitle className="text-gray-100" subTitles={subTitles} />
         </div>
-        <div className="relative mt-126 flex flex-col gap-2">
+        <LandingSectionImage className="mt-104 translate-x-1/5 md:translate-x-0 lg:mt-126">
           <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
             {[...Array(4)].map((_, i) => (
               <motion.div
-                key={`animation-line-${DiagonalLine[i]?.top}`}
+                key={`animation-line-${DiagonalLine[i]}`}
                 animate={{
                   scaleX: [0.2, 1, 0.2],
                   opacity: [0.3, 1, 0.3],
                 }}
                 aria-hidden="true"
-                className="absolute h-[2px] w-[180px] rotate-[45deg] rounded-full bg-white/30 opacity-30"
+                className={cn(
+                  'absolute h-1 w-60 rotate-[45deg] rounded-full bg-white/30 opacity-30 md:w-80 lg:h-2 lg:w-180',
+                  DiagonalLine[i]
+                )}
                 initial={{ scaleX: 0.2, opacity: 0.3 }}
-                style={{
-                  top: DiagonalLine[i]?.top ?? 0,
-                  left: DiagonalLine[i]?.left ?? 0,
-                }}
                 transition={{
                   repeat: Infinity,
                   duration: 0.8,
@@ -66,7 +61,7 @@ const AlbaformSection = () => {
             ))}
           </div>
           <AnalogClock />
-        </div>
+        </LandingSectionImage>
       </LandingContainer>
     </LandingSection>
   );
