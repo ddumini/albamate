@@ -10,7 +10,7 @@ const PostCardSection = ({ cardInfo }: PostCardProps) => {
     { value: '삭제하기', clickEvent: () => console.error('') },
   ];
   return (
-    <section className="grid-rows-auto grid grid-cols-1 items-center gap-y-16 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3">
+    <section className="grid-rows-auto grid grid-cols-1 items-center gap-y-16 lg:grid-cols-2 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3">
       {cardInfo.map((item: PostCardItem) => {
         return (
           <MyPostCard
