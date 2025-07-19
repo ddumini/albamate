@@ -21,6 +21,17 @@ interface Props {
   dropdownOptions: DropdownOption[];
 }
 
+/**
+ * 단일 알바 카드 컴포넌트
+ *
+ * @param {AlbaItem} item - 알바 정보 (제목, 이미지, 모집기간, 지원자 수 등)
+ * @param {() => void} onClick - 카드 전체 클릭 시 실행할 함수 (예: 상세 페이지 이동)
+ * @param {DropdownOption[]} dropdownOptions - 카드 우측 상단 드롭다운의 옵션 목록
+ *
+ * 사용 예시
+ * <AlbaCard key={`${item.id}-${item.recruitmentEndDate}`} item={item} />
+ *
+ */
 const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
   const start = new Date(item.recruitmentStartDate);
   const end = new Date(item.recruitmentEndDate);
