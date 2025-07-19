@@ -5,7 +5,7 @@ import AddformClient from '@/features/owner/addform/components/AddformClient';
 const generateMetadata = async ({
   searchParams,
 }: {
-  searchParams: { formId?: number };
+  searchParams: { formId?: string };
 }): Promise<Metadata> => {
   if (searchParams.formId) {
     return {
@@ -23,7 +23,7 @@ const generateMetadata = async ({
 const AddformPage = async ({
   searchParams,
 }: {
-  searchParams: { formId?: number };
+  searchParams: { formId?: string };
 }) => {
   return <AddformClient formId={searchParams.formId} />;
 };

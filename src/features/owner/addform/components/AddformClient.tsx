@@ -13,7 +13,7 @@ import Sidebar from './Sidebar';
 import TabMenu from './TabMenu';
 import WorkConditionForm from './WorkConditionForm';
 
-const AddformClient = ({ formId }: { formId?: number }) => {
+const AddformClient = ({ formId }: { formId?: string }) => {
   const [currentMenu, setCurrentMenu] = useState<MenuIndex>(1);
   const [writingMenu, setWritingMenu] = useState({
     1: false,
