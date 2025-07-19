@@ -25,16 +25,8 @@ const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
       <WorkerInfoEdit close={closeModal} />
     );
 
-  const dropDownItem = useMemo(
-    () => [
-      { value: '내 정보 수정', clickEvent: myInfoEdit },
-      { value: '비밀번호 변경', clickEvent: pwChange },
-    ],
-    [role]
-  );
-
   const renderModalContent = (title: string, content: ReactNode) => (
-    <div className="w-375 p-24 md:static md:translate-x-0 lg:w-720 lg:px-40 lg:py-32">
+    <div className="w-375 p-24 lg:w-720 lg:px-40 lg:py-32">
       <Modal.Header>
         <h1 className="mb-24 text-2lg font-semibold lg:mb-40 lg:text-3xl">
           {title}
@@ -63,6 +55,14 @@ const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
       renderModalContent('비밀번호 변경', <PwChangeForm close={closeModal} />)
     );
   };
+
+  const dropDownItem = useMemo(
+    () => [
+      { value: '내 정보 수정', clickEvent: myInfoEdit },
+      { value: '비밀번호 변경', clickEvent: pwChange },
+    ],
+    [role]
+  );
 
   return (
     <>
