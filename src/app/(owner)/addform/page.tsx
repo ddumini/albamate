@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import AddformClient from '@/features/owner/addform/components/AddformClient';
 
-const generateMetadata = async ({
+export const generateMetadata = async ({
   searchParams,
 }: {
   searchParams: { formId?: string };
