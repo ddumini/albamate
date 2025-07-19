@@ -13,7 +13,7 @@ const LandingContainer = ({
   return (
     <div
       className={cn(
-        'mx-auto flex w-375 flex-col md:w-618 md:flex-row md:justify-between md:px-24 lg:w-full xl:w-1140',
+        'mx-auto flex w-full max-w-375 flex-col px-24 md:w-618 md:max-w-none md:flex-row md:justify-between lg:w-full xl:w-1140',
         className
       )}
     >

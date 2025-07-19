@@ -29,7 +29,7 @@ const AnywhereSection = () => {
           </motion.h2>
           <SubTitle className="text-[#8C9ECC]" subTitles={subTitles} />
         </div>
-        <LandingSectionImage className="mt-126">
+        <LandingSectionImage className="mt-60 lg:mt-126">
           <motion.div
             className="absolute -top-26 -left-15 -translate-x-full lg:-top-92 lg:-left-30"
             initial={{ opacity: 0, y: 40 }}
