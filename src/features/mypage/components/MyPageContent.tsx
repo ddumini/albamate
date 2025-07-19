@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
-import Select from '@/shared/components/common/select';
 import Tab from '@/shared/components/common/tab/Tab';
 
 import CommentCardSection from './CommentCardSection';
 import { comment, post, scrap } from './dummy';
+import ScrapFilterControls from './FilterControll';
 import MyPageTop from './MyPageTop';
 import PostCardSection from './PostCardSection';
 import ScrapCardSection from './ScrapCardSection';
@@ -47,7 +47,10 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
       ];
       break;
     case 'comment':
-      sortOption = [{ value: 'latest', label: '최신순' }];
+      sortOption = [
+        { value: 'latest', label: '최신순' },
+        { value: 'old', label: '오래된 순' },
+      ];
       break;
     case 'scrap':
       sortOption = [
@@ -109,6 +112,14 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
             new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime()
         );
         break;
+
+      case 'old':
+        filtered = filtered.sort(
+          (a, b) =>
+            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime() -
+            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime()
+        );
+        break;
     }
 
     return filtered;
@@ -163,37 +174,14 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
           <Tab handleClick={handleClickTab} tabs={tapOption} />
         </div>
         <div className={`self-end ${selectWrapClassName} py-14 lg:py-24`}>
-          {tabValue === 'scrap' && (
-            <div className="flex items-center gap-10 lg:gap-16">
-              <div>
-                <Select
-                  options={publicOption}
-                  placeholder="전체"
-                  variant="filter"
-                  onSelect={value => {
-                    setPublicValue(value);
-                  }}
-                />
-              </div>
-              <div>
-                <Select
-                  options={recruitOption}
-                  placeholder="전체"
-                  variant="filter"
-                  onSelect={value => {
-                    setRecruitValue(value);
-                  }}
-                />
-              </div>
-            </div>
-          )}
-          <Select
-            options={sortOption}
-            placeholder="최신순"
-            variant="sort"
-            onSelect={value => {
-              setSortValue(value);
-            }}
+          <ScrapFilterControls
+            publicOption={publicOption}
+            recruitOption={recruitOption}
+            setPublicValue={setPublicValue}
+            setRecruitValue={setRecruitValue}
+            setSortValue={setSortValue}
+            sortOption={sortOption}
+            tabValue={tabValue}
           />
         </div>
       </section>

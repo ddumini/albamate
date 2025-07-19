@@ -22,6 +22,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
 
   const onSubmit = (data: FormData) => {
     console.error(data);
+    close();
   };
 
   return (
@@ -92,9 +93,8 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         <PrimaryButton
           className="w-158 flex-1 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
           label="수정하기"
-          type="button"
+          type="submit"
           variant="solid"
-          onClick={() => close()}
         />
       </div>
     </form>
