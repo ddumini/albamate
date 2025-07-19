@@ -50,7 +50,7 @@ const LandingButton = ({ content }: LandingButtonProps) => {
   return (
     <Link
       ref={linkRef}
-      className="relative flex h-80 min-w-223 items-center justify-center overflow-hidden rounded-full bg-blue-300 px-30 text-2xl font-bold text-gray-50"
+      className="relative flex h-58 min-w-150 items-center justify-center overflow-hidden rounded-full bg-blue-300 px-24 font-bold text-gray-50 lg:h-80 lg:min-w-223 lg:px-30 lg:text-2xl"
       href="/albalist"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

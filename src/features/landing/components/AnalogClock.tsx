@@ -43,10 +43,9 @@ const AnalogClock = () => {
     <div className="flex items-center justify-center">
       <svg
         aria-label="아날로그 시계"
-        className="drop-shadow-lg"
-        height={560}
+        className="w-224 drop-shadow-lg md:w-280 lg:w-560"
+        preserveAspectRatio="xMidYMid meet"
         viewBox="0 0 560 560"
-        width={560}
       >
         {/* 시계 배경 */}
         <circle cx="280" cy="280" fill="#15388E" r="280" />

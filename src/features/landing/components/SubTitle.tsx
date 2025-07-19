@@ -12,9 +12,12 @@ const SubTitle = ({
   return (
     <>
       {subTitles.map((item, index) => (
-        <p key={item} className="h-46 overflow-hidden">
+        <p key={item} className="h-26 overflow-hidden lg:h-46">
           <motion.span
-            className={cn('block text-2xl leading-46 font-semibold', className)}
+            className={cn(
+              'block text-lg leading-26 font-semibold lg:text-2xl lg:leading-46',
+              className
+            )}
             initial={{ opacity: 0, y: 20 }}
             transition={{
               duration: 0.7,

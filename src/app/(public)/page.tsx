@@ -8,7 +8,7 @@ import ManageSection from '@/features/landing/components/ManageSection';
 
 const Home = () => {
   return (
-    <main>
+    <div className="-lg:mt-80 -mt-48 md:-mt-64">
       <LandingBg />
       <HeroSection />
       <AnywhereSection />
@@ -16,7 +16,7 @@ const Home = () => {
       <ManageSection />
       <ApplySection />
       <FooterSection />
-    </main>
+    </div>
   );
 };
 
