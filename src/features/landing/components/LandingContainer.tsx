@@ -11,7 +11,12 @@ const LandingContainer = ({
   className,
 }: PropsWithChildren<LandingContainerProps>) => {
   return (
-    <div className={cn('mx-auto flex w-1140 justify-between', className)}>
+    <div
+      className={cn(
+        'mx-auto flex justify-between md:px-24 lg:w-full xl:w-1140',
+        className
+      )}
+    >
       {children}
     </div>
   );
