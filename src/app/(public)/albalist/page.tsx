@@ -3,11 +3,7 @@ import InnerContainer from '@/shared/components/container/InnerContainer';
 
 const Page = () => {
   return (
-    <InnerContainer
-      className="md:max-w-900 lg:max-w-1600"
-      size="lg"
-      tabletSize="md"
-    >
+    <InnerContainer className="md:max-w-900" size="lg">
       <AlbaListPage />
     </InnerContainer>
   );
