@@ -59,8 +59,9 @@ const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
 
   return (
     <div className="flex flex-col items-start gap-24 border-b border-gray-100 py-16 last:border-b-0">
-      <div className="flex w-full justify-between text-xs text-gray-500 lg:text-base">
+      <div className="flex w-full justify-between">
         <PostMetaInfoUser
+          className="text-xs text-gray-500 lg:text-base"
           createdAt={comment.createdAt}
           writer={comment.writer}
         />

@@ -1,4 +1,5 @@
 import Profile from '@/shared/components/common/profile/Profile';
+import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/utils/date';
 
 import { Writer } from '../../types/albatalk';
@@ -6,11 +7,16 @@ import { Writer } from '../../types/albatalk';
 interface PostMetaInfoUserProps {
   writer: Writer;
   createdAt: string;
+  className?: string;
 }
 
-const PostMetaInfoUser = ({ writer, createdAt }: PostMetaInfoUserProps) => {
+const PostMetaInfoUser = ({
+  writer,
+  createdAt,
+  className,
+}: PostMetaInfoUserProps) => {
   return (
-    <div className="flex items-center gap-7">
+    <div className={cn('flex items-center gap-7', className)}>
       {/* 프로필 이미지 */}
       <div className="size-26">
         {writer.imageUrl ? (

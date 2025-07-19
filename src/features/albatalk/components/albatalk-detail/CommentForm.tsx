@@ -33,9 +33,9 @@ const CommentForm = ({ postId, onSubmit }: CommentFormProps) => {
         id="commentContent"
         placeholder="댓글을 작성해주세요."
       />
-      <div className="mt-8 flex w-108 self-end">
+      <div className="mt-8 flex w-108 self-end md:w-136">
         <PrimaryButton
-          className="w-full max-w-640 py-12 text-lg lg:text-xl"
+          className="w-full py-12 text-lg lg:w-214 lg:text-xl"
           disabled={false}
           label="등록하기"
           type="button"
