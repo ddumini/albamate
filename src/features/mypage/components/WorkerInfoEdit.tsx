@@ -27,7 +27,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 h-112 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="name">
           이름 <span className="text-mint-100">*</span>
         </label>
@@ -43,7 +43,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 h-112 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="nickname">
           닉네임 <span className="text-mint-100">*</span>
         </label>
@@ -58,7 +58,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-24 lg:mb-30">
+      <div className="mb-24 h-112 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="phone">
           연락처 <span className="text-mint-100">*</span>
         </label>

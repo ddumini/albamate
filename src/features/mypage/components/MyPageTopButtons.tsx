@@ -26,7 +26,7 @@ const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
     );
 
   const renderModalContent = (title: string, content: ReactNode) => (
-    <div className="BG-white w-375 overflow-x-hidden px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
+    <div className="BG-white w-375 px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
       <Modal.Header>
         <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-36 lg:text-3xl">
           {title}
