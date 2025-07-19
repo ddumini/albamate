@@ -1,5 +1,7 @@
 'use client';
 
+import { ReactNode, useMemo } from 'react';
+
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Modal from '@/shared/components/common/modal/Modal';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
@@ -16,44 +18,49 @@ interface MyPageTopButtonsProps {
 
 const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
   const { openModal, closeModal } = useModalStore();
+  const infoComponent =
+    role === 'OWNER' ? (
+      <OwnerInfoEdit close={closeModal} />
+    ) : (
+      <WorkerInfoEdit close={closeModal} />
+    );
 
-  const dropDownItem = [
-    { value: '내 정보 수정', clickEvent: () => myInfoEdit() },
-    { value: '비밀번호 변경', clickEvent: () => pwChange() },
-  ];
+  const dropDownItem = useMemo(
+    () => [
+      { value: '내 정보 수정', clickEvent: myInfoEdit },
+      { value: '비밀번호 변경', clickEvent: pwChange },
+    ],
+    [role]
+  );
+
+  const renderModalContent = (title: string, content: ReactNode) => (
+    <div className="w-375 p-24 md:static md:translate-x-0 lg:w-720 lg:px-40 lg:py-32">
+      <Modal.Header>
+        <h1 className="mb-24 text-2lg font-semibold lg:mb-40 lg:text-3xl">
+          {title}
+        </h1>
+      </Modal.Header>
+      <Modal.Body className="flex w-full flex-col items-center gap-y-24 lg:mb-40">
+        {content}
+      </Modal.Body>
+    </div>
+  );
 
   const myInfoEdit = () => {
     openModal(
-      <div className="w-375 p-24 lg:w-720 lg:px-40 lg:py-32">
-        <Modal.Header>
-          <h1 className="mb-24 text-2lg font-semibold lg:mb-40 lg:text-3xl">
-            내 정보 수정
-          </h1>
-        </Modal.Header>
-        <Modal.Body className="flex w-full flex-col items-center gap-y-24 lg:mb-40">
+      renderModalContent(
+        '내 정보 수정',
+        <>
           <ProfileEdit onImageChange={() => {}} />
-          {role === 'OWNER' ? (
-            <OwnerInfoEdit close={closeModal} />
-          ) : (
-            <WorkerInfoEdit close={closeModal} />
-          )}
-        </Modal.Body>
-      </div>
+          {infoComponent}
+        </>
+      )
     );
   };
 
   const pwChange = () => {
     openModal(
-      <div className="w-375 p-24 lg:w-720 lg:px-40 lg:py-32">
-        <Modal.Header>
-          <h1 className="mb-24 text-2lg font-semibold lg:mb-40 lg:text-3xl">
-            비밀번호 변경
-          </h1>
-        </Modal.Header>
-        <Modal.Body className="flex w-full flex-col items-center gap-y-24 lg:mb-40">
-          <PwChangeForm close={closeModal} />
-        </Modal.Body>
-      </div>
+      renderModalContent('비밀번호 변경', <PwChangeForm close={closeModal} />)
     );
   };
 
