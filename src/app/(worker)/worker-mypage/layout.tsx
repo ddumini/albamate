@@ -8,7 +8,7 @@ const MyPageLayout = ({ children }: { children: ReactNode }) => {
   return (
     <main>
       <MainGnb />
-      <InnerContainer>{children}</InnerContainer>
+      <InnerContainer className="pt-85">{children}</InnerContainer>
       <ModalManager />
     </main>
   );

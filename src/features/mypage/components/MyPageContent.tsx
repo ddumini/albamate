@@ -165,7 +165,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
   };
 
   return (
-    <div className="max-w-1480 pt-85">
+    <div className="mb-40 max-w-1480">
       <MyPageTop role={role} />
       <section
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}

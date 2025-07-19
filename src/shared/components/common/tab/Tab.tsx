@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 interface TabItem {
@@ -14,7 +16,7 @@ const Tab = ({ tabs, handleClick }: TabProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="flex w-327 gap-8 rounded-md bg-gray-25 p-6 text-[14px] md:w-422 md:text-[16px]">
+    <div className="flex w-fit max-w-327 gap-8 rounded-md bg-gray-25 p-6 text-[14px] md:max-w-422 md:text-[16px]">
       {tabs.map((item, idx) => (
         <button
           key={item.id}

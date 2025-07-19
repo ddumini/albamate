@@ -25,11 +25,12 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
 
   const onSubmit = (data: FormData) => {
     console.error(data);
+    close();
   };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 lg:mb-25">
         <label className="mb-8 text-md" htmlFor="nickname">
           닉네임 <span className="text-mint-100">*</span>
         </label>
@@ -44,12 +45,11 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 lg:mb-25">
         <label className="mb-8 text-md" htmlFor="storeName">
           가게 이름 <span className="text-mint-100">*</span>
         </label>
         <Input
-          required
           id="storeName"
           placeholder="이름을 입력해주세요."
           variant="outlined"
@@ -61,12 +61,11 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-24 lg:mb-30">
+      <div className="mb-16 lg:mb-25">
         <label className="mb-8 text-md" htmlFor="storePhone">
           가게 전화번호 <span className="text-mint-100">*</span>
         </label>
         <Input
-          required
           placeholder="숫자만 입력해주세요."
           variant="outlined"
           {...register('storePhone', {
@@ -83,7 +82,7 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-24 lg:mb-30">
+      <div className="mb-16 lg:mb-25">
         <label className="mb-8 text-md" htmlFor="ownerPhone">
           사장님 전화번호
         </label>
@@ -103,12 +102,11 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 lg:mb-25">
         <label className="mb-8 text-md" htmlFor="location">
           가게 위치 <span className="text-mint-100">*</span>
         </label>
         <IconInput
-          required
           alt="위치"
           id="location"
           placeholder="이름을 입력해주세요."
@@ -134,9 +132,8 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <PrimaryButton
           className="w-158 flex-1 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
           label="수정하기"
-          type="button"
+          type="submit"
           variant="solid"
-          onClick={() => close()}
         />
       </div>
     </form>

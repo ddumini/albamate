@@ -32,7 +32,6 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
           이름 <span className="text-mint-100">*</span>
         </label>
         <Input
-          required
           id="name"
           placeholder="이름을 입력해주세요."
           variant="outlined"
@@ -49,7 +48,6 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
           닉네임 <span className="text-mint-100">*</span>
         </label>
         <Input
-          required
           placeholder="닉네임을 입력해주세요."
           variant="outlined"
           {...register('nickname', { required: '닉네임은 필수입니다.' })}
@@ -65,7 +63,6 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
           연락처 <span className="text-mint-100">*</span>
         </label>
         <Input
-          required
           placeholder="숫자만 입력해주세요."
           variant="outlined"
           {...register('phone', {

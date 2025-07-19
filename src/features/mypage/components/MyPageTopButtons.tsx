@@ -26,13 +26,13 @@ const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
     );
 
   const renderModalContent = (title: string, content: ReactNode) => (
-    <div className="w-375 p-24 lg:w-720 lg:px-40 lg:py-32">
+    <div className="BG-white w-375 overflow-x-hidden px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
       <Modal.Header>
-        <h1 className="mb-24 text-2lg font-semibold lg:mb-40 lg:text-3xl">
+        <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-36 lg:text-3xl">
           {title}
         </h1>
       </Modal.Header>
-      <Modal.Body className="flex w-full flex-col items-center gap-y-24 lg:mb-40">
+      <Modal.Body className="flex w-full flex-col items-center gap-y-20">
         {content}
       </Modal.Body>
     </div>
