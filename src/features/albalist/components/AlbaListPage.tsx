@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import ListWrapper from '@common/list/ListWrapper';
 import { useEffect, useState } from 'react';
 
 import { albaMockData } from '@/features/albalist/mock/mockData';
@@ -15,32 +15,24 @@ const AlbaListPage = () => {
   const [albaList, setAlbaList] = useState<AlbaItem[]>([]);
   const [user, setUser] = useState<User | null>(null);
 
-  const router = useRouter();
-
   useEffect(() => {
     setAlbaList(albaMockData);
-    setUser({ role: 'OWNER' }); // 예시용
+    setUser({ role: 'OWNER' });
   }, []);
 
   const isOwner = user?.role === 'OWNER';
 
-  const handleCardClick = (id: number) => {
-    router.push(`/alba/${id}`);
-  };
-
   return (
-    <div>
+    <div className="mb-68">
       <AlbaFilterBar isOwner={isOwner} />
-      <div className="flex flex-wrap justify-center gap-24 px-24">
-        {albaList.map(item => (
-          <AlbaCard
-            key={item.id}
-            item={item}
-            onClick={() => handleCardClick(item.id)}
-          />
-        ))}
+      <ListWrapper
+        items={albaList}
+        renderItem={item => (
+          <AlbaCard key={`${item.id}-${item.recruitmentEndDate}`} item={item} />
+        )}
+      >
         {isOwner && <FloatingFormButton />}
-      </div>
+      </ListWrapper>
     </div>
   );
 };
