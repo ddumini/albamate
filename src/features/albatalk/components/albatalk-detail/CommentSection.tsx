@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { CommentsResponse } from '../../types/albatalk';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
-import CommentStats from './CommentStatus';
+import CommentStatus from './CommentStatus';
 
 interface CommentSectionProps {
   postId: number;
@@ -15,7 +15,7 @@ const CommentSection = ({ postId, initialComments }: CommentSectionProps) => {
   const [comments, setComments] = useState(initialComments);
   return (
     <div className="flex flex-col gap-24 lg:gap-40">
-      <CommentStats count={initialComments.totalItemCount} />
+      <CommentStatus count={initialComments.totalItemCount} />
       <CommentForm postId={postId} />
       <CommentList initialComments={comments.data} />
     </div>
