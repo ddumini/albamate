@@ -10,7 +10,7 @@ const ScrapCardSection = ({ cardInfo }: ScrapCardProps) => {
     { value: '스크랩 취소', clickEvent: () => console.error('') },
   ];
   return (
-    <section className="grid-rows-auto relative grid grid-cols-1 place-items-center items-center lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3">
+    <section className="grid-rows-auto relative grid grid-cols-1 place-items-center items-center gap-y-32 md:gap-y-48 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3">
       {cardInfo.map((item: ScrapItem) => {
         return (
           <MyScrapCard

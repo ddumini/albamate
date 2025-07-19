@@ -11,18 +11,23 @@ import MyPageTop from './MyPageTop';
 import PostCardSection from './PostCardSection';
 import ScrapCardSection from './ScrapCardSection';
 
-const MyPageContent = () => {
+interface TabOption {
+  id: string;
+  label: string;
+}
+
+interface MyPageContentProps {
+  role: string;
+  tapOption: TabOption[];
+}
+
+const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
   const [tabValue, setTabValue] = useState('post');
 
-  const filterWrapClassName = `${tabValue === 'scrap' ? 'xl:flex-col' : 'xl:flex-row xl:items-center'}`;
+  const filterWrapClassName = `${tabValue === 'scrap' ? 'lg:flex-col' : 'lg:flex-row lg:items-center'}`;
   const selectWrapClassName = `${tabValue === 'scrap' ? 'w-full flex items-center justify-between' : ''}`;
-  const tabClassName = `${tabValue === 'scrap' ? 'flex items-center justify-start w-full mb-16' : ''}`;
+  const tabClassName = `${tabValue === 'scrap' ? 'flex items-center lg:justify-start w-full mb-16' : ''}`;
 
-  const tapOption = [
-    { id: 'post', label: '내가 쓴 글' },
-    { id: 'comment', label: '내가 쓴 댓글' },
-    { id: 'scrap', label: '스크랩' },
-  ];
   const sortOption = [
     { value: 'latest', label: '최신순' },
     { value: 'comments', label: '댓글많은순' },
@@ -48,8 +53,8 @@ const MyPageContent = () => {
   };
 
   return (
-    <div className="max-w-1480 px-24 pt-85 md:px-72 lg:mx-auto">
-      <MyPageTop />
+    <div className="max-w-1480 pt-85">
+      <MyPageTop role={role} />
       <section
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
       >
