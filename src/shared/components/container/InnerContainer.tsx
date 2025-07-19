@@ -21,7 +21,6 @@ import { cn } from '@/shared/lib/cn';
 interface InnerContainerProps {
   children: ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  tabletSize?: 'sm' | 'md' | 'lg';
   className?: string;
   isFlex?: boolean;
 }
@@ -29,7 +28,6 @@ interface InnerContainerProps {
 const InnerContainer = ({
   children,
   size = 'md',
-  tabletSize = 'md',
   className,
   isFlex,
 }: InnerContainerProps) => {
@@ -38,15 +36,9 @@ const InnerContainer = ({
       className={cn(
         'mx-auto max-w-375 px-24',
         // 패딩(padding) 24px * 2 = 48px을 더한 max-w값
-
-        // 태블릿 브레이크포인트 (md)
-        tabletSize === 'sm' && 'md:max-w-568', // 520px + 48px
-        tabletSize === 'md' && 'md:max-w-648', // 600px + 48px
-        tabletSize === 'lg' && 'md:max-w-768', // 720px + 48px
-
-        size === 'sm' && 'lg:max-w-688',
-        size === 'md' && 'lg:max-w-1528',
-        size === 'lg' && 'lg:max-w-1608',
+        size === 'sm' && 'md:max-w-568 lg:max-w-688',
+        size === 'md' && 'md:max-w-648 lg:max-w-1528',
+        size === 'lg' && 'md:max-w-768 lg:max-w-1608',
         size === 'xl' && 'lg:max-w-1672',
         isFlex && 'flex flex-col lg:flex-row',
         className

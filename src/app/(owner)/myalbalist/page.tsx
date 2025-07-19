@@ -1,7 +1,7 @@
 import AlbaListPage from '@/features/albalist/components/AlbaListPage';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 
-const Page = () => {
+const MyabalistPage = () => {
   return (
     <InnerContainer size="md">
       <AlbaListPage />
@@ -9,4 +9,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default MyabalistPage;
