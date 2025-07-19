@@ -34,11 +34,11 @@ const InnerContainer = ({
   return (
     <div
       className={cn(
-        'mx-auto max-w-375 px-24',
+        'mx-auto w-full px-24 md:max-w-none',
         // 패딩(padding) 24px * 2 = 48px을 더한 max-w값
-        size === 'sm' && 'md:max-w-568 lg:max-w-688',
-        size === 'md' && 'md:max-w-648 lg:max-w-1528',
-        size === 'lg' && 'md:max-w-768 lg:max-w-1608',
+        size === 'sm' && 'lg:max-w-688',
+        size === 'md' && 'lg:max-w-1528',
+        size === 'lg' && 'lg:max-w-1608',
         size === 'xl' && 'lg:max-w-1672',
         isFlex && 'flex flex-col lg:flex-row',
         className

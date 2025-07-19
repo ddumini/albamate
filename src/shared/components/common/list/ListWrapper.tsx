@@ -37,7 +37,12 @@ const ListWrapper = <T extends Identifiable>({
   className,
 }: ListWrapperProps<T>) => {
   return (
-    <div className={cn('flex flex-wrap justify-start gap-24', className)}>
+    <div
+      className={cn(
+        'grid grid-cols-1 gap-x-24 gap-y-64 sm:grid-cols-2 lg:grid-cols-3',
+        className
+      )}
+    >
       {items.map(item => (
         <div key={item.id}>{renderItem(item)}</div>
       ))}
