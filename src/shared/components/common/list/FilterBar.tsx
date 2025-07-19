@@ -40,11 +40,8 @@ import { FilterBarProps } from '@/shared/types/filter';
 const FilterBar = ({
   isOwner,
   searchPlaceholder,
-  onInputChange,
-  onIconClick,
-  onRecruitFilterChange,
-  onPublicFilterChange,
-  onSortChange,
+  searchHandlers,
+  filterHandlers,
 }: FilterBarProps) => {
   return (
     <div className="w-full py-32 md:px-72 md:py-48 lg:py-60 dark:border-gray-500">
@@ -54,11 +51,12 @@ const FilterBar = ({
           alt="검색"
           className="w-327 lg:w-728"
           iconClassName="pl-16"
-          iconOnClick={onIconClick}
+          iconOnClick={searchHandlers?.onIconClick}
           inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
           placeholder={searchPlaceholder}
           src="/icons/search.svg"
-          onChange={onInputChange}
+          onChange={searchHandlers?.onInputChange}
+          onKeyDown={searchHandlers?.onInputKeyDown}
         />
         <div className="flex justify-between">
           <div className="flex gap-16">
@@ -67,7 +65,7 @@ const FilterBar = ({
               options={RecruitFilterOptions}
               placeholder="전체"
               variant="filter"
-              onSelect={onRecruitFilterChange}
+              onSelect={filterHandlers.handleRecruitChange}
             />
             {/* 공개 여부 */}
             {isOwner && (
@@ -75,7 +73,7 @@ const FilterBar = ({
                 options={PublicFilterOptions}
                 placeholder="전체"
                 variant="filter"
-                onSelect={onPublicFilterChange}
+                onSelect={filterHandlers.handlePublicChange}
               />
             )}
           </div>
@@ -84,7 +82,7 @@ const FilterBar = ({
             options={SortOptions}
             variant="sort"
             wrapperClassName="mt-8"
-            onSelect={onSortChange}
+            onSelect={filterHandlers.handleSortChange}
           />
         </div>
       </div>
