@@ -1,32 +1,21 @@
 'use client';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
 
-import AlbaDropdown from '@/features/albalist/components/AlbaDropdown';
+import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
+import { cn } from '@/shared/lib/cn';
 
 interface PostHeaderProps {
   title: string;
   postId: number;
+  className?: string;
+  titleClassName?: string;
 }
 
-const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [open]);
-
+const PostCardHeader = ({
+  title,
+  postId,
+  className,
+  titleClassName,
+}: PostHeaderProps) => {
   const handleActionClick = (option: string) => {
     if (option === 'edit') {
       //TODO: 수정 로직
@@ -34,7 +23,6 @@ const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
     } else if (option === 'delete') {
       //TODO: 삭제 로직
     }
-    setOpen(false); // 클릭 후 드롭다운 닫기
   };
 
   const menuOptions = [
@@ -43,33 +31,16 @@ const PostCardHeader = ({ title, postId }: PostHeaderProps) => {
   ];
 
   return (
-    <div className="mb-8 flex items-start justify-between">
-      <h2 className="mr-12 line-clamp-2 flex-1 text-lg font-semibold break-words text-gray-900 dark:text-white">
+    <div className={cn('mb-8 flex items-start justify-between', className)}>
+      <h2
+        className={cn(
+          'mr-12 line-clamp-2 flex-1 text-lg font-semibold break-words text-gray-900 dark:text-white',
+          titleClassName
+        )}
+      >
         {title}
       </h2>
-      <div ref={dropdownRef} className="relative ml-auto">
-        <Image
-          alt="드롭다운 아이콘"
-          className="cursor-pointer"
-          height={24}
-          role="button"
-          src="/icons/kebab-menu.svg"
-          tabIndex={0}
-          width={24}
-          onClick={e => {
-            e.stopPropagation();
-            setOpen(prev => !prev);
-          }}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              e.stopPropagation();
-              setOpen(prev => !prev);
-            }
-          }}
-        />
-        {open && <AlbaDropdown options={menuOptions} />}
-      </div>
+      <KebabMenuDropdown options={menuOptions} />
     </div>
   );
 };
