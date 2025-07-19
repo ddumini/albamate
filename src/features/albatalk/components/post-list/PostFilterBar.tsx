@@ -48,9 +48,9 @@ const PostFilterBar = () => {
       />
       <div className="justify-items-end lg:self-center">
         <Select
-          className="mt-8"
           options={sortOptions}
           variant="sort"
+          wrapperClassName="mt-8"
           onSelect={handleSortChange}
         />
       </div>

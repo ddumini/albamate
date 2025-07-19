@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Post } from '@/features/albatalk/types/albatalk';
 
 import PostCardHeader from './PostCardHeader';
-import PostFooter from './PostMetaInfo';
+import PostMetaInfo from './PostMetaInfo';
 
 interface PostItemProps {
   post: Post;
@@ -25,7 +25,7 @@ const PostItem = ({ post }: PostItemProps) => {
       return;
     }
 
-    router.push(`/post/${post.id}`);
+    router.push(`/albatalk/${post.id}`);
   };
 
   return (
@@ -39,7 +39,7 @@ const PostItem = ({ post }: PostItemProps) => {
           {post.content}
         </p>
       </div>
-      <PostFooter
+      <PostMetaInfo
         commentCount={post.commentCount}
         createdAt={post.createdAt}
         initialLikeCount={post.likeCount}
