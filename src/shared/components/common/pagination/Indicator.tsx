@@ -1,9 +1,4 @@
-interface IndicatorProps {
-  current: number;
-  total: number;
-  disabled?: boolean;
-  onIndicatorClick?: (index: number) => void;
-}
+import { IndicatorProps } from '@/shared/types/carousel';
 
 const Indicator = ({
   current,

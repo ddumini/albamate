@@ -54,6 +54,7 @@ export interface UseSwipeGestureProps {
 export interface IndicatorProps {
   current: number;
   total: number;
+  disabled?: boolean;
   onIndicatorClick?: (index: number) => void;
 }
 
