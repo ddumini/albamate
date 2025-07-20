@@ -10,11 +10,11 @@ interface FormData {
   checkNewPw: string;
 }
 
-interface WorkerInfoEditProps {
+interface PwChangeFormProps {
   close: () => void;
 }
 
-const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
+const PwChangeForm = ({ close }: PwChangeFormProps) => {
   const [curIsVisible, setCurIsVisible] = useState(false);
   const [newIsVisible, setNewIsVisible] = useState(false);
   const [checkIsVisible, setCheckIsVisible] = useState(false);
@@ -22,6 +22,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
@@ -30,7 +31,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 h-98 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="name">
           현재 비밀번호
         </label>
@@ -59,7 +60,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-16 lg:mb-32">
+      <div className="mb-16 h-98 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="newPw">
           새 비밀번호
         </label>
@@ -86,7 +87,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
         )}
       </div>
 
-      <div className="mb-24 lg:mb-30">
+      <div className="mb-16 h-98 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="checkNewPw">
           새 비밀번호 확인
         </label>
@@ -107,6 +108,8 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
           variant="outlined"
           {...register('checkNewPw', {
             required: '새로운 비밀번호를 다시 한번 입력해주세요',
+            validate: value =>
+              value === watch('newPw') || '비밀번호가 일치하지 않습니다.',
           })}
           isInvalid={!!errors.checkNewPw}
         />
@@ -126,9 +129,8 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
         <PrimaryButton
           className="w-158 flex-1 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
           label="수정하기"
-          type="button"
+          type="submit"
           variant="solid"
-          onClick={() => close()}
         />
       </div>
     </form>
