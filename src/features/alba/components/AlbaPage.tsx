@@ -8,7 +8,7 @@ import ToastPopup from '@/shared/components/common/popup/ToastPopup';
 
 import { albaMockData } from '../mocks/mockData';
 
-const AlbaListPage = () => {
+const AlbaPage = () => {
   const { formId } = useParams();
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -45,4 +45,4 @@ const AlbaListPage = () => {
   );
 };
 
-export default AlbaListPage;
+export default AlbaPage;
