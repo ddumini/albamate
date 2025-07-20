@@ -4,8 +4,13 @@ import { useState } from 'react';
 
 import Tab from '@/shared/components/common/tab/Tab';
 import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
+import {
+  ContentType,
+  PostCardItem,
+  Role,
+  SortOption,
+} from '@/shared/types/mypage';
 
-import { ContentType, PostCardItem, Role } from '../../../shared/types/mypage';
 import { comment, post, scrap } from '../mock/dummy';
 import ScrapFilterControls from './FilterControl';
 import MixedSection from './MixedSection';
@@ -19,11 +24,6 @@ interface TabOption {
 interface MyPageContentProps {
   role: Role;
   tapOption: TabOption[];
-}
-
-interface SortOption {
-  value: string;
-  label: string;
 }
 
 const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {

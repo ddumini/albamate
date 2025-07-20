@@ -1,6 +1,6 @@
-import { SortOptions, TabValue } from '../types/mypage';
+import { ContentType, SortOption } from '../types/mypage';
 
-export const SORT_OPTIONS: Record<TabValue, SortOptions[]> = {
+export const SORT_OPTIONS: Record<ContentType, SortOption[]> = {
   post: [
     { value: 'latest', label: '최신순' },
     { value: 'comments', label: '댓글 많은 순' },

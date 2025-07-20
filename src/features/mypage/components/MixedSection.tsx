@@ -53,7 +53,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
       case 'scrap':
         return [
           { value: '지원하기', clickEvent: () => router.push(`/apply/${id}`) },
-          { value: '스크랩 취소', clickEvent: () => () => router.push(`/`) },
+          { value: '스크랩 취소', clickEvent: () => router.push(`/`) },
         ];
     }
   };
