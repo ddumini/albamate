@@ -97,7 +97,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
             />
             스크랩
           </div>
-          <span className="font-semibold">{scrapCount}회</span>
+          <span className="font-semibold text-mint-400">{scrapCount}회</span>
 
           <div className="flex items-center gap-3 font-bold">
             <Image
@@ -109,8 +109,9 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
             지원현황
           </div>
           <span className="font-normal whitespace-nowrap">
-            현재까지 <span className="font-semibold">{applyCount}명</span>이
-            알바폼에 지원했어요!
+            현재까지{' '}
+            <span className="font-semibold text-mint-400">{applyCount}명</span>
+            이 알바폼에 지원했어요!
           </span>
         </div>
       </div>
