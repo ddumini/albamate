@@ -68,12 +68,12 @@ const MyScrapCard = ({ cardContent, dropdownItem }: MyScrapCardProps) => {
             <div className="mr-8 inline-flex items-center gap-8">
               <Chip
                 active
-                label={isRecruiting ? '비공개' : '공개'}
+                label={cardContent.isPublic ? '비공개' : '공개'}
                 variant="filled"
               />
               <Chip
                 active
-                label={cardContent.isPublic ? '모집중' : '모집마감'}
+                label={isRecruiting ? '모집중' : '모집마감'}
                 variant="filled"
               />
             </div>

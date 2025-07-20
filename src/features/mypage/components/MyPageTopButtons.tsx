@@ -61,7 +61,7 @@ const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
       { value: '내 정보 수정', clickEvent: myInfoEdit },
       { value: '비밀번호 변경', clickEvent: pwChange },
     ],
-    [role]
+    []
   );
 
   return (
