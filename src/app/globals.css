@@ -136,21 +136,21 @@
 }
 
 .Text-btn {
-  @apply text-green-500 dark:text-green-400;
+  @apply text-mint-400 dark:text-mint-300;
 }
 
 .Text-deepmint {
-  @apply text-green-500 dark:text-green-400;
+  @apply text-mint-400 dark:text-mint-300;
 }
 
 .Text-mint {
-  @apply text-green-400 dark:text-green-500;
+  @apply text-mint-300 dark:text-mint-400;
 }
 
 .Border-mint {
-  @apply border border-green-400 dark:border-green-500;
+  @apply border border-mint-300 dark:border-mint-400;
 }
 
 .BG-drag-hovered {
-  @apply bg-green-100;
+  @apply bg-mint-100;
 }
