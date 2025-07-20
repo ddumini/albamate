@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import {
   CommentCardItem,
   PostCardItem,
@@ -21,6 +23,8 @@ interface MixedSectionProps {
 }
 
 const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
+  const router = useRouter();
+
   const firstItem = cardInfo[0];
   const scrapWrapStyle =
     'grid-rows-auto relative grid grid-cols-1 place-items-center items-center gap-y-32 md:gap-y-48 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3';
@@ -35,18 +39,21 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
   };
 
   // 카드의 드롭다운 아이템 결정 함수
-  const getDropdownItems = (type: ContentType) => {
+  const getDropdownItems = (type: ContentType, id: number) => {
     switch (type) {
       case 'post':
       case 'comment':
         return [
-          { value: '수정하기', clickEvent: () => console.log('') },
-          { value: '삭제하기', clickEvent: () => console.log('') },
+          {
+            value: '수정하기',
+            clickEvent: () => router.push(`/albatalks/${id}`),
+          },
+          { value: '삭제하기', clickEvent: () => router.push(`/`) },
         ];
       case 'scrap':
         return [
-          { value: '지원하기', clickEvent: () => console.error('') },
-          { value: '스크랩 취소', clickEvent: () => console.error('') },
+          { value: '지원하기', clickEvent: () => router.push(`/apply/${id}`) },
+          { value: '스크랩 취소', clickEvent: () => () => router.push(`/`) },
         ];
     }
   };
@@ -57,7 +64,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
       return (
         <MyScrapCard
           cardContent={item}
-          dropdownItem={getDropdownItems('scrap')}
+          dropdownItem={getDropdownItems('scrap', item.id)}
         />
       );
     }
@@ -65,7 +72,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
       return (
         <MyPostCard
           cardContent={item}
-          dropdownItem={getDropdownItems('post')}
+          dropdownItem={getDropdownItems('post', item.id)}
         />
       );
     }
@@ -73,7 +80,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
     return (
       <MyCommentCard
         cardContent={item}
-        dropdownItem={getDropdownItems('comment')}
+        dropdownItem={getDropdownItems('comment', item.post.id)}
       />
     );
   };
