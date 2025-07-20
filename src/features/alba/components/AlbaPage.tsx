@@ -4,9 +4,11 @@ import AlbaDetail from '@alba/AlbaDetail';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import ToastPopup from '@/shared/components/common/popup/ToastPopup';
 
 import { albaMockData } from '../mocks/mockData';
+import AlbaInfo from './AlbaInfo';
 
 const AlbaPage = () => {
   const { formId } = useParams();
@@ -30,10 +32,8 @@ const AlbaPage = () => {
   }
 
   return (
-    <div className="py-40">
-      <div className="mb-40 text-sm text-gray-500">
-        알바 상세 페이지 - ID: {formId}
-      </div>
+    <div className="Text-black flex w-full max-w-375 min-w-320 flex-col gap-32 py-40 text-sm lg:max-w-770 lg:text-lg">
+      <div className="mb-40 text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       <ToastPopup
         applyCount={item.applyCount}
         duration={5000}
@@ -41,6 +41,8 @@ const AlbaPage = () => {
         onClose={() => setPopupVisible(false)}
       />
       <AlbaDetail item={item} />
+      <AlbaInfo item={item} />
+      <AlbaDescription description={item.description} />
     </div>
   );
 };
