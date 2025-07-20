@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import useCarousel from '@/shared/hooks/useCarousel';
 import { useSwipeGesture } from '@/shared/hooks/useSwipeGesture';
@@ -17,8 +17,14 @@ const ImageCarousel: React.FC<CarouselProps> = ({
   className = '',
   ...props
 }) => {
-  const { currentSlide, isAutoPlaying, goToSlide, nextSlide, prevSlide } =
-    useCarousel({ totalSlides: slides.length });
+  const {
+    currentSlide,
+    isAutoPlaying,
+    isTransitioning,
+    goToSlide,
+    nextSlide,
+    prevSlide,
+  } = useCarousel({ totalSlides: slides.length });
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useSwipeGesture(
     {
@@ -30,20 +36,48 @@ const ImageCarousel: React.FC<CarouselProps> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 자동 재생 관리
-  useEffect(() => {
-    if (!isAutoPlaying || slides.length <= 1) return;
+  // 자동재생 타이머 관리
+  const startAutoPlay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
 
-    intervalRef.current = setInterval(() => {
-      nextSlide();
-    }, interval);
+    if (isAutoPlaying && slides.length > 1) {
+      intervalRef.current = setInterval(nextSlide, interval);
+    }
+  }, [isAutoPlaying, slides.length, nextSlide, interval]);
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+  const stopAutoPlay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  // 인디케이터 클릭 핸들러
+  const handleIndicatorClick = useCallback(
+    (index: number) => {
+      if (!isTransitioning) {
+        goToSlide(index);
       }
-    };
-  }, [nextSlide, isAutoPlaying, interval, slides.length]);
+    },
+    [goToSlide, isTransitioning]
+  );
+
+  // 마우스 이벤트 핸들러
+  const handleMouseEnter = useCallback(() => {
+    stopAutoPlay();
+  }, [stopAutoPlay]);
+
+  const handleMouseLeave = useCallback(() => {
+    startAutoPlay();
+  }, [startAutoPlay]);
+
+  // 자동재생 초기화 및 정리
+  useEffect(() => {
+    startAutoPlay();
+    return stopAutoPlay;
+  }, [startAutoPlay, stopAutoPlay]);
 
   // 키보드 네비게이션
   useEffect(() => {
@@ -74,21 +108,6 @@ const ImageCarousel: React.FC<CarouselProps> = ({
       return () => carousel.removeEventListener('keydown', handleKeyDown);
     }
   }, [prevSlide, nextSlide, goToSlide, slides.length]);
-
-  // 마우스 이벤트 핸들러 - 호버로 자동재생 제어
-  const handleMouseEnter = (): void => {
-    // 마우스가 올라오면 자동재생 정지
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-  };
-
-  const handleMouseLeave = (): void => {
-    // 마우스가 벗어나면 자동재생 재시작
-    if (isAutoPlaying && slides.length > 1) {
-      intervalRef.current = setInterval(nextSlide, interval);
-    }
-  };
 
   // 빈 슬라이드 처리
   if (!slides || slides.length === 0) {
@@ -135,7 +154,7 @@ const ImageCarousel: React.FC<CarouselProps> = ({
               <Image
                 fill
                 alt={slide.alt ?? '슬라이드 이미지'}
-                className="object-cover"
+                className="object-contain"
                 priority={index === 0}
                 src={slide.image}
               />
@@ -158,8 +177,9 @@ const ImageCarousel: React.FC<CarouselProps> = ({
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform">
             <Indicator
               current={currentSlide}
+              disabled={isTransitioning}
               total={slides.length}
-              onIndicatorClick={goToSlide}
+              onIndicatorClick={handleIndicatorClick}
             />
           </div>
         )}

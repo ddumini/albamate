@@ -65,13 +65,18 @@ export default function useCarousel({
 
   const nextSlide = useCallback(() => {
     if (state.isTransitioning) return;
+    const nextIndex = (state.currentSlide + 1) % totalSlides;
     dispatch({ type: 'NEXT', total: totalSlides });
-  }, [state.isTransitioning, totalSlides]);
+    onSlideChange?.(nextIndex);
+  }, [state.isTransitioning, totalSlides, state.currentSlide, onSlideChange]);
 
   const prevSlide = useCallback(() => {
     if (state.isTransitioning) return;
+    const prevIndex =
+      state.currentSlide === 0 ? totalSlides - 1 : state.currentSlide - 1;
     dispatch({ type: 'PREV', total: totalSlides });
-  }, [state.isTransitioning, totalSlides]);
+    onSlideChange?.(prevIndex);
+  }, [state.isTransitioning, totalSlides, state.currentSlide, onSlideChange]);
 
   const toggleAutoPlay = useCallback(() => {
     dispatch({ type: 'TOGGLE_AUTOPLAY' });
