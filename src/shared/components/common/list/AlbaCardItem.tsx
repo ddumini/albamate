@@ -6,6 +6,7 @@ import { differenceInCalendarDays, format, isAfter } from 'date-fns';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
+import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
@@ -16,7 +17,7 @@ export interface DropdownOption {
 }
 
 interface Props {
-  item: AlbaItem;
+  item: AlbaItem | OwnerMyAlbaItem;
   onClick: () => void;
   dropdownOptions: DropdownOption[];
 }

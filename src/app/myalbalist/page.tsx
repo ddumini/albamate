@@ -1,10 +1,10 @@
-import AlbaListPage from '@/features/albalist/components/AlbaListPage';
+import MyAlbaList from '@/features/myalbalist/components/MyAlbaList';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 
 const MyAlbaListPage = () => {
   return (
     <InnerContainer size="md">
-      <AlbaListPage />
+      <MyAlbaList />
     </InnerContainer>
   );
 };
