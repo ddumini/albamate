@@ -79,7 +79,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
           type={!newIsVisible ? 'password' : 'text'}
           variant="outlined"
           {...register('newPw', { required: '새로운 비밀번호를 입력해주세요' })}
-          isInvalid={!!errors.currentPw}
+          isInvalid={!!errors.newPw}
         />
         {errors.newPw && (
           <p className="text-sm text-red-500">{errors.newPw.message}</p>
@@ -108,7 +108,7 @@ const PwChangeForm = ({ close }: WorkerInfoEditProps) => {
           {...register('checkNewPw', {
             required: '새로운 비밀번호를 다시 한번 입력해주세요',
           })}
-          isInvalid={!!errors.currentPw}
+          isInvalid={!!errors.checkNewPw}
         />
         {errors.checkNewPw && (
           <p className="text-sm text-red-500">{errors.checkNewPw.message}</p>
