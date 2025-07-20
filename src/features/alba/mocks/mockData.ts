@@ -6,7 +6,7 @@ export const albaMockData: MockAlbaItem[] = [
     ownerId: 272,
     title: '홀서빙 알바 모집해요',
     description:
-      '코드잇 카페입니다. 주말 토, 일 오픈업무하실 분 구합니다.\n\n성실하게 일하실 분들만 지원 바랍니다.',
+      '코드잇 카페입니다. 주말 토, 일 오픈업무하실 분 구합니다. \n\n 성실하게 일하실 분들만 지원 바랍니다. 작성한 이력서를 알바폼에 첨부해주시고, 아래와 같이 문자 보내주세요. 근무 중 전화통화 불가합니다. \n\n 이력서 검토 후 면접 진행자에 한해 면접일정 개별 연락드리겠습니다. \n 많은 지원바랍니다.',
     recruitmentStartDate: '2025-05-22T06:02:04.727Z',
     recruitmentEndDate: '2025-05-26T06:02:04.727Z',
     imageUrls: [
@@ -30,7 +30,7 @@ export const albaMockData: MockAlbaItem[] = [
     scrapCount: 1,
     createdAt: '2025-05-22T06:03:59.006Z',
     updatedAt: '2025-05-26T01:53:09.080Z',
-    storeName: '사장님test',
+    storeName: '코드잇 카페',
     storePhoneNumber: '0212341234',
     phoneNumber: '01012341234',
     isScrapped: false,
