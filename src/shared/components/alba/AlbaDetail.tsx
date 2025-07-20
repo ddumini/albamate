@@ -37,7 +37,6 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
     scrapCount,
     applyCount,
     createdAt,
-    description,
   } = item;
 
   const getStatusLabel = (recruitmentEndDate: string) => {
@@ -62,7 +61,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
   const formattedStart = format(new Date(createdAt), 'yyyy.MM.dd HH:mm');
 
   return (
-    <div className="max-w-375 min-w-320 space-y-16 text-sm text-gray-800 lg:max-w-770 lg:space-y-32 lg:text-lg">
+    <div className="space-y-16 lg:space-y-32">
       <div className="flex items-center justify-between md:justify-start md:gap-16">
         {/* 1. 공개/모집여부 */}
         <div className="flex gap-4">
@@ -80,7 +79,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
           {storeName}
         </div>
         <div>{location}</div>
-        <div className="text-gray-600">{`· ${preferred}`}</div>
+        <div className="">{`· ${preferred}`}</div>
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
@@ -88,7 +87,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
 
       {/* 5. 스크랩, 지원 현황 */}
       <div className="mt-6 border-t border-b border-gray-100 py-4">
-        <div className="grid grid-cols-[1fr_2fr] gap-12 p-12 text-gray-800 lg:grid-cols-[1fr_4fr] lg:gap-24 lg:p-24">
+        <div className="grid grid-cols-[1fr_2fr] gap-12 p-12 lg:grid-cols-[1fr_4fr] lg:gap-24 lg:p-24">
           <div className="flex items-center gap-3 font-bold">
             <Image
               alt="스크랩"
@@ -115,7 +114,6 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
           </span>
         </div>
       </div>
-      <div className="whitespace-pre-line lg:text-2lg">{description}</div>
     </div>
   );
 };
