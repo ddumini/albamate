@@ -13,8 +13,27 @@ const formatDate = (isoString: string, isDesktop: boolean) => {
   const date = isoString.slice(0, 10);
   const [year, month, day] = date.split('-');
   return isDesktop
-    ? `${year?.slice(2)}.${month}.${day}` // 24.10.25
-    : `${year}년 ${month}월 ${day}일`; // 2024년 10월 25일 (예시)
+    ? `${year}.${month}.${day}` // 2024년 10월 25일
+    : `${year?.slice(2)}.${month}.${day}`; // 24.10.25
+};
+
+const getBorderClass = (idx: number) => {
+  if (idx === 0) {
+    // 1번 요소: 오른쪽 선 + 아래쪽 선, 선을 요소에서 8px 떨어뜨림
+    return `
+      after:absolute after:top-0 after:right-[-72px] after:h-[calc(100%+40px)] after:w-[1px] after:bg-gray-100
+      before:absolute before:bottom-[-8px] before:left-[-28px] before:h-[1px] before:w-[calc(100%+120px)] before:bg-gray-100
+    `;
+  }
+  if (idx === 1) {
+    // 2번 요소: 아래쪽 선만 (좌측으로 8px 더 확장)
+    return `after:absolute after:bottom-[-8px] after:left-[-70px] after:h-[1px] after:w-[calc(100%+120px)] after:bg-gray-100`;
+  }
+  if (idx === 2) {
+    // 3번 요소: 오른쪽 선만 (위쪽으로 8px 더 확장)
+    return `after:absolute after:top-[-26px] after:right-[-72px] after:h-[calc(100%+36px)] after:w-[1px] after:bg-gray-100`;
+  }
+  return '';
 };
 
 const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
@@ -39,21 +58,16 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   if (isDesktop) {
     // 데스크탑 레이아웃 (하나의 박스에 모두 표시)
     return (
-      <div className="grid max-w-640 grid-cols-2 gap-36 rounded-lg border border-gray-100 bg-gray-25 p-36 font-sans">
-        {Info.map(({ label, value, img }) => (
+      <div className="grid h-336 max-w-640 grid-cols-2 gap-36 rounded-lg border border-gray-100 bg-gray-25 p-36 font-sans">
+        {Info.map(({ label, value, img }, idx) => (
           <div
             key={label}
-            className="mx-60 flex items-center justify-start gap-16"
+            className={`relative mx-40 flex items-center justify-start gap-16 p-4 ${getBorderClass(idx)}`}
           >
             {/* 아이콘 */}
-            <div className="relative h-24 w-24 shrink-0 lg:h-36 lg:w-36">
+            <div className="relative h-24 w-24 lg:h-36 lg:w-36">
               <div className="absolute inset-0 scale-120 rounded-2xl bg-gray-50 dark:bg-gray-100" />
-              <Image
-                fill
-                alt="icon"
-                className="relative rounded-xl"
-                src={img}
-              />
+              <Image fill alt="icon" objectFit="cover" src={img} />
             </div>
 
             {/* 텍스트 */}
