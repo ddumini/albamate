@@ -52,10 +52,13 @@ const MyScrapCard = ({ cardContent, dropdownItem }: MyScrapCardProps) => {
   };
 
   return (
-    <PrivateWrapper className="w-327 md:w-476" isPrivate={cardContent.isPublic}>
+    <PrivateWrapper
+      className="w-327 md:w-full md:max-w-476"
+      isPrivate={cardContent.isPublic}
+    >
       <div
         key={cardContent.id}
-        className="flex h-390 w-327 flex-col items-start justify-start gap-24 rounded-2xl p-3 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg md:h-full md:w-full md:max-w-476"
+        className="flex h-390 w-327 flex-col items-start justify-start gap-24 rounded-2xl p-3 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg md:h-full md:w-full md:max-w-476 lg:w-full lg:max-w-476"
         onClick={handleCardClick}
       >
         {/* Card top */}
@@ -100,7 +103,7 @@ const MyScrapCard = ({ cardContent, dropdownItem }: MyScrapCardProps) => {
           </span>
           <span className="inline-flex h-16 w-1 bg-line-200" />
           <span
-            className={cn('w-1/3 text-center', dDay <= 5 && 'brightness-150')}
+            className={cn('w-1/3 text-center', dDay <= 5 && 'text-red-500')}
           >
             {dDayFormat()}
           </span>

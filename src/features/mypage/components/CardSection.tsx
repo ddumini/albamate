@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-
+import { Fragment, ReactNode } from 'react';
 interface CardSectionProps<T extends { id: number }> {
   cardInfo: T[];
   renderCard: (item: T) => ReactNode;
@@ -14,7 +13,7 @@ const CardSection = <T extends { id: number }>({
   return (
     <section className={cardWrapStyle}>
       {cardInfo.map(item => (
-        <div key={item.id}>{renderCard(item)}</div>
+        <Fragment key={item.id}>{renderCard(item)}</Fragment>
       ))}
     </section>
   );
