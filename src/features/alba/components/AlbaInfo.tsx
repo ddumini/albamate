@@ -39,7 +39,9 @@ const getBorderClass = (idx: number) => {
 const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   const { isDesktop } = useViewport();
 
-  const period = `${formatDate(item.recruitmentStartDate, isDesktop)} ~ ${formatDate(item.recruitmentEndDate, isDesktop)}`;
+  const period = isDesktop
+    ? `${formatDate(item.recruitmentStartDate, true)} ~ ${formatDate(item.recruitmentEndDate, true)}`
+    : `${formatDate(item.recruitmentStartDate, false)}~${formatDate(item.recruitmentEndDate, false)}`;
 
   const workDays = item.workDays.join(', ');
   const workTime = `${item.workStartTime}~${item.workEndTime}`;
@@ -100,7 +102,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
           </div>
 
           <div>
-            <div className="Text-gray">{label}</div>
+            <div className="Text-gray text-xs">{label}</div>
             <div className="Text-mint font-bold">{value}</div>
           </div>
         </div>
