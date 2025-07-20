@@ -1,45 +1,16 @@
-export interface MockAlbaItem {
-  id: number;
-  ownerId: number;
-  title: string;
-  description: string;
-  recruitmentStartDate: string;
-  recruitmentEndDate: string;
-  imageUrls: string[];
-  location: string;
-  workStartDate: string;
-  workEndDate: string;
-  workStartTime: string;
-  workEndTime: string;
-  workDays: string[];
-  isNegotiableWorkDays: boolean;
-  hourlyWage: number;
-  isPublic: boolean;
-  numberOfPositions: number;
-  gender: string;
-  education: string;
-  age: string;
-  preferred: string;
-  applyCount: number;
-  scrapCount: number;
-  createdAt: string;
-  updatedAt: string;
-  storeName: string;
-  storePhoneNumber: string;
-  phoneNumber: string;
-  isScrapped: boolean;
-}
+import { MockAlbaItem } from '../types/MockAlbaItem';
 
 export const albaMockData: MockAlbaItem[] = [
   {
     id: 452,
     ownerId: 272,
     title: '홀서빙 알바 모집해요',
-    description: '테스트 알바 모집 공고입니다.',
+    description:
+      '코드잇 카페입니다. 주말 토, 일 오픈업무하실 분 구합니다. \n\n 성실하게 일하실 분들만 지원 바랍니다. 작성한 이력서를 알바폼에 첨부해주시고, 아래와 같이 문자 보내주세요. 근무 중 전화통화 불가합니다. \n\n 이력서 검토 후 면접 진행자에 한해 면접일정 개별 연락드리겠습니다. \n 많은 지원바랍니다.',
     recruitmentStartDate: '2025-05-22T06:02:04.727Z',
     recruitmentEndDate: '2025-05-26T06:02:04.727Z',
     imageUrls: [''],
-    location: '서울시 관악구 남부순환로 168라길 17',
+    location: '서울시 관악구',
     workStartDate: '2025-05-29T06:02:04.727Z',
     workEndDate: '2025-12-22T06:02:04.727Z',
     workStartTime: '18:00',
