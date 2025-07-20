@@ -3,14 +3,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { PostCardItem } from '../../../shared/types/mypage';
+import { DropdownValue, PostCardItem } from '@/shared/types/mypage';
+
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
-
-interface DropdownValue {
-  value: string;
-  clickEvent: () => void;
-}
 
 interface MyPostCardProps {
   cardContent: PostCardItem;
@@ -64,8 +60,8 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
                 alt="프로필 이미지"
                 sizes="36px"
                 src={
-                  cardContent.imageUrl
-                    ? cardContent.imageUrl
+                  cardContent.writer.imageUrl
+                    ? cardContent.writer.imageUrl
                     : '/icons/user-profile.svg'
                 }
               />
