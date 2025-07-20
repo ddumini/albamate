@@ -7,12 +7,12 @@ import { cn } from '@/shared/lib/cn';
 
 import Chip from '../../../shared/components/common/chip/Chip';
 import PrivateWrapper from '../../../shared/components/common/PrivateWrapper';
-import { DropdownValue, ScrapItem } from '../../../shared/types/mypage';
+import { DropdownValue, ScrapCardItem } from '../../../shared/types/mypage';
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
 
 interface MyScrapCardProps {
-  cardContent: ScrapItem;
+  cardContent: ScrapCardItem;
   dropdownItem: DropdownValue[];
 }
 

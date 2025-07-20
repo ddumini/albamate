@@ -66,7 +66,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
             <span className="relative inline-flex h-24 w-24 items-center justify-center gap-2 overflow-hidden rounded-full lg:h-36 lg:w-36">
               <Image
                 fill
-                alt="프로필 이미지"
+                alt="댓글 아이콘"
                 sizes="36px"
                 src="/icons/comment.svg"
               />
@@ -77,7 +77,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
             <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
               <Image
                 fill
-                alt="프로필 이미지"
+                alt="좋아요 아이콘"
                 sizes="36px"
                 src="/icons/like.svg"
               />

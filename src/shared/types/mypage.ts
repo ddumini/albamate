@@ -3,6 +3,7 @@ export interface DropdownValue {
   value: string;
   clickEvent: () => void;
 }
+export type Role = 'OWNER' | 'APPLICANT';
 
 // Post
 export interface PostCardItem {
@@ -43,7 +44,7 @@ export interface CommentCardProps {
 }
 
 // Scrap
-export interface ScrapItem {
+export interface ScrapCardItem {
   updatedAt: string;
   createdAt: string;
   isPublic: boolean;
@@ -57,5 +58,5 @@ export interface ScrapItem {
 }
 
 export interface ScrapCardProps {
-  cardInfo: ScrapItem[];
+  cardInfo: ScrapCardItem[];
 }

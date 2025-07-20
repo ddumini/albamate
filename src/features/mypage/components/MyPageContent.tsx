@@ -4,12 +4,11 @@ import { useState } from 'react';
 
 import Tab from '@/shared/components/common/tab/Tab';
 
-import CommentCardSection from './CommentCardSection';
+import { PostCardItem, Role } from '../../../shared/types/mypage';
 import { comment, post, scrap } from './dummy';
-import ScrapFilterControls from './FilterControll';
+import ScrapFilterControls from './FilterControl';
+import MixedSection from './MixedSection';
 import MyPageTop from './MyPageTop';
-import PostCardSection from './PostCardSection';
-import ScrapCardSection from './ScrapCardSection';
 
 interface TabOption {
   id: string;
@@ -17,7 +16,7 @@ interface TabOption {
 }
 
 interface MyPageContentProps {
-  role: string;
+  role: Role;
   tapOption: TabOption[];
 }
 
@@ -78,15 +77,16 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
     setTabValue(value);
   };
 
-  const getFilterPostData = () => {
-    let filtered = [...post.data];
+  const getFilterPostData = (): PostCardItem[] => {
+    if (!post.data || post.data.length === 0) return [];
+    let filtered: PostCardItem[] = [...post.data];
 
     switch (sortValue) {
       case 'latest':
         filtered = filtered.sort(
           (a, b) =>
-            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime() -
-            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime()
+            new Date(b.updatedAt ?? b.createdAt).getTime() -
+            new Date(a.updatedAt ?? a.createdAt).getTime()
         );
         break;
 
@@ -101,6 +101,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
 
     return filtered;
   };
+
   const getFilterCommentData = () => {
     let filtered = [...comment.data];
 
@@ -186,13 +187,13 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
         </div>
       </section>
       {tabValue === 'post' && (
-        <PostCardSection cardInfo={getFilterPostData()} />
+        <MixedSection cardInfo={getFilterPostData()} type="post" />
       )}
       {tabValue === 'comment' && (
-        <CommentCardSection cardInfo={getFilterCommentData()} />
+        <MixedSection cardInfo={getFilterCommentData()} type="comment" />
       )}
       {tabValue === 'scrap' && (
-        <ScrapCardSection cardInfo={getFilterScrapData()} />
+        <MixedSection cardInfo={getFilterScrapData()} type="scrap" />
       )}
     </div>
   );

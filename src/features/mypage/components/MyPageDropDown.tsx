@@ -33,7 +33,7 @@ const MyPageDropDown = ({ items, className }: MyPageDropdownProps) => {
           </button>
         )}
       >
-        <ul className="relative z-10 flex h-68 w-full flex-col items-center justify-between rounded-lg border border-solid border-line-100 p-4 [box-shadow:4px_4px_4px_rgba(228,228,228,0.1)]">
+        <ul className="relative z-10 flex h-68 w-full flex-col items-center justify-between rounded-lg p-4 [box-shadow:4px_4px_4px_rgba(228,228,228,0.1)]">
           {items.map(item => {
             return (
               <li
