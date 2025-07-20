@@ -1,71 +1,50 @@
 'use client';
 
-import IconInput from '@/shared/components/common/input/IconInput';
-import Select from '@/shared/components/common/select';
+import FilterBar from '@common/list/FilterBar';
 
 interface Props {
   isOwner: boolean;
 }
 
 const AlbaFilterBar = ({ isOwner }: Props) => {
-  const RecruitFilterOptions = [
-    { value: 'total', label: '전체' },
-    { value: 'recruiting', label: '모집 중' },
-    { value: 'oldest', label: '모집 마감' },
-  ];
-  const PublicFilterOptions = [
-    { value: 'total', label: '전체' },
-    { value: 'public', label: '공개' },
-    { value: 'private', label: '비공개' },
-  ];
-  const sortOptions = [
-    { value: 'latest', label: '최신순' },
-    { value: 'high-wage', label: '시급높은순' },
-    { value: 'many-applicants', label: '지원자 많은순' },
-    { value: 'many-scraps', label: '스크랩 많은순' },
-  ];
-
-  const handleFilterChange = (value: string) => console.log('필터:', value);
-  const handleSortChange = (value: string) => console.log('정렬:', value);
+  // 추후 API 연동 시 검색, 필터, 정렬 기능 구현
+  const handleFilterChange = (value: string) => {
+    console.log('모집 여부 필터 변경:', value);
+  };
+  const handlePublicFilterChange = (value: string) => {
+    console.log('공개/비공개 필터 변경:', value);
+  };
+  const handleSortChange = (value: string) => {
+    console.log('정렬 변경:', value);
+  };
+  const handleIconClick = () => {
+    alert('검색 아이콘 클릭');
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('검색어 입력:', e.target.value);
+  };
+  // 'Enter' 키를 눌렀을 때 검색을 실행하는 핸들러 추가
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      alert('Enter 키로 검색!');
+    }
+  };
 
   return (
-    <div className="mb-24 w-full border-b border-gray-100 px-24 md:px-72 dark:border-gray-500">
-      <div className="mx-auto flex max-w-1479 flex-col gap-16 px-4 py-20 lg:gap-20">
-        <IconInput
-          alt="검색"
-          className="w-327 lg:w-728"
-          iconClassName="pl-24"
-          iconOnClick={() => alert('검색')}
-          inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
-          placeholder="어떤 알바를 찾고 계세요?"
-          src="/icons/search.svg"
-        />
-        <div className="flex justify-between">
-          <div className="flex gap-16">
-            <Select
-              options={RecruitFilterOptions}
-              placeholder="전체"
-              variant="filter"
-              onSelect={handleFilterChange}
-            />
-            {isOwner && (
-              <Select
-                options={PublicFilterOptions}
-                placeholder="전체"
-                variant="filter"
-                onSelect={handleFilterChange}
-              />
-            )}
-          </div>
-          <Select
-            options={sortOptions}
-            variant="sort"
-            wrapperClassName="mt-8"
-            onSelect={handleSortChange}
-          />
-        </div>
-      </div>
-    </div>
+    <FilterBar
+      filterHandlers={{
+        handleRecruitChange: handleFilterChange,
+        handlePublicChange: handlePublicFilterChange,
+        handleSortChange: handleSortChange,
+      }}
+      isOwner={isOwner}
+      searchHandlers={{
+        onIconClick: handleIconClick,
+        onInputChange: handleInputChange,
+        onInputKeyDown: handleInputKeyDown,
+      }}
+      searchPlaceholder="어떤 알바를 찾고 계세요?"
+    />
   );
 };
 

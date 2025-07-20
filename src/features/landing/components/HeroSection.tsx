@@ -30,11 +30,11 @@ const HeroSection = () => {
     },
   ];
   return (
-    <LandingSection className="min-h-1080 items-center justify-end gap-50">
+    <LandingSection className="min-h-750 items-center justify-center gap-80 lg:min-h-1080 lg:justify-end lg:gap-50">
       <hgroup className="relative z-5 flex flex-col items-center">
         <motion.h1
           animate={{ opacity: 1, y: 0 }}
-          className="relative mb-50 h-29 w-204"
+          className="relative mb-28 h-21 w-121 lg:mb-50 lg:h-29 lg:w-204"
           initial={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
@@ -51,13 +51,13 @@ const HeroSection = () => {
           <LandingButton content="시작하기" />
         </motion.div>
       </hgroup>
-      <div className="relative h-610 w-964">
+      <div className="relative h-244 w-386 lg:h-610 lg:w-964">
         <Image
           alt="알바메이트"
-          className="absolute right-0 bottom-0 z-1"
-          height={515}
+          className="absolute right-0 bottom-0 z-1 h-206 w-364 lg:h-515 lg:w-909"
+          height={206}
           src="/images/landing/hero-file-bg.png"
-          width={909}
+          width={364}
         />
         <ul className="relative h-full w-full">
           {fileList.map((file, index) => (
@@ -67,7 +67,7 @@ const HeroSection = () => {
                 y: 0,
                 opacity: 1,
               }}
-              className="absolute z-2"
+              className="absolute z-2 h-139 w-130 lg:h-342 lg:w-334"
               initial={{
                 y: -1000,
                 opacity: 0,
@@ -85,16 +85,16 @@ const HeroSection = () => {
                 damping: 18,
               }}
             >
-              <Image alt="알바메이트" height={342} src={file.src} width={334} />
+              <Image alt="알바메이트" height={139} src={file.src} width={130} />
             </motion.li>
           ))}
         </ul>
         <Image
           alt="알바메이트"
-          className="absolute bottom-0 left-0 z-3"
-          height={390}
+          className="absolute bottom-0 left-0 z-3 h-156 w-320 lg:h-390 lg:w-798"
+          height={156}
           src="/images/landing/hero-file-fw.png"
-          width={798}
+          width={320}
         />
       </div>
     </LandingSection>

@@ -45,7 +45,10 @@ const LandingHeroText = ({ isWhite = false }: LandingHeroTextProps) => {
   });
 
   return (
-    <motion.div ref={ref} className="text-center text-5xl leading-68 font-bold">
+    <motion.div
+      ref={ref}
+      className="text-center text-2xl leading-36 font-bold lg:text-5xl lg:leading-68"
+    >
       {/* eslint-disable-next-line */}
       <motion.p className="relative" {...(getAnimationProps() as any)}>
         한 곳에서 관리하는
