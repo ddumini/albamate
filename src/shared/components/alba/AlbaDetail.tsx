@@ -11,6 +11,21 @@ interface AlbaStateProps {
   item: MockAlbaItem;
 }
 
+/**
+ * 알바 상세 페이지에서 알바 상태 정보를 표시하는 컴포넌트입니다.
+ *
+ * 공개 여부, 모집 상태, 등록일, 가게 정보, 제목, 스크랩/지원 현황, 상세 설명 등을 포함합니다.
+ *
+ * @component
+ * @author yujin
+ * @date 2025-07-20
+ *
+ * @param {AlbaStateProps} props
+ * @param {MockAlbaItem} props.item - 알바 데이터 객체
+ *
+ * @example
+ * <AlbaState item={mockAlbaItem} />
+ */
 const AlbaState = ({ item }: AlbaStateProps) => {
   const {
     isPublic,
