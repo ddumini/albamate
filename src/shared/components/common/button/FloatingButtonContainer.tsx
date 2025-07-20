@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Z_INDEX } from '@/shared/constants/zIndex';
-
 /**
  * FloatingButtonContainer 컴포넌트의 Props 인터페이스
  */
@@ -54,7 +52,7 @@ const FloatingButtonContainer: React.FC<FloatingButtonContainerProps> = ({
    * @returns 포지션에 맞는 CSS 클래스 문자열
    */
   const getPositionClasses = (): string => {
-    const baseClasses = `fixed flex flex-col gap-24 z-[${Z_INDEX.FLOATING_BUTTON}}]`;
+    const baseClasses = 'fixed flex flex-col gap-24 z-1000';
 
     if (position === 'right-center') {
       return `${baseClasses} right-23 top-1/2 lg:right-220 transform -translate-y-1/2`;
