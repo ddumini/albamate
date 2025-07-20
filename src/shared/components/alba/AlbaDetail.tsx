@@ -7,7 +7,7 @@ import React from 'react';
 
 import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
 
-interface AlbaStateProps {
+interface AlbaDetailProps {
   item: MockAlbaItem;
 }
 
@@ -20,13 +20,13 @@ interface AlbaStateProps {
  * @author yujin
  * @date 2025-07-20
  *
- * @param {AlbaStateProps} props
+ * @param {AlbaDetailProps} props
  * @param {MockAlbaItem} props.item - 알바 데이터 객체
  *
  * @example
  * <AlbaState item={mockAlbaItem} />
  */
-const AlbaState = ({ item }: AlbaStateProps) => {
+const AlbaDetail = ({ item }: AlbaDetailProps) => {
   const {
     isPublic,
     recruitmentEndDate,
@@ -120,4 +120,4 @@ const AlbaState = ({ item }: AlbaStateProps) => {
   );
 };
 
-export default AlbaState;
+export default AlbaDetail;
