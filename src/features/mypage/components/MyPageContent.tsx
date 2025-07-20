@@ -105,10 +105,10 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
     let filtered = [...scrap.data];
 
     if (publicValue !== 'all' && publicValue === 'public') {
-      filtered = filtered.filter(item => item.isPublic === true);
+      filtered = filtered.filter(item => item.isPublic === false);
     }
     if (publicValue !== 'all' && publicValue === 'private') {
-      filtered = filtered.filter(item => item.isPublic === false);
+      filtered = filtered.filter(item => item.isPublic === true);
     }
 
     if (recruitValue !== 'all' && recruitValue === 'recruit') {
@@ -141,6 +141,16 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
     return filtered;
   };
 
+  const ScrapFilterControlsProps = {
+    publicOption,
+    recruitOption,
+    setPublicValue,
+    setRecruitValue,
+    setSortValue,
+    sortOption,
+    tabValue,
+  };
+
   return (
     <div className="mb-40 w-full max-w-1480">
       <MyPageTop role={role} />
@@ -151,15 +161,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
           <Tab handleClick={handleClickTab} tabs={tapOption} />
         </div>
         <div className={`self-end ${selectWrapClassName} py-14 lg:py-24`}>
-          <ScrapFilterControls
-            publicOption={publicOption}
-            recruitOption={recruitOption}
-            setPublicValue={setPublicValue}
-            setRecruitValue={setRecruitValue}
-            setSortValue={setSortValue}
-            sortOption={sortOption}
-            tabValue={tabValue}
-          />
+          <ScrapFilterControls {...ScrapFilterControlsProps} />
         </div>
       </section>
       {tabValue === 'post' && (
