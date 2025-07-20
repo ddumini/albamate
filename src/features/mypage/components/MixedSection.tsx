@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import {
   CommentCardItem,
+  ContentType,
   PostCardItem,
   ScrapCardItem,
 } from '@/shared/types/mypage';
@@ -15,7 +16,6 @@ import MyPostCard from './MyPostCard';
 import MyScrapCard from './MyScrapCard';
 
 type CardInfoItem = PostCardItem | CommentCardItem | ScrapCardItem;
-type ContentType = 'post' | 'comment' | 'scrap';
 
 interface MixedSectionProps {
   cardInfo: CardInfoItem[];

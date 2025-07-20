@@ -1,13 +1,14 @@
 import Image from 'next/image';
 
-type EmptyCardProps = 'post' | 'comment' | 'scrap';
+import { ContentType } from '@/shared/types/mypage';
+
 interface EmptyInfo {
   image: string;
   title: string;
   description?: string;
 }
 
-const EMPTY_DATA: Record<EmptyCardProps, EmptyInfo> = {
+const EMPTY_DATA: Record<ContentType, EmptyInfo> = {
   post: {
     image: '/images/mypage/non-post.svg',
     title: '작성한 게시글이 없어요',
@@ -23,7 +24,7 @@ const EMPTY_DATA: Record<EmptyCardProps, EmptyInfo> = {
   },
 };
 
-const EmptyCard = ({ type }: { type: EmptyCardProps }) => {
+const EmptyCard = ({ type }: { type: ContentType }) => {
   const { image, title, description } = EMPTY_DATA[type];
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">

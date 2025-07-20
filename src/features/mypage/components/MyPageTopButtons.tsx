@@ -6,17 +6,14 @@ import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Modal from '@/shared/components/common/modal/Modal';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import useModalStore from '@/shared/store/useModalStore';
+import { Role } from '@/shared/types/mypage';
 
 import MyPageDropDown from './MyPageDropDown';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
-interface MyPageTopButtonsProps {
-  role: string;
-}
-
-const MyPageTopButtons = ({ role }: MyPageTopButtonsProps) => {
+const MyPageTopButtons = ({ role }: { role: Role }) => {
   const { openModal, closeModal } = useModalStore();
   const infoComponent =
     role === 'OWNER' ? (

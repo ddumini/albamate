@@ -46,7 +46,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
             {cardContent.title}
           </h3>
         </div>
-        <MyPageDropDown className="relative z-20" items={dropdownItem} />
+        <MyPageDropDown items={dropdownItem} />
       </section>
       <section>
         <p className="Text-gray text-lg font-normal">{cardContent.content}</p>

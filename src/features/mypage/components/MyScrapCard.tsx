@@ -4,11 +4,11 @@ import { differenceInCalendarDays, isAfter } from 'date-fns';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import Chip from '@/shared/components/common/chip/Chip';
+import PrivateWrapper from '@/shared/components/common/PrivateWrapper';
 import { cn } from '@/shared/lib/cn';
+import { DropdownValue, ScrapCardItem } from '@/shared/types/mypage';
 
-import Chip from '../../../shared/components/common/chip/Chip';
-import PrivateWrapper from '../../../shared/components/common/PrivateWrapper';
-import { DropdownValue, ScrapCardItem } from '../../../shared/types/mypage';
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
 

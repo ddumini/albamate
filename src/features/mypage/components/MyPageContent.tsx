@@ -3,8 +3,9 @@
 import { useState } from 'react';
 
 import Tab from '@/shared/components/common/tab/Tab';
+import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
 
-import { PostCardItem, Role } from '../../../shared/types/mypage';
+import { ContentType, PostCardItem, Role } from '../../../shared/types/mypage';
 import { comment, post, scrap } from '../mock/dummy';
 import ScrapFilterControls from './FilterControl';
 import MixedSection from './MixedSection';
@@ -35,32 +36,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
   const selectWrapClassName = `${tabValue === 'scrap' ? 'w-full flex items-center justify-between' : ''}`;
   const tabClassName = `${tabValue === 'scrap' ? 'flex items-center lg:justify-start w-full mb-16' : ''}`;
 
-  let sortOption: SortOption[] = [];
-
-  switch (tabValue) {
-    case 'post':
-      sortOption = [
-        { value: 'latest', label: '최신순' },
-        { value: 'comments', label: '댓글 많은 순' },
-        { value: 'like', label: '좋아요 순' },
-      ];
-      break;
-    case 'comment':
-      sortOption = [
-        { value: 'latest', label: '최신순' },
-        { value: 'old', label: '오래된 순' },
-      ];
-      break;
-    case 'scrap':
-      sortOption = [
-        { value: 'latest', label: '최신순' },
-        { value: 'scrap', label: '스크랩 많은 순' },
-        { value: 'apply', label: '지원 많은 순' },
-      ];
-      break;
-    default:
-      sortOption = [];
-  }
+  const sortOption: SortOption[] = SORT_OPTIONS[tabValue as ContentType] || [];
 
   const publicOption = [
     { value: 'all', label: '전체' },

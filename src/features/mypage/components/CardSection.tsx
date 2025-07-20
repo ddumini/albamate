@@ -1,4 +1,5 @@
 import { Fragment, ReactNode } from 'react';
+
 interface CardSectionProps<T extends { id: number }> {
   cardInfo: T[];
   renderCard: (item: T) => ReactNode;

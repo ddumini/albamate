@@ -1,3 +1,4 @@
+import { SortOptions } from '../constants/filterOptions';
 // My Page
 export interface DropdownValue {
   value: string;
@@ -61,3 +62,10 @@ export interface ScrapCardItem {
 export interface ScrapCardProps {
   cardInfo: ScrapCardItem[];
 }
+
+export interface SortOptions {
+  value: string;
+  label: string;
+}
+
+export type ContentType = 'post' | 'comment' | 'scrap';
