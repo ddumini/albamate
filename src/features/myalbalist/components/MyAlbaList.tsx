@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import AlbaFilterBar from '@/features/albalist/components/AlbaFilterBar';
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
+import { cn } from '@/shared/lib/cn';
 import type { User } from '@/shared/types/alba';
 
 import { applicantMyAlbaMock } from '../mock/applicantMyAlbaList';
@@ -33,6 +34,7 @@ const AlbaListPage = () => {
     <div className="mb-68">
       <AlbaFilterBar isOwner={isOwner} />
       <ListWrapper
+        className={cn(!isOwner && '!gap-y-10 md:!gap-y-20 lg:!gap-y-40')}
         items={albaList as (ApplicantMyAlbaItem | OwnerMyAlbaItem)[]}
         renderItem={item => (
           <MyAlbaCard key={`${item.id}`} isOwner={isOwner} item={item} />

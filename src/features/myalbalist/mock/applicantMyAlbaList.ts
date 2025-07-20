@@ -9,13 +9,14 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 1,
     form: {
       owner: {
-        imageUrl: '/owners/owner1.png',
+        imageUrl: '',
         storeName: '카페 모닝',
         id: 101,
       },
       recruitmentEndDate: '2025-08-01',
       recruitmentStartDate: '2025-07-01',
-      description: '아침 시간대 바리스타 모집',
+      description:
+        '아침 시간대 바리스타 모집입니다. 커피 제조 경험이 있으시면 우대하며, 고객 응대와 매장 정리 업무를 함께 담당하시게 됩니다. 주 3-4일 근무 가능하시고, 커피에 대한 열정과 친절한 서비스 마인드를 가진 분을 찾습니다.',
       title: '바리스타 모집',
       id: 1001,
     },
@@ -29,37 +30,18 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 2,
     form: {
       owner: {
-        imageUrl: '/owners/owner2.png',
+        imageUrl: '/images/examples/profile-example09.jpg',
         storeName: '베이커리 라온',
         id: 102,
       },
       recruitmentEndDate: '2025-08-10',
       recruitmentStartDate: '2025-07-05',
-      description: '빵 포장 및 계산 담당',
+      description:
+        '빵 포장 및 계산 담당입니다. 신선한 베이커리 제품의 포장과 고객 응대, POS 계산 업무를 담당하시게 됩니다. 주말 근무 가능하시고, 깔끔하고 정확한 업무 처리 능력이 필요합니다. 베이커리 제품에 대한 기본 지식이 있으시면 더욱 좋습니다.',
       title: '베이커리 판매 알바',
       id: 1002,
     },
     id: 2,
-  },
-  {
-    updatedAt: '2025-07-17T13:40:00Z',
-    createdAt: '2025-07-07T11:00:00Z',
-    status: 'INTERVIEW_COMPLETED',
-    resumeName: '이력서_3',
-    resumeId: 3,
-    form: {
-      owner: {
-        imageUrl: '/owners/owner3.png',
-        storeName: '편의점 GS강남점',
-        id: 103,
-      },
-      recruitmentEndDate: '2025-07-30',
-      recruitmentStartDate: '2025-07-01',
-      description: '야간 편의점 근무자 모집',
-      title: '야간 알바 모집',
-      id: 1003,
-    },
-    id: 3,
   },
   {
     updatedAt: '2025-07-16T16:20:00Z',
@@ -69,7 +51,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 4,
     form: {
       owner: {
-        imageUrl: '/owners/owner4.png',
+        imageUrl: '/images/examples/profile-example02.jpg',
         storeName: 'PC방 나인',
         id: 104,
       },
@@ -89,7 +71,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 5,
     form: {
       owner: {
-        imageUrl: '/owners/owner5.png',
+        imageUrl: '/images/examples/profile-example03.jpg',
         storeName: '치킨나라',
         id: 105,
       },
@@ -109,7 +91,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 6,
     form: {
       owner: {
-        imageUrl: '/owners/owner6.png',
+        imageUrl: '/images/examples/profile-example04.jpg',
         storeName: '헬스장 무브핏',
         id: 106,
       },
@@ -122,6 +104,27 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     id: 6,
   },
   {
+    updatedAt: '2025-07-17T13:40:00Z',
+    createdAt: '2025-07-07T11:00:00Z',
+    status: 'INTERVIEW_COMPLETED',
+    resumeName: '이력서_3',
+    resumeId: 3,
+    form: {
+      owner: {
+        imageUrl: '/images/examples/profile-example01.jpg',
+        storeName: '편의점 GS강남점',
+        id: 103,
+      },
+      recruitmentEndDate: '2025-07-30',
+      recruitmentStartDate: '2025-07-01',
+      description:
+        '야간 편의점 근무자 모집입니다. 오후 10시부터 새벽 6시까지 근무하며, 상품 진열, 고객 응대, 계산 업무를 담당하시게 됩니다. 야간 근무에 적합한 체력과 안전에 대한 책임감이 필요하며, 주 4-5일 근무 가능하신 분을 찾습니다.',
+      title: '야간 알바 모집',
+      id: 1003,
+    },
+    id: 3,
+  },
+  {
     updatedAt: '2025-07-13T13:30:00Z',
     createdAt: '2025-07-03T08:00:00Z',
     status: 'INTERVIEW_COMPLETED',
@@ -129,7 +132,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 7,
     form: {
       owner: {
-        imageUrl: '/owners/owner7.png',
+        imageUrl: '/images/examples/profile-example05.jpg',
         storeName: '편의점 CU한남점',
         id: 107,
       },
@@ -149,7 +152,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 8,
     form: {
       owner: {
-        imageUrl: '/owners/owner8.png',
+        imageUrl: '/images/examples/profile-example06.jpg',
         storeName: '도서관 카페',
         id: 108,
       },
@@ -169,7 +172,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 9,
     form: {
       owner: {
-        imageUrl: '/owners/owner9.png',
+        imageUrl: '/images/examples/profile-example07.jpg',
         storeName: '노브랜드버거',
         id: 109,
       },
@@ -189,7 +192,7 @@ export const applicantMyAlbaMock: ApplicantMyAlbaItem[] = [
     resumeId: 10,
     form: {
       owner: {
-        imageUrl: '/owners/owner10.png',
+        imageUrl: '/images/examples/profile-example08.jpg',
         storeName: '세탁소 클린업',
         id: 110,
       },

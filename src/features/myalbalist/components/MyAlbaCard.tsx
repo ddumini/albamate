@@ -45,7 +45,7 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
   ];
 
   const handleCardClick = () => {
-    router.push(`/myalbalist/${item.id}`);
+    router.push(`/albalist/${item.id}`);
   };
 
   return (
