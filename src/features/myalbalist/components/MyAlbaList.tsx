@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import AlbaFilterBar from '@/features/albalist/components/AlbaFilterBar';
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
 import { cn } from '@/shared/lib/cn';
-import type { User } from '@/shared/types/alba';
 
 import { applicantMyAlbaMock } from '../mock/applicantMyAlbaList';
+import type { User } from '../types/myalbalist';
 import { ApplicantMyAlbaItem, OwnerMyAlbaItem } from '../types/myalbalist';
 import MyAlbaCard from './MyAlbaCard';
 
