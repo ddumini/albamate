@@ -3,6 +3,7 @@ export interface DropdownValue {
   value: string;
   clickEvent: () => void;
 }
+
 export type Role = 'OWNER' | 'APPLICANT';
 
 // Post

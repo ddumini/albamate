@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Tab from '@/shared/components/common/tab/Tab';
 
 import { PostCardItem, Role } from '../../../shared/types/mypage';
-import { comment, post, scrap } from './dummy';
+import { comment, post, scrap } from '../mock/dummy';
 import ScrapFilterControls from './FilterControl';
 import MixedSection from './MixedSection';
 import MyPageTop from './MyPageTop';

@@ -3,25 +3,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { CommentCardItem, DropdownValue } from '@/shared/types/mypage';
+
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
-
-interface CommentCardItem {
-  post: {
-    content: string;
-    title: string;
-    id: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-  content: string;
-  id: number;
-}
-
-interface DropdownValue {
-  value: string;
-  clickEvent: () => void;
-}
 
 interface MyCommentCardProps {
   cardContent: CommentCardItem;
