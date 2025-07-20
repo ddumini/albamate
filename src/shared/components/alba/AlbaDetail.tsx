@@ -62,7 +62,7 @@ const AlbaState = ({ item }: AlbaStateProps) => {
   const formattedStart = format(new Date(createdAt), 'yyyy.MM.dd HH:mm');
 
   return (
-    <div className="max-w-375 space-y-16 text-sm text-gray-800 lg:max-w-770 lg:space-y-32 lg:text-lg">
+    <div className="max-w-375 min-w-320 space-y-16 text-sm text-gray-800 lg:max-w-770 lg:space-y-32 lg:text-lg">
       <div className="flex items-center justify-between md:justify-start md:gap-16">
         {/* 1. 공개/모집여부 */}
         <div className="flex gap-4">
