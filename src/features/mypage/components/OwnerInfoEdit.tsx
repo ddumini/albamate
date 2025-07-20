@@ -109,11 +109,11 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <IconInput
           alt="위치"
           id="location"
-          placeholder="이름을 입력해주세요."
+          placeholder="위치를 입력해주세요."
           position="left"
           src="/icons/pin-solid.svg"
           variant="outlined"
-          {...register('location', { required: '가게 이름은 필수입니다.' })}
+          {...register('location', { required: '가게 위치는 필수입니다.' })}
           isInvalid={!!errors.location}
         />
         {errors.location && (
