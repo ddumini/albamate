@@ -1,14 +1,8 @@
 'use client';
+
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-/**
- * @typedef {Object} ToastLikePopupProps
- * @property {number} [count] - 현재 지원한 알바생 수
- * @property {number} [duration=3000] - 자동으로 닫히기까지의 시간 (ms)
- * @property {boolean} visible - 팝업 표시 여부
- * @property {() => void} onClose - 팝업 종료 시 실행되는 콜백 함수
- */
 interface ToastLikePopupProps {
   applyCount: number;
   duration?: number;
@@ -16,34 +10,25 @@ interface ToastLikePopupProps {
   onClose: () => void;
 }
 
-/**
- * 현재 이 페이지를 보고 있는 사용자 수를 나타내는 토스트 형태의 팝업 컴포넌트입니다.
- * 자동 닫힘 기능과 애니메이션 효과를 포함합니다.
- *
- * @component
- * @param {ToastLikePopupProps} props - 팝업에 전달되는 props
- */
 const ToastPopup = ({
   applyCount,
   duration = 3000,
   visible,
   onClose,
 }: ToastLikePopupProps) => {
-  const [shouldRender, setShouldRender] = useState(visible);
-  const [animationClass, setAnimationClass] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
-  // 애니메이션 관리
+  // 마운트 및 트랜지션 시작
   useEffect(() => {
     if (visible) {
-      setShouldRender(true);
-      // 아래에서 위로 등장
+      setIsMounted(true);
       requestAnimationFrame(() => {
-        setAnimationClass('opacity-92 translate-y-0');
+        setIsVisible(true);
       });
     } else {
-      // 위로 사라짐
-      setAnimationClass('opacity-0 -translate-y-12');
-      const timeout = setTimeout(() => setShouldRender(false), 500); // transition 시간과 일치
+      setIsVisible(false); // 트랜지션 시작
+      const timeout = setTimeout(() => setIsMounted(false), 500); // transition 종료 후 언마운트
       return () => clearTimeout(timeout);
     }
   }, [visible]);
@@ -51,29 +36,28 @@ const ToastPopup = ({
   // 자동 닫힘
   useEffect(() => {
     if (!visible) return;
-    const timer = setTimeout(() => onClose(), duration);
+    const timer = setTimeout(onClose, duration);
     return () => clearTimeout(timer);
   }, [visible, duration, onClose]);
 
-  if (!shouldRender) return null;
+  if (!isMounted) return null;
 
   return (
     <div
-      className={`Text-white-gray fixed top-50 left-1/2 z-51 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl bg-blue-300 px-40 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:text-md lg:text-lg ${animationClass} `}
+      className={`Text-white-gray fixed top-50 left-1/2 z-51 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl bg-blue-300 px-40 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:text-md lg:text-lg ${
+        isVisible ? 'translate-y-0 opacity-92' : '-translate-y-12 opacity-0'
+      }`}
       style={{ width: 'calc(100vw - 3rem * 2)' }}
     >
-      {/* 아이콘 */}
       <div className="relative h-24 w-24 lg:h-36 lg:w-36">
         <Image fill alt="사용자 이미지" src="/icons/user.svg" />
       </div>
 
-      {/* 메시지 */}
       <span className="flex-1">
         현재 <span className="font-semibold text-mint-400">{applyCount}명</span>
         이 지원했어요!
       </span>
 
-      {/* 닫기 버튼 */}
       <button
         aria-label="닫기"
         className="relative h-24 w-24 cursor-pointer transition hover:brightness-75 md:h-30 md:w-30 lg:h-36 lg:w-36"
