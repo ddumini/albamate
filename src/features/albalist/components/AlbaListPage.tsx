@@ -3,7 +3,7 @@
 import ListWrapper from '@common/list/ListWrapper';
 import { useEffect, useState } from 'react';
 
-import { albaMockData } from '@/features/albalist/mock/mockData';
+import { albaMockData } from '@/features/albalist/mocks/mockData';
 import type { User } from '@/shared/types/alba';
 import { AlbaItem } from '@/shared/types/alba';
 
