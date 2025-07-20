@@ -128,7 +128,7 @@ const TestPage = () => {
       </div>
 
       <ToastPopup
-        count={5}
+        applyCount={5}
         duration={5000}
         visible={popupVisible}
         onClose={() => setPopupVisible(false)}
