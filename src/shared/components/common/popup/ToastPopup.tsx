@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
  * @property {() => void} onClose - 팝업 종료 시 실행되는 콜백 함수
  */
 interface ToastLikePopupProps {
-  count?: number;
+  applyCount: number;
   duration?: number;
   visible: boolean;
   onClose: () => void;
@@ -24,7 +24,7 @@ interface ToastLikePopupProps {
  * @param {ToastLikePopupProps} props - 팝업에 전달되는 props
  */
 const ToastPopup = ({
-  count = 3,
+  applyCount,
   duration = 3000,
   visible,
   onClose,
@@ -59,7 +59,7 @@ const ToastPopup = ({
 
   return (
     <div
-      className={`Text-white-gray fixed top-50 left-1/2 z-50 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl bg-blue-300 px-40 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:text-md lg:text-lg ${animationClass} `}
+      className={`Text-white-gray fixed top-50 left-1/2 z-51 mx-12 flex max-w-[1200px] min-w-[300px] -translate-x-1/2 items-center gap-4 rounded-xl bg-blue-300 px-40 py-12 text-xs whitespace-nowrap shadow-lg transition-all duration-500 ease-in-out md:text-md lg:text-lg ${animationClass} `}
       style={{ width: 'calc(100vw - 3rem * 2)' }}
     >
       {/* 아이콘 */}
@@ -69,8 +69,8 @@ const ToastPopup = ({
 
       {/* 메시지 */}
       <span className="flex-1">
-        현재 <span className="font-semibold text-mint-400">{count}명</span>이
-        지원했어요!
+        현재 <span className="font-semibold text-mint-400">{applyCount}명</span>
+        이 지원했어요!
       </span>
 
       {/* 닫기 버튼 */}
