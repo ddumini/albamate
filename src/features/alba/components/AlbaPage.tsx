@@ -8,6 +8,7 @@ import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import ToastPopup from '@/shared/components/common/popup/ToastPopup';
 
 import { albaMockData } from '../mocks/mockData';
+import AlbaContact from './AlbaContact';
 import AlbaInfo from './AlbaInfo';
 
 const AlbaPage = () => {
@@ -42,6 +43,7 @@ const AlbaPage = () => {
       />
       <AlbaDetail item={item} />
       <AlbaInfo item={item} />
+      <AlbaContact item={item} />
       <AlbaDescription description={item.description} />
     </div>
   );
