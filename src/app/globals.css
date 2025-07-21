@@ -135,6 +135,10 @@
   @apply text-white dark:text-gray-50;
 }
 
+.Text-error {
+  @apply text-error dark:text-red-300;
+}
+
 .Text-btn {
   @apply text-mint-400 dark:text-mint-300;
 }
