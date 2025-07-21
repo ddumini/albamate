@@ -33,7 +33,7 @@ const AlbaPage = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-375 min-w-320 py-40 text-sm lg:max-w-6xl lg:text-lg">
+    <div className="mx-auto w-full max-w-375 min-w-320 py-40 text-sm lg:max-w-7xl lg:text-lg">
       <div className="mb-40 text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       <ToastPopup
         applyCount={item.applyCount}
@@ -50,23 +50,23 @@ const AlbaPage = () => {
         <AlbaDescription description={item.description} />
         <AlbaCondition item={item} />
         <AlbaLocation />
-        <AlbaApplyButton />
+        <AlbaApplyButton myId={123} ownerId={item.ownerId} />
       </div>
 
       {/* 2. 데스크탑 전용 좌우 배치 (순서 재구성) */}
-      <div className="hidden gap-20 lg:flex">
-        {/* 왼쪽 열 */}
-        <div className="flex w-1/2 flex-col gap-32">
+      <div className="mx-auto hidden max-w-screen-xl grid-cols-12 gap-42 lg:grid">
+        {/* 왼쪽 열 (col 5/12) */}
+        <div className="col-span-5 flex flex-col gap-32">
           <AlbaDetail item={item} />
           <AlbaDescription description={item.description} />
           <AlbaLocation />
         </div>
 
-        {/* 오른쪽 열 */}
-        <div className="flex w-1/2 flex-col gap-32">
+        {/* 오른쪽 열 (col 5/12) */}
+        <div className="col-span-7 flex flex-col justify-end gap-32">
           <AlbaInfo item={item} />
           <AlbaContact item={item} />
-          <AlbaApplyButton />
+          <AlbaApplyButton myId={123} ownerId={item.ownerId} />
           <AlbaCondition item={item} />
         </div>
       </div>
