@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-
-import { cn } from './../../../shared/lib/cn';
+import { cn } from '@/shared/lib/cn';
 
 const AddtalkButtons = ({ className }: { className?: string }) => {
   return (
