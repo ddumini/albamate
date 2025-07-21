@@ -64,7 +64,7 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
       <div className="max-w-640 rounded-lg border border-gray-50 bg-gray-25 p-24">
         {infoData.map(({ name, value, isPeriod }) => (
           <div key={name} className="flex justify-between py-32">
-            <div className="Text-darkgray flex items-center gap-8">
+            <div className="flex items-center gap-8 text-gray-500">
               {name}
               {isPeriod && (
                 <div
