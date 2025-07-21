@@ -1,3 +1,5 @@
+'use client';
+
 import InputFileImage from '@common/input/InputFileImage';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -8,6 +10,10 @@ interface UploadSingleImageProps {
    * 선택된 단일 `File` 을 인자로 받습니다.
    */
   onImageChange: (file: File) => void;
+  /**
+   * input 요소의 고유 ID입니다. `label`의 `htmlFor` 속성과 연결하는 데 사용될 수 있습니다.
+   */
+  id?: string;
 }
 
 /**
@@ -15,7 +21,7 @@ interface UploadSingleImageProps {
  * 사용자가 이미지를 선택하면 해당 이미지를 미리보기로 보여주고,
  * 선택된 `File` 을 `onImageChange` 콜백을 통해 상위 컴포넌트로 전달합니다.
  */
-const UploadSingleImage = ({ onImageChange }: UploadSingleImageProps) => {
+const UploadSingleImage = ({ onImageChange, id }: UploadSingleImageProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   useEffect(() => {
     return () => {
@@ -56,6 +62,7 @@ const UploadSingleImage = ({ onImageChange }: UploadSingleImageProps) => {
 
       <InputFileImage
         className="absolute inset-0 cursor-pointer"
+        id={id}
         onImageChange={handleImageChange}
       />
     </div>
