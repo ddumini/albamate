@@ -13,7 +13,19 @@ const nextConfig: NextConfig = {
 
   images: {
     remotePatterns: [
-      new URL('https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/**'),
+      {
+        protocol: 'https',
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      // 추후 API 반영 후 삭제 예정
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 

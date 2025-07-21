@@ -39,6 +39,9 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
   const dDay = differenceInCalendarDays(end, new Date());
   const isRecruiting = isAfter(end, new Date());
 
+  const [imgSrc, setImgSrc] = useState(
+    item.imageUrls?.[0] || '/icons/user.svg'
+  );
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -77,7 +80,8 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
           fill
           alt="알바 이미지"
           className="object-cover"
-          src={item.imageUrls?.[0] || '/images/list-default.png'}
+          src={imgSrc}
+          onError={() => setImgSrc('/icons/user.svg')}
         />
       </div>
 

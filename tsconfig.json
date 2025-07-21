@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@lib/*": ["./src/shared/lib/*"],
-      "@common/*": ["./src/shared/components/common/*"]
+      "@common/*": ["./src/shared/components/common/*"],
+      "@alba/*": ["./src/shared/components/alba/*"]
     },
     // Turbopack 호환성 설정
     "forceConsistentCasingInFileNames": true,
