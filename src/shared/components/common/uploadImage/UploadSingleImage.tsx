@@ -36,7 +36,7 @@ const UploadSingleImage = ({ onImageChange, id }: UploadSingleImageProps) => {
     onImageChange(files[0]);
   };
   return (
-    <div className="relative flex size-160 flex-col items-center justify-center gap-8 rounded-lg bg-background-200 lg:size-240">
+    <div className="relative flex size-160 flex-col items-center justify-center gap-8 overflow-hidden rounded-lg bg-background-200 lg:size-240">
       {previewImage ? (
         <Image
           fill
