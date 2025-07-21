@@ -10,9 +10,11 @@ const AddtalkClient = () => {
         <h1 className="text-2lg font-semibold text-black-400 md:text-xl lg:text-3xl">
           글쓰기
         </h1>
+        {/* 데스크탑용 버튼 */}
         <AddtalkButtons className="hidden md:flex" />
       </header>
       <AddtalkForm />
+      {/* 모바일용 버튼 */}
       <AddtalkButtons className="md:hidden" />
     </div>
   );
