@@ -10,7 +10,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import ThemeToggle from '@/shared/components/ThemeToggle';
+import ImageCarousel from '@/shared/components/ui/ImageCarousel';
 import useModalStore from '@/shared/store/useModalStore';
+import { Slide } from '@/shared/types/carousel';
+import { createSlidesFromUrls } from '@/shared/utils/carousel';
+
 const RADIO_OPTIONS: RadioOption[] = [
   { value: 'REJECTED', label: '거절' },
   { value: 'INTERVIEW_PENDING', label: '면접대기' },
@@ -228,6 +232,15 @@ const HyeranClientTest = () => {
     );
   };
 
+  // 캐러셀 예시
+  const sampleImages = [
+    '/images/landing/albaform-clock.png',
+    '/images/landing/apply-girl.png',
+    '/images/landing/anywhere-application.png',
+  ];
+
+  const sampleSlides: Slide[] = createSlidesFromUrls(sampleImages);
+
   return (
     <div className="flex flex-col gap-20">
       <ThemeToggle />
@@ -287,13 +300,6 @@ const HyeranClientTest = () => {
             onClick={handleBookmarkToggle}
           />
           <FloatingButton type="share" />
-        </FloatingButtonContainer>
-        <FloatingButtonContainer>
-          <FloatingButton
-            href="/forms/create"
-            text="폼 만들기"
-            type="addForm"
-          />
         </FloatingButtonContainer>
       </section>
       <section>
@@ -376,7 +382,19 @@ const HyeranClientTest = () => {
           >
             내 지원 내역 모달
           </button>
+          <div>
+            <FloatingButtonContainer>
+              <FloatingButton
+                href="/forms/create"
+                text="폼 만들기"
+                type="addForm"
+              />
+            </FloatingButtonContainer>
+          </div>
         </div>
+      </section>
+      <section>
+        <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
       </section>
     </div>
   );
