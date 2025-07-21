@@ -85,7 +85,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
 
   // 모바일/태블릿 레이아웃 (각 항목 개별 카드로 표시)
   return (
-    <div className="grid grid-cols-2 gap-8 font-sans">
+    <div className="grid grid-cols-2 gap-8">
       {Info.map(({ label, value, img }) => (
         <div
           key={label}
