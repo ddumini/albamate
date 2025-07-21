@@ -1,9 +1,9 @@
 'use client';
 
+import AlbaDropdown from '@common/list/AlbaDropdown'; // 경로 확인
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
-import AlbaDropdown from '@/shared/components/common/list/AlbaDropdown'; // 경로 확인
 import { useClickOutside } from '@/shared/hooks/useClickOutside'; // 경로 확인
 
 interface KebabMenuDropdownProps {

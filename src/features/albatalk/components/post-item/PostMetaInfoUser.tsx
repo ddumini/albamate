@@ -19,14 +19,11 @@ const PostMetaInfoUser = ({
     <div className={cn('flex items-center gap-7', className)}>
       {/* 프로필 이미지 */}
       <div className="size-26">
-        {writer.imageUrl ? (
-          <Profile
-            className="size-26 border-none lg:size-26"
-            imageUrl={writer.imageUrl}
-          />
-        ) : (
-          <Profile className="size-26 border-none lg:size-26" sizes="26px" />
-        )}
+        <Profile
+          className="size-26 border-none lg:size-26"
+          imageUrl={writer.imageUrl ? writer.imageUrl : null}
+          sizes="26px"
+        />
       </div>
       {/* 닉네임 */}
       <span>{writer.nickname}</span>
