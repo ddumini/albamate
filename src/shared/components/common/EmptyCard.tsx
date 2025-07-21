@@ -31,12 +31,12 @@ const EMPTY_DATA: Record<EmptyType, EmptyInfo> = {
     title: '스크랩한 알바폼이 없어요.',
   },
   albaList: {
-    image: 'images/non-form.svg',
+    image: '/images/non-form.svg',
     title: '등록된 알바폼이 없어요.',
     description: '1분 만에 등록하고 알바를 구해보세요!',
   },
   applyList: {
-    image: 'images/non-form.svg',
+    image: '/images/non-form.svg',
     title: '지원한 알바폼이 없어요.',
     description: '알바폼을 둘러보고 지원해보세요!',
   },
