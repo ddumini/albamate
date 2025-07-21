@@ -11,11 +11,9 @@ interface ChipProps {
 
 const Chip = ({ label, variant = 'default', active = false }: ChipProps) => {
   const baseClasses = `
-    inline-flex rounded-sm font-medium border items-center gap-4 transition-all
-    text-xs px-8 py-4 h-28
-    md:px-10 md:py-4 md:h-32
-    lg:text-md md:text-sm 
-    min-w-fit
+    flex rounded-sm font-medium border items-center gap-4 transition-all
+    text-xs px-8 h-28
+    lg:text-md md:text-sm flex-shrink-0 lg:h-32
   `;
 
   const variants = {

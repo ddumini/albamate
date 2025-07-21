@@ -52,6 +52,7 @@
   --spacing: 0.0625rem;
 
   --breakpoint-3xl: 120rem;
+  --breakpoint-xs: 23.4375rem; /* 375px */
 }
 
 /* 다크모드 토글 버튼 유틸리티 클래스 */

@@ -6,8 +6,6 @@
 
 import React from 'react';
 
-import { Z_INDEX } from '@/shared/constants/zIndex';
-
 interface ModalOverlayProps {
   children: React.ReactNode;
   onClose?: () => void;
@@ -21,7 +19,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-[${Z_INDEX.MODAL}] flex items-center justify-center bg-black-100/50`}
+      className="fixed inset-0 z-1040 flex items-center justify-center bg-black-100/50"
       onClick={closeOnOverlayClick ? onClose : undefined}
     >
       {children}

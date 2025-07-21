@@ -85,7 +85,12 @@ const HeroSection = () => {
                 damping: 18,
               }}
             >
-              <Image alt="알바메이트" height={139} src={file.src} width={130} />
+              <Image
+                fill
+                alt="알바메이트"
+                className="object-contain"
+                src={file.src}
+              />
             </motion.li>
           ))}
         </ul>
