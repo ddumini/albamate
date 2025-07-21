@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+import EmptyCard from '@/shared/components/common/EmptyCard';
 import {
   CommentCardItem,
   ContentType,
@@ -10,7 +11,6 @@ import {
 } from '@/shared/types/mypage';
 
 import CardSection from './CardSection';
-import EmptyCard from './EmptyCard';
 import MyCommentCard from './MyCommentCard';
 import MyPostCard from './MyPostCard';
 import MyScrapCard from './MyScrapCard';

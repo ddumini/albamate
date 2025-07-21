@@ -68,3 +68,10 @@ export interface SortOption {
 }
 
 export type ContentType = 'post' | 'comment' | 'scrap';
+export type EmptyType =
+  | 'post'
+  | 'comment'
+  | 'scrap'
+  | 'albaList'
+  | 'applyList'
+  | 'albaTalkComment';
