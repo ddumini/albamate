@@ -1,10 +1,11 @@
+'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
 import { Writer } from '@/features/albatalk/types/albatalk';
-import Profile from '@/shared/components/common/profile/Profile';
 import { cn } from '@/shared/lib/cn';
-import { formatDate } from '@/shared/utils/date';
+
+import PostMetaInfoUser from './PostMetaInfoUser';
 
 interface PostMetaInfoProps {
   writer: Writer;
@@ -30,36 +31,22 @@ const PostMetaInfo = ({
   const handleLikeToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    setIsLiked(prev => {
-      const newIsLiked = !prev;
-      setLikeCount(prevCount => (prev ? prevCount - 1 : prevCount + 1));
-      console.log(`좋아요 ${prev ? '취소' : '추가'} : ${postId}`);
-      return newIsLiked;
-    });
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeCount(prevCount => prevCount - 1);
+      console.log(`좋아요 취소 : ${postId}`);
+    } else {
+      setIsLiked(true);
+      setLikeCount(prevCount => prevCount + 1);
+      console.log(`좋아요 추가 : ${postId}`);
+    }
   };
 
   return (
     <div
       className={cn('flex justify-between text-xs text-gray-500', className)}
     >
-      <div className="flex items-center gap-7">
-        {/* 프로필 이미지 */}
-        <div className="size-26">
-          {writer.imageUrl ? (
-            <Profile
-              className="size-26 border-none lg:size-26"
-              imageUrl={writer.imageUrl}
-            />
-          ) : (
-            <Profile className="size-26 border-none lg:size-26" sizes="26px" />
-          )}
-        </div>
-        {/* 닉네임 */}
-        <span>{writer.nickname}</span>
-        <div className="h-12 w-px bg-line-200" />
-        {/* 날짜 */}
-        <time>{formatDate(createdAt, 'post')}</time>
-      </div>
+      <PostMetaInfoUser createdAt={createdAt} writer={writer} />
 
       <div className="flex gap-12">
         {/* 댓글 수 */}
@@ -74,11 +61,12 @@ const PostMetaInfo = ({
         </div>
 
         {/* 좋아요 */}
-        <div className="flex" onClick={handleLikeToggle}>
+        <div className="flex">
           <button
             aria-label="좋아요 버튼"
             className="transition-transform duration-150 hover:scale-110 active:scale-95"
             type="button"
+            onClick={handleLikeToggle}
           >
             <Image alt="like_icon" height={24} src={likeIconSrc} width={24} />
           </button>
