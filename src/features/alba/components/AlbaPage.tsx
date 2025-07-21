@@ -33,7 +33,7 @@ const AlbaPage = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-375 min-w-320 py-40 text-sm text-black lg:max-w-6xl lg:text-lg">
+    <div className="mx-auto w-full max-w-375 min-w-320 py-40 text-sm lg:max-w-6xl lg:text-lg">
       <div className="mb-40 text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       <ToastPopup
         applyCount={item.applyCount}
