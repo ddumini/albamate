@@ -29,7 +29,7 @@ const NavMenu = ({ items = DEFAULT_NAV_ITEMS }: NavMenuProps) => {
         <button
           key={href}
           className={cn(
-            'text-sm transition-colors md:gap-24 md:text-base lg:text-xl',
+            'text-xs whitespace-nowrap transition-colors xs:text-sm md:gap-24 md:text-base lg:text-xl',
             pathname === href && 'text-mint-100'
           )}
           type="button"

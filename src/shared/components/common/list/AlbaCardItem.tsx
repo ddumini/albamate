@@ -6,6 +6,7 @@ import { differenceInCalendarDays, format, isAfter } from 'date-fns';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
+import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
@@ -16,7 +17,7 @@ export interface DropdownOption {
 }
 
 interface Props {
-  item: AlbaItem;
+  item: AlbaItem | OwnerMyAlbaItem;
   onClick: () => void;
   dropdownOptions: DropdownOption[];
 }
@@ -45,7 +46,6 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
   // 마감일에 따른 클래스 설정
   const dDayClass = cn(
-    'px-25 whitespace-nowrap lg:px-48',
     dDay < 0 && 'text-gray-400',
     dDay >= 0 && dDay <= 3 && 'text-error brightness-150 font-semibold',
     dDay > 3 && 'text-gray-600 hover:text-gray-900'
@@ -69,29 +69,29 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
   return (
     <div
-      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-16 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
       onClick={onClick}
     >
-      <div className="relative flex h-180 w-full justify-end overflow-hidden rounded-lg">
+      <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-lg border border-line-200 dark:border-transparent">
         <Image
           fill
           alt="알바 이미지"
           className="object-cover"
-          src={item.imageUrls?.[0] || '/icons/user.svg'}
+          src={item.imageUrls?.[0] || '/images/list-default.png'}
         />
       </div>
 
-      <div className="relative mt-12 flex items-center gap-8 text-sm">
+      <div className="relative mt-12 flex items-center gap-8 pb-30 text-sm xs:pt-0">
         {item.isPublic && <Chip active label="공개" variant="filled" />}
         <Chip
           active
           label={isRecruiting ? '모집 중' : '모집 완료'}
           variant="filled"
         />
-        <span className="Text-gray ml-8 whitespace-nowrap">
+        <span className="Text-gray absolute bottom-0 left-0 whitespace-nowrap xs:static">
           {format(start, 'yyyy.MM.dd')} ~ {format(end, 'yyyy.MM.dd')}
         </span>
-        <div ref={dropdownRef} className="relative ml-auto">
+        <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
           <Image
             alt="드롭다운 아이콘"
             className="cursor-pointer"
@@ -109,13 +109,14 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
       <h3 className="Text-black mt-12 text-lg font-semibold">{item.title}</h3>
 
-      <div className="mt-12 flex w-full justify-center rounded-lg bg-gray-25 py-6 text-xs text-gray-600 dark:bg-gray-50">
+      <div className="mt-12 flex h-38 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-50 dark:bg-gray-50">
         {stats.map((stat, idx) => (
           <span
             key={stat.label}
             className={cn(
-              'px-24 whitespace-nowrap lg:px-48',
-              idx !== stats.length - 1 && 'border-r border-gray-200',
+              'relative flex flex-1 items-center justify-center whitespace-nowrap',
+              idx !== stats.length - 1 &&
+                'after:absolute after:top-1/2 after:right-0 after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100',
               stat.isDeadline && dDayClass
             )}
           >

@@ -54,12 +54,12 @@ const FilterBar = ({
   filterHandlers,
 }: FilterBarProps) => {
   return (
-    <div className="w-full py-32 md:px-72 md:py-48 lg:py-60 dark:border-gray-500">
-      <div className="mx-auto flex max-w-1479 flex-col gap-20 px-4 md:gap-24 lg:gap-32">
+    <div className="w-full py-32 md:py-48 lg:py-60 dark:border-gray-500">
+      <div className="mx-auto flex flex-col gap-20 md:gap-24 lg:gap-32">
         {/* 검색창 */}
         <IconInput
           alt="검색"
-          className="w-327 lg:w-728"
+          className="w-full lg:w-728"
           iconClassName="pl-16"
           iconOnClick={searchHandlers?.onIconClick}
           inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
