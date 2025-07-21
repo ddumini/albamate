@@ -60,7 +60,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   if (isDesktop) {
     // 데스크탑 레이아웃 (하나의 박스에 모두 표시)
     return (
-      <div className="grid h-336 max-w-640 grid-cols-2 gap-36 rounded-lg border border-gray-100 bg-gray-25 p-40 dark:bg-gray-50">
+      <div className="grid h-336 max-w-640 grid-cols-2 gap-36 rounded-lg border border-gray-50 bg-gray-25 p-40">
         {Info.map(({ label, value, img }, idx) => (
           <div
             key={label}

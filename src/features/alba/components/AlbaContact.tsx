@@ -61,7 +61,7 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
   if (isDesktop) {
     // 데스크탑 레이아웃 (가로 정렬, 여유있게)
     return (
-      <div className="max-w-640 rounded-xl border border-gray-200 bg-gray-25 p-24">
+      <div className="max-w-640 rounded-lg border border-gray-50 bg-gray-25 p-24">
         {infoData.map(({ name, value, isPeriod }) => (
           <div key={name} className="flex justify-between py-32">
             <div className="Text-darkgray flex items-center gap-8">
