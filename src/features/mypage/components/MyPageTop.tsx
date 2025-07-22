@@ -1,4 +1,5 @@
-import { Role } from '../../../shared/types/mypage';
+import { Role } from '@/shared/types/mypage';
+
 import MyPageTopButtons from './MyPageTopButtons';
 
 const MyPageTop = ({ role }: { role: Role }) => {

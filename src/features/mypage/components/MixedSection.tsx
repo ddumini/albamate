@@ -1,8 +1,8 @@
 'use client';
 
+import EmptyCard from '@common/EmptyCard';
 import { useRouter } from 'next/navigation';
 
-import EmptyCard from '@/shared/components/common/EmptyCard';
 import {
   CommentCardItem,
   ContentType,
@@ -27,9 +27,9 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
 
   const firstItem = cardInfo[0];
   const scrapWrapStyle =
-    'grid-rows-auto relative grid grid-cols-1 place-items-center items-center gap-y-32 md:gap-y-48 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3';
+    'grid-rows-auto relative grid grid-cols-1 gap-y-32 md:gap-y-48 lg:gap-x-25 lg:gap-y-45 lg:grid-cols-2 xl:grid-cols-3';
   const postCommentWrapStyle =
-    'grid-rows-auto grid grid-cols-1 items-center gap-y-16 lg:grid-cols-2 lg:flex-row lg:flex-wrap lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3';
+    'grid-rows-auto grid grid-cols-1 items-center gap-y-16 lg:grid-cols-2 lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3';
 
   // Card 컴포넌트 Wrap 스타일 결정 함수
   const getCardWrapStyle = (item: CardInfoItem) => {
@@ -45,15 +45,15 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
       case 'comment':
         return [
           {
-            value: '수정하기',
-            clickEvent: () => router.push(`/albatalks/${id}`),
+            label: '수정하기',
+            onClick: () => router.push(`/albatalks/${id}`),
           },
-          { value: '삭제하기', clickEvent: () => router.push(`/`) },
+          { label: '삭제하기', onClick: () => router.push(`/`) },
         ];
       case 'scrap':
         return [
-          { value: '지원하기', clickEvent: () => router.push(`/apply/${id}`) },
-          { value: '스크랩 취소', clickEvent: () => router.push(`/`) },
+          { label: '지원하기', onClick: () => router.push(`/apply/${id}`) },
+          { label: '스크랩 취소', onClick: () => router.push(`/`) },
         ];
     }
   };

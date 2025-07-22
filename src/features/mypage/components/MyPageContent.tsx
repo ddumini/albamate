@@ -1,8 +1,8 @@
 'use client';
 
+import Tab from '@common/tab/Tab';
 import { useState } from 'react';
 
-import Tab from '@/shared/components/common/tab/Tab';
 import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
 import {
   ContentType,

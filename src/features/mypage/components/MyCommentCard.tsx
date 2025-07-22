@@ -1,16 +1,17 @@
 'use client';
 
+import { DropdownOption } from '@common/list/AlbaCardItem';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { CommentCardItem, DropdownValue } from '@/shared/types/mypage';
+import { CommentCardItem } from '@/shared/types/mypage';
 
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
 
 interface MyCommentCardProps {
   cardContent: CommentCardItem;
-  dropdownItem: DropdownValue[];
+  dropdownItem: DropdownOption[];
 }
 
 const MyCommentCard = ({ cardContent, dropdownItem }: MyCommentCardProps) => {

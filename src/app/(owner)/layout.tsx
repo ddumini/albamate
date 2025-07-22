@@ -1,4 +1,4 @@
-import MainGnb from '@/shared/components/common/gnb/main-gnb';
+import MainGnb from '@common/gnb/main-gnb';
 
 const OwnerLayout = ({ children }: { children: React.ReactNode }) => {
   return (
