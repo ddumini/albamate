@@ -17,16 +17,16 @@ interface AlbaPageDesktopProps {
 
 const AlbaPageDesktop = ({ item, isOwner }: AlbaPageDesktopProps) => {
   return (
-    <div className="mx-auto grid max-w-screen-xl grid-cols-12 gap-42">
+    <div className="mx-auto grid grid-cols-12 gap-120">
       {/* 왼쪽 열 */}
-      <div className="col-span-5 flex flex-col gap-32">
+      <div className="col-span-6 flex flex-col gap-32">
         <AlbaDetail item={item} />
         <AlbaDescription description={item.description} />
         <AlbaLocation />
       </div>
 
       {/* 오른쪽 열 */}
-      <div className="col-span-7 flex flex-col justify-end gap-32">
+      <div className="col-span-6 flex flex-col justify-end gap-32">
         <AlbaInfo item={item} />
         <AlbaContact item={item} />
         <ApplyButtonDesktop isOwner={isOwner} />
