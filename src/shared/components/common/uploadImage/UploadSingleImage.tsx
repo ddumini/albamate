@@ -36,7 +36,7 @@ const UploadSingleImage = ({ onImageChange, id }: UploadSingleImageProps) => {
     onImageChange(files[0]);
   };
   return (
-    <div className="relative flex size-160 flex-col items-center justify-center gap-8 overflow-hidden rounded-lg bg-background-200 lg:size-240">
+    <div className="relative flex size-160 flex-col items-center justify-center gap-8 overflow-hidden rounded-lg bg-background-200 transition-all duration-200 ease-in-out hover:bg-background-300 lg:size-240 dark:bg-gray-800 dark:hover:bg-gray-700">
       {previewImage ? (
         <Image
           fill
@@ -49,12 +49,12 @@ const UploadSingleImage = ({ onImageChange, id }: UploadSingleImageProps) => {
         <>
           <Image
             alt="이미지 넣기"
-            className="size-36"
+            className="size-36 invert-80 dark:invert-100"
             height={36}
             src="/icons/upload.svg"
             width={36}
           />
-          <p className="text-lg font-medium text-gray-500 lg:text-2lg">
+          <p className="text-lg font-medium text-gray-500 lg:text-2lg dark:text-gray-100">
             이미지 넣기
           </p>
         </>
