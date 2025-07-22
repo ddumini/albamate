@@ -10,7 +10,7 @@ export const inputStyle = {
 
 export const inputVariants = {
   solid:
-    'bg-background-200 hover:bg-background-300 dark:bg-gray-700 dark:hover:bg-gray-800',
+    'bg-background-200 hover:bg-background-300 dark:bg-gray-800 dark:hover:bg-gray-700',
   outlined:
     'border border-gray-200 hover:border-gray-400 focus:border-mint-300',
 };
