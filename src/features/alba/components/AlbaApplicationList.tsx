@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import { mockApplications } from '../mocks/mockApplicationData';
@@ -48,7 +49,13 @@ const getExperienceLabel = (months: number) => {
   return `${remainingMonths}개월`;
 };
 
-const ApplicationList = () => {
+const AlbaApplicationList = () => {
+  const router = useRouter();
+
+  const handleClick = (applicantId: number) => {
+    router.push(`/applications/${applicantId}`);
+  };
+
   return (
     <div className="max-w-640">
       <h2 className="mb-12 text-2lg font-bold lg:mb-24 lg:text-[26px]">
@@ -90,6 +97,26 @@ const ApplicationList = () => {
         {mockApplications.map(applicant => (
           <li key={applicant.id} className="BorderB-gray p-20">
             <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
+              <button
+                className="hover:text-mint-500 text-left underline underline-offset-2"
+                type="button"
+                onClick={() => handleClick(applicant.applicantId)}
+              >
+                {applicant.name}
+              </button>
+              <div className="whitespace-nowrap">{applicant.phoneNumber}</div>
+              <div>{getExperienceLabel(applicant.experienceMonths)}</div>
+              <div className={getStatusColor(applicant.status)}>
+                {getStatusLabel(applicant.status)}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <ul className="Text-black">
+        {mockApplications.map(applicant => (
+          <li key={applicant.id} className="BorderB-gray p-20">
+            <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
               <div className="underline underline-offset-2">
                 {applicant.name}
               </div>
@@ -107,4 +134,4 @@ const ApplicationList = () => {
   );
 };
 
-export default ApplicationList;
+export default AlbaApplicationList;
