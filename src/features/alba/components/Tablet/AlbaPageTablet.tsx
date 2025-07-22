@@ -3,6 +3,7 @@
 import AlbaDetail from '@alba/AlbaDetail';
 
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
+import { cn } from '@/shared/lib/cn';
 
 import { albaMockData } from '../../mocks/mockData';
 import AlbaCondition from '../AlbaCondition';
@@ -18,7 +19,7 @@ interface AlbaPageTabletProps {
 
 const AlbaPageTablet = ({ item, isOwner }: AlbaPageTabletProps) => {
   return (
-    <div className="flex flex-col gap-32">
+    <div className={cn('flex flex-col gap-32', !isOwner && 'mb-80')}>
       <AlbaDetail item={item} />
       <AlbaInfo item={item} />
       <AlbaContact item={item} />
