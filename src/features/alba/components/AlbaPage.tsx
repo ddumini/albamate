@@ -4,16 +4,18 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import ToastPopup from '@/shared/components/common/popup/ToastPopup';
+import useViewport from '@/shared/hooks/useViewport';
 
 import { albaMockData } from '../mocks/mockData';
 import ApplicationList from './AlbaApplicationList';
-import AlbaPageDesktop from './AlbaPageDesktop';
-import AlbaPageMobile from './AlbaPageMobile';
+import AlbaPageDesktop from './Desktop/AlbaPageDesktop';
+import AlbaPageTablet from './Tablet/AlbaPageTablet';
 
 const AlbaPage = () => {
   const { formId } = useParams();
   const [popupVisible, setPopupVisible] = useState(false);
   const isOwner = true;
+  const { isDesktop } = useViewport();
 
   useEffect(() => {
     setPopupVisible(true);
@@ -23,7 +25,7 @@ const AlbaPage = () => {
 
   if (!item) {
     return (
-      <div className="py-40 text-center text-red-500">
+      <div className="py-40 text-center text-error">
         해당 알바 정보를 찾을 수 없습니다.
       </div>
     );
@@ -40,8 +42,11 @@ const AlbaPage = () => {
         onClose={() => setPopupVisible(false)}
       />
 
-      <AlbaPageMobile item={item} />
-      <AlbaPageDesktop item={item} />
+      {isDesktop ? (
+        <AlbaPageDesktop isOwner={isOwner} item={item} />
+      ) : (
+        <AlbaPageTablet isOwner={isOwner} item={item} />
+      )}
 
       <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
 
