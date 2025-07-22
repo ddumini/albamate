@@ -24,13 +24,19 @@ interface LabelProps
 const Label = ({ children, isRequired, className, ...props }: LabelProps) => {
   return (
     <label
-      className={cn('text-md font-medium text-black-400 lg:text-xl', className)}
+      className={cn(
+        'text-md font-medium text-black-400 lg:text-xl dark:text-gray-100',
+        className
+      )}
       {...props}
     >
       {children}
       {isRequired && (
         <>
-          <span aria-hidden="true" className="ml-4 text-mint-300">
+          <span
+            aria-hidden="true"
+            className="ml-4 text-mint-300 dark:text-mint-350"
+          >
             *
           </span>
           <span className="sr-only">필수</span>
