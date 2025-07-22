@@ -80,10 +80,10 @@ const PrimaryButton = ({
 
   // variant별 스타일 정의
   const solidStyles =
-    'bg-mint-300 hover:bg-mint-400 text-gray-50 disabled:bg-gray-100 disabled:hover:bg-gray-100';
+    'bg-mint-300 hover:bg-mint-400 text-gray-25 disabled:bg-gray-100 disabled:hover:bg-gray-100';
   const outlineStyles =
     'border border-mint-300 hover:border-mint-400 text-mint-300 hover:text-mint-400 bg-transparent disabled:border-gray-100 disabled:hover:border-gray-100 disabled:text-gray-100 disabled:hover:text-gray-100';
-  const cancelSolidStyles = 'bg-gray-100 text-gray-50';
+  const cancelSolidStyles = 'bg-gray-100 text-gray-25';
   const cancelOutlineStyles =
     'border border-gray-100 text-gray-100  bg-transparent';
 

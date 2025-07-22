@@ -4,8 +4,8 @@ import Dropdown from '@/shared/components/ui/Dropdown';
 import { cn } from '@/shared/lib/cn';
 
 interface MyPageDropdownValueProps {
-  value: string;
-  clickEvent: () => void;
+  label: string;
+  onClick: () => void;
 }
 
 interface MyPageDropdownProps {
@@ -33,15 +33,15 @@ const MyPageDropDown = ({ items, className }: MyPageDropdownProps) => {
           {items.map(item => {
             return (
               <li
-                key={item.value}
+                key={item.label}
                 className="inline-flex w-full items-center justify-center"
               >
                 <button
                   className="w-90 rounded-lg py-4 text-xs text-gray-400 hover:bg-mint-50 hover:font-semibold hover:text-black"
                   type="button"
-                  onClick={() => item.clickEvent()}
+                  onClick={() => item.onClick()}
                 >
-                  {item.value}
+                  {item.label}
                 </button>
               </li>
             );

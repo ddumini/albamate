@@ -3,14 +3,15 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { DropdownValue, PostCardItem } from '@/shared/types/mypage';
+import { PostCardItem } from '@/shared/types/mypage';
 
+import { DropdownOption } from '../../../shared/components/common/list/AlbaCardItem';
 import DateFormatter from './DateFormatter';
 import MyPageDropDown from './MyPageDropDown';
 
 interface MyPostCardProps {
   cardContent: PostCardItem;
-  dropdownItem: DropdownValue[];
+  dropdownItem: DropdownOption[];
   key?: string | number;
 }
 
