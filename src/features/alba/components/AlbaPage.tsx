@@ -1,27 +1,56 @@
 'use client';
 
+// 컴파운드 네임스페이스
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import FloatingButton from '@/shared/components/common/button/FloatingButton';
+import FloatingButtonContainer from '@/shared/components/common/button/FloatingButtonContainer';
 import ToastPopup from '@/shared/components/common/popup/ToastPopup';
 import useViewport from '@/shared/hooks/useViewport';
+import useModalStore from '@/shared/store/useModalStore';
 
 import { albaMockData } from '../mocks/mockData';
 import ApplicationList from './AlbaApplicationList';
-import AlbaPageDesktop from './Desktop/AlbaPageDesktop';
-import AlbaPageTablet from './Tablet/AlbaPageTablet';
+import AlbaPageDesktop from './desktop/AlbaPageDesktop';
+import RecruitCloseModal from './modal/RecruitClosedModal';
+import AlbaPageTablet from './tablet/AlbaPageTablet';
 
 const AlbaPage = () => {
   const { formId } = useParams();
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-  const isOwner = true;
+  const [isOwner, setIsOwner] = useState(true);
   const { isDesktop } = useViewport();
 
-  useEffect(() => {
-    setPopupVisible(true);
-  }, []);
+  const { openModal } = useModalStore();
 
   const item = albaMockData.find(alba => alba.id === Number(formId));
+
+  const isRecruitmentClosed = (recruitmentEndDate: string) => {
+    const now = new Date();
+    const end = new Date(recruitmentEndDate);
+    return now > end;
+  };
+
+  // 진입 시 모집 마감 모달 띄우기
+  useEffect(() => {
+    if (!item) return;
+
+    const closed = isRecruitmentClosed(item.recruitmentEndDate);
+
+    if (closed) {
+      openModal(<RecruitCloseModal />);
+    }
+
+    setPopupVisible(true);
+  }, [item]);
+
+  const handleBookmarkToggle = () => {
+    const newBookmarkState = !isBookmarked;
+    // 북마크 API 호출 자리
+    setIsBookmarked(newBookmarkState);
+  };
 
   if (!item) {
     return (
@@ -32,25 +61,38 @@ const AlbaPage = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-375 min-w-320 py-40 text-sm lg:max-w-7xl lg:text-lg">
-      <div className="mb-40 text-gray-500">알바 상세 페이지 - ID: {formId}</div>
-
+    <div className="mx-auto w-full max-w-375 min-w-320 py-120 text-sm lg:max-w-7xl lg:text-lg">
       <ToastPopup
         applyCount={item.applyCount}
         duration={5000}
         visible={popupVisible}
         onClose={() => setPopupVisible(false)}
       />
-
+      <FloatingButtonContainer position="right-center">
+        <FloatingButton
+          isBookmarked={isBookmarked}
+          type="bookmark"
+          onClick={handleBookmarkToggle}
+        />
+        <FloatingButton type="share" />
+        <FloatingButton
+          type="addAlbatalk"
+          onClick={() => setIsOwner(!isOwner)}
+        />
+      </FloatingButtonContainer>
+      <div className="text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       {isDesktop ? (
         <AlbaPageDesktop isOwner={isOwner} item={item} />
       ) : (
         <AlbaPageTablet isOwner={isOwner} item={item} />
       )}
 
-      <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
-
-      {isOwner && <ApplicationList />}
+      {isOwner && (
+        <div>
+          <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
+          <ApplicationList />
+        </div>
+      )}
     </div>
   );
 };
