@@ -1,7 +1,6 @@
+import PrimaryButton from '@common/button/PrimaryButton';
+import Input from '@common/input/Input';
 import { useForm } from 'react-hook-form';
-
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import Input from '@/shared/components/common/input/Input';
 
 interface FormData {
   name: string;

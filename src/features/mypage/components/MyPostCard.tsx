@@ -1,9 +1,9 @@
 'use client';
 
+import { DropdownOption } from '@common/list/AlbaCardItem';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { DropdownOption } from '@/shared/components/common/list/AlbaCardItem';
 import { PostCardItem } from '@/shared/types/mypage';
 
 import DateFormatter from './DateFormatter';

@@ -1,6 +1,6 @@
 'use client';
 
-import Select from '@/shared/components/common/select';
+import Select from '@common/select';
 
 interface ScrapFilterControlsProps {
   tabValue: string;

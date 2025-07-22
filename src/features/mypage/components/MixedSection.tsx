@@ -1,8 +1,8 @@
 'use client';
 
+import EmptyCard from '@common/EmptyCard';
 import { useRouter } from 'next/navigation';
 
-import EmptyCard from '@/shared/components/common/EmptyCard';
 import {
   CommentCardItem,
   ContentType,

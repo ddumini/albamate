@@ -1,10 +1,10 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
+import Modal from '@common/modal/Modal';
+import ProfileEdit from '@common/profile/ProfileEdit';
 import { ReactNode, useMemo } from 'react';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import Modal from '@/shared/components/common/modal/Modal';
-import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import useModalStore from '@/shared/store/useModalStore';
 import { Role } from '@/shared/types/mypage';
 
@@ -55,8 +55,8 @@ const MyPageTopButtons = ({ role }: { role: Role }) => {
 
   const dropDownItem = useMemo(
     () => [
-      { value: '내 정보 수정', clickEvent: myInfoEdit },
-      { value: '비밀번호 변경', clickEvent: pwChange },
+      { label: '내 정보 수정', onClick: myInfoEdit },
+      { label: '비밀번호 변경', onClick: pwChange },
     ],
     []
   );

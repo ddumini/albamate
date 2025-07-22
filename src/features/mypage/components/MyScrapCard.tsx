@@ -1,12 +1,11 @@
 'use client';
 
+import AlbaCardItem from '@common/list/AlbaCardItem';
+import { DropdownOption } from '@common/list/AlbaCardItem';
 import { useRouter } from 'next/navigation';
 
 import PrivateWrapper from '@/shared/components/common/PrivateWrapper';
 import { ScrapCardItem } from '@/shared/types/mypage';
-
-import AlbaCardItem from '../../../shared/components/common/list/AlbaCardItem';
-import { DropdownOption } from '../../../shared/components/common/list/AlbaCardItem';
 
 interface MyScrapCardProps {
   cardContent: ScrapCardItem;
