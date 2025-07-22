@@ -27,7 +27,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
         name="viewport"
       />
-      <body className={pretendard.className}>
+      <body className={`${pretendard.className} dark:bg-gray-900`}>
         <ThemeProvider enableSystem attribute="class" defaultTheme="system">
           <Providers>{children}</Providers>
           <ModalManager />
