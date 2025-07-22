@@ -7,8 +7,11 @@ import { useEffect, useState } from 'react';
 import FloatingButton from '@/shared/components/common/button/FloatingButton';
 import FloatingButtonContainer from '@/shared/components/common/button/FloatingButtonContainer';
 import ToastPopup from '@/shared/components/common/popup/ToastPopup';
+import ImageCarousel from '@/shared/components/ui/ImageCarousel';
 import useViewport from '@/shared/hooks/useViewport';
 import useModalStore from '@/shared/store/useModalStore';
+import { Slide } from '@/shared/types/carousel';
+import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 import { albaMockData } from '../mocks/mockData';
 import ApplicationList from './AlbaApplicationList';
@@ -60,8 +63,16 @@ const AlbaPage = () => {
     );
   }
 
+  const images = [
+    '/images/landing/albaform-clock.png',
+    '/images/landing/apply-girl.png',
+    '/images/landing/anywhere-application.png',
+  ];
+
+  const sampleSlides: Slide[] = createSlidesFromUrls(images);
+
   return (
-    <div className="mx-auto w-full max-w-375 min-w-320 py-120 text-sm lg:max-w-7xl lg:text-lg">
+    <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-120 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
       <ToastPopup
         applyCount={item.applyCount}
         duration={5000}
@@ -81,6 +92,8 @@ const AlbaPage = () => {
           onClick={() => setIsOwner(!isOwner)}
         />
       </FloatingButtonContainer>
+
+      <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
       <div className="text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       {isDesktop ? (
         <AlbaPageDesktop isOwner={isOwner} item={item} />
