@@ -14,7 +14,7 @@ import { Slide } from '@/shared/types/carousel';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 import { albaMockData } from '../mocks/mockData';
-import ApplicationList from './AlbaApplicationList';
+import AlbaApplicationList from './AlbaApplicationList';
 import AlbaPageDesktop from './desktop/AlbaPageDesktop';
 import RecruitCloseModal from './modal/RecruitClosedModal';
 import AlbaPageTablet from './tablet/AlbaPageTablet';
@@ -104,7 +104,7 @@ const AlbaPage = () => {
       {isOwner && (
         <div>
           <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
-          <ApplicationList />
+          <AlbaApplicationList />
         </div>
       )}
     </div>
