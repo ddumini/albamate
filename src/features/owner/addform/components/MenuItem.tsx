@@ -31,7 +31,10 @@ const MenuItem = ({
     <button
       className={cn(
         'flex h-52 w-full items-center gap-12 rounded-2xl px-24 lg:h-78 lg:justify-between lg:px-32',
-        isActive && 'bg-mint-300',
+        'transition-all duration-200 ease-in-out',
+        isActive
+          ? 'bg-mint-300 dark:bg-mint-350'
+          : 'hover:bg-mint-300/30 dark:hover:bg-mint-350/40',
         className
       )}
       type="button"
@@ -42,7 +45,9 @@ const MenuItem = ({
         <span
           className={cn(
             'text-lg font-bold lg:text-xl',
-            isActive ? 'text-gray-25' : 'text-black-100'
+            isActive
+              ? 'text-gray-25 dark:text-gray-50'
+              : 'text-black-100 dark:text-gray-500'
           )}
         >
           {itemLabels[menuIndex]}
