@@ -56,10 +56,10 @@ const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
 
   return (
     <div className="flex gap-20 lg:gap-24">
-      <div className="relative flex size-80 items-center justify-center rounded-lg bg-background-200 lg:size-116">
+      <div className="relative flex size-80 items-center justify-center rounded-lg bg-background-200 transition-all duration-200 ease-in-out hover:bg-background-300 lg:size-116 dark:bg-gray-800 hover:dark:bg-gray-700">
         <Image
           alt="이미지 넣기"
-          className="size-24 lg:size-36"
+          className="size-24 invert-60 lg:size-36 dark:invert-80"
           height={36}
           sizes="24px (min-width:64rem) 36px"
           src="/icons/upload.svg"
@@ -84,7 +84,7 @@ const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
             />
             <button
               aria-label="이미지 삭제"
-              className="absolute -top-10 -right-10 size-24 lg:-top-14 lg:-right-14 lg:size-36"
+              className="absolute -top-10 -right-10 size-24 transition-all duration-200 ease-in-out hover:brightness-90 lg:-top-14 lg:-right-14 lg:size-36 dark:brightness-75 dark:invert-100 dark:hover:brightness-65"
               type="button"
               onClick={() => removeImage(idx)}
             >
