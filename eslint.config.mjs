@@ -47,6 +47,7 @@ export default tseslint.config(
       'prefer-const': 'warn', // 재할당 없는 let은 const로
       'no-nested-ternary': 'warn', // 삼항 연산자 중첩 금지
       'no-unused-vars': 'off', // TypeScript에서는 @typescript-eslint/no-unused-vars 사용
+      'react/prop-types': 'off',
 
       // ✅ TypeScript 규칙
       '@typescript-eslint/no-unused-vars': [
