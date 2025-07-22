@@ -75,6 +75,7 @@ const AlbaPage = () => {
           onClick={handleBookmarkToggle}
         />
         <FloatingButton type="share" />
+        {/* 사장님/지원자 변경을 위한 임시 floatingBtn */}
         <FloatingButton
           type="addAlbatalk"
           onClick={() => setIsOwner(!isOwner)}
