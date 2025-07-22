@@ -6,6 +6,7 @@ import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useModalStore from '@/shared/store/useModalStore';
 
 import ApplicationListModal from '../modal/ApplicationListModal';
+import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonTabletProps {
   isOwner: boolean;
@@ -21,6 +22,10 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
     openModal(<ApplicationListModal />);
   };
 
+  const handleOpenFormDeleteModal = () => {
+    openModal(<FormDeleteModal />);
+  };
+
   return (
     <div className="fixed right-0 bottom-0 left-0 z-50 bg-white/70 px-16 py-12 backdrop-blur lg:hidden dark:bg-gray-900/70">
       {isOwner ? (
@@ -32,6 +37,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
             label={deleteButtonLabel}
             type="button"
             variant="outline"
+            onClick={handleOpenFormDeleteModal}
           />
           <PrimaryButton
             className="flex w-3/4 max-w-[640px] items-center justify-center py-20 text-lg lg:text-xl"
