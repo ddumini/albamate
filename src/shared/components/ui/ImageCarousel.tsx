@@ -120,7 +120,7 @@ const ImageCarousel: React.FC<CarouselProps> = ({
       aria-label="이미지 캐러셀"
       aria-live="polite"
       className={cn(
-        'relative mx-auto h-260 w-full overflow-hidden rounded-2xl bg-white shadow-2xl lg:h-562',
+        'relative mx-auto h-260 w-full overflow-hidden bg-white lg:h-562',
         className
       )}
       role="region"
