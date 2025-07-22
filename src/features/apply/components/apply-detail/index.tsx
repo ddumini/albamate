@@ -52,7 +52,7 @@ const ApplyDetail = ({
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-40 text-sm lg:max-w-7xl lg:text-lg">
+    <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-40 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
       <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
 
       <div className="space-y-40 lg:grid lg:grid-cols-2 lg:gap-150 lg:space-y-0">
@@ -69,7 +69,7 @@ const ApplyDetail = ({
           />
         </div>
       </div>
-      <div className="border-4 border-line-100" />
+      <div className="border-4 border-line-100 dark:border-gray-800" />
       <ApplyProfile data={applyResponse} />
     </div>
   );

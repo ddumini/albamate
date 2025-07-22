@@ -19,6 +19,8 @@ const ApplyState = ({
 }: ApplyStateProps) => {
   const { isDesktop } = useViewport();
 
+  const desktopStyle = isDesktop ? 'text-black' : '';
+
   // D-Day 계산
   const today = new Date();
   const recruitmentEnd = new Date(recruitmentEndDate);
@@ -63,13 +65,13 @@ const ApplyState = ({
             </span>
           )}
         </div>
-        <span>{applicationDate}</span>
+        <span className={desktopStyle}>{applicationDate}</span>
       </div>
 
       {/* 진행 상태 */}
       <div className="flex items-center justify-between border-b border-gray-200 py-14 lg:border-b-0">
         <span className="text-gray-400">진행 상태</span>
-        <span>{statusInfo.text}</span>
+        <span className={desktopStyle}>{statusInfo.text}</span>
       </div>
     </div>
   );
