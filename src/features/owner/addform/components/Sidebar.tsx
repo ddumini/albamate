@@ -24,11 +24,11 @@ const Sidebar = ({
   return (
     <nav
       className={cn(
-        'flex h-966 w-452 flex-col justify-between rounded-2xl bg-background-200 p-40',
+        'flex h-966 w-452 flex-col justify-between rounded-2xl bg-background-200 p-40 dark:bg-gray-800',
         className
       )}
     >
-      <ul>
+      <ul className="flex flex-col gap-8">
         {menuIndexList.map(menuIndex => (
           <li key={menuIndex}>
             <MenuItem

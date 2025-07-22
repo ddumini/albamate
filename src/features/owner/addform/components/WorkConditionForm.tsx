@@ -65,7 +65,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             id="hourlyWage"
             placeholder="10030"
           />
-          <span className="absolute top-14 right-30 text-lg font-medium text-black-400 lg:top-16 lg:right-40 lg:text-xl">
+          <span className="absolute top-14 right-30 text-lg font-medium text-black-400 lg:top-16 lg:right-40 lg:text-xl dark:text-gray-100">
             원
           </span>
         </div>

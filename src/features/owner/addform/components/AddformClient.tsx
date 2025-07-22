@@ -16,8 +16,8 @@ import WorkConditionForm from './WorkConditionForm';
 const AddformClient = ({ formId }: { formId?: string }) => {
   const [currentMenu, setCurrentMenu] = useState<MenuIndex>(1);
   const [writingMenu, setWritingMenu] = useState({
-    1: false,
-    2: false,
+    1: true,
+    2: true,
     3: false,
   });
   const { isDesktop } = useViewport();
