@@ -6,9 +6,9 @@ export const getStatusLabel = (status: string) => {
     case 'REJECTED':
       return '거절됨';
     case 'INTERVIEW_PENDING':
-      return '인터뷰 대기';
+      return '면접 대기';
     case 'INTERVIEW_COMPLETED':
-      return '인터뷰 완료';
+      return '면접 완료';
     case 'HIRED':
       return '고용됨';
     default:
