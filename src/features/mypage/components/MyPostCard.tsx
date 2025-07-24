@@ -35,7 +35,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
   return (
     <div
       key={cardContent.id}
-      className="Border-Card flex h-264 w-full flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full xl:max-w-476"
+      className="Border-Card flex h-264 w-full cursor-pointer flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full xl:max-w-476"
       onClick={handleCardClick}
     >
       <section className="flex w-full items-center justify-between">
