@@ -13,7 +13,7 @@ const AlbaDescription: React.FC<AlbaDescriptionProps> = ({ description }) => {
     <div className="max-w-375 min-w-320 text-sm lg:max-w-770 lg:text-2lg">
       <p
         className={`overflow-hidden text-ellipsis whitespace-pre-line ${
-          expanded ? '' : 'line-clamp-5' // Tailwind CSS line-clamp 유틸리티 사용
+          expanded ? '' : 'line-clamp-7' // Tailwind CSS line-clamp 유틸리티 사용
         }`}
       >
         {description}
