@@ -79,11 +79,11 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
       className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-16 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
       onClick={onClick}
     >
-      <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-lg border border-line-200 dark:border-transparent">
+      <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-2xl border-8 border-gray-100 dark:border-gray-200">
         <Image
           fill
           alt="알바 이미지"
-          className="object-cover"
+          className="rounded-lg object-cover"
           src={imgSrc}
           onError={() => setImgSrc('/icons/user.svg')}
         />

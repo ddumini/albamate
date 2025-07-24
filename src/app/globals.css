@@ -106,7 +106,7 @@
 }
 
 .Border-Card {
-  @apply border border-mint-100 dark:border-mint-400;
+  @apply border-3 border-mint-100 dark:border-mint-400;
 }
 
 .BG-mint {
