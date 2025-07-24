@@ -126,7 +126,7 @@
 }
 
 .BG-error {
-  @apply bg-red-400 dark:bg-red-400;
+  @apply bg-error dark:bg-red-400;
 }
 
 .Text-black {
