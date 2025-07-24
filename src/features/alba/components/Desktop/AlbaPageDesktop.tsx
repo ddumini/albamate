@@ -29,7 +29,7 @@ const AlbaPageDesktop = ({ item, isOwner }: AlbaPageDesktopProps) => {
       <div className="col-span-6 flex flex-col justify-end gap-32">
         <AlbaInfo item={item} />
         <AlbaContact item={item} />
-        <ApplyButtonDesktop isOwner={isOwner} />
+        <ApplyButtonDesktop isOwner={isOwner} itemId={item.id} />
         <AlbaCondition item={item} />
       </div>
     </div>

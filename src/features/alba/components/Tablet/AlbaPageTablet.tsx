@@ -26,7 +26,7 @@ const AlbaPageTablet = ({ item, isOwner }: AlbaPageTabletProps) => {
       <AlbaDescription description={item.description} />
       <AlbaCondition item={item} />
       <AlbaLocation />
-      <ApplyButtonTablet isOwner={isOwner} />
+      <ApplyButtonTablet isOwner={isOwner} itemId={item.id} />
     </div>
   );
 };

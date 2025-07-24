@@ -1,4 +1,6 @@
-// AlbaApplyButtonDesktop.tsx
+'use client';
+
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
@@ -9,12 +11,15 @@ import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonDesktopProps {
   isOwner: boolean;
+  itemId: number; // ✅ 추가
 }
 
 const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
   isOwner,
+  itemId,
 }) => {
   const { openModal } = useModalStore();
+  const router = useRouter();
 
   const handleOpenApplicationModal = () => {
     openModal(<ApplicationListModal />);
@@ -22,6 +27,10 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
 
   const handleOpenFormDeleteModal = () => {
     openModal(<FormDeleteModal />);
+  };
+
+  const handleApply = () => {
+    router.push(`/apply/${itemId}`);
   };
 
   return (
@@ -32,6 +41,7 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
         label={isOwner ? '수정하기' : '지원하기'}
         type="button"
         variant="solid"
+        onClick={isOwner ? undefined : handleApply}
       />
       <PrimaryButton
         className="max-w-[640px] py-20 text-lg lg:text-xl"

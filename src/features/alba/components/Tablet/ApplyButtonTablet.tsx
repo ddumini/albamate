@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
@@ -10,12 +11,15 @@ import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonTabletProps {
   isOwner: boolean;
+  itemId: number;
 }
 
 const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
   isOwner,
+  itemId,
 }) => {
   const { openModal } = useModalStore();
+  const router = useRouter();
   const deleteButtonLabel = ''; // 아이콘만 보이게
 
   const handleOpenApplicationModal = () => {
@@ -24,6 +28,10 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
 
   const handleOpenFormDeleteModal = () => {
     openModal(<FormDeleteModal />);
+  };
+
+  const handleApply = () => {
+    router.push(`/apply/${itemId}`);
   };
 
   return (
@@ -55,6 +63,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
             label="지원하기"
             type="button"
             variant="solid"
+            onClick={handleApply}
           />
           <PrimaryButton
             aria-label="내 지원 내역 보기"
