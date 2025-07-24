@@ -36,7 +36,7 @@ const AlbaPage = () => {
     return now > end;
   };
 
-  // 진입 시 모집 마감 모달 띄우기
+  // 진입 시 모집 마감 여부 확인 후 모달 띄우기
   useEffect(() => {
     if (!item) return;
 
@@ -47,7 +47,7 @@ const AlbaPage = () => {
     }
 
     setPopupVisible(true);
-  }, [item]);
+  }, [item, openModal]);
 
   const handleBookmarkToggle = () => {
     const newBookmarkState = !isBookmarked;
@@ -94,7 +94,6 @@ const AlbaPage = () => {
       </FloatingButtonContainer>
 
       <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
-      <div className="text-gray-500">알바 상세 페이지 - ID: {formId}</div>
       {isDesktop ? (
         <AlbaPageDesktop isOwner={isOwner} item={item} />
       ) : (
