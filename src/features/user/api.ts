@@ -1,6 +1,5 @@
 import { axiosInstance } from '@/shared/lib/axios';
-
-import { EditPassword, UpdateMyProfile } from '../../shared/types/mypage';
+import { EditPassword, UpdateMyProfile } from '@/shared/types/mypage';
 
 // 내 정보 조회
 export const getMyProfile = () => axiosInstance.get('/users/me');
