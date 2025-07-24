@@ -29,7 +29,7 @@ const RecruitCloseModal = () => {
       <Modal.Footer>
         <div>
           <PrimaryButton
-            className="mt-12 h-58 w-327 rounded-md hover:brightness-90"
+            className="mt-12 h-58 w-327 rounded-md hover:brightness-95"
             label="삭제하기"
             type="button"
             variant="solid"
