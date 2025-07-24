@@ -108,9 +108,7 @@ export const albaMockData: MockAlbaItem[] = [
     description: '학생 환영! 주말 근무 가능자 모집',
     recruitmentStartDate: '2025-06-15T08:00:00.000Z',
     recruitmentEndDate: '2025-06-20T08:00:00.000Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1500315331616-db2f053f3453?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     location: '서울시 강남구',
     workStartDate: '2025-06-25T08:00:00.000Z',
     workEndDate: '2025-12-30T08:00:00.000Z',
@@ -208,9 +206,7 @@ export const albaMockData: MockAlbaItem[] = [
     description: '체력 좋으신 분 우대. 택배 물품 분류 업무.',
     recruitmentStartDate: '2025-05-01T05:00:00.000Z',
     recruitmentEndDate: '2025-05-07T05:00:00.000Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1508385082359-f4f8664b6a2c?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     location: '경기도 김포시',
     workStartDate: '2025-05-10T06:00:00.000Z',
     workEndDate: '2025-11-30T15:00:00.000Z',
