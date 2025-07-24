@@ -3,11 +3,12 @@
 import AlbaDescription from '@alba/AlbaDescription';
 import AlbaDetail from '@alba/AlbaDetail';
 
+import AlbaLocation from '@/features/alba/components/AlbaLocation';
+
 import { albaMockData } from '../../mocks/mockData';
 import AlbaCondition from '../AlbaCondition';
 import AlbaContact from '../AlbaContact';
 import AlbaInfo from '../AlbaInfo';
-import AlbaLocation from '../AlbaLocation';
 import ApplyButtonDesktop from './ApplyButtonDesktop';
 
 interface AlbaPageDesktopProps {

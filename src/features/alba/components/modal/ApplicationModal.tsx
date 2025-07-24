@@ -1,12 +1,12 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
+import Input from '@common/input/Input';
+import Modal from '@common/modal/Modal';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import Input from '@/shared/components/common/input/Input';
-import Modal from '@/shared/components/common/modal/Modal';
 import useModalStore from '@/shared/store/useModalStore';
 
 type FormValues = {

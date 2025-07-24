@@ -1,13 +1,13 @@
 'use client';
 
 // 컴파운드 네임스페이스
+import FloatingButton from '@common/button/FloatingButton';
+import FloatingButtonContainer from '@common/button/FloatingButtonContainer';
+import ToastPopup from '@common/popup/ToastPopup';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import FloatingButton from '@/shared/components/common/button/FloatingButton';
-import FloatingButtonContainer from '@/shared/components/common/button/FloatingButtonContainer';
-import ToastPopup from '@/shared/components/common/popup/ToastPopup';
 import ImageCarousel from '@/shared/components/ui/ImageCarousel';
 import useViewport from '@/shared/hooks/useViewport';
 import useModalStore from '@/shared/store/useModalStore';

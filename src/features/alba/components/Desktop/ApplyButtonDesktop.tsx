@@ -1,9 +1,9 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useModalStore from '@/shared/store/useModalStore';
 
 import ApplicationModal from '../modal/ApplicationModal';

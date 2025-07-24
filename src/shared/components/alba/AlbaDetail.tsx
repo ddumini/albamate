@@ -1,11 +1,11 @@
 'use client';
 
+import { getPublicLabel, getStatusLabel } from '@common/chip/label';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import React from 'react';
 
 import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
-import { getPublicLabel, getStatusLabel } from '@/shared/utils/label';
 
 interface AlbaDetailProps {
   item: MockAlbaItem;

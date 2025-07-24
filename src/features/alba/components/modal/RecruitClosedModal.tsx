@@ -1,8 +1,8 @@
+import PrimaryButton from '@common/button/PrimaryButton';
+import Modal from '@common/modal/Modal';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import Modal from '@/shared/components/common/modal/Modal';
 import useModalStore from '@/shared/store/useModalStore';
 
 const RecruitCloseModal = () => {
