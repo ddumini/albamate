@@ -12,9 +12,9 @@ import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
-const MyPageTopButtons = ({ role }: { role: boolean }) => {
+const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
   const { openModal, closeModal } = useModalStore();
-  const infoComponent = role ? (
+  const infoComponent = isOwner ? (
     <OwnerInfoEdit close={closeModal} />
   ) : (
     <WorkerInfoEdit close={closeModal} />

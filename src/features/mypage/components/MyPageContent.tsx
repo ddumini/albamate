@@ -156,7 +156,7 @@ const MyPageContent = () => {
 
   return (
     <div className="mb-40 w-full max-w-1480">
-      <MyPageTop role={isOwner} />
+      <MyPageTop isOwner={isOwner} />
       <section
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
       >
