@@ -1,5 +1,6 @@
 'use client';
 
+import { getPublicLabel, getStatusLabel } from '@common/chip/label';
 import AlbaDropdown from '@common/list/AlbaDropdown';
 import { differenceInCalendarDays } from 'date-fns';
 import Image from 'next/image';
@@ -10,7 +11,6 @@ import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
-import { getPublicLabel, getStatusLabel } from '@/shared/utils/label';
 
 export interface DropdownOption {
   label: string;
