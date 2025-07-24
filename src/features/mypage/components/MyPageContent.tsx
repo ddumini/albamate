@@ -4,12 +4,7 @@ import Tab from '@common/tab/Tab';
 import { useState } from 'react';
 
 import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
-import {
-  ContentType,
-  PostCardItem,
-  Role,
-  SortOption,
-} from '@/shared/types/mypage';
+import { ContentType, PostCardItem, SortOption } from '@/shared/types/mypage';
 
 import { comment, post, scrap } from '../mock/dummy';
 import ScrapFilterControls from './FilterControl';
@@ -21,22 +16,29 @@ interface TabOption {
   label: string;
 }
 
-interface MyPageContentProps {
-  role: Role;
-  tapOption: TabOption[];
-}
-
-const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
+const MyPageContent = () => {
   const [tabValue, setTabValue] = useState('post');
   const [sortValue, setSortValue] = useState('latest');
   const [publicValue, setPublicValue] = useState('all');
   const [recruitValue, setRecruitValue] = useState('all');
+  const [isOwner, setIsOwner] = useState(false);
 
-  const filterWrapClassName = `${tabValue === 'scrap' ? 'lg:flex-col' : 'lg:flex-row lg:items-center'}`;
-  const selectWrapClassName = `${tabValue === 'scrap' ? 'w-full flex items-center justify-between' : ''}`;
-  const tabClassName = `${tabValue === 'scrap' ? 'flex items-center lg:justify-start w-full mb-16' : ''}`;
+  const filterWrapClassName =
+    tabValue === 'scrap' ? 'lg:flex-col' : 'lg:flex-row lg:items-center';
+  const selectWrapClassName =
+    tabValue === 'scrap' ? 'w-full flex items-center justify-between' : '';
+  const tabClassName =
+    tabValue === 'scrap'
+      ? 'flex items-center lg:justify-start w-full mb-16'
+      : '';
 
   const sortOption: SortOption[] = SORT_OPTIONS[tabValue as ContentType] || [];
+
+  const tapOption = [
+    { id: 'post', label: '내가 쓴 글' },
+    { id: 'comment', label: '내가 쓴 댓글' },
+    !isOwner && { id: 'scrap', label: '스크랩' },
+  ].filter((item): item is TabOption => Boolean(item));
 
   const publicOption = [
     { value: 'all', label: '전체' },
@@ -101,6 +103,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
 
     return filtered;
   };
+
   const getFilterScrapData = () => {
     let filtered = [...scrap.data];
 
@@ -153,7 +156,7 @@ const MyPageContent = ({ role, tapOption }: MyPageContentProps) => {
 
   return (
     <div className="mb-40 w-full max-w-1480">
-      <MyPageTop role={role} />
+      <MyPageTop isOwner={isOwner} />
       <section
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
       >
