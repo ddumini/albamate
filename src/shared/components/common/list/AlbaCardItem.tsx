@@ -76,20 +76,20 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
   return (
     <div
-      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-16 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
+      className="Border-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
       onClick={onClick}
     >
       <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-2xl border-8 border-gray-100 dark:border-gray-200">
         <Image
           fill
           alt="알바 이미지"
-          className="rounded-lg object-cover"
+          className="rounded-2lg object-cover"
           src={imgSrc}
           onError={() => setImgSrc('/icons/user.svg')}
         />
       </div>
 
-      <div className="relative mt-12 flex items-center gap-8 pb-30 text-sm xs:pt-0">
+      <div className="relative mt-12 flex items-center gap-8 pb-20 text-sm xs:pt-0">
         {getPublicLabel(isPublic)}
         {getStatusLabel(recruitmentEndDate)}
         <span className="Text-gray absolute bottom-0 left-0 whitespace-nowrap xs:static">
@@ -112,9 +112,9 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
         </div>
       </div>
 
-      <h3 className="Text-black mt-12 text-lg font-semibold">{title}</h3>
+      <h3 className="Text-black mb-20 ml-4 text-2lg font-semibold">{title}</h3>
 
-      <div className="mt-12 flex h-38 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-50 dark:bg-gray-800">
+      <div className="mt-12 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (
           <span
             key={stat.label}
