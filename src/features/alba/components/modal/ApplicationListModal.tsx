@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,8 +15,13 @@ type FormValues = {
   password: string;
 };
 
-const ApplicationListModal = () => {
+interface ApplicationListModalProps {
+  itemId: number;
+}
+
+const ApplicationListModal = ({ itemId }: ApplicationListModalProps) => {
   const { closeModal } = useModalStore();
+  const router = useRouter();
 
   const {
     register,
@@ -25,7 +31,8 @@ const ApplicationListModal = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log('입력 데이터:', data);
-    closeModal(); // 실제로는 여기서 API 호출 등을 처리 가능
+    closeModal();
+    router.push(`/myapply/${itemId}`);
   };
 
   return (
@@ -56,7 +63,7 @@ const ApplicationListModal = () => {
           <label className="text-sm font-medium">
             전화번호
             <Input
-              className="mt-1 h-52 rounded border border-gray-300 px-3 py-2 text-black lg:h-54"
+              className="mt-1 h-52 rounded border border-gray-300 px-3 py-2 pl-12 text-black lg:h-54"
               type="tel"
               {...register('phone', {
                 required: '전화번호를 입력해주세요',
@@ -92,7 +99,7 @@ const ApplicationListModal = () => {
           </label>
 
           <PrimaryButton
-            className="h-58 w-327 rounded-md bg-mint-400"
+            className="h-58 w-327 rounded-md bg-mint-400 hover:brightness-92"
             label="지원 내역 상세보기"
             type="submit"
             variant="solid"
