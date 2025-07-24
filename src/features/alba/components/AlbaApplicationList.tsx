@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 
 import {
@@ -13,12 +13,7 @@ import {
 import { mockApplications } from '../mocks/mockApplicationData';
 
 const AlbaApplicationList = () => {
-  const router = useRouter();
   const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
-
-  const handleClick = (applicantId: number) => {
-    router.push(`/applications/${applicantId}`);
-  };
 
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + 5); // 5개씩 추가로 보여줌
@@ -41,7 +36,7 @@ const AlbaApplicationList = () => {
         <div className="flex items-center px-4">이름</div>
         <div className="flex items-center px-4">전화번호</div>
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-8">
             경력
             <Image
               alt="경력"
@@ -53,7 +48,7 @@ const AlbaApplicationList = () => {
           </div>
         </div>
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-8">
             상태
             <Image
               alt="상태"
@@ -71,13 +66,12 @@ const AlbaApplicationList = () => {
         {visibleApplications.map(applicant => (
           <li key={applicant.id} className="BorderB-gray p-20">
             <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
-              <button
+              <Link
                 className="hover:text-mint-500 text-left underline underline-offset-2"
-                type="button"
-                onClick={() => handleClick(applicant.applicantId)}
+                href={`/applications/${applicant.applicantId}`}
               >
                 {applicant.name}
-              </button>
+              </Link>
               <div className="whitespace-nowrap">{applicant.phoneNumber}</div>
               <div>{getExperienceLabel(applicant.experienceMonths)}</div>
               <div className={getStatusColor(applicant.status)}>
