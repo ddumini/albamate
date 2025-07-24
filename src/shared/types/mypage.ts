@@ -67,7 +67,7 @@ export interface SortOption {
   label: string;
 }
 
-export interface EditMyProfile {
+export interface UpdateMyProfile {
   location?: string;
   phoneNumber: string;
   storePhoneNumber?: string;
