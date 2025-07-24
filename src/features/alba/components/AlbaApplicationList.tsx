@@ -1,53 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import {
+  getExperienceLabel,
+  getStatusColor,
+  getStatusLabel,
+} from '@/shared/utils/application';
+
 import { mockApplications } from '../mocks/mockApplicationData';
-
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case 'PENDING':
-      return '대기중';
-    case 'REJECTED':
-      return '거절됨';
-    case 'ACCEPTED':
-      return '승인됨';
-    default:
-      return '알수없음';
-  }
-};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'REJECTED':
-      return 'text-error';
-    case 'PENDING':
-      return 'text-gray-500';
-    case 'ACCEPTED':
-      return 'text-blue-600';
-    default:
-      return 'Text-black';
-  }
-};
-
-const getExperienceLabel = (months: number) => {
-  if (months === 0) return '없음';
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-
-  if (years > 0 && remainingMonths > 0) {
-    return `${years}년 ${remainingMonths}개월`;
-  }
-
-  if (years > 0) {
-    return `${years}년`;
-  }
-
-  return `${remainingMonths}개월`;
-};
 
 const AlbaApplicationList = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 'use client';
 
-import Chip from '@common/chip/Chip';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import React from 'react';
 
 import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
+import { getPublicLabel, getStatusLabel } from '@/shared/utils/label';
 
 interface AlbaDetailProps {
   item: MockAlbaItem;
@@ -39,22 +39,6 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
     createdAt,
   } = item;
 
-  const getStatusLabel = (recruitmentEndDate: string) => {
-    return new Date(recruitmentEndDate) > new Date() ? (
-      <Chip active label="모집 중" variant="filled" />
-    ) : (
-      <Chip active label="모집 마감" variant="filled" />
-    );
-  };
-
-  const getPublicLabel = (isPublic: boolean) => {
-    return isPublic ? (
-      <Chip active label="공개" variant="filled" />
-    ) : (
-      <Chip active label="비공개" variant="filled" />
-    );
-  };
-
   const recruitLabel = getStatusLabel(recruitmentEndDate);
   const publicLabel = getPublicLabel(isPublic);
 
@@ -70,7 +54,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         </div>
 
         {/* 2. 모집 날짜 범위 */}
-        <div>{formattedStart} 등록</div>
+        <div className="Text-darkgray">{formattedStart} 등록</div>
       </div>
 
       {/* 3. 가게 이름, 위치, 우대사항 */}
@@ -78,8 +62,8 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         <div className="font-semibold underline underline-offset-4">
           {storeName}
         </div>
-        <div>{location}</div>
-        <div className="">{`· ${preferred}`}</div>
+        <div className="Text-darkgray">{location}</div>
+        <div className="Text-darkgray">{`· ${preferred}`}</div>
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
@@ -111,7 +95,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
           <span className="font-normal whitespace-nowrap">
             현재까지{' '}
             <span className="font-semibold text-mint-400">{applyCount}명</span>
-            이 알바폼에 지원했어요!
+            이 이 알바폼에 지원했어요!
           </span>
         </div>
       </div>

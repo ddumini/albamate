@@ -2,20 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 저장한 경로에 따라 수정
+import { formatDateLong, formatDateShort } from '@/shared/utils/format';
 
 import { MockAlbaItem } from '../types/MockAlbaItem';
 
 interface AlbaInfoProps {
   item: MockAlbaItem;
 }
-
-const formatDate = (isoString: string, isDesktop: boolean) => {
-  const date = isoString.slice(0, 10);
-  const [year, month, day] = date.split('-');
-  return isDesktop
-    ? `${year}.${month}.${day}` // 2024년 10월 25일
-    : `${year?.slice(2)}.${month}.${day}`; // 24.10.25
-};
 
 const getBorderClass = (idx: number) => {
   if (idx === 0) {
@@ -40,8 +33,8 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   const { isDesktop } = useViewport();
 
   const period = isDesktop
-    ? `${formatDate(item.recruitmentStartDate, true)} ~ ${formatDate(item.recruitmentEndDate, true)}`
-    : `${formatDate(item.recruitmentStartDate, false)}~${formatDate(item.recruitmentEndDate, false)}`;
+    ? `${formatDateLong(item.recruitmentStartDate)} ~ ${formatDateLong(item.recruitmentEndDate)}`
+    : `${formatDateShort(item.recruitmentStartDate)}~${formatDateShort(item.recruitmentEndDate)}`;
 
   const workDays = item.workDays.join(', ');
   const workTime = `${item.workStartTime}~${item.workEndTime}`;

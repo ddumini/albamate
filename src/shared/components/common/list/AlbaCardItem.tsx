@@ -1,8 +1,7 @@
 'use client';
 
-import Chip from '@common/chip/Chip';
 import AlbaDropdown from '@common/list/AlbaDropdown';
-import { differenceInCalendarDays, format, isAfter } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -10,6 +9,8 @@ import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
+import { formatDateLong } from '@/shared/utils/format';
+import { getPublicLabel, getStatusLabel } from '@/shared/utils/label';
 
 export interface DropdownOption {
   label: string;
@@ -34,15 +35,18 @@ interface Props {
  *
  */
 const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
-  const start = new Date(item.recruitmentStartDate);
-  const end = new Date(item.recruitmentEndDate);
-  const dDay = differenceInCalendarDays(end, new Date());
-  const isRecruiting = isAfter(end, new Date());
-
-  const [imgSrc, setImgSrc] = useState(
-    item.imageUrls?.[0] || '/icons/user.svg'
-  );
+  const {
+    title,
+    isPublic,
+    recruitmentStartDate,
+    recruitmentEndDate,
+    imageUrls,
+    applyCount,
+    scrapCount,
+  } = item;
+  const [imgSrc, setImgSrc] = useState(imageUrls?.[0] || '/icons/user.svg');
   const [open, setOpen] = useState(false);
+  const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   useClickOutside(dropdownRef, () => setOpen(false));
@@ -58,11 +62,11 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
   const stats = [
     {
       label: '지원자',
-      value: `${item.applyCount}명`,
+      value: `${applyCount}명`,
     },
     {
       label: '스크랩',
-      value: `${item.scrapCount}명`,
+      value: `${scrapCount}명`,
     },
     {
       label: dDay < 0 ? '마감 완료' : `마감 D-${dDay}`,
@@ -86,14 +90,11 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
       </div>
 
       <div className="relative mt-12 flex items-center gap-8 pb-30 text-sm xs:pt-0">
-        {item.isPublic && <Chip active label="공개" variant="filled" />}
-        <Chip
-          active
-          label={isRecruiting ? '모집 중' : '모집 완료'}
-          variant="filled"
-        />
+        {getPublicLabel(isPublic)}
+        {getStatusLabel(recruitmentEndDate)}
         <span className="Text-gray absolute bottom-0 left-0 whitespace-nowrap xs:static">
-          {format(start, 'yyyy.MM.dd')} ~ {format(end, 'yyyy.MM.dd')}
+          {formatDateLong(recruitmentStartDate)} ~{' '}
+          {formatDateLong(recruitmentEndDate)}
         </span>
         <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
           <Image
@@ -111,7 +112,7 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
         </div>
       </div>
 
-      <h3 className="Text-black mt-12 text-lg font-semibold">{item.title}</h3>
+      <h3 className="Text-black mt-12 text-lg font-semibold">{title}</h3>
 
       <div className="mt-12 flex h-38 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-50 dark:bg-gray-50">
         {stats.map((stat, idx) => (
