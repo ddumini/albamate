@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import AddformClient from '@/features/owner/addform/components/AddformClient';
+import AddformClient from '@/features/addform/components/AddformClient';
 
 export const generateMetadata = async ({
   searchParams,
