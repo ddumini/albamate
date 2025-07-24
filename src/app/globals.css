@@ -26,6 +26,7 @@
   --color-line-100: hsl(0, 0%, 95%);
   --color-line-200: hsl(0, 0%, 90%);
   --color-error: hsl(15, 100%, 49%);
+  --color-red-450: hsl(15, 100%, 55%);
   --color-mint-50: hsl(171, 86%, 88%);
   --color-mint-100: hsl(171, 86%, 68%);
   --color-mint-200: hsl(171, 86%, 58%);
@@ -122,6 +123,10 @@
 
 .BG-solid-mint {
   @apply bg-mint-400;
+}
+
+.BG-error {
+  @apply bg-red-400 dark:bg-red-400;
 }
 
 .Text-black {
