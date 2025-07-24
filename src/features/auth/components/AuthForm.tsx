@@ -1,5 +1,5 @@
 'use client';
-
+import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
@@ -24,8 +24,11 @@ const AuthForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = data => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async data => {
+    await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (
