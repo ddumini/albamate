@@ -57,16 +57,14 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
         {Info.map(({ label, value, img }, idx) => (
           <div
             key={label}
-            className={`relative mx-30 flex items-center justify-start gap-16 p-4 ${getBorderClass(idx)}`}
+            className={`relative mx-30 flex items-center justify-start gap-20 p-4 ${getBorderClass(idx)}`}
           >
-            {/* 아이콘 */}
-            <div className="relative h-24 w-24 lg:h-36 lg:w-36">
-              <div className="absolute inset-0 scale-120 rounded-2xl bg-gray-50 dark:bg-gray-100" />
+            <div className="relative h-36 w-36 flex-shrink-0 lg:h-40 lg:w-40">
+              <div className="absolute inset-[-5px] rounded-3xl bg-gray-50 dark:bg-gray-100" />
               <Image fill alt="icon" objectFit="cover" src={img} />
             </div>
 
-            {/* 텍스트 */}
-            <div className="ml-2 lg:ml-4">
+            <div className="ml-4">
               <div className="text-sm text-gray-500">{label}</div>
               <div className="text-base font-bold text-teal-500">{value}</div>
             </div>
@@ -84,7 +82,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
           key={label}
           className="flex w-full items-center justify-start gap-10 rounded-lg border border-gray-100 px-6 py-4"
         >
-          <div className="relative h-24 w-24 lg:h-36 lg:w-36">
+          <div className="relative h-24 w-24 flex-shrink-0 lg:h-36 lg:w-36">
             <div className="absolute inset-0 scale-120 rounded-2xl bg-gray-50 dark:bg-gray-100" />
             <Image
               fill
