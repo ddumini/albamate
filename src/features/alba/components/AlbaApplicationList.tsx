@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import {
   getExperienceLabel,
@@ -24,7 +24,10 @@ const AlbaApplicationList = () => {
     setVisibleCount(prev => prev + 5); // 5개씩 추가로 보여줌
   };
 
-  const visibleApplications = mockApplications.slice(0, visibleCount);
+  const visibleApplications = useMemo(() => {
+    return mockApplications.slice(0, visibleCount);
+  }, [visibleCount]);
+
   const hasMore = visibleCount < mockApplications.length;
 
   return (
@@ -87,7 +90,7 @@ const AlbaApplicationList = () => {
 
       {/* 더보기 버튼 */}
       {hasMore && (
-        <div className="mt-20 text-center">
+        <div className="text-center">
           <button
             className="bg-mint-500 hover:bg-mint-600 rounded px-12 py-8 text-white"
             type="button"
