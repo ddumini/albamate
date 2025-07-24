@@ -1,5 +1,3 @@
-'use client';
-
 import { getPublicLabel, getStatusLabel } from '@common/chip/label';
 import { format } from 'date-fns';
 import Image from 'next/image';
