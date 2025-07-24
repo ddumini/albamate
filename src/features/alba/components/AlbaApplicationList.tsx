@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   getExperienceLabel,
@@ -14,10 +14,18 @@ import { mockApplications } from '../mocks/mockApplicationData';
 
 const AlbaApplicationList = () => {
   const router = useRouter();
+  const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
 
   const handleClick = (applicantId: number) => {
     router.push(`/applications/${applicantId}`);
   };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 5); // 5개씩 추가로 보여줌
+  };
+
+  const visibleApplications = mockApplications.slice(0, visibleCount);
+  const hasMore = visibleCount < mockApplications.length;
 
   return (
     <div className="max-w-640">
@@ -57,7 +65,7 @@ const AlbaApplicationList = () => {
 
       {/* 리스트 */}
       <ul className="Text-black">
-        {mockApplications.map(applicant => (
+        {visibleApplications.map(applicant => (
           <li key={applicant.id} className="BorderB-gray p-20">
             <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
               <button
@@ -76,23 +84,19 @@ const AlbaApplicationList = () => {
           </li>
         ))}
       </ul>
-      <ul className="Text-black">
-        {mockApplications.map(applicant => (
-          <li key={applicant.id} className="BorderB-gray p-20">
-            <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
-              <div className="underline underline-offset-2">
-                {applicant.name}
-              </div>
-              <div className="whitespace-nowrap">{applicant.phoneNumber}</div>
-              <div>{getExperienceLabel(applicant.experienceMonths)}</div>
 
-              <div className={getStatusColor(applicant.status)}>
-                {getStatusLabel(applicant.status)}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* 더보기 버튼 */}
+      {hasMore && (
+        <div className="mt-20 text-center">
+          <button
+            className="bg-mint-500 hover:bg-mint-600 rounded px-12 py-8 text-white"
+            type="button"
+            onClick={handleLoadMore}
+          >
+            더보기
+          </button>
+        </div>
+      )}
     </div>
   );
 };
