@@ -1,7 +1,7 @@
 import { axiosInstance } from '@/shared/lib/axios';
 
 // 이미지 업로드
-export const uploadImage = (teamId: string, file: File) => {
+export const uploadImage = (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
 
