@@ -12,7 +12,7 @@ const RecruitCloseModal = () => {
       <Modal.Header showCloseButton>
         <Image
           alt="모집마감"
-          className="mx-40 my-20"
+          className="mx-auto my-20"
           height={80}
           src="/images/modal/warning.svg"
           width={80}
@@ -29,7 +29,7 @@ const RecruitCloseModal = () => {
       <Modal.Footer>
         <div>
           <PrimaryButton
-            className="mt-12 h-58 w-327 rounded-md bg-red-450 brightness-80 hover:brightness-70"
+            className="BG-error mt-12 h-58 w-327 rounded-md hover:brightness-90"
             label="삭제하기"
             type="button"
             variant="cancelSolid"
