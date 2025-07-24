@@ -26,8 +26,9 @@ export const getStatusColor = (status: string) => {
     case 'INTERVIEW_PENDING':
       return 'text-gray-500';
     case 'INTERVIEW_COMPLETED':
-    case 'HIRED':
       return 'text-blue-600';
+    case 'HIRED':
+      return 'text-mint-400';
     default:
       return 'text-black'; // 소문자 주의
   }
