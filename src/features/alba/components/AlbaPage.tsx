@@ -2,6 +2,7 @@
 
 // 컴파운드 네임스페이스
 import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import FloatingButton from '@/shared/components/common/button/FloatingButton';
@@ -12,7 +13,9 @@ import useViewport from '@/shared/hooks/useViewport';
 import useModalStore from '@/shared/store/useModalStore';
 import { Slide } from '@/shared/types/carousel';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
+import { getDDayString } from '@/shared/utils/format';
 
+import { addBookmark, removeBookmark } from '../api/bookmark';
 import { albaMockData } from '../mocks/mockData';
 import AlbaApplicationList from './AlbaApplicationList';
 import AlbaPageDesktop from './desktop/AlbaPageDesktop';
@@ -23,36 +26,50 @@ const AlbaPage = () => {
   const { formId } = useParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isOwner, setIsOwner] = useState(true);
   const { isDesktop } = useViewport();
 
   const { openModal } = useModalStore();
 
+  const router = useRouter();
   const item = albaMockData.find(alba => alba.id === Number(formId));
-
-  const isRecruitmentClosed = (recruitmentEndDate: string) => {
-    const now = new Date();
-    const end = new Date(recruitmentEndDate);
-    return now > end;
-  };
 
   // 진입 시 모집 마감 여부 확인 후 모달 띄우기
   useEffect(() => {
     if (!item) return;
 
-    const closed = isRecruitmentClosed(item.recruitmentEndDate);
+    const ddayText = getDDayString(item.recruitmentEndDate);
+    const isClosed = ddayText === '모집 마감';
 
-    if (closed) {
+    if (isClosed) {
       openModal(<RecruitCloseModal />);
     }
 
     setPopupVisible(true);
   }, [item, openModal]);
 
-  const handleBookmarkToggle = () => {
+  const handleBookmarkToggle = async () => {
+    if (!isLoggedIn) {
+      router.push('/signin');
+      return;
+    }
+
     const newBookmarkState = !isBookmarked;
-    // 북마크 API 호출 자리
-    setIsBookmarked(newBookmarkState);
+
+    try {
+      if (newBookmarkState) {
+        await addBookmark(Number(formId));
+        alert('스크랩했어요!');
+      } else {
+        await removeBookmark(Number(formId));
+        alert('스크랩을 취소했어요.');
+      }
+
+      setIsBookmarked(newBookmarkState);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (!item) {
