@@ -90,9 +90,9 @@ const AlbaApplicationList = () => {
 
       {/* 더보기 버튼 */}
       {hasMore && (
-        <div className="text-center">
+        <div className="mt-20 text-center">
           <button
-            className="bg-mint-500 hover:bg-mint-600 rounded px-12 py-8 text-white"
+            className="bg-mint-500 hover:bg-mint-600 w-100 rounded border border-gray-300 text-white lg:w-200"
             type="button"
             onClick={handleLoadMore}
           >
