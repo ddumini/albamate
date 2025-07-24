@@ -22,16 +22,20 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
   const router = useRouter();
   const deleteButtonLabel = ''; // 아이콘만 보이게
 
-  const handleOpenApplicationModal = () => {
+  const handleApplicationModal = () => {
     openModal(<ApplicationListModal />);
   };
 
-  const handleOpenFormDeleteModal = () => {
+  const handleFormDeleteModal = () => {
     openModal(<FormDeleteModal />);
   };
 
   const handleApply = () => {
     router.push(`/apply/${itemId}`);
+  };
+
+  const handleModify = () => {
+    router.push(`/addform?formId=${itemId}`);
   };
 
   return (
@@ -45,7 +49,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
             label={deleteButtonLabel}
             type="button"
             variant="outline"
-            onClick={handleOpenFormDeleteModal}
+            onClick={handleFormDeleteModal}
           />
           <PrimaryButton
             className="flex w-3/4 max-w-[640px] items-center justify-center py-20 text-lg lg:text-xl"
@@ -53,6 +57,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
             label="수정하기"
             type="button"
             variant="solid"
+            onClick={handleModify}
           />
         </div>
       ) : (
@@ -72,7 +77,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
             label="내 지원 내역 보기"
             type="button"
             variant="outline"
-            onClick={handleOpenApplicationModal}
+            onClick={handleApplicationModal}
           />
         </div>
       )}

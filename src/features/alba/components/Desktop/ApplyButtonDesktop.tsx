@@ -33,6 +33,10 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
     router.push(`/apply/${itemId}`);
   };
 
+  const handleModify = () => {
+    router.push(`/addform?formId=${itemId}`);
+  };
+
   return (
     <div className="flex flex-col gap-10 py-16">
       <PrimaryButton
@@ -41,7 +45,7 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
         label={isOwner ? '수정하기' : '지원하기'}
         type="button"
         variant="solid"
-        onClick={isOwner ? undefined : handleApply}
+        onClick={isOwner ? handleModify : handleApply}
       />
       <PrimaryButton
         className="max-w-[640px] py-20 text-lg lg:text-xl"
