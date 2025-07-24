@@ -1,3 +1,18 @@
+import { differenceInCalendarDays } from 'date-fns';
+
+/**
+ * 마감일 기준 D-Day 텍스트 반환
+ * @param endDate ISO 형식의 마감일 (예: 2025-07-30)
+ * @returns 예: "D-3", "모집 마감"
+ */
+export const getDDayString = (endDate: string): string => {
+  const today = new Date();
+  const end = new Date(endDate);
+  const daysLeft = differenceInCalendarDays(end, today);
+
+  return daysLeft >= 0 ? `D-${daysLeft}` : '모집 마감';
+};
+
 /**
  * 날짜를 YYYY.MM.DD. 형식으로 포맷 (긴 형식)
  * @param isoString ISO 형식의 날짜 문자열

@@ -1,9 +1,12 @@
-import { differenceInCalendarDays } from 'date-fns';
 import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 만든 훅 경로 맞게 수정
 import { cn } from '@/shared/lib/cn';
-import { formatDateLong, formatPhoneNumber } from '@/shared/utils/format';
+import {
+  formatDateLong,
+  formatPhoneNumber,
+  getDDayString,
+} from '@/shared/utils/format';
 
 import { MockAlbaItem } from '../types/MockAlbaItem';
 
@@ -14,12 +17,8 @@ interface AlbaContactProps {
 const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
   const { isDesktop } = useViewport();
 
-  const today = new Date();
-  const recruitmentEnd = new Date(item.recruitmentEndDate);
-  const daysLeft = differenceInCalendarDays(recruitmentEnd, today);
-
   const period = `${formatDateLong(item.recruitmentStartDate)} ~ ${formatDateLong(item.recruitmentEndDate)}`;
-  const dDayString = daysLeft >= 0 ? `D-${daysLeft}` : '모집 마감';
+  const dDayString = getDDayString(item.recruitmentEndDate);
 
   const infoData = [
     {
