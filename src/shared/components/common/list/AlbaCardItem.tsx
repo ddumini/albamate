@@ -114,12 +114,12 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
 
       <h3 className="Text-black mt-12 text-lg font-semibold">{title}</h3>
 
-      <div className="mt-12 flex h-38 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-50 dark:bg-gray-50">
+      <div className="mt-12 flex h-38 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-50 dark:bg-gray-800">
         {stats.map((stat, idx) => (
           <span
             key={stat.label}
             className={cn(
-              'relative flex flex-1 items-center justify-center whitespace-nowrap',
+              'relative flex flex-1 items-center justify-center whitespace-nowrap dark:text-gray-100',
               idx !== stats.length - 1 &&
                 'after:absolute after:top-1/2 after:right-0 after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100',
               stat.isDeadline && dDayClass
