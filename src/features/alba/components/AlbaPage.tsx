@@ -39,10 +39,10 @@ const AlbaPage = () => {
   useEffect(() => {
     if (!item) return;
 
-    const ddayText = getDDayString(item.recruitmentEndDate);
-    const isClosed = ddayText === '모집 마감';
+    const dDayText = getDDayString(item.recruitmentEndDate);
+    const isRecruitClosed = dDayText === '모집 마감';
 
-    if (isClosed) {
+    if (isRecruitClosed) {
       openModal(<RecruitCloseModal />);
     }
 
