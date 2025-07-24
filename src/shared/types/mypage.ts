@@ -67,6 +67,21 @@ export interface SortOption {
   label: string;
 }
 
+export interface EditMyProfile {
+  location?: string;
+  phoneNumber: string;
+  storePhoneNumber?: string;
+  storeName?: string;
+  imageUrl: string;
+  nickname: string;
+  name: string;
+}
+
+export interface EditPassword {
+  newPassword: string;
+  currentPassword: string;
+}
+
 export type ContentType = 'post' | 'comment' | 'scrap';
 export type EmptyType =
   | 'post'
