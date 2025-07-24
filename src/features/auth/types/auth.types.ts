@@ -7,23 +7,29 @@
  *
  * 예시:
  * {
- *   id: 1,
- *   nickname: "재현",
- *   teamId: "15-7",
+ *   location: "서울시 강남구",
+ *   phoneNumber: "01012345678",
+ *   storePhoneNumber: "021234567",
+ *   storeName: "가게 이름",
+ *   role: "APPLICANT",
+ *   imageUrl: "https://cdn.com/avatar.png",
+ *   nickname: "이름",
+ *   name: "이름",
  *   email: "user@example.com",
- *   image: "https://cdn.com/avatar.png",
- *   createdAt: "2024-01-01T00:00:00.000Z",
- *   updatedAt: "2024-06-08T12:00:00.000Z"
+ *   id: 1
  * }
  */
 export interface User {
-  id: number; // 사용자의 고유 ID (DB의 PK)
+  location: string; // 가게 위치
+  phoneNumber: string; // 사용자 전화번호
+  storePhoneNumber: string; // 가게 전화번호
+  storeName: string; // 가게 이름
+  role: 'APPLICANT' | 'OWNER';
+  imageUrl: string | null; // 프로필 이미지 URL, 없으면 null
   nickname: string; // 사용자 별명 (UI에서 이름 대신 보여줄 수 있음)
-  teamId: string; // 팀 기능이 있다면 속한 팀의 고유 ID
+  name: string; // 사용자 이름
   email: string; // 사용자 이메일 (로그인 ID)
-  image: string | null; // 프로필 이미지 URL, 없으면 null
-  createdAt: string; // 사용자 계정 생성일 (ISO 문자열)
-  updatedAt: string; // 최근 사용자 정보 수정일 (ISO 문자열)
+  id: number; // 사용자의 고유 ID (DB의 PK)
 }
 
 /**
@@ -69,7 +75,7 @@ export interface SignInRequest {
  * 예시:
  * {
  *   email: "user@example.com",
- *   nickname: "재현",
+ *   nickname: "ddumini",
  *   password: "password123",
  *   passwordConfirmation: "password123"
  * }

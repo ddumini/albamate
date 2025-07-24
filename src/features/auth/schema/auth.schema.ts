@@ -111,19 +111,18 @@ export const signUpRequestSchema = z
 
 export const userSchema = z.object({
   id: z.number().int().positive(),
+  location: z.string().min(1, '위치는 필수입니다.'),
+  phoneNumber: z.string().min(1, '전화번호는 필수입니다.'),
+  storePhoneNumber: z.string().min(1, '가게 전화번호는 필수입니다.'),
+  storeName: z.string().min(1, '가게 이름은 필수입니다.'),
+  role: z.enum(['APPLICANT', 'OWNER']),
+  imageUrl: z.string().url('유효한 이미지 URL이어야 합니다.').nullable(),
   nickname: z
     .string()
     .min(1, '닉네임은 1자 이상이어야 합니다.')
     .max(20, '닉네임은 20자 이하여야 합니다.'),
-  teamId: z.string(),
+  name: z.string().min(1, '이름은 필수입니다.'),
   email: z.string().email(),
-  image: z.string().url('유효한 이미지 URL이어야 합니다.').nullable(),
-  updatedAt: z
-    .string()
-    .datetime({ message: '유효한 날짜 및 시간 형식이어야 합니다.' }),
-  createdAt: z
-    .string()
-    .datetime({ message: '유효한 날짜 및 시간 형식이어야 합니다.' }),
 });
 
 //** API 응답 타입에 대한 Zod 스키마 */
