@@ -6,7 +6,7 @@ import React from 'react';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useModalStore from '@/shared/store/useModalStore';
 
-import ApplicationListModal from '../modal/ApplicationListModal';
+import ApplicationModal from '../modal/ApplicationModal';
 import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonTabletProps {
@@ -23,7 +23,7 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
   const deleteButtonLabel = ''; // 아이콘만 보이게
 
   const handleApplicationModal = () => {
-    openModal(<ApplicationListModal />);
+    openModal(<ApplicationModal itemId={itemId} />);
   };
 
   const handleFormDeleteModal = () => {

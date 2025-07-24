@@ -6,12 +6,12 @@ import React from 'react';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useModalStore from '@/shared/store/useModalStore';
 
-import ApplicationListModal from '../modal/ApplicationListModal';
+import ApplicationModal from '../modal/ApplicationModal';
 import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonDesktopProps {
   isOwner: boolean;
-  itemId: number; // ✅ 추가
+  itemId: number;
 }
 
 const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
@@ -21,11 +21,11 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
   const { openModal } = useModalStore();
   const router = useRouter();
 
-  const handleOpenApplicationModal = () => {
-    openModal(<ApplicationListModal />);
+  const handleApplicationModal = () => {
+    openModal(<ApplicationModal itemId={itemId} />);
   };
 
-  const handleOpenFormDeleteModal = () => {
+  const handleFormDeleteModal = () => {
     openModal(<FormDeleteModal />);
   };
 
@@ -53,9 +53,7 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
         label={isOwner ? '삭제하기' : '내 지원 내역 보기'}
         type="button"
         variant="outline"
-        onClick={
-          isOwner ? handleOpenFormDeleteModal : handleOpenApplicationModal
-        }
+        onClick={isOwner ? handleFormDeleteModal : handleApplicationModal}
       />
     </div>
   );
