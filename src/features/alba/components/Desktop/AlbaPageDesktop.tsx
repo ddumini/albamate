@@ -23,14 +23,14 @@ const AlbaPageDesktop = ({ item, isOwner }: AlbaPageDesktopProps) => {
       <div className="col-span-6 flex flex-col gap-32">
         <AlbaDetail item={item} />
         <AlbaDescription description={item.description} />
-        <AlbaLocation />
+        <AlbaLocation location={item.location} />
       </div>
 
       {/* 오른쪽 열 */}
       <div className="col-span-6 flex flex-col gap-32">
         <AlbaInfo item={item} />
         <AlbaContact item={item} />
-        <ApplyButtonDesktop isOwner={isOwner} itemId={item.id} />
+        <ApplyButtonDesktop id={item.id} isOwner={isOwner} />
         <AlbaCondition item={item} />
       </div>
     </div>
