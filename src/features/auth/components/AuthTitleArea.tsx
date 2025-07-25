@@ -2,27 +2,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import {
-  AUTH_ROUTES,
-  type AuthPageType,
-  getAuthContentFromPath,
-} from '@/features/auth/constants';
+import { getAuthContentFromPath } from '@/features/auth/constants';
+import { getAuthPageType } from '@/features/auth/utils/authUtils';
 
 const AuthTitleArea = () => {
   const pathname = usePathname();
-
-  const getAuthPageType = (pathname: string): AuthPageType => {
-    switch (pathname) {
-      case AUTH_ROUTES.SIGNIN:
-        return 'signin';
-      case AUTH_ROUTES.SIGNUP:
-        return 'signup';
-      case AUTH_ROUTES.ACCOUNT_INFO:
-        return 'accountInfo';
-      default:
-        return 'signin';
-    }
-  };
 
   const authPageType = getAuthPageType(pathname);
   const { title, description, link, linkText } = getAuthContentFromPath(

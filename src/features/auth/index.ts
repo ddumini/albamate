@@ -30,6 +30,18 @@ export {
 } from '@/features/auth/constants/auth.message';
 
 // Utils
+export { getAuthPageType } from '@/features/auth/utils/authUtils';
+
+// Form fields
+export {
+  type FormConfig,
+  type FormField,
+  getFormConfig,
+  getFormDefaultValues,
+  getFormFields,
+  getFormValidationSchema,
+} from '@/features/auth/constants/formFields';
+
 // export {
 //   getTokenExpiration,
 //   isTokenExpired,
