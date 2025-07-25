@@ -6,7 +6,7 @@ export const albaMockData: MockAlbaItem[] = [
     ownerId: 272,
     title: '홀서빙 알바 모집해요',
     description:
-      '코드잇 카페입니다. 주말 토, 일 오픈업무하실 분 구합니다. \n\n 성실하게 일하실 분들만 지원 바랍니다. 작성한 이력서를 알바폼에 첨부해주시고, 아래와 같이 문자 보내주세요. 근무 중 전화통화 불가합니다. \n\n 이력서 검토 후 면접 진행자에 한해 면접일정 개별 연락드리겠습니다. \n 많은 지원바랍니다.',
+      '코드잇 카페입니다. 주말 토, 일 오픈업무하실 분 구합니다. \n\n 성실하게 일하실 분들만 지원 바랍니다. 작성한 이력서를 알바폼에 첨부해주시고, 아래와 같이 문자 보내주세요. 근무 중 전화통화 불가합니다. \n\n 예) OOO입니다. _에 거주합니다. 알바폼 지원. \n\n 이력서 검토 후 면접 진행자에 한해 면접일정 개별 연락드리겠습니다. \n 많은 지원바랍니다.',
     recruitmentStartDate: '2025-05-22T06:02:04.727Z',
     recruitmentEndDate: '2025-05-26T06:02:04.727Z',
     imageUrls: [
@@ -108,9 +108,7 @@ export const albaMockData: MockAlbaItem[] = [
     description: '학생 환영! 주말 근무 가능자 모집',
     recruitmentStartDate: '2025-06-15T08:00:00.000Z',
     recruitmentEndDate: '2025-06-20T08:00:00.000Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1500315331616-db2f053f3453?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     location: '서울시 강남구',
     workStartDate: '2025-06-25T08:00:00.000Z',
     workEndDate: '2025-12-30T08:00:00.000Z',
@@ -208,9 +206,7 @@ export const albaMockData: MockAlbaItem[] = [
     description: '체력 좋으신 분 우대. 택배 물품 분류 업무.',
     recruitmentStartDate: '2025-05-01T05:00:00.000Z',
     recruitmentEndDate: '2025-05-07T05:00:00.000Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1508385082359-f4f8664b6a2c?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     location: '경기도 김포시',
     workStartDate: '2025-05-10T06:00:00.000Z',
     workEndDate: '2025-11-30T15:00:00.000Z',

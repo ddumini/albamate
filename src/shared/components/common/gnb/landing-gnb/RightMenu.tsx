@@ -10,7 +10,7 @@ const RightMenu = () => {
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push('/login'); // 로그인 페이지로 이동
+    router.push('/signin'); // 로그인 페이지로 이동
   };
 
   return (

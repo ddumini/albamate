@@ -29,7 +29,7 @@ const Header = ({ isOpen, setIsOpen }: HeaderProps) => {
             items={[
               { href: '/albalist', label: '알바 목록' },
               { href: '/albatalk', label: '알바토크' },
-              { href: '/myalbaform', label: '내 알바폼' },
+              { href: '/myalbalist', label: '내 알바폼' },
             ]}
           />
         </div>

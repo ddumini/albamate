@@ -4,7 +4,7 @@ export interface Application {
   name: string;
   phoneNumber: string;
   experienceMonths: number;
-  status: 'PENDING' | 'REJECTED' | 'ACCEPTED';
+  status: 'INTERVIEW_PENDING' | 'REJECTED' | 'INTERVIEW_COMPLETED' | 'HIRED';
   introduction: string;
   resumeName: string;
   resumeId: number;
