@@ -22,5 +22,3 @@ export const getMyPosts = (limit: number) =>
 // 내가 작성한 댓글 목록 조회
 export const getMyComments = (page = 1, pageSize = 10) =>
   axiosInstance.get(`/users/me/comments?page=${page}&pageSize=${pageSize}`);
-
-// test용
