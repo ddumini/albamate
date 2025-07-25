@@ -63,3 +63,8 @@ export type FormDataByPageType = {
   signup: SignUpFormData;
   accountInfo: AccountInfoFormData;
 };
+
+/**
+ * 페이지 타입에 따른 폼 데이터 타입을 추출하는 유틸리티 타입
+ */
+export type FormDataForPage<T extends AuthPageType> = FormDataByPageType[T];
