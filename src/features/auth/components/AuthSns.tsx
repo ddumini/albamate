@@ -10,7 +10,7 @@ const AuthSns = () => {
       <div className="mt-24 flex items-center justify-center gap-16 lg:mt-40">
         <Link
           className="flex aspect-square w-48 items-center justify-center rounded-full border border-line-100 transition-colors duration-200 hover:bg-line-100 lg:w-72 dark:border-gray-300 dark:bg-gray-300 dark:hover:bg-gray-500"
-          href="/api/auth/signin/google"
+          href="/api/auth/signin/kakao"
         >
           <Image
             alt="kakao"
