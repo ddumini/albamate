@@ -11,7 +11,7 @@ import {
  * KakaoMap 컴포넌트
  *
  * - 카카오맵을 렌더링하고 지정된 위치에 마커를 표시합니다.
- * - 추후 실제 API 데이터 및 지오코딩 유틸 제작 필요합니다.
+ * - 추후 실제 API 데이터 필요합니다.
  *
  * @author sumin
  * @date 2025-07-13
@@ -46,7 +46,6 @@ interface KakaoMapProps {
 }
 
 export default function KakaoMap({ location }: KakaoMapProps) {
-  // - 에러 처리 및 캐싱 로직 추가 고려
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [coords, setCoords] = useState<Coordinates | null>(null);
