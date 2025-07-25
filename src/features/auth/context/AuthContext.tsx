@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   // 임시로 mock 세션 사용
-  const session = {
+  const mockSession = {
     user: mockUser,
     expires: '2099-12-31T23:59:59.999Z',
   };
@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const authPageType = getAuthPageType(pathname);
   const userTypeFromPath = getUserTypeFromPath(pathname);
-  const userTypeFromSession = getUserTypeFromSession(session);
+  const userTypeFromSession = getUserTypeFromSession(mockSession);
   const userType = userTypeFromSession || userTypeFromPath;
 
   const authContent = userTypeFromSession
-    ? getAuthContentFromSession(session, authPageType)
+    ? getAuthContentFromSession(mockSession, authPageType)
     : getAuthContentFromPath(pathname, authPageType);
 
   const value: AuthContextValue = {

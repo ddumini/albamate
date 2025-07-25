@@ -6,7 +6,6 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
-import { auth } from '@/auth';
 
 import { metadata } from './metadata';
 import { viewport } from './viewport';
@@ -23,10 +22,6 @@ export { metadata };
 export { viewport };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await auth();
-
-  console.log(session);
-
   return (
     <html suppressHydrationWarning lang="ko">
       <meta

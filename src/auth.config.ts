@@ -21,7 +21,7 @@ export const authConfig = {
 
         // 회원가입 인증
         // 로그인 인증
-        // TODO: 엔드포인트 수정
+        // TODO: 엔드포인트 수정 (공통 api로 변경 예정)
         const res = await fetch(
           `https://fe-project-albaform.vercel.app/15-3/auth/sign-in`,
           {
