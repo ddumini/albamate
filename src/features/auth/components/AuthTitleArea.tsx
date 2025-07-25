@@ -33,14 +33,14 @@ const AuthTitleArea = () => {
 
   return (
     <div className="flex flex-col gap-16 text-center lg:gap-32">
-      <h2 className="text-2xl font-semibold text-black-500 lg:text-3xl">
+      <h2 className="text-2xl font-semibold text-black-500 lg:text-3xl dark:text-gray-100">
         {title}
       </h2>
-      <p className="font-regular text-xs text-black-100 lg:text-xl">
+      <p className="font-regular text-xs text-black-100 lg:text-xl dark:text-gray-200">
         {description[0]}
         {linkText && (
           <Link
-            className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500"
+            className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500 dark:text-gray-100"
             href={dynamicLink}
           >
             {linkText}
