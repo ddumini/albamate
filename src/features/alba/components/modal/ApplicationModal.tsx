@@ -16,10 +16,10 @@ type FormValues = {
 };
 
 interface ApplicationListModalProps {
-  itemId: number;
+  id: number;
 }
 
-const ApplicationListModal = ({ itemId }: ApplicationListModalProps) => {
+const ApplicationListModal = ({ id }: ApplicationListModalProps) => {
   const { closeModal } = useModalStore();
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const ApplicationListModal = ({ itemId }: ApplicationListModalProps) => {
   const onSubmit = (data: FormValues) => {
     console.log('입력 데이터:', data);
     closeModal();
-    router.push(`/myapply/${itemId}`);
+    router.push(`/myapply/${id}`);
   };
 
   return (

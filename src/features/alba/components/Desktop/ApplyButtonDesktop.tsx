@@ -11,18 +11,18 @@ import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonDesktopProps {
   isOwner: boolean;
-  itemId: number;
+  id: number;
 }
 
 const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
   isOwner,
-  itemId,
+  id,
 }) => {
   const { openModal } = useModalStore();
   const router = useRouter();
 
   const handleApplicationModal = () => {
-    openModal(<ApplicationModal itemId={itemId} />);
+    openModal(<ApplicationModal id={id} />);
   };
 
   const handleFormDeleteModal = () => {
@@ -30,11 +30,11 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
   };
 
   const handleApply = () => {
-    router.push(`/apply/${itemId}`);
+    router.push(`/apply/${id}`);
   };
 
   const handleModify = () => {
-    router.push(`/addform?formId=${itemId}`);
+    router.push(`/addform?formId=${id}`);
   };
 
   return (
