@@ -17,7 +17,7 @@ import { getDDayString } from '@/shared/utils/format';
 
 import { addBookmark, removeBookmark } from '../api/bookmark';
 import { albaMockData } from '../mocks/mockData';
-import AlbaApplicationList from './AlbaApplicationList';
+import ApplicationList from './ApplicationList';
 import AlbaPageDesktop from './desktop/AlbaPageDesktop';
 import RecruitCloseModal from './modal/RecruitClosedModal';
 import AlbaPageTablet from './tablet/AlbaPageTablet';
@@ -120,7 +120,7 @@ const AlbaPage = () => {
       {isOwner && (
         <div>
           <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
-          <AlbaApplicationList />
+          <ApplicationList />
         </div>
       )}
     </div>

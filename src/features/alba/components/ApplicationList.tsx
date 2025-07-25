@@ -12,7 +12,7 @@ import {
 
 import { mockApplications } from '../mocks/mockApplicationData';
 
-const AlbaApplicationList = () => {
+const ApplicationList = () => {
   const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
 
   const handleLoadMore = () => {
@@ -98,4 +98,4 @@ const AlbaApplicationList = () => {
   );
 };
 
-export default AlbaApplicationList;
+export default ApplicationList;
