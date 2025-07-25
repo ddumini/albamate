@@ -1,10 +1,15 @@
 import { differenceInCalendarDays, format } from 'date-fns';
+import Image from 'next/image';
 import React from 'react';
 
+import Tooltip from '@/shared/components/common/tooltip/Tooltip';
 import useViewport from '@/shared/hooks/useViewport';
 import { cn } from '@/shared/lib/cn';
+import useModalStore from '@/shared/store/useModalStore';
+import { getStatusColor, getStatusLabel } from '@/shared/utils/application';
 
 import { ApplyStatus } from '../../types/apply';
+import ApplyStateModal from './ApplyStateModal';
 
 interface ApplyStateProps {
   status: ApplyStatus;
@@ -30,23 +35,14 @@ const ApplyState = ({
   // 지원일시 포맷팅
   const applicationDate = format(new Date(createdAt), 'yyyy.MM.dd HH:mm');
 
-  // 상태별 정보
-  const getStatusInfo = (status: ApplyStatus) => {
-    switch (status) {
-      case 'INTERVIEW_PENDING':
-        return { text: '면접 대기' };
-      case 'INTERVIEW_COMPLETED':
-        return { text: '면접 완료' };
-      case 'HIRED':
-        return { text: '채용 완료' };
-      case 'REJECTED':
-        return { text: '거절' };
-      default:
-        return { text: '알 수 없음' };
-    }
-  };
+  const statusInfo = getStatusLabel(status);
+  const statusColor = getStatusColor(status);
 
-  const statusInfo = getStatusInfo(status);
+  const { openModal } = useModalStore();
+
+  const handleApplyStateModal = () => {
+    openModal(<ApplyStateModal />);
+  };
 
   return (
     <div className="lg:rounded-lg lg:bg-gray-25 lg:p-24">
@@ -67,9 +63,31 @@ const ApplyState = ({
       </div>
 
       {/* 진행 상태 */}
-      <div className="flex items-center justify-between border-b border-gray-200 py-14 lg:border-b-0">
-        <span className="text-gray-400">진행 상태</span>
-        <span className={desktopStyle}>{statusInfo.text}</span>
+      <div className="flex w-full items-center justify-between border-b border-gray-200 py-14 lg:border-b-0">
+        <div className="flex items-center gap-2">
+          <span className="text-gray-400">진행 상태</span>
+          <Tooltip
+            content={() => (
+              <div className="flex items-center gap-2">
+                <div className="relative h-24 w-24 md:h-30 md:w-30">
+                  <Image fill alt="info" src="/icons/info.svg" />
+                </div>
+                <span className="text-xs md:text-md">
+                  알바폼 현재 진행상태를 변경할 수 있어요!
+                </span>
+              </div>
+            )}
+          >
+            <Image
+              alt="수정 아이콘"
+              height={24}
+              src="/icons/edit.svg"
+              width={24}
+              onClick={handleApplyStateModal}
+            />
+          </Tooltip>
+        </div>
+        <span className={cn(desktopStyle, statusColor)}>{statusInfo}</span>
       </div>
     </div>
   );
