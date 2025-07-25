@@ -13,7 +13,7 @@ import {
  *
  * @example
  *
- * ```typescript
+ 
  * // 기본 사용법 - 인증 상태 확인
  * function AuthGuard({ children }: { children: React.ReactNode }) {
  *   const { isAuthenticated, isLoading } = useSessionUtils();
@@ -140,7 +140,6 @@ import {
  *
  *   return <UserProfile user={user} />;
  * }
- * ```
  */
 export function useSessionUtils() {
   const {

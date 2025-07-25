@@ -143,7 +143,6 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
  * 폼 필드 구성을 가져오는 함수
  *
  * @example
- * ```typescript
  * // 로그인 폼 필드 가져오기
  * const signinFields = getFormFields('signin');
  *
@@ -152,7 +151,6 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
  *
  * // 지원자 계정 정보 폼 필드 가져오기
  * const applicantFields = getFormFields('accountInfo', 'applicant');
- * ```
  */
 export const getFormFields = (
   pageType: AuthPageType,
@@ -176,10 +174,8 @@ export const getFormFields = (
  * 폼 기본값을 생성하는 함수
  *
  * @example
- * ```typescript
  * const defaultValues = getFormDefaultValues('signin');
  * const ownerDefaults = getFormDefaultValues('accountInfo', 'owner');
- * ```
  */
 export const getFormDefaultValues = (
   pageType: AuthPageType,
@@ -199,10 +195,8 @@ export const getFormDefaultValues = (
  * 폼 유효성 검사 스키마를 생성하는 함수
  *
  * @example
- * ```typescript
  * const validationSchema = getFormValidationSchema('signin');
  * const ownerValidation = getFormValidationSchema('accountInfo', 'owner');
- * ```
  */
 export const getFormValidationSchema = (
   pageType: AuthPageType,
@@ -226,10 +220,8 @@ export const getFormValidationSchema = (
  * 통합 폼 구성을 가져오는 함수
  *
  * @example
- * ```typescript
  * const formConfig = getFormConfig('signin');
  * const ownerFormConfig = getFormConfig('accountInfo', 'owner');
- * ```
  */
 export const getFormConfig = (
   pageType: AuthPageType,

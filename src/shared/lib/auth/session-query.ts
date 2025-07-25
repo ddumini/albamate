@@ -13,7 +13,7 @@ export const SESSION_QUERY_KEYS = {
  * 서버 사이드에서 세션을 가져오는 함수
  *
  * @example
- * ```typescript
+ 
  * // 서버 컴포넌트에서 사용
  * export default async function ServerComponent() {
  *   const session = await fetchSession();
@@ -35,7 +35,6 @@ export const SESSION_QUERY_KEYS = {
  *
  *   return Response.json({ user: session.user });
  * }
- * ```
  */
 async function fetchSession() {
   try {
@@ -51,7 +50,6 @@ async function fetchSession() {
  * 클라이언트 사이드에서 세션을 쿼리로 관리하는 훅
  *
  * @example
- * ```typescript
  * // 기본 사용법
  * function MyComponent() {
  *   const { data: session, isLoading, error } = useSessionQuery();
@@ -77,7 +75,6 @@ async function fetchSession() {
  *     </div>
  *   );
  * }
- * ```
  */
 export function useSessionQuery() {
   const { data: session, status, update } = useSession();
@@ -95,7 +92,6 @@ export function useSessionQuery() {
  * 사용자 정보를 쿼리로 관리하는 훅
  *
  * @example
- * ```typescript
  * // 사용자 정보만 필요한 경우
  * function UserProfile() {
  *   const { data: user, isLoading } = useUserQuery();
@@ -126,7 +122,6 @@ export function useSessionQuery() {
  *
  *   return <div>역할을 확인할 수 없습니다.</div>;
  * }
- * ```
  */
 export function useUserQuery() {
   const { data: session } = useSessionQuery();
@@ -143,7 +138,6 @@ export function useUserQuery() {
  * 세션 갱신 뮤테이션
  *
  * @example
- * ```typescript
  * // 수동 세션 갱신
  * function RefreshButton() {
  *   const refreshSession = useRefreshSessionMutation();
@@ -186,7 +180,6 @@ export function useUserQuery() {
  *
  *   return <div>자동 갱신 활성화됨</div>;
  * }
- * ```
  */
 export function useRefreshSessionMutation() {
   const queryClient = useQueryClient();
@@ -214,7 +207,6 @@ export function useRefreshSessionMutation() {
  * 로그아웃 뮤테이션
  *
  * @example
- * ```typescript
  * // 기본 로그아웃 버튼
  * function LogoutButton() {
  *   const logout = useLogoutMutation();
@@ -278,7 +270,6 @@ export function useRefreshSessionMutation() {
  *
  *   return null;
  * }
- * ```
  */
 export function useLogoutMutation() {
   const queryClient = useQueryClient();

@@ -1,18 +1,35 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 
-import { getAuthContentFromPath } from '@/features/auth/constants';
-import { getAuthPageType } from '@/features/auth/utils/authUtils';
+import { createAuthRoute } from '@/features/auth/constants/route';
+import { AuthContext } from '@/features/auth/context/AuthContextValue';
 
 const AuthTitleArea = () => {
-  const pathname = usePathname();
+  const authContext = useContext(AuthContext);
 
-  const authPageType = getAuthPageType(pathname);
-  const { title, description, link, linkText } = getAuthContentFromPath(
-    pathname,
-    authPageType
-  );
+  if (!authContext) {
+    return null;
+  }
+
+  const { authContent, userType, authPageType } = authContext;
+  const { title, description, linkText } = authContent;
+
+  // 현재 사용자 타입을 유지하면서 다른 페이지로 이동하는 링크 생성
+  const getDynamicLink = () => {
+    if (!userType) return authContent.link || '/signin';
+
+    switch (authPageType) {
+      case 'signin':
+        return createAuthRoute.signup(userType);
+      case 'signup':
+        return createAuthRoute.signin(userType);
+      default:
+        return authContent.link || '/signin';
+    }
+  };
+
+  const dynamicLink = getDynamicLink();
 
   return (
     <div className="flex flex-col gap-16 text-center lg:gap-32">
@@ -21,10 +38,10 @@ const AuthTitleArea = () => {
       </h2>
       <p className="font-regular text-xs text-black-100 lg:text-xl">
         {description[0]}
-        {link && linkText && (
+        {linkText && (
           <Link
             className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500"
-            href={link}
+            href={dynamicLink}
           >
             {linkText}
           </Link>

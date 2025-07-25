@@ -6,38 +6,18 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getFormConfig } from '@/features/auth/constants/formFields';
 import { AuthContext } from '@/features/auth/context/AuthContextValue';
-import type { AuthPageType, UserType } from '@/features/auth/types';
+import type {
+  AccountInfoFormData,
+  AuthFormData,
+  AuthPageType,
+  SignInFormData,
+  SignUpFormData,
+  UserType,
+} from '@/features/auth/types';
 import { getAuthPageType } from '@/features/auth/utils/authUtils';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 
 import AuthFormFields from './AuthFormFields';
-
-// 폼 타입별 인터페이스
-interface SignInFormData {
-  email: string;
-  password: string;
-}
-
-interface SignUpFormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  name: string;
-  nickname: string;
-  phoneNumber: string;
-}
-
-interface AccountInfoFormData {
-  name: string;
-  nickname: string;
-  phoneNumber: string;
-  location: string;
-  // 사장님 전용 필드
-  storeName?: string;
-  storePhoneNumber?: string;
-}
-
-type AuthFormData = SignInFormData | SignUpFormData | AccountInfoFormData;
 
 /**
  * 인증 폼 컴포넌트
@@ -46,7 +26,6 @@ type AuthFormData = SignInFormData | SignUpFormData | AccountInfoFormData;
  * accountInfo 페이지에서는 지원자/사장님에 따라 다른 필드 표시
  *
  * @example
- * ```typescript
  * // 로그인 페이지에서
  * <AuthForm />
  *
@@ -55,7 +34,6 @@ type AuthFormData = SignInFormData | SignUpFormData | AccountInfoFormData;
  *
  * // 정보작성 페이지에서 (지원자/사장님 자동 구분)
  * <AuthForm />
- * ```
  */
 const AuthForm = () => {
   const pathname = usePathname();
@@ -134,7 +112,7 @@ const AuthForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-16 lg:gap-32">
-        <AuthFormFields
+        <AuthFormFields<AuthFormData>
           errors={errors}
           fields={formConfig.fields}
           register={register}
