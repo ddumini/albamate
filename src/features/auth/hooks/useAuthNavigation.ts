@@ -24,7 +24,12 @@ export const useAuthNavigation = () => {
   const searchParams = useSearchParams();
 
   // 현재 사용자 타입
-  const currentUserType = searchParams.get('type') as UserType | null;
+  const currentUserType = (() => {
+    const typeParam = searchParams.get('type');
+    return typeParam === 'owner' || typeParam === 'applicant'
+      ? typeParam
+      : null;
+  })();
 
   /**
    * 다른 사용자 타입으로 전환
