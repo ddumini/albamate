@@ -1,5 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 import TooltipContentWrapper from './TooltipContentWrapper';
 
@@ -13,24 +15,21 @@ const Tooltip = ({ content, children }: ClickTooltipProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   // 바깥 클릭 시 닫힘
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(wrapperRef, () => {
+    if (open) {
+      setOpen(false);
+    }
+  });
 
   const close = () => setOpen(false);
 
   return (
     <div ref={wrapperRef} className="relative inline-block">
-      <div className="cursor-pointer" onClick={() => setOpen(prev => !prev)}>
+      <div
+        className="cursor-pointer"
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
         {children}
       </div>
 
