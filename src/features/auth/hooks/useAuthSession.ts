@@ -36,6 +36,8 @@ export const useAuthSession = () => {
       await update();
     } catch (error) {
       console.error('세션 갱신 실패:', error);
+      // 사용자에게 알림(toast/alert 등)을 띄우거나 호출부에서 에러를 처리할 수 있도록 전파 (추후 구현)
+      throw error;
     }
   };
 

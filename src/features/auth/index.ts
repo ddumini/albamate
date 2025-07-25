@@ -15,7 +15,7 @@ export type {
   SignInFormData,
   SignUpFormData,
 } from '@/features/auth/schema/auth.schema';
-export { signInSchema, SignupSchema } from '@/features/auth/schema/auth.schema';
+export { signInSchema, signupSchema } from '@/features/auth/schema/auth.schema';
 
 // Actions
 // export { signUpAction } from './actions/auth.action';

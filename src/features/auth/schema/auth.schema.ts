@@ -70,7 +70,7 @@ export const signInSchema = z.object({
  * - password: 복잡도 및 정규식 검증 포함
  * - passwordConfirmation: 확인용 입력값, 최소 1자 필요 및 password 일치 여부 검증
  */
-export const SignupSchema = z
+export const signupSchema = z
   .object({
     email: emailSchema,
     nickname: nicknameSchema,
@@ -84,7 +84,7 @@ export const SignupSchema = z
 
 // 폼 데이터 타입 추론
 export type SignInFormData = z.infer<typeof signInSchema>;
-export type SignUpFormData = z.infer<typeof SignupSchema>;
+export type SignUpFormData = z.infer<typeof signupSchema>;
 
 // --- API 요청 Body 스키마 ---
 
