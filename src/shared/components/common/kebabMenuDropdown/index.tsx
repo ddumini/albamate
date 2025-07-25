@@ -5,12 +5,14 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 import { useClickOutside } from '@/shared/hooks/useClickOutside'; // 경로 확인
+import { cn } from '@/shared/lib/cn';
 
 interface KebabMenuDropdownProps {
   options: { label: string; onClick: () => void }[];
+  className?: string;
 }
 
-const KebabMenuDropdown = ({ options }: KebabMenuDropdownProps) => {
+const KebabMenuDropdown = ({ options, className }: KebabMenuDropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -21,12 +23,13 @@ const KebabMenuDropdown = ({ options }: KebabMenuDropdownProps) => {
   });
 
   const handleToggle = (e: React.MouseEvent | React.KeyboardEvent) => {
-    e.stopPropagation();
+    e.preventDefault(); // Link의 기본 동작 방지
+    e.stopPropagation(); // 이벤트 버블링 방지
     setOpen(prev => !prev);
   };
 
   return (
-    <div ref={dropdownRef} className="relative ml-auto">
+    <div ref={dropdownRef} className={cn('relative ml-auto', className)}>
       <Image
         alt="드롭다운 아이콘"
         className="cursor-pointer"
