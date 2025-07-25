@@ -1,10 +1,13 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
 
+import { createFormRequestSchema } from '../schema/addform.schema';
 import AddformButtons from './AddformButtons';
 import { MenuIndex } from './MenuItem';
 import RecruitConditionForm from './RecruitConditionForm';
@@ -21,6 +24,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     3: false,
   });
   const { isDesktop } = useViewport();
+  const methods = useForm({ resolver: zodResolver(createFormRequestSchema) });
+
   const handleMenuClick = (menuIndex: MenuIndex) => {
     setCurrentMenu(menuIndex);
   };
@@ -55,9 +60,15 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             onMenuClick={handleMenuClick}
           />
         )}
-        <RecruitContentForm className={currentMenu === 1 ? '' : 'hidden'} />
-        <RecruitConditionForm className={currentMenu === 2 ? '' : 'hidden'} />
-        <WorkConditionForm className={currentMenu === 3 ? '' : 'hidden'} />
+        <FormProvider {...methods}>
+          <form>
+            <RecruitContentForm className={currentMenu === 1 ? '' : 'hidden'} />
+            <RecruitConditionForm
+              className={currentMenu === 2 ? '' : 'hidden'}
+            />
+            <WorkConditionForm className={currentMenu === 3 ? '' : 'hidden'} />
+          </form>
+        </FormProvider>
         {isDesktop || (
           <AddformButtons className="mx-24 my-10" isEdit={!!formId} />
         )}
