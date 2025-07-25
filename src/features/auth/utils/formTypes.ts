@@ -5,7 +5,6 @@ import type {
   FormDataByPageType,
   SignInFormData,
   SignUpFormData,
-  UserType,
 } from '../types';
 
 /**
@@ -34,8 +33,8 @@ export const validateFormFields = <T extends Record<string, any>>(
  * 페이지 타입과 사용자 타입에 따른 폼 데이터 타입을 반환하는 함수
  */
 export const getFormDataType = (
-  pageType: AuthPageType,
-  userType?: UserType
+  pageType: AuthPageType
+  // userType?: UserType
 ): keyof FormDataByPageType => {
   switch (pageType) {
     case 'signin':
