@@ -12,7 +12,7 @@ import { ApplicantMyAlbaItem, OwnerMyAlbaItem } from '../types/myalbalist';
 import MyAlbaCard from './MyAlbaCard';
 
 const AlbaListPage = () => {
-  const { isOwner, user, isLoading, session } = useSessionUtils();
+  const { isOwner, user, isLoading } = useSessionUtils();
 
   // TODO: 실제 API 호출로 교체 필요
   const [albaList, setAlbaList] = useState<

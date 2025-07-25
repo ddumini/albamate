@@ -34,7 +34,10 @@ export const authConfig = {
           }
         );
 
-        if (!res.ok) return null;
+        if (!res.ok) {
+          console.error('Auth API error:', res.status, res.statusText);
+          return null;
+        }
 
         const data = await res.json();
 
