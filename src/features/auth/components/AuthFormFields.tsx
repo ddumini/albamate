@@ -6,12 +6,14 @@ import {
 } from 'react-hook-form';
 
 import type { FormField } from '../constants/formFields';
+import { createTypedFormFields, validateFormFields } from '../utils/formTypes';
 import AuthFormItem from './AuthFormItem';
 
 interface AuthFormFieldsProps<T extends FieldValues> {
   fields: FormField[];
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  defaultValues: T;
 }
 
 /**
@@ -25,6 +27,7 @@ interface AuthFormFieldsProps<T extends FieldValues> {
  *     fields={fields}
  *     register={register}
  *     errors={errors}
+ *     defaultValues={defaultValues}
  *   />
  * );
  */
@@ -32,10 +35,15 @@ const AuthFormFields = <T extends FieldValues>({
   fields,
   register,
   errors,
+  defaultValues,
 }: AuthFormFieldsProps<T>) => {
+  const typedFields = createTypedFormFields<T>(fields);
+  if (!validateFormFields<T>(typedFields, defaultValues)) {
+    throw new Error('폼 필드가 스키마와 일치하지 않습니다.');
+  }
   return (
     <>
-      {fields.map(field => (
+      {typedFields.map(field => (
         <AuthFormItem<T>
           key={field.name}
           errors={errors}

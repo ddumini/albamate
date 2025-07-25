@@ -118,6 +118,7 @@ const AuthForm = () => {
           register={register}
         />
       </div>
+      {/* TODO: 로딩 상태 추가 (isSubmitting) */}
       <PrimaryButton
         className="mt-24 h-58 w-full lg:mt-56"
         disabled={!isValid}
