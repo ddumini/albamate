@@ -39,8 +39,8 @@ const RecruitContentForm = ({ className }: { className?: string }) => {
         <DatePicker />
       </AddFormSection>
       <AddFormSection>
-        <Label>이미지 첨부</Label>
-        <UploadMultipleImage onImageChange={() => {}} />
+        <Label htmlFor="uploadImage">이미지 첨부</Label>
+        <UploadMultipleImage id="uploadImage" onImageChange={() => {}} />
       </AddFormSection>
     </div>
   );
