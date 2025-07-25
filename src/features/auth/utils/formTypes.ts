@@ -51,9 +51,72 @@ export const getFormDataType = (
 
 /**
  * 폼 필드의 타입 안전성을 보장하는 유틸리티
+ * 컴파일 타임에 타입 검증을 수행하고, 런타임에는 기본적인 구조 검증만 수행
  */
 export const createTypedFormFields = <T extends Record<string, any>>(
   fields: FormField[]
 ): Array<FormField & { name: keyof T }> => {
+  // 런타임에 기본적인 구조 검증
+  if (!Array.isArray(fields) || fields.length === 0) {
+    throw new Error('Form fields must be a non-empty array');
+  }
+
+  // 각 필드의 기본 구조 검증
+  for (const field of fields) {
+    if (!field.name || typeof field.name !== 'string') {
+      throw new Error('Each form field must have a valid name property');
+    }
+    if (!field.label || typeof field.label !== 'string') {
+      throw new Error('Each form field must have a valid label property');
+    }
+    if (
+      !field.type ||
+      !['text', 'email', 'password', 'tel', 'number'].includes(field.type)
+    ) {
+      throw new Error('Each form field must have a valid type property');
+    }
+  }
+
   return fields as Array<FormField & { name: keyof T }>;
+};
+
+/**
+ * 타입 안전한 폼 필드 생성 함수 (더 엄격한 버전)
+ * 실제 폼 데이터 타입과 필드 이름이 일치하는지 컴파일 타임에 검증
+ */
+export const createStrictlyTypedFormFields = <T extends Record<string, any>>(
+  fields: Array<FormField & { name: keyof T }>
+): Array<FormField & { name: keyof T }> => {
+  // 기본 구조 검증
+  if (!Array.isArray(fields) || fields.length === 0) {
+    throw new Error('Form fields must be a non-empty array');
+  }
+
+  return fields;
+};
+
+/**
+ * 폼 필드와 폼 데이터 타입의 호환성을 검증하는 함수
+ * 개발 시에만 사용하여 타입 안전성을 확인
+ */
+export const validateFormCompatibility = <T extends Record<string, any>>(
+  fields: FormField[],
+  formDataKeys: (keyof T)[]
+): boolean => {
+  const fieldNames = fields.map(field => field.name);
+  const missingFields = formDataKeys.filter(
+    key => !fieldNames.includes(key as string)
+  );
+  const extraFields = fieldNames.filter(
+    name => !formDataKeys.includes(name as keyof T)
+  );
+
+  if (missingFields.length > 0) {
+    console.warn(`Missing form fields: ${missingFields.join(', ')}`);
+  }
+  if (extraFields.length > 0) {
+    console.warn(`Extra form fields: ${extraFields.join(', ')}`);
+  }
+
+  return missingFields.length === 0 && extraFields.length === 0;
 };
