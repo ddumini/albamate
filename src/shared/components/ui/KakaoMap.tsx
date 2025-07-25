@@ -2,6 +2,11 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
+import {
+  Coordinates,
+  getCoordsByAddress,
+} from '@/shared/utils/getCoordsByAddress';
+
 /**
  * KakaoMap 컴포넌트
  *
@@ -30,7 +35,6 @@ interface KakaoMaps {
 interface KakaoSDK {
   maps: KakaoMaps;
 }
-
 declare global {
   interface Window {
     kakao: KakaoSDK;
@@ -42,15 +46,10 @@ interface KakaoMapProps {
 }
 
 export default function KakaoMap({ location }: KakaoMapProps) {
-  // TODO: 추후 geocoding util 함수 제작 필요
-  // - 카카오맵 Geocoder API를 사용하여 주소 → 좌표 변환
   // - 에러 처리 및 캐싱 로직 추가 고려
-  const locationCoords: Record<string, { lat: number; lng: number }> = {
-    [location]: { lat: 37.5665, lng: 126.978 },
-  };
-
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [coords, setCoords] = useState<Coordinates | null>(null);
 
   useEffect(() => {
     // 이미 로드된 경우 중복 로드 방지
@@ -86,36 +85,38 @@ export default function KakaoMap({ location }: KakaoMapProps) {
     };
   }, []);
 
+  // 주소 → 좌표 변환
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    getCoordsByAddress(location)
+      .then(result => {
+        if (result) setCoords(result);
+        else setLoadError('해당 주소의 좌표를 찾을 수 없습니다.');
+      })
+      .catch(err => {
+        console.error(err);
+        setLoadError('좌표 변환 중 오류가 발생했습니다.');
+      });
+  }, [isLoaded, location]);
+
   // 에러 상태 처리
   if (loadError) {
     return (
       <div className="flex h-96 items-center justify-center rounded-lg bg-gray-100">
-        <p className="text-red-500">지도를 불러오는 중 오류가 발생했습니다.</p>
+        <p className="text-error">지도를 불러오는 중 오류가 발생했습니다.</p>
       </div>
     );
   }
 
   // 로딩 상태 처리
-  if (!isLoaded) {
+  if (!isLoaded || !coords) {
     return (
       <div className="flex h-96 items-center justify-center rounded-lg bg-gray-100">
         <p className="text-gray-600">지도를 불러오는 중입니다...</p>
       </div>
     );
   }
-
-  // 좌표 데이터가 없는 경우 처리
-  if (!locationCoords[location]) {
-    return (
-      <div className="flex h-96 items-center justify-center rounded-lg bg-gray-100">
-        <p className="text-yellow-600">
-          해당 위치의 좌표 정보를 찾을 수 없습니다.
-        </p>
-      </div>
-    );
-  }
-
-  const coords = locationCoords[location];
 
   return (
     <Map
