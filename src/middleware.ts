@@ -15,6 +15,14 @@ export async function middleware(request: NextRequest) {
     if (session) {
       return NextResponse.redirect(new URL('/', request.url));
     }
+
+    // auth 페이지에서 type 파라미터가 없으면 기본값 설정
+    const url = new URL(request.url);
+    if (!url.searchParams.has('type')) {
+      url.searchParams.set('type', 'worker'); // 기본값: 지원자
+      return NextResponse.redirect(url);
+    }
+
     return NextResponse.next();
   }
 
