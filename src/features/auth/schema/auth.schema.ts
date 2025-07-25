@@ -111,10 +111,10 @@ export const signUpRequestSchema = z
 
 export const userSchema = z.object({
   id: z.number().int().positive(),
-  location: z.string().min(1, '위치는 필수입니다.'),
-  phoneNumber: z.string().min(1, '전화번호는 필수입니다.'),
-  storePhoneNumber: z.string().min(1, '가게 전화번호는 필수입니다.'),
-  storeName: z.string().min(1, '가게 이름은 필수입니다.'),
+  location: z.string().min(1, '위치는 필수입니다.').optional(),
+  phoneNumber: z.string().min(1, '전화번호는 필수입니다.').optional(),
+  storePhoneNumber: z.string().min(1, '가게 전화번호는 필수입니다.').optional(),
+  storeName: z.string().min(1, '가게 이름은 필수입니다.').optional(),
   role: z.enum(['APPLICANT', 'OWNER']),
   imageUrl: z.string().url('유효한 이미지 URL이어야 합니다.').nullable(),
   nickname: z

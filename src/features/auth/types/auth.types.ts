@@ -20,10 +20,10 @@
  * }
  */
 export interface User {
-  location: string; // 가게 위치
-  phoneNumber: string; // 사용자 전화번호
-  storePhoneNumber: string; // 가게 전화번호
-  storeName: string; // 가게 이름
+  location?: string; // 가게 위치 (선택적)
+  phoneNumber?: string; // 사용자 전화번호 (선택적)
+  storePhoneNumber?: string; // 가게 전화번호 (선택적)
+  storeName?: string; // 가게 이름 (선택적)
   role: 'APPLICANT' | 'OWNER';
   imageUrl: string | null; // 프로필 이미지 URL, 없으면 null
   nickname: string; // 사용자 별명 (UI에서 이름 대신 보여줄 수 있음)
