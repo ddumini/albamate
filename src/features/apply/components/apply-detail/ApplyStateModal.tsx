@@ -21,6 +21,10 @@ const ApplyStateModal = () => {
     { value: 'HIRED', label: '채용 완료' },
   ];
 
+  const handleStateSubmit = () => {
+    console.log('선택된 상태:', selected);
+  };
+
   return (
     <div className="flex w-full flex-col gap-25 rounded-xl bg-gray-25 p-24 dark:bg-gray-900">
       <Modal.Header showCloseButton={false}>
@@ -55,6 +59,7 @@ const ApplyStateModal = () => {
           label="선택하기"
           type="button"
           variant="solid"
+          onClick={handleStatusSubmit}
         />
       </Modal.Footer>
     </div>
