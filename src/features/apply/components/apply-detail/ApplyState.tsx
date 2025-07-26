@@ -70,13 +70,18 @@ const ApplyState = ({
               </div>
             }
           >
-            <Image
-              alt="수정 아이콘"
-              height={24}
-              src="/icons/edit.svg"
-              width={24}
+            <button
+              aria-label="진행 상태 수정"
+              type="button"
               onClick={handleApplyStateModal}
-            />
+            >
+              <Image
+                alt="수정 아이콘"
+                height={24}
+                src="/icons/edit.svg"
+                width={24}
+              />
+            </button>
           </Tooltip>
         </div>
         <span className={statusColor}>{statusInfo}</span>
