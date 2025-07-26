@@ -54,16 +54,14 @@ const ApplyState = ({
       <div className="flex items-center justify-between border-b border-gray-200 py-14">
         <div className="flex items-center gap-4">
           <span className="text-gray-400">지원 일시</span>
-          {isDesktop && (
-            <span
-              className={cn(
-                'ml-2 font-semibold',
-                dDayString === '모집 마감' ? 'Text-error' : 'text-mint-400'
-              )}
-            >
-              {dDayString}
-            </span>
-          )}
+          <span
+            className={cn(
+              'ml-2 hidden font-semibold lg:block',
+              dDayString === '모집 마감' ? 'Text-error' : 'text-mint-400'
+            )}
+          >
+            {dDayString}
+          </span>
         </div>
         <span className={desktopStyle}>{applicationDate}</span>
       </div>

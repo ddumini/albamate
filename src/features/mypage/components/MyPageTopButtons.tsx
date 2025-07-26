@@ -5,22 +5,20 @@ import Modal from '@common/modal/Modal';
 import ProfileEdit from '@common/profile/ProfileEdit';
 import { ReactNode, useMemo } from 'react';
 
+import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
-import { Role } from '@/shared/types/mypage';
 
-import MyPageDropDown from './MyPageDropDown';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
-const MyPageTopButtons = ({ role }: { role: Role }) => {
+const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
   const { openModal, closeModal } = useModalStore();
-  const infoComponent =
-    role === 'OWNER' ? (
-      <OwnerInfoEdit close={closeModal} />
-    ) : (
-      <WorkerInfoEdit close={closeModal} />
-    );
+  const infoComponent = isOwner ? (
+    <OwnerInfoEdit close={closeModal} />
+  ) : (
+    <WorkerInfoEdit close={closeModal} />
+  );
 
   const renderModalContent = (title: string, content: ReactNode) => (
     <div className="BG-white w-375 px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
@@ -79,7 +77,7 @@ const MyPageTopButtons = ({ role }: { role: Role }) => {
           onClick={() => pwChange()}
         />
       </div>
-      <MyPageDropDown className="lg:hidden" items={dropDownItem} />
+      <KebabMenuDropdown className="lg:hidden" options={dropDownItem} />
     </>
   );
 };

@@ -1,8 +1,12 @@
-import { differenceInCalendarDays } from 'date-fns';
 import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 만든 훅 경로 맞게 수정
 import { cn } from '@/shared/lib/cn';
+import {
+  formatDateLong,
+  formatPhoneNumber,
+  getDDayString,
+} from '@/shared/utils/format';
 
 import { MockAlbaItem } from '../types/MockAlbaItem';
 
@@ -10,37 +14,11 @@ interface AlbaContactProps {
   item: MockAlbaItem;
 }
 
-const formatDateShort = (isoString: string) => {
-  const date = isoString.slice(0, 10);
-  const [year, month, day] = date.split('-');
-  const monthStr = month?.padStart(2, '0'); // 1자리면 0붙임
-  const dayStr = day?.padStart(2, '0');
-  return `${year}.${monthStr}. ${dayStr}.`;
-};
-
-// 폰번호 포맷 함수
-const formatPhoneNumber = (phone: string, isOwnerPhone = false) => {
-  // 숫자만 추출
-  const digits = phone.replace(/\D/g, '');
-
-  if (isOwnerPhone) {
-    // 사장님 번호: 3-4-4 (예: 010-1234-5678)
-    return digits.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-  } else {
-    // 가게 번호: 2-4-4 (예: 02-1234-5678)
-    return digits.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
-  }
-};
-
 const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
   const { isDesktop } = useViewport();
 
-  const today = new Date();
-  const recruitmentEnd = new Date(item.recruitmentEndDate);
-  const daysLeft = differenceInCalendarDays(recruitmentEnd, today);
-
-  const period = `${formatDateShort(item.recruitmentStartDate)} ~ ${formatDateShort(item.recruitmentEndDate)}`;
-  const dDayString = daysLeft >= 0 ? `D-${daysLeft}` : '모집 마감';
+  const period = `${formatDateLong(item.recruitmentStartDate)} ~ ${formatDateLong(item.recruitmentEndDate)}`;
+  const dDayString = getDDayString(item.recruitmentEndDate);
 
   const infoData = [
     {

@@ -32,15 +32,15 @@ const PostList: React.FC = () => {
 
   return (
     <div className="mx-auto max-w-1480 pb-128">
-      <div className="flex flex-col gap-30">
+      <div className="flex flex-col">
         <PostFilterBar />
-        <section className="grid grid-cols-1 gap-16 lg:grid-cols-3">
+        <section className="grid grid-cols-1 gap-24 lg:grid-cols-3">
           {posts.map(post => (
             <PostItem key={post.id} post={post} />
           ))}
         </section>
         <FloatingButtonContainer>
-          <FloatingButton href="/albatalk/" type="addAlbatalk" />
+          <FloatingButton href="/addtalk" type="addAlbatalk" />
         </FloatingButtonContainer>
       </div>
     </div>

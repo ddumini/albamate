@@ -45,9 +45,7 @@ export const albaMockData: AlbaItem[] = [
     title: '패스트푸드점 아르바이트',
     recruitmentStartDate: '2025-07-25T00:00:00.000Z',
     recruitmentEndDate: '2025-08-05T23:59:59.999Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1500315331616-db2f053f3453?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     applyCount: 6,
     scrapCount: 4,
     isPublic: true,
@@ -84,9 +82,7 @@ export const albaMockData: AlbaItem[] = [
     title: '물류 창고 분류 작업',
     recruitmentStartDate: '2025-07-25T00:00:00.000Z',
     recruitmentEndDate: '2025-08-05T23:59:59.999Z',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1508385082359-f4f8664b6a2c?auto=format&fit=crop&w=800&q=80',
-    ],
+    imageUrls: [''],
     applyCount: 10,
     scrapCount: 3,
     isPublic: true,

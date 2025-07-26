@@ -1,7 +1,7 @@
 <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="40" cy="40" r="40" fill="url(#paint0_linear_1_9134)"/>
 <foreignObject x="10" y="10.0022" width="60.001" height="56.9978"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(3px);clip-path:url(#bgblur_0_1_9134_clip_path);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="6" d="M37.9268 16.7861C39.3561 15.7291 41.3116 15.7422 42.7266 16.8184L63.9971 33H64V33.002L64.001 33.0029L64 33.0039V59C64 60.1046 63.1046 61 62 61H18C16.8954 61 16 60.1046 16 59V33H16.0049L37.9268 16.7861Z" fill="url(#paint1_linear_1_9134)"/>
-<rect x="19" y="25" width="42" height="34" rx="4" fill="#11E4C4"/>
+<rect x="19" y="25" width="42" height="34" rx="4" fill="#2FD7BE"/>
 <foreignObject x="10" y="29" width="60" height="40"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(3px);clip-path:url(#bgblur_1_1_9134_clip_path);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="6" d="M64 61C64 62.1046 63.1046 63 62 63H18C16.8954 63 16 62.1046 16 61V35L40 57L64 35V61Z" fill="#FEF7EC" fill-opacity="0.2"/>
 <foreignObject x="31" y="25" width="18" height="26"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(4px);clip-path:url(#bgblur_2_1_9134_clip_path);height:100%;width:100%"></div></foreignObject><g filter="url(#filter2_i_1_9134)" data-figma-bg-blur-radius="8">
 <rect x="39" y="33" width="2" height="10" rx="1" fill="url(#paint2_radial_1_9134)"/>

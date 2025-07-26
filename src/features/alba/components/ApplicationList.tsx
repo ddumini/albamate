@@ -1,54 +1,30 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import Link from 'next/link';
+import React, { useMemo, useState } from 'react';
+
+import {
+  getExperienceLabel,
+  getStatusColor,
+  getStatusLabel,
+} from '@/shared/utils/application';
 
 import { mockApplications } from '../mocks/mockApplicationData';
 
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case 'PENDING':
-      return '대기중';
-    case 'REJECTED':
-      return '거절됨';
-    case 'ACCEPTED':
-      return '승인됨';
-    default:
-      return '알수없음';
-  }
-};
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'REJECTED':
-      return 'text-error';
-    case 'PENDING':
-      return 'text-gray-500';
-    case 'ACCEPTED':
-      return 'text-blue-600';
-    default:
-      return 'Text-black';
-  }
-};
-
-const getExperienceLabel = (months: number) => {
-  if (months === 0) return '없음';
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-
-  if (years > 0 && remainingMonths > 0) {
-    return `${years}년 ${remainingMonths}개월`;
-  }
-
-  if (years > 0) {
-    return `${years}년`;
-  }
-
-  return `${remainingMonths}개월`;
-};
-
 const ApplicationList = () => {
+  const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 5); // 5개씩 추가로 보여줌
+  };
+
+  const visibleApplications = useMemo(() => {
+    return mockApplications.slice(0, visibleCount);
+  }, [visibleCount]);
+
+  const hasMore = visibleCount < mockApplications.length;
+
   return (
     <div className="max-w-640">
       <h2 className="mb-12 text-2lg font-bold lg:mb-24 lg:text-[26px]">
@@ -60,7 +36,7 @@ const ApplicationList = () => {
         <div className="flex items-center px-4">이름</div>
         <div className="flex items-center px-4">전화번호</div>
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-8">
             경력
             <Image
               alt="경력"
@@ -72,7 +48,7 @@ const ApplicationList = () => {
           </div>
         </div>
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-8">
             상태
             <Image
               alt="상태"
@@ -87,15 +63,17 @@ const ApplicationList = () => {
 
       {/* 리스트 */}
       <ul className="Text-black">
-        {mockApplications.map(applicant => (
+        {visibleApplications.map(applicant => (
           <li key={applicant.id} className="BorderB-gray p-20">
             <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
-              <div className="underline underline-offset-2">
+              <Link
+                className="hover:text-mint-500 text-left underline underline-offset-2"
+                href={`/applications/${applicant.applicantId}`}
+              >
                 {applicant.name}
-              </div>
+              </Link>
               <div className="whitespace-nowrap">{applicant.phoneNumber}</div>
               <div>{getExperienceLabel(applicant.experienceMonths)}</div>
-
               <div className={getStatusColor(applicant.status)}>
                 {getStatusLabel(applicant.status)}
               </div>
@@ -103,6 +81,19 @@ const ApplicationList = () => {
           </li>
         ))}
       </ul>
+
+      {/* 더보기 버튼 */}
+      {hasMore && (
+        <div className="mt-20 text-center">
+          <button
+            className="bg-mint-500 hover:bg-mint-600 w-100 rounded border border-gray-300 text-white lg:w-200"
+            type="button"
+            onClick={handleLoadMore}
+          >
+            더보기
+          </button>
+        </div>
+      )}
     </div>
   );
 };

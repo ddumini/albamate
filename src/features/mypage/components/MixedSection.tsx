@@ -46,7 +46,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
         return [
           {
             label: '수정하기',
-            onClick: () => router.push(`/albatalks/${id}`),
+            onClick: () => router.push(`/albatalk/${id}`),
           },
           { label: '삭제하기', onClick: () => router.push(`/`) },
         ];

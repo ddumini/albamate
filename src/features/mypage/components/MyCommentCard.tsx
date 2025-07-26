@@ -2,12 +2,12 @@
 
 import { DropdownOption } from '@common/list/AlbaCardItem';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
+import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import { CommentCardItem } from '@/shared/types/mypage';
 
 import DateFormatter from './DateFormatter';
-import MyPageDropDown from './MyPageDropDown';
 
 interface MyCommentCardProps {
   cardContent: CommentCardItem;
@@ -15,26 +15,11 @@ interface MyCommentCardProps {
 }
 
 const MyCommentCard = ({ cardContent, dropdownItem }: MyCommentCardProps) => {
-  const router = useRouter();
-
-  const handleCardClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const isInteractiveElement =
-      target.closest('button') ||
-      target.closest('[role="button"]') ||
-      target.closest('[role="menu"]');
-
-    if (isInteractiveElement) {
-      return;
-    }
-
-    router.push(`/albatalks/${cardContent.post.id}`);
-  };
   return (
-    <div
+    <Link
       key={cardContent.id}
-      className="Border-Card flex h-264 w-full flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full xl:max-w-476"
-      onClick={handleCardClick}
+      className="Border-Card flex h-264 w-full cursor-pointer flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full xl:max-w-476"
+      href={`/albatalks/${cardContent.post.id}`}
     >
       <section className="flex w-full items-center justify-between">
         <div className="inline-flex items-center">
@@ -45,7 +30,7 @@ const MyCommentCard = ({ cardContent, dropdownItem }: MyCommentCardProps) => {
             {cardContent.post.title}
           </h3>
         </div>
-        <MyPageDropDown items={dropdownItem} />
+        <KebabMenuDropdown options={dropdownItem} />
       </section>
       <section className="inline-flex flex-col gap-40">
         <p className="Text-gray text-xs font-normal lg:text-lg">
@@ -60,7 +45,7 @@ const MyCommentCard = ({ cardContent, dropdownItem }: MyCommentCardProps) => {
           <span>{DateFormatter(cardContent.updatedAt)}</span>
         </div>
       </section>
-    </div>
+    </Link>
   );
 };
 
