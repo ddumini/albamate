@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 interface GnbMenuProps {
   isOpen: boolean;
@@ -7,6 +8,13 @@ interface GnbMenuProps {
 }
 
 const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
+  const handleLogout = () => {
+    signOut({
+      callbackUrl: '/signin',
+      redirect: true,
+    });
+  };
+
   return (
     <div className="relative">
       {/* 오버레이 클릭 시 닫기 */}
@@ -50,12 +58,15 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
             {/* 로그아웃 */}
             <div
               className="flex cursor-pointer items-center gap-8"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                handleLogout();
+              }}
             >
               <div className="relative h-24 w-24">
                 <Image fill alt="로그아웃" src="/icons/logout.svg" />
               </div>
-              <Link href="/logout">로그아웃</Link>
+              <Link href="/signin">로그아웃</Link>
             </div>
           </div>
         </div>
