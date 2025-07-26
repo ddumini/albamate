@@ -1,30 +1,18 @@
 'use client';
-import { useRef, useState } from 'react';
-
-import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { useState } from 'react';
 
 import TooltipContentWrapper from './TooltipContentWrapper';
 
-interface ClickTooltipProps {
-  content: React.ReactNode | ((args: { close: () => void }) => React.ReactNode);
+interface TooltipProps {
+  content: React.ReactNode;
   children: React.ReactNode;
 }
 
-const Tooltip = ({ content, children }: ClickTooltipProps) => {
+const Tooltip = ({ content, children }: TooltipProps) => {
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  // 바깥 클릭 시 닫힘
-  useClickOutside(wrapperRef, () => {
-    if (open) {
-      setOpen(false);
-    }
-  });
-
-  const close = () => setOpen(false);
 
   return (
-    <div ref={wrapperRef} className="relative inline-block">
+    <div className="relative inline-block">
       <div
         className="cursor-pointer"
         onMouseEnter={() => setOpen(true)}
@@ -39,13 +27,9 @@ const Tooltip = ({ content, children }: ClickTooltipProps) => {
           <div className="absolute -top-4.5 left-1/4 z-0 h-12 w-12 -translate-x-1/2 rotate-45 bg-blue-300" />
 
           {/* 툴팁 본문 */}
-          {typeof content === 'function' ? (
-            <TooltipContentWrapper>{content({ close })}</TooltipContentWrapper>
-          ) : (
-            <TooltipContentWrapper>
-              <span>{content}</span>
-            </TooltipContentWrapper>
-          )}
+          <TooltipContentWrapper>
+            <span>{content}</span>
+          </TooltipContentWrapper>
         </div>
       )}
     </div>

@@ -24,6 +24,7 @@ const ApplyStateModal = () => {
   const handleStateSubmit = () => {
     // TODO: API 호출로 실제 상태 업데이트
     console.log('선택된 상태:', selected);
+    closeModal();
   };
 
   return (

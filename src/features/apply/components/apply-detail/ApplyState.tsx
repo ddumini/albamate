@@ -1,4 +1,3 @@
-import { differenceInCalendarDays, format } from 'date-fns';
 import Image from 'next/image';
 import React from 'react';
 
@@ -6,6 +5,7 @@ import Tooltip from '@/shared/components/common/tooltip/Tooltip';
 import { cn } from '@/shared/lib/cn';
 import useModalStore from '@/shared/store/useModalStore';
 import { getStatusColor, getStatusLabel } from '@/shared/utils/application';
+import { formatDateTime, getDDayString } from '@/shared/utils/format';
 
 import { ApplyStatus } from '../../types/apply';
 import ApplyStateModal from './ApplyStateModal';
@@ -22,13 +22,10 @@ const ApplyState = ({
   recruitmentEndDate,
 }: ApplyStateProps) => {
   // D-Day 계산
-  const today = new Date();
-  const recruitmentEnd = new Date(recruitmentEndDate);
-  const daysLeft = differenceInCalendarDays(recruitmentEnd, today);
-  const dDayString = daysLeft >= 0 ? `D-${daysLeft}` : '모집 마감';
+  const dDayString = getDDayString(recruitmentEndDate);
 
   // 지원일시 포맷팅
-  const applicationDate = format(new Date(createdAt), 'yyyy.MM.dd HH:mm');
+  const applicationDate = formatDateTime(createdAt);
 
   const statusInfo = getStatusLabel(status);
   const statusColor = getStatusColor(status);
@@ -62,7 +59,7 @@ const ApplyState = ({
         <div className="flex items-center gap-2">
           <span className="text-gray-400">진행 상태</span>
           <Tooltip
-            content={() => (
+            content={
               <div className="flex items-center gap-2">
                 <div className="relative h-24 w-24 md:h-30 md:w-30">
                   <Image fill alt="info" src="/icons/info.svg" />
@@ -71,7 +68,7 @@ const ApplyState = ({
                   알바폼 현재 진행상태를 변경할 수 있어요!
                 </span>
               </div>
-            )}
+            }
           >
             <Image
               alt="수정 아이콘"
