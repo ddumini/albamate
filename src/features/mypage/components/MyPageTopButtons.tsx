@@ -5,9 +5,9 @@ import Modal from '@common/modal/Modal';
 import ProfileEdit from '@common/profile/ProfileEdit';
 import { ReactNode, useMemo } from 'react';
 
+import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
 
-import MyPageDropDown from './MyPageDropDown';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
@@ -77,7 +77,7 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
           onClick={() => pwChange()}
         />
       </div>
-      <MyPageDropDown className="lg:hidden" items={dropDownItem} />
+      <KebabMenuDropdown className="lg:hidden" options={dropDownItem} />
     </>
   );
 };

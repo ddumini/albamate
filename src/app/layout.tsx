@@ -2,6 +2,7 @@ import './globals.css';
 
 import ModalManager from '@common/modal/ModalManager';
 import localFont from 'next/font/local';
+import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
@@ -20,7 +21,7 @@ const pretendard = localFont({
 export { metadata };
 export { viewport };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning lang="ko">
       <meta
@@ -28,10 +29,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         name="viewport"
       />
       <body className={`${pretendard.className} dark:bg-gray-900`}>
-        <ThemeProvider enableSystem attribute="class" defaultTheme="system">
-          <Providers>{children}</Providers>
-          <ModalManager />
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider enableSystem attribute="class" defaultTheme="system">
+            <Providers>{children}</Providers>
+            <ModalManager />
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

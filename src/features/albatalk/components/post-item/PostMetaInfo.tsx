@@ -29,6 +29,7 @@ const PostMetaInfo = ({
   const likeIconSrc = isLiked ? '/icons/like-active.svg' : '/icons/like.svg';
 
   const handleLikeToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
 
     if (isLiked) {
@@ -51,12 +52,9 @@ const PostMetaInfo = ({
       <div className="flex gap-12">
         {/* 댓글 수 */}
         <div className="flex">
-          <Image
-            alt="comment_count"
-            height={24}
-            src="/icons/comment.svg"
-            width={24}
-          />
+          <div className="relative size-24 lg:size-36">
+            <Image alt="comment_count" layout="fill" src="/icons/comment.svg" />
+          </div>
           <span className="ml-2 self-center">{commentCount}</span>
         </div>
 
@@ -68,7 +66,9 @@ const PostMetaInfo = ({
             type="button"
             onClick={handleLikeToggle}
           >
-            <Image alt="like_icon" height={24} src={likeIconSrc} width={24} />
+            <div className="relative size-24 lg:size-36">
+              <Image alt="like_icon" layout="fill" src={likeIconSrc} />
+            </div>
           </button>
           <span className="ml-2 min-w-24 self-center">{likeCount}</span>
         </div>

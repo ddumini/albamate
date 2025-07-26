@@ -33,11 +33,11 @@ const PostFilterBar = () => {
   const handleSortChange = (value: string) => alert(value);
 
   return (
-    <div className="flex flex-col px-4 py-16 lg:flex-row lg:justify-between">
+    <div className="flex flex-col gap-20 py-32 md:gap-24 md:py-48 lg:flex-row lg:justify-between lg:py-60">
       <IconInput
         alt="검색"
-        className="my-16 lg:my-24 lg:w-728"
-        iconClassName="pl-24"
+        className="lg:w-728"
+        iconClassName="pl-16"
         iconOnClick={handleSearchSubmit}
         inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
         placeholder="궁금한 점을 검색해보세요"
