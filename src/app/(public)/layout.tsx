@@ -3,7 +3,7 @@
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <main className="mt-48 md:mt-64 lg:mt-80">{children}</main>
+      <main className="lg:mt-160">{children}</main>
     </div>
   );
 };
