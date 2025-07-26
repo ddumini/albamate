@@ -11,7 +11,7 @@ const GnbRenderer = () => {
   const pathname = usePathname();
   const { isAuthenticated } = useAuthSession();
 
-  if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
+  if (pathname.startsWith('/signup') || pathname.startsWith('/signin')) {
     return <AuthGnb />;
   }
 
@@ -19,7 +19,7 @@ const GnbRenderer = () => {
     return isAuthenticated ? <MainGnb /> : <LandingGnb />;
   }
 
-  return isAuthenticated ? <MainGnb /> : null;
+  return isAuthenticated ? <MainGnb /> : <LandingGnb />;
 };
 
 export default GnbRenderer;
