@@ -1,3 +1,4 @@
+import { ReadonlyURLSearchParams } from 'next/navigation';
 import type { Session } from 'next-auth';
 
 import {
@@ -6,7 +7,11 @@ import {
 } from '@/features/auth/constants/authContent';
 
 import type { AuthContent, AuthPageType, UserType } from '../types';
-import { getUserTypeFromPath, getUserTypeFromSession } from './userType';
+import {
+  getUserTypeFromPath,
+  getUserTypeFromQuery,
+  getUserTypeFromSession,
+} from './userType';
 
 /**
  * 사용자 타입에 따라 인증 콘텐츠를 동적으로 생성하는 함수
@@ -32,6 +37,20 @@ export const getAuthContentFromPath = (
   pageType: AuthPageType
 ): AuthContent => {
   const userType = getUserTypeFromPath(pathname);
+  return getAuthContent(pageType, userType);
+};
+
+/**
+ * 쿼리 파라미터와 페이지 타입을 기반으로 인증 콘텐츠를 가져오는 함수
+ * @param searchParams - URL 검색 파라미터
+ * @param pageType - 인증 페이지 타입
+ * @returns 해당 사용자 타입에 맞는 인증 콘텐츠
+ */
+export const getAuthContentFromQuery = (
+  searchParams: ReadonlyURLSearchParams | null,
+  pageType: AuthPageType
+): AuthContent => {
+  const userType = getUserTypeFromQuery(searchParams);
   return getAuthContent(pageType, userType);
 };
 

@@ -1,46 +1,47 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 
-import {
-  AUTH_ROUTES,
-  type AuthPageType,
-  getAuthContentFromPath,
-} from '@/features/auth/constants';
+import { createAuthRoute } from '@/features/auth/constants/route';
+import { AuthContext } from '@/features/auth/context/AuthContextValue';
 
 const AuthTitleArea = () => {
-  const pathname = usePathname();
+  const authContext = useContext(AuthContext);
 
-  const getAuthPageType = (pathname: string): AuthPageType => {
-    switch (pathname) {
-      case AUTH_ROUTES.SIGNIN:
-        return 'signin';
-      case AUTH_ROUTES.SIGNUP:
-        return 'signup';
-      case AUTH_ROUTES.ACCOUNT_INFO:
-        return 'accountInfo';
+  if (!authContext) {
+    return null;
+  }
+
+  const { authContent, userType, authPageType } = authContext;
+  const { title, description, linkText } = authContent;
+
+  // 현재 사용자 타입을 유지하면서 다른 페이지로 이동하는 링크 생성
+  const getDynamicLink = () => {
+    if (!userType) return authContent.link || '/signin';
+
+    switch (authPageType) {
+      case 'signin':
+        return createAuthRoute.signup(userType);
+      case 'signup':
+        return createAuthRoute.signin(userType);
       default:
-        return 'signin';
+        return authContent.link || '/signin';
     }
   };
 
-  const authPageType = getAuthPageType(pathname);
-  const { title, description, link, linkText } = getAuthContentFromPath(
-    pathname,
-    authPageType
-  );
+  const dynamicLink = getDynamicLink();
 
   return (
     <div className="flex flex-col gap-16 text-center lg:gap-32">
-      <h2 className="text-2xl font-semibold text-black-500 lg:text-3xl">
+      <h2 className="text-2xl font-semibold text-black-500 lg:text-3xl dark:text-gray-100">
         {title}
       </h2>
-      <p className="font-regular text-xs text-black-100 lg:text-xl">
+      <p className="font-regular text-xs text-black-100 lg:text-xl dark:text-gray-200">
         {description[0]}
-        {link && linkText && (
+        {linkText && (
           <Link
-            className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500"
-            href={link}
+            className="ml-8 inline-block font-semibold text-black-400 underline hover:text-black-500 dark:text-gray-100"
+            href={dynamicLink}
           >
             {linkText}
           </Link>
