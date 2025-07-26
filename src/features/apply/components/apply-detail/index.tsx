@@ -23,9 +23,9 @@ const ApplyDetail = ({
   albaformData,
   applicationData,
   images = [
-    '/images/landing/albaform-clock.png',
-    '/images/landing/apply-girl.png',
-    '/images/landing/anywhere-application.png',
+    '/images/examples/store-example01.jpg',
+    '/images/examples/store-example02.jpg',
+    '/images/examples/store-example03.jpg',
   ],
 }: ApplyDetailProps) => {
   const sampleSlides: Slide[] = createSlidesFromUrls(images);

@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { getExperienceLabel } from '@/shared/utils/application';
+import { formatPhoneNumber } from '@/shared/utils/format';
+
 import { ApplyResponse } from '../../types/apply';
 
 interface ApplyProfileProps {
@@ -9,16 +12,6 @@ interface ApplyProfileProps {
 const ApplyProfile = ({ data }: ApplyProfileProps) => {
   const { name, phoneNumber, experienceMonths, resumeName, introduction } =
     data;
-
-  const getExperienceText = (months: number) => {
-    if (months === 0) return '신입';
-    if (months < 12) return `${months}개월`;
-    const years = Math.floor(months / 12);
-    const remainingMonths = months % 12;
-    return remainingMonths > 0
-      ? `${years}년 ${remainingMonths}개월`
-      : `${years}년`;
-  };
 
   return (
     <div>
@@ -34,14 +27,16 @@ const ApplyProfile = ({ data }: ApplyProfileProps) => {
           {/* 연락처 */}
           <div className="flex items-center justify-between border-b border-gray-200 py-14">
             <span className="text-gray-400">연락처</span>
-            <span className="font-medium">{phoneNumber}</span>
+            <span className="font-medium">
+              {formatPhoneNumber(phoneNumber, true)}
+            </span>
           </div>
 
           {/* 경력 */}
           <div className="flex items-center justify-between border-b border-gray-200 py-14">
             <span className="text-gray-400">경력</span>
             <span className="font-medium">
-              {getExperienceText(experienceMonths)}
+              {getExperienceLabel(experienceMonths)}
             </span>
           </div>
 

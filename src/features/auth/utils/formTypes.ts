@@ -24,8 +24,14 @@ export type AccountInfoFieldName = FormFieldName<AccountInfoFormData>;
  */
 export const validateFormFields = <T extends Record<string, any>>(
   fields: FormField[],
-  formData: T
+  formData: Record<string, string> // T에서 Record<string, string>로 변경
 ): fields is Array<FormField & { name: keyof T }> => {
+  // formData가 undefined이거나 null인 경우 처리
+  if (!formData || typeof formData !== 'object') {
+    console.warn('validateFormFields: formData가 유효하지 않습니다.', formData);
+    return false;
+  }
+
   return fields.every(field => field.name in formData);
 };
 

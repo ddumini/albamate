@@ -2,6 +2,8 @@
 
 import { JSX } from 'react';
 
+import { cn } from '@/shared/lib/cn';
+
 export interface RadioOption {
   value: string;
   /** 화면에 표시될 라벨 */
@@ -82,9 +84,13 @@ const RadioButton = ({
           return (
             <label
               key={option.value}
-              className="flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 border-line-100 bg-white p-14 font-medium transition-all duration-200 hover:border-mint-300 has-checked:border-mint-300 has-checked:bg-gray-50 has-disabled:cursor-not-allowed has-disabled:opacity-50 has-disabled:hover:border-line-100 lg:w-360 lg:px-24 lg:py-17"
+              className={cn(
+                `flex w-327 cursor-pointer items-center justify-between rounded-lg border-2 border-line-100 bg-white p-14 font-medium text-gray-600 transition-all duration-200`,
+                `hover:border-mint-300 has-checked:border-mint-300 has-checked:bg-mint-50 has-disabled:cursor-not-allowed has-disabled:opacity-50 has-disabled:hover:border-line-100 lg:w-360 lg:px-24 lg:py-17`,
+                `dark:bg-gray-800 dark:text-gray-400 dark:hover:border-mint-300 dark:has-checked:border-mint-300 dark:has-checked:bg-mint-50 dark:has-checked:text-black`
+              )}
             >
-              <span className="flex-1 text-sm text-gray-600 select-none lg:text-base">
+              <span className="flex-1 text-sm select-none lg:text-base">
                 {option.label}
               </span>
               <div className="relative inline-block">

@@ -13,7 +13,7 @@ interface AuthFormFieldsProps<T extends FieldValues> {
   fields: FormField[];
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  defaultValues: T;
+  defaultValues?: Record<string, string>; // 선택적 prop으로 변경
 }
 
 /**
@@ -38,9 +38,12 @@ const AuthFormFields = <T extends FieldValues>({
   defaultValues,
 }: AuthFormFieldsProps<T>) => {
   const typedFields = createTypedFormFields<T>(fields);
-  if (!validateFormFields<T>(typedFields, defaultValues)) {
+
+  // defaultValues가 있을 때만 검증
+  if (defaultValues && !validateFormFields<T>(typedFields, defaultValues)) {
     throw new Error('폼 필드가 스키마와 일치하지 않습니다.');
   }
+
   return (
     <>
       {typedFields.map(field => (
