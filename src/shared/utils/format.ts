@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, format } from 'date-fns';
 
 /**
  * 마감일 기준 D-Day 텍스트 반환
@@ -31,6 +31,19 @@ export const formatDateLong = (isoString: string): string => {
 export const formatDateShort = (isoString: string): string => {
   const [year, month, day] = isoString.slice(0, 10).split('-');
   return `${year?.slice(2)}.${month}.${day}.`;
+};
+
+/**
+ * 날짜시간을 YYYY.MM.DD HH:mm 형식으로 포맷
+ * @param isoString ISO 형식의 날짜시간 문자열
+ * @returns 예: "2025.07.24 14:30"
+ */
+export const formatDateTime = (isoString: string): string => {
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return '-';
+  }
+  return format(date, 'yyyy.MM.dd HH:mm');
 };
 
 /**

@@ -36,7 +36,7 @@ const TestPage = () => {
 
       <div className="flex justify-center">
         <Tooltip
-          content={({ close }) => (
+          content={
             <div className="flex items-center gap-2">
               <div className="relative h-24 w-24 md:h-30 md:w-30">
                 <Image fill alt="info" src="/icons/info.svg" />
@@ -52,7 +52,7 @@ const TestPage = () => {
                 <Image fill alt="닫기 버튼" src="/icons/x-thin.svg" />
               </button>
             </div>
-          )}
+          }
         >
           <Image
             alt="수정 아이콘"

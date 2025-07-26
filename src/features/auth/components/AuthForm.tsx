@@ -113,6 +113,7 @@ const AuthForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-16 lg:gap-32">
         <AuthFormFields<AuthFormData>
+          defaultValues={formConfig.defaultValues}
           errors={errors}
           fields={formConfig.fields}
           register={register}
