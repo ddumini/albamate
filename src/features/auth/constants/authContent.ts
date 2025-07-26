@@ -23,15 +23,15 @@ export const AUTH_CONTENT_TEMPLATES: Record<
     signup: {
       title: '사장님 회원가입',
       description: [
-        '아직 계정이 없으신가요?',
-        '지원자 로그인은 지원자 전용 페이지에서 할 수 있습니다.',
+        '이미 사장님 계정이 있으신가요?',
+        '지원자 회원가입은 지원자 전용 페이지에서 할 수 있습니다.',
       ],
       link: AUTH_ROUTES.SIGNIN,
       linkText: '로그인 하기',
     },
     accountInfo: {
-      title: '사장님 계정 정보',
-      description: ['계정 정보를 입력해주세요.'],
+      title: '사장님 정보 입력',
+      description: ['추가 정보를 입력하여 사장님 회원가입을 완료해주세요.'],
     },
   },
   applicant: {
@@ -51,11 +51,11 @@ export const AUTH_CONTENT_TEMPLATES: Record<
         '사장님 회원가입은 사장님 전용 페이지에서 할 수 있습니다.',
       ],
       link: AUTH_ROUTES.SIGNIN,
-      linkText: '회원가입 하기',
+      linkText: '로그인 하기',
     },
     accountInfo: {
-      title: '지원자 계정 정보',
-      description: ['계정 정보를 입력해주세요.'],
+      title: '지원자 정보 입력',
+      description: ['추가 정보를 입력하여 지원자 회원가입을 완료해주세요.'],
     },
   },
 };
