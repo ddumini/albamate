@@ -9,10 +9,14 @@ import RadioButton, {
 } from '@/shared/components/common/button/RadioButton';
 import useModalStore from '@/shared/store/useModalStore';
 
-const ApplyStateModal = () => {
+interface ApplyStateModalProps {
+  currentStatus: string;
+}
+
+const ApplyStateModal = ({ currentStatus }: ApplyStateModalProps) => {
   const { closeModal } = useModalStore();
 
-  const [selected, setSelected] = useState('INTERVIEW_PENDING');
+  const [selected, setSelected] = useState(currentStatus);
 
   const RADIO_OPTIONS: RadioOption[] = [
     { value: 'REJECTED', label: '거절' },

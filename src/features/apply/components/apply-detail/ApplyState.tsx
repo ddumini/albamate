@@ -33,7 +33,7 @@ const ApplyState = ({
   const { openModal } = useModalStore();
 
   const handleApplyStateModal = () => {
-    openModal(<ApplyStateModal />);
+    openModal(<ApplyStateModal currentStatus={status} />);
   };
 
   return (
