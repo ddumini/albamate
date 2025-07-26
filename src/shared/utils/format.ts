@@ -39,7 +39,11 @@ export const formatDateShort = (isoString: string): string => {
  * @returns 예: "2025.07.24 14:30"
  */
 export const formatDateTime = (isoString: string): string => {
-  return format(new Date(isoString), 'yyyy.MM.dd HH:mm');
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return '-';
+  }
+  return format(date, 'yyyy.MM.dd HH:mm');
 };
 
 /**
