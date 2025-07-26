@@ -3,7 +3,6 @@ import Image from 'next/image';
 import React from 'react';
 
 import Tooltip from '@/shared/components/common/tooltip/Tooltip';
-import useViewport from '@/shared/hooks/useViewport';
 import { cn } from '@/shared/lib/cn';
 import useModalStore from '@/shared/store/useModalStore';
 import { getStatusColor, getStatusLabel } from '@/shared/utils/application';
@@ -22,10 +21,6 @@ const ApplyState = ({
   createdAt,
   recruitmentEndDate,
 }: ApplyStateProps) => {
-  const { isDesktop } = useViewport();
-
-  const desktopStyle = isDesktop ? 'text-black' : '';
-
   // D-Day 계산
   const today = new Date();
   const recruitmentEnd = new Date(recruitmentEndDate);
@@ -59,7 +54,7 @@ const ApplyState = ({
             {dDayString}
           </span>
         </div>
-        <span className={desktopStyle}>{applicationDate}</span>
+        <span className="lg:text-black">{applicationDate}</span>
       </div>
 
       {/* 진행 상태 */}
@@ -87,7 +82,7 @@ const ApplyState = ({
             />
           </Tooltip>
         </div>
-        <span className={cn(desktopStyle, statusColor)}>{statusInfo}</span>
+        <span className={statusColor}>{statusInfo}</span>
       </div>
     </div>
   );
