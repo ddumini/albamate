@@ -1,5 +1,11 @@
 import { axiosInstance } from '@/shared/lib/axios';
-import { EditPassword, UpdateMyProfile } from '@/shared/types/mypage';
+import {
+  CommentCardItem,
+  EditPassword,
+  PostCardItem,
+  ScrapCardItem,
+  UpdateMyProfile,
+} from '@/shared/types/mypage';
 
 // 내 정보 조회
 export const getMyProfile = () => axiosInstance.get('/users/me');
@@ -12,13 +18,19 @@ export const updateMyProfile = (data: UpdateMyProfile) =>
 export const updatePassword = (data: EditPassword) =>
   axiosInstance.patch('/users/me/password', data);
 
-// 내가 스크랩한 알바폼 목록 조회
-export const getMyScrapAlbaForms = () => axiosInstance.get('/users/me/scrap');
-
 // 내가 작성한 게시글 목록 조회
-export const getMyPosts = (limit: number) =>
-  axiosInstance.get(`/users/me/posts?limit=${limit}`);
+export const getMyPosts = (limit: number): Promise<PostCardItem[]> =>
+  axiosInstance.get(`/users/me/posts?limit=${limit}`).then(res => res.data);
 
 // 내가 작성한 댓글 목록 조회
-export const getMyComments = (page = 1, pageSize = 10) =>
-  axiosInstance.get(`/users/me/comments?page=${page}&pageSize=${pageSize}`);
+export const getMyComments = (
+  page = 1,
+  pageSize = 10
+): Promise<CommentCardItem[]> =>
+  axiosInstance
+    .get(`/users/me/comments?page=${page}&pageSize=${pageSize}`)
+    .then(res => res.data);
+
+// 내가 스크랩한 알바폼 목록 조회
+export const getMyScrapAlbaForms = (): Promise<ScrapCardItem[]> =>
+  axiosInstance.get('/users/me/scrap').then(res => res.data);

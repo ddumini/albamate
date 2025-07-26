@@ -40,23 +40,20 @@ export const useUpdateMyPasswordQuery = () => {
   });
 };
 
-export const useMyScrapQuery = () => {
-  return useQuery({
+export const useMyScrapQuery = () =>
+  useQuery({
     queryKey: ['myScrap'],
     queryFn: () => getMyScrapAlbaForms(),
   });
-};
 
-export const useMyPostsQuery = (limit: number) => {
-  return useQuery({
+export const useMyPostsQuery = (limit: number) =>
+  useQuery({
     queryKey: ['myPosts', limit],
     queryFn: () => getMyPosts(limit),
   });
-};
 
-export const useMyComments = (page: number, pageSize: number) => {
-  return useQuery({
+export const useMyCommentsQuery = (page: number, pageSize: number) =>
+  useQuery({
     queryKey: ['myComment', page, pageSize],
     queryFn: () => getMyComments(page, pageSize),
   });
-};
