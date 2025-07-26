@@ -110,7 +110,7 @@
 }
 
 .BG-Card {
-  @apply bg-mint-100/5 hover:bg-mint-100/2 dark:bg-mint-400/5 dark:hover:bg-mint-400/2;
+  @apply bg-mint-100/5 hover:bg-mint-100/2 dark:bg-mint-400/4 dark:hover:bg-mint-400/2;
 }
 
 .BG-mint {
