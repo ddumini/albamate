@@ -10,7 +10,7 @@ export const getStatusLabel = (status: string) => {
     case 'INTERVIEW_COMPLETED':
       return '면접 완료';
     case 'HIRED':
-      return '고용됨';
+      return '채용됨';
     default:
       return '알수없음';
   }
