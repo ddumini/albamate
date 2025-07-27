@@ -1,6 +1,23 @@
-import { axiosInstance } from '@/shared/lib/axios';
+import { useAxiosWithAuth } from '@/shared/lib/axios';
 
-export const getApplicantMyAlbalist = () =>
-  axiosInstance.get(`/users/me/applications`);
+interface PaginationParams {
+  limit?: number;
+  offset?: number;
+  page?: number;
+}
 
-export const getOwnerMyAlbalist = () => axiosInstance.get(`/users/me/forms`);
+// 커스텀 훅으로 인증된 axios 인스턴스 사용
+export const useMyAlbalistApi = () => {
+  const authAxios = useAxiosWithAuth();
+
+  return {
+    getApplicantMyAlbalist: (params: PaginationParams = { limit: 10 }) =>
+      authAxios.get('users/me/applications', {
+        params,
+      }),
+    getOwnerMyAlbalist: (params: PaginationParams = { limit: 10 }) =>
+      authAxios.get('users/me/forms', {
+        params,
+      }),
+  };
+};

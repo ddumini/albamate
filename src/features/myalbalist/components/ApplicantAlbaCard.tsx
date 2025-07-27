@@ -3,7 +3,6 @@
 import Chip from '@common/chip/Chip';
 import { format, isAfter } from 'date-fns';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRef, useState } from 'react';
 
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
@@ -55,13 +54,12 @@ const ApplicantAlbaCard = ({ item, onClick }: Props) => {
           </p>
           <p>{format(item.createdAt, 'yyyy.MM.dd HH:mm')}</p>
         </div>
-        {/* TODO: 이력서 보기 기능 확인 후 수정 */}
-        <Link
+        {/* <Link
           className="font-regular text-400 text-xs underline lg:text-md"
           href={`/myalbalist/${item.id}`}
         >
           이력서 보기
-        </Link>
+        </Link> */}
       </div>
 
       <div className="flex flex-col gap-8">
