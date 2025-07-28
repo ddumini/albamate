@@ -16,3 +16,11 @@ export const SortOptions = [
   { value: 'many-applicants', label: '지원자 많은순' },
   { value: 'many-scraps', label: '스크랩 많은순' },
 ];
+
+export const MyAlbaSortOptions = [
+  { value: 'total', label: '전체' },
+  { value: 'rejected', label: '거절' },
+  { value: 'interview-pending', label: '면접 대기' },
+  { value: 'interview-completed', label: '면접 완료' },
+  { value: 'hired', label: '채용 완료' },
+];

@@ -1,5 +1,6 @@
 import './globals.css';
 
+import GnbRenderer from '@common/gnb/GnbRenderer'; // dynamic 없이 일반 import
 import ModalManager from '@common/modal/ModalManager';
 import localFont from 'next/font/local';
 import { SessionProvider } from 'next-auth/react';
@@ -18,21 +19,27 @@ const pretendard = localFont({
 });
 
 // eslint-disable-next-line react-refresh/only-export-components
-export { metadata };
-export { viewport };
+export { metadata, viewport };
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning lang="ko">
-      <meta
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-        name="viewport"
-      />
+      <head>
+        <meta
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+          name="viewport"
+        />
+      </head>
       <body className={`${pretendard.className} dark:bg-gray-900`}>
         <SessionProvider>
           <ThemeProvider enableSystem attribute="class" defaultTheme="system">
-            <Providers>{children}</Providers>
-            <ModalManager />
+            <Providers>
+              <div className="mb-48">
+                <GnbRenderer />
+              </div>
+              {children}
+              <ModalManager />
+            </Providers>
           </ThemeProvider>
         </SessionProvider>
       </body>

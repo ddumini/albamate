@@ -15,6 +15,10 @@ export interface FilterHandlers {
 export interface FilterBarProps {
   isOwner: boolean;
   searchPlaceholder?: string;
+  searchValue?: string;
+  recruitValue?: string;
+  publicValue?: string;
+  sortValue?: string;
   searchHandlers?: SearchHandlers;
   filterHandlers: FilterHandlers;
 }

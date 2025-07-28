@@ -11,19 +11,19 @@ import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonTabletProps {
   isOwner: boolean;
-  itemId: number;
+  id: number;
 }
 
 const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
   isOwner,
-  itemId,
+  id,
 }) => {
   const { openModal } = useModalStore();
   const router = useRouter();
   const deleteButtonLabel = ''; // 아이콘만 보이게
 
   const handleApplicationModal = () => {
-    openModal(<ApplicationModal itemId={itemId} />);
+    openModal(<ApplicationModal id={id} />);
   };
 
   const handleFormDeleteModal = () => {
@@ -31,11 +31,11 @@ const ApplyButtonTablet: React.FC<AlbaApplyButtonTabletProps> = ({
   };
 
   const handleApply = () => {
-    router.push(`/apply/${itemId}`);
+    router.push(`/apply/${id}`);
   };
 
   const handleModify = () => {
-    router.push(`/addform?formId=${itemId}`);
+    router.push(`/addform?formId=${id}`);
   };
 
   return (
