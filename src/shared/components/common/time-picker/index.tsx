@@ -25,11 +25,20 @@ import TimeSelect from './TimeSelect';
 
 interface TimePickerProps {
   className?: string;
+  defaultValue?: { workStartTime: string; workEndTime: string };
+  onChange?: (range: {
+    workStartTime: string | null;
+    workEndTime: string | null;
+  }) => void;
 }
 
-const TimePicker = ({ className }: TimePickerProps) => {
-  const [startTime, setStartTime] = useState<string | null>(null);
-  const [endTime, setEndTime] = useState<string | null>(null);
+const TimePicker = ({ className, defaultValue, onChange }: TimePickerProps) => {
+  const [startTime, setStartTime] = useState<string | null>(
+    defaultValue?.workStartTime || null
+  );
+  const [endTime, setEndTime] = useState<string | null>(
+    defaultValue?.workEndTime || null
+  );
 
   // 표시용 값 (선택되지 않았으면 '00:00', 선택되었으면 실제 값)
   const displayStartTime = startTime || '00:00';
@@ -39,6 +48,16 @@ const TimePicker = ({ className }: TimePickerProps) => {
   const isStartTimeSelected = startTime !== null;
   const isEndTimeSelected = endTime !== null;
 
+  const handleStartTimeChange = (value: string) => {
+    setStartTime(value);
+    onChange?.({ workStartTime: value, workEndTime: endTime });
+  };
+
+  const handleEndTimeChange = (value: string) => {
+    setEndTime(value);
+    onChange?.({ workStartTime: startTime, workEndTime: value });
+  };
+
   return (
     <div className={cn('flex gap-27 lg:gap-36', className)}>
       <TimeSelect
@@ -46,14 +65,14 @@ const TimePicker = ({ className }: TimePickerProps) => {
         label="근무 시작"
         placeholder="00:00"
         value={displayStartTime}
-        onChange={setStartTime}
+        onChange={handleStartTimeChange}
       />
       <TimeSelect
         isSelected={isEndTimeSelected}
         label="근무 종료"
         placeholder="00:00"
         value={displayEndTime}
-        onChange={setEndTime}
+        onChange={handleEndTimeChange}
       />
     </div>
   );
