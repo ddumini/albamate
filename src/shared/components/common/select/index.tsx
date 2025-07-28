@@ -17,6 +17,7 @@ import { cn } from '@/shared/lib/cn';
  * @param {SelectProps} props
  * @param {SelectOption[]} props.options - 선택 옵션 배열
  * @param {string} [props.defaultValue] - 기본 선택된 값
+ * @param {string} [props.value] - 현재 선택된 값 (제어 컴포넌트용)
  * @param {string} [props.placeholder] - 선택 시 표시될 텍스트
  * @param {string} [props.variant] - 선택 컴포넌트 타입 (filter, sort)
  * @param {string} [props.className] - 추가 커스텀 클래스
@@ -32,6 +33,7 @@ interface SelectProps {
   options: SelectOption[];
   onSelect: (selectedValue: string) => void;
   defaultValue?: string;
+  value?: string;
   placeholder?: string;
   variant?: 'filter' | 'sort';
   wrapperClassName?: string;
@@ -42,16 +44,20 @@ const Select = ({
   options,
   onSelect,
   defaultValue,
+  value,
   placeholder,
   variant = 'filter',
   wrapperClassName = '',
   buttonClassName = '',
 }: SelectProps) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue || '');
+  const [internalValue, setInternalValue] = useState(defaultValue || '');
 
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    onSelect(value);
+  // 외부에서 value가 제공되면 그것을 사용, 아니면 내부 상태 사용
+  const selectedValue = value !== undefined ? value : internalValue;
+
+  const handleSelect = (newValue: string) => {
+    setInternalValue(newValue);
+    onSelect(newValue);
   };
 
   const selectedOption = options.find(option => option.value === selectedValue);
@@ -63,7 +69,7 @@ const Select = ({
     }
     return `text-black-100 dark:text-gray-200 flex h-30 w-80 lg:w-126 cursor-pointer items-center justify-between rounded-sm border border-gray-100 px-12 text-xs lg:h-42 lg:text-2lg lg:px-16 ${buttonClassName} ${
       selectedValue
-        ? 'text-mint-300 bg-mint-50/50 border-mint-300 dark:text-mint-300'
+        ? 'text-mint-300 bg-mint-50/50 dark:bg-mint-50/10 border-mint-300 dark:text-mint-300'
         : 'text-black-100'
     }`;
   };

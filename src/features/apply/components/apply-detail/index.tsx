@@ -1,7 +1,8 @@
 'use client';
-import { useParams, usePathname } from 'next/navigation';
+import { useState } from 'react';
 
-import { albaMockData } from '@/features/alba/mocks/mockData';
+import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
+import { User } from '@/features/auth/types';
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import AlbaDetail from '@/shared/components/alba/AlbaDetail';
 import ImageCarousel from '@/shared/components/ui/ImageCarousel';
@@ -13,41 +14,35 @@ import ApplyProfile from './ApplyProfile';
 import ApplyState from './ApplyState';
 
 interface ApplyDetailProps {
-  applyResponse?: ApplyResponse;
+  albaformData: MockAlbaItem;
+  applicationData?: ApplyResponse;
   images?: string[];
 }
 
 const ApplyDetail = ({
-  applyResponse,
+  albaformData,
+  applicationData,
   images = [
-    '/images/landing/albaform-clock.png',
-    '/images/landing/apply-girl.png',
-    '/images/landing/anywhere-application.png',
+    '/images/examples/store-example01.jpg',
+    '/images/examples/store-example02.jpg',
+    '/images/examples/store-example03.jpg',
   ],
 }: ApplyDetailProps) => {
   const sampleSlides: Slide[] = createSlidesFromUrls(images);
-  const params = useParams();
-  const pathname = usePathname(); // 또는 router.pathname
 
-  // URL 패턴으로 구분
-  const isOwnerView = pathname.includes('/application/'); // 사장님 뷰
+  const [user, _setUser] = useState<User | null>(null);
 
-  const itemId = isOwnerView
-    ? Number(params.applicationId)
-    : Number(params.formId);
+  const _isOwner = user?.role === 'OWNER';
 
-  const item = albaMockData.find(alba => alba.id === Number(itemId));
-
-  if (!item) {
+  if (!albaformData) {
     return (
       <div className="py-40 text-center text-red-500">
-        {itemId}
         해당 알바 정보를 찾을 수 없습니다.
       </div>
     );
   }
 
-  if (!applyResponse) {
+  if (!applicationData) {
     return <div>지원서 정보가 없습니다.</div>;
   }
 
@@ -57,20 +52,20 @@ const ApplyDetail = ({
 
       <div className="space-y-40 lg:grid lg:grid-cols-2 lg:gap-150 lg:space-y-0">
         <div className="space-y-40">
-          <AlbaDetail item={item} />
-          <AlbaDescription description={item.description} />
+          <AlbaDetail item={albaformData} />
+          <AlbaDescription description={albaformData.description} />
         </div>
         {/* 지원서 상태 */}
         <div>
           <ApplyState
-            createdAt={applyResponse.createdAt}
-            recruitmentEndDate={item.recruitmentEndDate}
-            status={applyResponse.status}
+            createdAt={applicationData.createdAt}
+            recruitmentEndDate={albaformData.recruitmentEndDate}
+            status={applicationData.status}
           />
         </div>
       </div>
       <div className="border-4 border-line-100 dark:border-gray-800" />
-      <ApplyProfile data={applyResponse} />
+      <ApplyProfile data={applicationData} />
     </div>
   );
 };

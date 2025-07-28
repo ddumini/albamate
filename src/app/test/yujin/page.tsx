@@ -3,13 +3,11 @@
 import Chip from '@common/chip/Chip';
 import EditPopup from '@common/popup/EditPopup';
 import ToastPopup from '@common/popup/ToastPopup';
-import Tab from '@common/tab/Tab';
 import Tooltip from '@common/tooltip/Tooltip';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import DatePicker from '@/shared/components/common/date-picker';
-import MainGnb from '@/shared/components/common/gnb/main-gnb';
 import Dropdown from '@/shared/components/ui/Dropdown';
 
 const TestPage = () => {
@@ -26,19 +24,12 @@ const TestPage = () => {
 
   return (
     <div className="m-16 flex flex-col gap-24 text-md">
-      <ul>
-        <li className="mb-72">
-          <MainGnb />
-        </li>
-      </ul>
-
       <div className="bg-gray-200">Hello Mint</div>
       <div className="BG-lightmint">Mint</div>
-      <Tab tabs={['내가 쓴 글', '내가 쓴 댓글', '스크랩']} />
 
       <div className="flex justify-center">
         <Tooltip
-          content={({ close }) => (
+          content={
             <div className="flex items-center gap-2">
               <div className="relative h-24 w-24 md:h-30 md:w-30">
                 <Image fill alt="info" src="/icons/info.svg" />
@@ -54,7 +45,7 @@ const TestPage = () => {
                 <Image fill alt="닫기 버튼" src="/icons/x-thin.svg" />
               </button>
             </div>
-          )}
+          }
         >
           <Image
             alt="수정 아이콘"

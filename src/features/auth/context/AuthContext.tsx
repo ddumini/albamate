@@ -1,55 +1,58 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { ReactNode } from 'react';
 
-import { AUTH_ROUTES } from '../constants/route';
-import { mockUser } from '../mocks';
-import type { AuthPageType } from '../types';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
+
 import {
   getAuthContentFromPath,
+  getAuthContentFromQuery,
   getAuthContentFromSession,
 } from '../utils/authContent';
-import { getUserTypeFromPath, getUserTypeFromSession } from '../utils/userType';
+import { getAuthPageType } from '../utils/authUtils';
+import {
+  getUserTypeFromPath,
+  getUserTypeFromQuery,
+  getUserTypeFromSession,
+} from '../utils/userType';
 import { AuthContext, type AuthContextValue } from './AuthContextValue';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
-
-  // 임시로 mock 세션 사용
-  const session = {
-    user: mockUser,
-    expires: '2099-12-31T23:59:59.999Z',
-  };
-
-  const getAuthPageType = (pathname: string): AuthPageType => {
-    switch (pathname) {
-      case AUTH_ROUTES.SIGNIN:
-        return 'signin';
-      case AUTH_ROUTES.SIGNUP:
-        return 'signup';
-      case AUTH_ROUTES.ACCOUNT_INFO:
-        return 'accountInfo';
-      default:
-        return 'signin';
-    }
-  };
+  const searchParams = useSearchParams();
+  const { session, isOwner, isApplicant } = useSessionUtils();
 
   const authPageType = getAuthPageType(pathname);
-  const userTypeFromPath = getUserTypeFromPath(pathname);
-  const userTypeFromSession = getUserTypeFromSession(session);
-  const userType = userTypeFromSession || userTypeFromPath;
 
-  const authContent = userTypeFromSession
-    ? getAuthContentFromSession(session, authPageType)
-    : getAuthContentFromPath(pathname, authPageType);
+  // 쿼리 파라미터에서 사용자 타입 감지
+  const userTypeFromQuery = getUserTypeFromQuery(searchParams);
+
+  const userTypeFromPath = getUserTypeFromPath(pathname);
+  const userTypeFromSession = getUserTypeFromSession(session || null);
+
+  // 우선순위: 쿼리 파라미터 > 세션 > 경로
+  const userType = userTypeFromQuery || userTypeFromSession || userTypeFromPath;
+
+  // authContent 결정 로직: 쿼리 파라미터 우선
+  let authContent;
+  if (userTypeFromQuery) {
+    // 쿼리 파라미터가 있으면 쿼리 기반으로 결정
+    authContent = getAuthContentFromQuery(searchParams, authPageType);
+  } else if (userTypeFromSession) {
+    // 세션이 있으면 세션 기반으로 결정
+    authContent = getAuthContentFromSession(session || null, authPageType);
+  } else {
+    // 그 외에는 경로 기반으로 결정
+    authContent = getAuthContentFromPath(pathname, authPageType);
+  }
 
   const value: AuthContextValue = {
     authPageType,
     userType: userType || null,
     authContent,
-    isOwner: userType === 'owner',
-    isApplicant: userType === 'applicant',
+    isOwner: isOwner,
+    isApplicant: isApplicant,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

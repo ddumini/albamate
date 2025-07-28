@@ -2,20 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 저장한 경로에 따라 수정
+import { formatDateLong, formatDateShort } from '@/shared/utils/format';
 
 import { MockAlbaItem } from '../types/MockAlbaItem';
 
 interface AlbaInfoProps {
   item: MockAlbaItem;
 }
-
-const formatDate = (isoString: string, isDesktop: boolean) => {
-  const date = isoString.slice(0, 10);
-  const [year, month, day] = date.split('-');
-  return isDesktop
-    ? `${year}.${month}.${day}` // 2024년 10월 25일
-    : `${year?.slice(2)}.${month}.${day}`; // 24.10.25
-};
 
 const getBorderClass = (idx: number) => {
   if (idx === 0) {
@@ -40,8 +33,8 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   const { isDesktop } = useViewport();
 
   const period = isDesktop
-    ? `${formatDate(item.recruitmentStartDate, true)} ~ ${formatDate(item.recruitmentEndDate, true)}`
-    : `${formatDate(item.recruitmentStartDate, false)}~${formatDate(item.recruitmentEndDate, false)}`;
+    ? `${formatDateLong(item.recruitmentStartDate)} ~ ${formatDateLong(item.recruitmentEndDate)}`
+    : `${formatDateShort(item.recruitmentStartDate)}~${formatDateShort(item.recruitmentEndDate)}`;
 
   const workDays = item.workDays.join(', ');
   const workTime = `${item.workStartTime}~${item.workEndTime}`;
@@ -64,16 +57,14 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
         {Info.map(({ label, value, img }, idx) => (
           <div
             key={label}
-            className={`relative mx-30 flex items-center justify-start gap-16 p-4 ${getBorderClass(idx)}`}
+            className={`relative mx-30 flex items-center justify-start gap-20 p-4 ${getBorderClass(idx)}`}
           >
-            {/* 아이콘 */}
-            <div className="relative h-24 w-24 lg:h-36 lg:w-36">
-              <div className="absolute inset-0 scale-120 rounded-2xl bg-gray-50 dark:bg-gray-100" />
+            <div className="relative h-36 w-36 flex-shrink-0 lg:h-40 lg:w-40">
+              <div className="absolute inset-[-5px] rounded-3xl bg-gray-50 dark:bg-gray-100" />
               <Image fill alt="icon" objectFit="cover" src={img} />
             </div>
 
-            {/* 텍스트 */}
-            <div className="ml-2 lg:ml-4">
+            <div className="ml-4">
               <div className="text-sm text-gray-500">{label}</div>
               <div className="text-base font-bold text-teal-500">{value}</div>
             </div>
@@ -91,7 +82,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
           key={label}
           className="flex w-full items-center justify-start gap-10 rounded-lg border border-gray-100 px-6 py-4"
         >
-          <div className="relative h-24 w-24 lg:h-36 lg:w-36">
+          <div className="relative h-24 w-24 flex-shrink-0 lg:h-36 lg:w-36">
             <div className="absolute inset-0 scale-120 rounded-2xl bg-gray-50 dark:bg-gray-100" />
             <Image
               fill

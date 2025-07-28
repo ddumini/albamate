@@ -28,7 +28,7 @@ const AlbaCard = ({ item }: Props) => {
         if (isLoggedIn) {
           alert(`${item.title} 스크랩 완료!`);
         } else {
-          router.push('/login');
+          router.push('/signin');
         }
       },
     },

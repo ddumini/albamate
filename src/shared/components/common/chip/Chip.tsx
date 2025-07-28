@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@lib/cn';
 import Image from 'next/image';
 
@@ -19,7 +17,7 @@ const Chip = ({ label, variant = 'default', active = false }: ChipProps) => {
   const variants = {
     default: 'bg-white text-gray-500 border-gray-300',
     filled: active
-      ? 'text-mint-300 bg-mint-50/50 border-mint-300'
+      ? 'text-mint-300 bg-mint-50/50 dark:bg-mint-50/10 border-mint-300'
       : 'bg-white text-gray-400 border-gray-200',
     icon: 'bg-white text-gray-600 border-gray-300',
   };

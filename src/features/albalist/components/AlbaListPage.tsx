@@ -1,9 +1,8 @@
 'use client';
 
 import ListWrapper from '@common/list/ListWrapper';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { albaMockData } from '@/features/albalist/mocks/mockData';
 import type { User } from '@/shared/types/alba';
 import { AlbaItem } from '@/shared/types/alba';
 
@@ -11,15 +10,13 @@ import AlbaCard from './AlbaCard';
 import AlbaFilterBar from './AlbaFilterBar';
 import FloatingFormButton from './FloatingFormButton';
 
-const AlbaListPage = () => {
-  const [albaList, setAlbaList] = useState<AlbaItem[]>([]);
-  const [user, setUser] = useState<User | null>(null);
+interface Props {
+  data: AlbaItem[];
+  user: User | null;
+}
 
-  useEffect(() => {
-    setAlbaList(albaMockData);
-    setUser({ role: 'OWNER' });
-  }, []);
-
+const AlbaListPage = ({ data, user }: Props) => {
+  const [albaList, setAlbaList] = useState<AlbaItem[]>(data);
   const isOwner = user?.role === 'OWNER';
 
   return (

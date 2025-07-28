@@ -45,7 +45,15 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
   ];
 
   const handleCardClick = () => {
-    router.push(`/albalist/${item.id}`);
+    // 사용자 역할에 따라 다른 경로로 이동
+    if (isOwner) {
+      // 사장님은 자신의 폼 상세 페이지로
+      router.push(`/albalist/${item.id}`);
+    } else {
+      // 지원자는 지원한 폼의 상세 페이지로
+      const applicantItem = item as ApplicantMyAlbaItem;
+      router.push(`/albalist/${applicantItem.form.id}`);
+    }
   };
 
   return (

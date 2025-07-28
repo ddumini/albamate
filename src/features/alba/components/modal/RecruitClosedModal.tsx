@@ -1,14 +1,21 @@
+import PrimaryButton from '@common/button/PrimaryButton';
+import Modal from '@common/modal/Modal';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import Modal from '@/shared/components/common/modal/Modal';
 import useModalStore from '@/shared/store/useModalStore';
 
 const RecruitCloseModal = () => {
   const { closeModal } = useModalStore();
 
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    router.back();
+    closeModal();
+  };
   return (
-    <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-25 p-24 text-center dark:bg-gray-900">
+    <div className="flex w-full flex-col gap-8 rounded-xl p-24 text-center">
       <Modal.Header showCloseButton>
         <Image
           alt="모집마감"
@@ -24,11 +31,11 @@ const RecruitCloseModal = () => {
       </Modal.Body>
       <Modal.Footer>
         <PrimaryButton
-          className="mt-12 h-58 w-327 rounded-md bg-mint-400"
-          label="홈으로 가기"
+          className="mt-12 h-58 w-327 rounded-md bg-mint-400 hover:brightness-92"
+          label="이전으로 가기"
           type="button"
           variant="solid"
-          onClick={closeModal}
+          onClick={handleGoBack}
         />
       </Modal.Footer>
     </div>

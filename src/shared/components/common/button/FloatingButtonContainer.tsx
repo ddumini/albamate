@@ -55,7 +55,7 @@ const FloatingButtonContainer: React.FC<FloatingButtonContainerProps> = ({
     const baseClasses = 'fixed flex flex-col gap-24 z-1000';
 
     if (position === 'right-center') {
-      return `${baseClasses} right-23 top-1/2 lg:right-220 transform -translate-y-1/2`;
+      return `${baseClasses} right-23 top-1/2 lg:right-40 transform -translate-y-1/2`;
     } else {
       return `${baseClasses} right-23 bottom-68 lg:right-100 lg:bottom-50`;
     }

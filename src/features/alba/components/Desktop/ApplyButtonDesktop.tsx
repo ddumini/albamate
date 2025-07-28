@@ -1,27 +1,40 @@
-// AlbaApplyButtonDesktop.tsx
+'use client';
+
+import PrimaryButton from '@common/button/PrimaryButton';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useModalStore from '@/shared/store/useModalStore';
 
-import ApplicationListModal from '../modal/ApplicationListModal';
+import ApplicationModal from '../modal/ApplicationModal';
 import FormDeleteModal from '../modal/FormDeleteModal';
 
 interface AlbaApplyButtonDesktopProps {
   isOwner: boolean;
+  id: number;
 }
 
 const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
   isOwner,
+  id,
 }) => {
   const { openModal } = useModalStore();
+  const router = useRouter();
 
-  const handleOpenApplicationModal = () => {
-    openModal(<ApplicationListModal />);
+  const handleApplicationModal = () => {
+    openModal(<ApplicationModal id={id} />);
   };
 
-  const handleOpenFormDeleteModal = () => {
+  const handleFormDeleteModal = () => {
     openModal(<FormDeleteModal />);
+  };
+
+  const handleApply = () => {
+    router.push(`/apply/${id}`);
+  };
+
+  const handleModify = () => {
+    router.push(`/addform?formId=${id}`);
   };
 
   return (
@@ -32,6 +45,7 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
         label={isOwner ? '수정하기' : '지원하기'}
         type="button"
         variant="solid"
+        onClick={isOwner ? handleModify : handleApply}
       />
       <PrimaryButton
         className="max-w-[640px] py-20 text-lg lg:text-xl"
@@ -39,9 +53,7 @@ const ApplyButtonDesktop: React.FC<AlbaApplyButtonDesktopProps> = ({
         label={isOwner ? '삭제하기' : '내 지원 내역 보기'}
         type="button"
         variant="outline"
-        onClick={
-          isOwner ? handleOpenFormDeleteModal : handleOpenApplicationModal
-        }
+        onClick={isOwner ? handleFormDeleteModal : handleApplicationModal}
       />
     </div>
   );
