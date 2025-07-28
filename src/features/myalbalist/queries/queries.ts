@@ -5,14 +5,14 @@ import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
 import { useMyAlbalistApi } from '../api/api';
 
-interface ApplicantQueryParams {
+export interface ApplicantQueryParams {
   limit?: number;
   cursor?: number;
   status?: 'REJECTED' | 'INTERVIEW_PENDING' | 'INTERVIEW_COMPLETED' | 'HIRED';
   keyword?: string;
 }
 
-interface OwnerQueryParams {
+export interface OwnerQueryParams {
   limit?: number;
   cursor?: number;
   orderBy?: 'mostRecent' | 'highestWage' | 'mostApplied' | 'mostScrapped';

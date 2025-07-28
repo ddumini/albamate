@@ -1,11 +1,4 @@
-interface ApiParams {
-  limit: number;
-  keyword?: string;
-  orderBy?: string;
-  isRecruiting?: boolean;
-  isPublic?: boolean;
-  status?: string;
-}
+import { ApplicantQueryParams, OwnerQueryParams } from '../queries/queries';
 
 // 사장님용 정렬 옵션 매핑
 export const mapOwnerSortToApi = (sortValue: string): string | undefined => {
@@ -59,19 +52,20 @@ export const convertFiltersToApiParams = (
   },
   isOwner: boolean,
   limit: number = 10
-): ApiParams => {
-  const params: ApiParams = {
-    limit, // 기본 limit 값 추가
-  };
-
-  if (filters.searchKeyword) {
-    params.keyword = filters.searchKeyword;
-  }
-
+): ApplicantQueryParams | OwnerQueryParams => {
   if (isOwner) {
     // 사장님용 파라미터
+    const params: OwnerQueryParams = {
+      limit,
+    };
+
+    if (filters.searchKeyword) {
+      params.keyword = filters.searchKeyword;
+    }
     if (filters.sortStatus && filters.sortStatus !== 'total') {
-      params.orderBy = mapOwnerSortToApi(filters.sortStatus);
+      params.orderBy = mapOwnerSortToApi(
+        filters.sortStatus
+      ) as OwnerQueryParams['orderBy'];
     }
     if (filters.recruitStatus && filters.recruitStatus !== 'total') {
       params.isRecruiting = mapRecruitStatusToApi(filters.recruitStatus);
@@ -79,12 +73,23 @@ export const convertFiltersToApiParams = (
     if (filters.publicStatus && filters.publicStatus !== 'total') {
       params.isPublic = mapPublicStatusToApi(filters.publicStatus);
     }
+
+    return params;
   } else {
     // 지원자용 파라미터
-    if (filters.sortStatus && filters.sortStatus !== 'total') {
-      params.status = mapApplicantStatusToApi(filters.sortStatus);
-    }
-  }
+    const params: ApplicantQueryParams = {
+      limit,
+    };
 
-  return params;
+    if (filters.searchKeyword) {
+      params.keyword = filters.searchKeyword;
+    }
+    if (filters.sortStatus && filters.sortStatus !== 'total') {
+      params.status = mapApplicantStatusToApi(
+        filters.sortStatus
+      ) as ApplicantQueryParams['status'];
+    }
+
+    return params;
+  }
 };

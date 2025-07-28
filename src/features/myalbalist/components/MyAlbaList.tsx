@@ -8,6 +8,8 @@ import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { cn } from '@/shared/lib/cn';
 
 import {
+  type ApplicantQueryParams,
+  type OwnerQueryParams,
   useApplicantMyAlbalistQuery,
   useOwnerMyAlbalistQuery,
 } from '../queries/queries';
@@ -58,20 +60,25 @@ const AlbaListPage = () => {
     [filters, isOwner]
   );
 
-  // 사용자 역할에 따라 다른 쿼리 사용
+  // 지원자용 쿼리 (enabled 옵션으로 조건부 실행)
   const {
     data: applicantData,
     isLoading: isApplicantLoading,
     error: applicantError,
     refetch: refetchApplicant,
-  } = useApplicantMyAlbalistQuery(apiParams);
+  } = useApplicantMyAlbalistQuery(
+    !isOwner ? (apiParams as ApplicantQueryParams) : { limit: 10 }
+  );
 
+  // 사장님용 쿼리 (enabled 옵션으로 조건부 실행)
   const {
     data: ownerData,
     isLoading: isOwnerLoading,
     error: ownerError,
     refetch: refetchOwner,
-  } = useOwnerMyAlbalistQuery(apiParams);
+  } = useOwnerMyAlbalistQuery(
+    isOwner ? (apiParams as OwnerQueryParams) : { limit: 10 }
+  );
 
   // 현재 사용자 역할에 맞는 데이터 선택
   const currentData = isOwner ? ownerData : applicantData;
