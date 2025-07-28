@@ -51,8 +51,11 @@ const AlbaListPage = () => {
   }
 
   // 데이터가 배열인지 확인하고 안전하게 처리
-  const items = Array.isArray(currentData) ? currentData : [];
+  const items = Array.isArray(currentData)
+    ? currentData
+    : currentData?.data || [];
 
+  console.log('isOwner:', isOwner);
   console.log('currentData:', currentData);
   console.log('items:', items);
 
