@@ -10,7 +10,7 @@ interface GnbMenuProps {
 const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
   const handleLogout = () => {
     signOut({
-      callbackUrl: '/signin',
+      callbackUrl: '/',
       redirect: true,
     });
   };
@@ -66,7 +66,7 @@ const GnbMenu = ({ isOpen, setIsOpen }: GnbMenuProps) => {
               <div className="relative h-24 w-24">
                 <Image fill alt="로그아웃" src="/icons/logout.svg" />
               </div>
-              <Link href="/signin">로그아웃</Link>
+              <span>로그아웃</span>
             </div>
           </div>
         </div>
