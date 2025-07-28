@@ -21,11 +21,7 @@ const pretendard = localFont({
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata, viewport };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning lang="ko">
       <head>
@@ -49,4 +45,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
