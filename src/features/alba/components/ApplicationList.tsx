@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 
+import Tooltip from '@/shared/components/common/tooltip/Tooltip';
 import {
   getExperienceLabel,
   getStatusColor,
@@ -32,7 +33,7 @@ const ApplicationList = () => {
       </h2>
 
       {/* 헤더 */}
-      <div className="BorderB-gray grid grid-cols-[1fr_2fr_1fr_1fr] px-24 py-16 text-gray-400">
+      <div className="BorderB-gray grid grid-cols-[1fr_2fr_1fr_1fr] px-16 py-16 text-gray-400">
         <div className="flex items-center px-4">이름</div>
         <div className="flex items-center px-4">전화번호</div>
         <div>
@@ -66,12 +67,14 @@ const ApplicationList = () => {
         {visibleApplications.map(applicant => (
           <li key={applicant.id} className="BorderB-gray p-20">
             <div className="grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 text-sm lg:text-base">
-              <Link
-                className="hover:text-mint-500 text-left underline underline-offset-2"
-                href={`/applications/${applicant.applicantId}`}
-              >
-                {applicant.name}
-              </Link>
+              <Tooltip content="지원자 상세 정보를 확인할 수 있습니다.">
+                <Link
+                  className="hover:text-mint-500 text-left underline underline-offset-2"
+                  href={`/applications/${applicant.applicantId}`}
+                >
+                  {applicant.name}
+                </Link>
+              </Tooltip>
               <div className="whitespace-nowrap">{applicant.phoneNumber}</div>
               <div>{getExperienceLabel(applicant.experienceMonths)}</div>
               <div className={getStatusColor(applicant.status)}>
@@ -86,7 +89,7 @@ const ApplicationList = () => {
       {hasMore && (
         <div className="mt-20 text-center">
           <button
-            className="bg-mint-500 hover:bg-mint-600 w-100 rounded border border-gray-300 text-white lg:w-200"
+            className="w-100 rounded border border-gray-300 hover:brightness-80 lg:w-200"
             type="button"
             onClick={handleLoadMore}
           >

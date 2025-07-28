@@ -12,7 +12,8 @@ export const albaMockData: MockAlbaItem[] = [
     imageUrls: [
       'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
     ],
-    location: '서울시 관악구',
+    location:
+      '서울특별시 중구 청계천로 100 시그니쳐타워 동관 1층 코드잇 스터디카페',
     workStartDate: '2025-05-29T06:02:04.727Z',
     workEndDate: '2025-12-22T06:02:04.727Z',
     workStartTime: '18:00',

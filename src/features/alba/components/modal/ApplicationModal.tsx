@@ -36,9 +36,9 @@ const ApplicationListModal = ({ id }: ApplicationListModalProps) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-30 rounded-xl bg-gray-25 p-24 dark:bg-gray-900">
+    <div className="flex w-full flex-col gap-36 rounded-xl p-24">
       <Modal.Header showCloseButton>
-        <div className="Text-black text-xl font-semibold lg:text-2xl">
+        <div className="Text-black text-xl font-bold lg:text-2xl">
           내 지원 내역 확인하기
         </div>
       </Modal.Header>
@@ -78,7 +78,7 @@ const ApplicationListModal = ({ id }: ApplicationListModalProps) => {
             )}
           </label>
 
-          <label className="text-sm font-medium">
+          <label className="mb-12 text-sm font-medium">
             비밀번호
             <Input
               className="mt-1 h-52 rounded border border-gray-300 text-black lg:h-54"

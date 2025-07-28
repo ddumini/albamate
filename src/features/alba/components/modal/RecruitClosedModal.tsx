@@ -15,7 +15,7 @@ const RecruitCloseModal = () => {
     closeModal();
   };
   return (
-    <div className="flex w-full flex-col gap-8 rounded-xl bg-gray-25 p-24 text-center dark:bg-gray-900">
+    <div className="flex w-full flex-col gap-8 rounded-xl p-24 text-center">
       <Modal.Header showCloseButton>
         <Image
           alt="모집마감"

@@ -1,7 +1,6 @@
 'use client';
 
 import DatePicker from '@common/date-picker';
-import MainGnb from '@common/gnb/main-gnb';
 import InputDropdown from '@common/input-dropdown';
 import TimePicker from '@common/time-picker';
 import WeekPicker from '@common/week-picker';
@@ -16,7 +15,6 @@ const Sumin = () => {
 
   return (
     <>
-      <MainGnb /> {/* dark mode 테스트용 헤더 */}
       <InnerContainer className="mb-80 bg-amber-50" size="sm">
         <div>
           <p className="mb-24 text-xl">

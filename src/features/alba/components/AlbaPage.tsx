@@ -29,6 +29,11 @@ const AlbaPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isOwner, setIsOwner] = useState(true);
   const { isDesktop } = useViewport();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const { openModal } = useModalStore();
 
@@ -71,6 +76,8 @@ const AlbaPage = () => {
       console.error(error);
     }
   };
+
+  if (!hasMounted) return null;
 
   if (!item) {
     return (
