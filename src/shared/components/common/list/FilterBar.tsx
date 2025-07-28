@@ -2,8 +2,10 @@
 
 import IconInput from '@common/input/IconInput';
 import Select from '@common/select';
+import { usePathname } from 'next/navigation';
 
 import {
+  MyAlbaSortOptions,
   PublicFilterOptions,
   RecruitFilterOptions,
   SortOptions,
@@ -16,6 +18,7 @@ import { FilterBarProps } from '@/shared/types/filter';
  * 알바 리스트, 마이 알바폼 등의 페이지에서 사용하는 필터 바 UI 컴포넌트입니다.
  * 검색창, 모집 상태 필터, 공개 여부 필터(사장일 경우), 정렬 옵션 등을 포함하며,
  * 사용자 입력 이벤트를 처리하기 위한 핸들러 객체를 props로 전달받습니다.
+ * 현재 페이지 경로를 자동으로 감지하여 적절한 필터 옵션을 제공합니다.
  *
  * @param {FilterBarProps} props - 필터 바에 필요한 모든 속성을 포함하는 props 객체
  * @param {boolean} props.isOwner - 사용자가 사장(OWNER)인지 여부 (공개/비공개 필터 노출 여부 결정)
@@ -53,6 +56,15 @@ const FilterBar = ({
   searchHandlers,
   filterHandlers,
 }: FilterBarProps) => {
+  const pathname = usePathname();
+
+  // 현재 페이지가 마이 알바리스트인지 확인
+  const isMyAlbaList = pathname.includes('/myalbalist');
+
+  // 모집 여부 필터 옵션 결정
+  const recruitOptions =
+    isMyAlbaList && !isOwner ? MyAlbaSortOptions : RecruitFilterOptions;
+
   return (
     <div className="w-full py-32 md:py-48 lg:py-60 dark:border-gray-500">
       <div className="mx-auto flex flex-col gap-20 md:gap-24 lg:gap-32">
@@ -72,7 +84,7 @@ const FilterBar = ({
           <div className="flex gap-16">
             {/* 모집 여부 */}
             <Select
-              options={RecruitFilterOptions}
+              options={recruitOptions}
               placeholder="전체"
               variant="filter"
               onSelect={filterHandlers.handleRecruitChange}

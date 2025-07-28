@@ -2,7 +2,6 @@
 
 import ListWrapper from '@common/list/ListWrapper';
 
-import AlbaFilterBar from '@/features/albalist/components/AlbaFilterBar';
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { cn } from '@/shared/lib/cn';
@@ -13,6 +12,7 @@ import {
 } from '../queries/queries';
 import { ApplicantMyAlbaItem, OwnerMyAlbaItem } from '../types/myalbalist';
 import MyAlbaCard from './MyAlbaCard';
+import AlbaFilterBar from './MyAlbaFilterBar';
 
 const AlbaListPage = () => {
   const { isOwner, user, isLoading } = useSessionUtils();
