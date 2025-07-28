@@ -1,3 +1,5 @@
+import { useFormContext } from 'react-hook-form';
+
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import { cn } from '@/shared/lib/cn';
 
@@ -7,10 +9,17 @@ interface AddformButtonsProps {
 }
 
 const AddformButtons = ({ isEdit, className }: AddformButtonsProps) => {
+  const {
+    getValues,
+    handleSubmit,
+    formState: { isValid },
+  } = useFormContext();
+
   return isEdit ? (
     <div className={cn('flex flex-col', className)}>
       <PrimaryButton
         className="h-58 text-xl font-semibold lg:h-72"
+        disabled={!isValid}
         label="수정하기"
         type="button"
         variant="solid"
@@ -26,9 +35,13 @@ const AddformButtons = ({ isEdit, className }: AddformButtonsProps) => {
       />
       <PrimaryButton
         className="h-58 text-xl font-semibold lg:h-72"
+        disabled={!isValid}
         label="등록하기"
         type="button"
         variant="solid"
+        onClick={() => {
+          console.log(getValues());
+        }}
       />
     </div>
   );
