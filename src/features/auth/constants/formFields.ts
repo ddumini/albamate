@@ -71,22 +71,22 @@ const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
     name: 'name',
     label: '이름',
     type: 'text',
-    required: true,
+    required: true, // 백엔드에서 필수
     placeholder: '이름을 입력해주세요',
   },
   {
     name: 'nickname',
     label: '닉네임',
     type: 'text',
-    required: true,
-    placeholder: '닉네임을 입력해주세요',
+    required: false,
+    placeholder: '닉네임을 입력해주세요 (선택사항)',
   },
   {
     name: 'phoneNumber',
     label: '전화번호',
     type: 'tel',
-    required: true,
-    placeholder: '전화번호를 입력해주세요',
+    required: false,
+    placeholder: '전화번호를 입력해주세요 (선택사항)',
   },
 ];
 
@@ -98,22 +98,22 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
     name: 'storeName',
     label: '매장명',
     type: 'text',
-    required: true,
-    placeholder: '매장명을 입력해주세요',
+    required: false,
+    placeholder: '매장명을 입력해주세요 (선택사항)',
   },
   {
     name: 'storePhoneNumber',
     label: '매장 전화번호',
     type: 'tel',
-    required: true,
-    placeholder: '매장 전화번호를 입력해주세요',
+    required: false,
+    placeholder: '매장 전화번호를 입력해주세요 (선택사항)',
   },
   {
     name: 'location',
     label: '위치',
     type: 'text',
-    required: true,
-    placeholder: '위치를 입력해주세요',
+    required: false,
+    placeholder: '위치를 입력해주세요 (선택사항)',
   },
 ];
 

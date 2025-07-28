@@ -82,7 +82,6 @@ const AuthForm = () => {
           const basicSignUpData = {
             email: signUpData.email,
             password: signUpData.password,
-            confirmPassword: signUpData.confirmPassword,
             role: userType === 'owner' ? 'OWNER' : 'APPLICANT',
           };
 
@@ -125,25 +124,69 @@ const AuthForm = () => {
 
             console.log('최종 회원가입 데이터:', finalSignUpData);
 
-            // 최종 회원가입 API 호출
-            const result = await signIn('credentials', {
-              ...finalSignUpData,
-              redirect: false, // 자동 리다이렉트 비활성화
-            } as any);
+            // 회원가입 API 직접 호출
+            try {
+              console.log('회원가입 API 요청 시작');
+              const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(finalSignUpData),
+              });
 
-            // 임시 데이터 삭제
-            sessionStorage.removeItem('tempSignUpData');
+              console.log('회원가입 API 응답 상태:', response.status);
 
-            console.log('회원가입 결과:', result);
+              if (response.ok) {
+                console.log('회원가입 성공');
 
-            // CredentialsSignin 에러가 있으면 실패로 처리
-            if (result?.ok && !result?.error) {
-              console.log('회원가입 성공, /albalist로 이동');
-              router.push('/albalist');
-            } else {
-              console.error('회원가입 실패:', result?.error);
-              // 에러 처리 (사용자에게 알림 등)
-              alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+                // 임시 데이터 삭제
+                sessionStorage.removeItem('tempSignUpData');
+
+                // 자동 로그인 처리
+                try {
+                  const signInResult = (await signIn('credentials', {
+                    email: finalSignUpData.email,
+                    password: finalSignUpData.password,
+                    redirect: false,
+                  } as any)) as any;
+
+                  if (signInResult && !signInResult.error) {
+                    console.log('자동 로그인 성공');
+                    alert('회원가입이 완료되었습니다!');
+                    router.push('/albalist');
+                  } else {
+                    console.error('자동 로그인 실패:', signInResult?.error);
+                    alert('회원가입이 완료되었습니다. 로그인해주세요.');
+                    router.push('/signin');
+                  }
+                } catch (signInError) {
+                  console.error('자동 로그인 중 오류:', signInError);
+                  alert('회원가입이 완료되었습니다. 로그인해주세요.');
+                  router.push('/signin');
+                }
+              } else {
+                // 응답 텍스트를 먼저 가져와서 JSON 파싱 시도
+                const responseText = await response.text();
+                console.log('회원가입 API 응답 텍스트:', responseText);
+
+                let errorData;
+                try {
+                  errorData = JSON.parse(responseText);
+                } catch (parseError) {
+                  console.error('응답 JSON 파싱 실패:', parseError);
+                  errorData = { error: '응답 파싱에 실패했습니다.' };
+                }
+
+                console.error('회원가입 실패:', errorData);
+                const errorMessage =
+                  errorData.error || '회원가입에 실패했습니다.';
+                alert(errorMessage);
+              }
+            } catch (error) {
+              console.error('회원가입 중 오류 발생:', error);
+              console.error('에러 상세:', error);
+              alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
             }
           } else {
             // 일반 계정 정보 업데이트
