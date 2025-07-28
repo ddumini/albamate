@@ -1,7 +1,11 @@
+import { Controller, useFormContext } from 'react-hook-form';
+
+import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import Label from '@/shared/components/common/input/Label';
 import InputDropdown from '@/shared/components/common/input-dropdown';
 import { cn } from '@/shared/lib/cn';
 
+import { CreateFormRequest } from '../schema/addform.schema';
 import AddFormSection from './AddFormSection';
 
 const RecruitConditionForm = ({ className }: { className?: string }) => {
@@ -34,6 +38,11 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
     { value: '40세 이상' },
   ];
   const preferredOptions = [{ value: '없음' }];
+
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<CreateFormRequest>();
   return (
     <div
       className={cn(
@@ -42,26 +51,108 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
       )}
     >
       <AddFormSection>
-        <Label isRequired>모집인원</Label>
-        <InputDropdown options={numberOfPositionsOptions} />
+        <Label isRequired htmlFor="numberOfPositions">
+          모집인원
+        </Label>
+        <Controller
+          control={control}
+          name="numberOfPositions"
+          render={({ field }) => (
+            <InputDropdown
+              defaultValue={field.value ? String(field.value) : undefined}
+              name="numberOfPositions"
+              options={numberOfPositionsOptions}
+              onChange={value => {
+                field.onChange(parseInt(value));
+              }}
+            />
+          )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.numberOfPositions}
+          message={errors.numberOfPositions?.message}
+        />
       </AddFormSection>
       <AddFormSection>
-        <Label isRequired>성별</Label>
-        <InputDropdown options={genderOptions} />
+        <Label isRequired htmlFor="gender">
+          성별
+        </Label>
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field }) => (
+            <InputDropdown
+              defaultValue={field.value ? String(field.value) : undefined}
+              name="gender"
+              options={genderOptions}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.gender}
+          message={errors.gender?.message}
+        />
       </AddFormSection>
       <AddFormSection>
-        <Label isRequired>학력</Label>
-        <InputDropdown options={educationOptions} />
+        <Label isRequired htmlFor="education">
+          학력
+        </Label>
+        <Controller
+          control={control}
+          name="education"
+          render={({ field }) => (
+            <InputDropdown
+              defaultValue={field.value ? String(field.value) : undefined}
+              name="education"
+              options={educationOptions}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.education}
+          message={errors.education?.message}
+        />
       </AddFormSection>
       <AddFormSection>
-        <Label isRequired>연령</Label>
-        <InputDropdown options={ageOptions} />
+        <Label isRequired htmlFor="age">
+          연령
+        </Label>
+        <Controller
+          control={control}
+          name="age"
+          render={({ field }) => (
+            <InputDropdown
+              defaultValue={field.value ? String(field.value) : undefined}
+              name="age"
+              options={ageOptions}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <ErrorMessage isVisible={!!errors.age} message={errors.age?.message} />
       </AddFormSection>
       <AddFormSection>
         <Label isRequired htmlFor="preferred">
           우대사항
         </Label>
-        <InputDropdown options={preferredOptions} />
+        <Controller
+          control={control}
+          name="preferred"
+          render={({ field }) => (
+            <InputDropdown
+              defaultValue={field.value ? String(field.value) : undefined}
+              name="preferred"
+              options={preferredOptions}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.preferred}
+          message={errors.preferred?.message}
+        />
       </AddFormSection>
     </div>
   );
