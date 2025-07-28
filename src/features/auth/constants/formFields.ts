@@ -37,9 +37,9 @@ const SIGNIN_FIELDS: FormField[] = [
 ];
 
 /**
- * 회원가입 폼 필드 구성
+ * 회원가입 첫 단계 폼 필드 (사장님과 지원자 모두 동일한 기본 정보)
  */
-const SIGNUP_FIELDS: FormField[] = [
+const SIGNUP_STEP1_FIELDS: FormField[] = [
   {
     name: 'email',
     label: '이메일',
@@ -61,31 +61,10 @@ const SIGNUP_FIELDS: FormField[] = [
     required: true,
     placeholder: '비밀번호를 다시 입력해주세요',
   },
-  {
-    name: 'name',
-    label: '이름',
-    type: 'text',
-    required: true,
-    placeholder: '이름을 입력해주세요',
-  },
-  {
-    name: 'nickname',
-    label: '닉네임',
-    type: 'text',
-    required: true,
-    placeholder: '닉네임을 입력해주세요',
-  },
-  {
-    name: 'phoneNumber',
-    label: '전화번호',
-    type: 'tel',
-    required: true,
-    placeholder: '전화번호를 입력해주세요',
-  },
 ];
 
 /**
- * 지원자 계정 정보 폼 필드 구성
+ * 지원자 계정 정보 폼 필드 구성 (회원가입 두 번째 단계)
  */
 const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
   {
@@ -109,20 +88,12 @@ const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
     required: true,
     placeholder: '전화번호를 입력해주세요',
   },
-  {
-    name: 'location',
-    label: '위치',
-    type: 'text',
-    required: true,
-    placeholder: '위치를 입력해주세요',
-  },
 ];
 
 /**
- * 사장님 계정 정보 폼 필드 구성
+ * 사장님 계정 정보 폼 필드 구성 (회원가입 두 번째 단계)
  */
 const OWNER_ACCOUNT_FIELDS: FormField[] = [
-  ...APPLICANT_ACCOUNT_FIELDS, // 공통 필드
   {
     name: 'storeName',
     label: '매장명',
@@ -136,6 +107,13 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
     type: 'tel',
     required: true,
     placeholder: '매장 전화번호를 입력해주세요',
+  },
+  {
+    name: 'location',
+    label: '위치',
+    type: 'text',
+    required: true,
+    placeholder: '위치를 입력해주세요',
   },
 ];
 
@@ -160,7 +138,8 @@ export const getFormFields = (
     case 'signin':
       return SIGNIN_FIELDS;
     case 'signup':
-      return SIGNUP_FIELDS;
+      // 회원가입 첫 단계: 사장님과 지원자 모두 동일한 기본 정보
+      return SIGNUP_STEP1_FIELDS;
     case 'accountInfo':
       return userType === 'owner'
         ? OWNER_ACCOUNT_FIELDS

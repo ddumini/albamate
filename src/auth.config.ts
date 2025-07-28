@@ -8,40 +8,215 @@ import { axiosInstance } from '@/shared/lib/axios';
 export const authConfig = {
   providers: [
     Credentials({
+      id: 'credentials',
+      name: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
       authorize: async credentials => {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
+        console.log('=== authorize 함수 시작 ===');
+        console.log('받은 credentials:', credentials);
 
-        if (!email || !password) return null;
-
-        // 회원가입 인증
-        // 로그인 인증
-        // TODO: 엔드포인트 수정 (공통 api로 변경 예정)
-        const res = await axiosInstance.post('/auth/sign-in', {
+        const {
           email,
           password,
+          passwordConfirmation,
+          nickname,
+          name,
+          phoneNumber,
+          role,
+          location,
+          storeName,
+          storePhoneNumber,
+        } = credentials as any;
+
+        console.log('파싱된 데이터:', {
+          email,
+          password,
+          passwordConfirmation,
+          nickname,
+          name,
+          phoneNumber,
+          role,
+          location,
+          storeName,
+          storePhoneNumber,
         });
 
-        if (res.status !== 200) {
-          console.error('Auth API error:', res.status, res.statusText);
+        if (!email || !password) {
+          console.log('❌ 이메일 또는 비밀번호 누락');
           return null;
         }
 
-        const data = res.data;
+        // 회원가입 시에만 추가 필드 검증
+        if (passwordConfirmation) {
+          console.log('🔄 회원가입 플로우 시작');
+          try {
+            // 지원자 회원가입
+            if (role === 'APPLICANT') {
+              console.log('👤 지원자 회원가입 시작');
 
-        return {
-          id: data.user.id,
-          email: data.user.email,
-          name: data.user.name,
-          role: data.user.role,
-          accessToken: data.accessToken,
-        };
+              const applicantData = {
+                email,
+                password,
+                passwordConfirmation,
+                role,
+                // accountInfo에서 받은 추가 정보
+                nickname,
+                name,
+                phoneNumber,
+              };
+
+              console.log(' 지원자 회원가입 요청 데이터:', applicantData);
+
+              const signUpRes = await axiosInstance.post(
+                '/auth/sign-up',
+                applicantData
+              );
+
+              console.log('📥 회원가입 API 응답:', signUpRes);
+              console.log(' 응답 상태:', signUpRes.status);
+              console.log('📥 응답 데이터:', signUpRes.data);
+
+              if (signUpRes.status !== 200) {
+                console.error(
+                  '❌ Applicant sign up API error:',
+                  signUpRes.status,
+                  signUpRes.data
+                );
+                throw new Error('회원가입에 실패했습니다.');
+              }
+
+              console.log('✅ 지원자 회원가입 성공:', signUpRes.data);
+
+              // 회원가입 응답에서 바로 사용자 정보와 토큰 추출
+              const { user, accessToken, refreshToken } = signUpRes.data;
+
+              console.log('👤 추출된 user:', user);
+              console.log(' 추출된 accessToken:', accessToken);
+              console.log('🔄 추출된 refreshToken:', refreshToken);
+
+              const returnData = {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                nickname: user.nickname,
+                role: user.role,
+                phoneNumber: user.phoneNumber,
+                location: user.location,
+                storeName: user.storeName,
+                storePhoneNumber: user.storePhoneNumber,
+                imageUrl: user.imageUrl,
+                accessToken,
+                refreshToken,
+              };
+
+              console.log('✅ === 회원가입 성공, 반환할 데이터 ===');
+              console.log('✅ returnData:', returnData);
+              return returnData;
+            }
+            // 사장님 회원가입
+            else if (role === 'OWNER') {
+              console.log('🏪 사장님 회원가입 시작');
+
+              const ownerData = {
+                email,
+                password,
+                passwordConfirmation,
+                role,
+                // accountInfo에서 받은 추가 정보
+                storeName,
+                storePhoneNumber,
+                location,
+              };
+
+              console.log(' 사장님 회원가입 요청 데이터:', ownerData);
+
+              const signUpRes = await axiosInstance.post(
+                '/auth/sign-up',
+                ownerData
+              );
+
+              console.log(' 사장님 회원가입 API 응답:', signUpRes);
+
+              if (signUpRes.status !== 200) {
+                console.error(
+                  '❌ Owner sign up API error:',
+                  signUpRes.status,
+                  signUpRes.data
+                );
+                throw new Error('회원가입에 실패했습니다.');
+              }
+
+              console.log('✅ 사장님 회원가입 성공:', signUpRes.data);
+
+              // 회원가입 응답에서 바로 사용자 정보와 토큰 추출
+              const { user, accessToken, refreshToken } = signUpRes.data;
+
+              const returnData = {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                nickname: user.nickname,
+                role: user.role,
+                phoneNumber: user.phoneNumber,
+                location: user.location,
+                storeName: user.storeName,
+                storePhoneNumber: user.storePhoneNumber,
+                imageUrl: user.imageUrl,
+                accessToken,
+                refreshToken,
+              };
+
+              console.log('✅ === 사장님 회원가입 성공, 반환할 데이터 ===');
+              console.log('✅ returnData:', returnData);
+              return returnData;
+            }
+          } catch (error) {
+            console.error('❌ 회원가입 중 오류 발생:', error);
+            console.error(
+              '❌ 에러 상세:',
+              error.response?.data || error.message
+            );
+            return null;
+          }
+        }
+
+        console.log('🔐 일반 로그인 플로우 시작');
+        // 일반 로그인 (회원가입이 아닌 경우)
+        try {
+          const res = await axiosInstance.post('/auth/sign-in', {
+            email,
+            password,
+          });
+
+          if (res.status !== 200) {
+            console.error('Auth API error:', res.status, res.statusText);
+            return null;
+          }
+
+          const data = res.data;
+          console.log('로그인 성공:', data);
+
+          return {
+            id: data.user.id,
+            email: data.user.email,
+            name: data.user.name,
+            nickname: data.user.nickname,
+            role: data.user.role,
+            phoneNumber: data.user.phoneNumber,
+            location: data.user.location,
+            storeName: data.user.storeName,
+            storePhoneNumber: data.user.storePhoneNumber,
+            imageUrl: data.user.imageUrl,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+          };
+        } catch (error) {
+          console.error('로그인 중 오류 발생:', error);
+          return null;
+        }
       },
     }),
   ],
@@ -88,8 +263,25 @@ export const authConfig = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      console.log('Redirect callback - url:', url, 'baseUrl:', baseUrl);
+
+      // 회원가입 완료 후 /albalist로 리다이렉트
+      if (url.startsWith('/signin') || url.startsWith('/signup')) {
+        console.log('회원가입/로그인 완료, /albalist로 리다이렉트');
+        return `${baseUrl}/albalist`;
+      }
+
+      // 기본 리다이렉트 로직
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
   pages: {
     signIn: '/signin',
+    signUp: '/signup',
+    accountInfo: '/accountInfo',
+    error: '/signin', // 인증 관련 에러 발생 시 리다이렉트 될 페이지
   },
 } as const;

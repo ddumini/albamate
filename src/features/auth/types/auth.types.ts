@@ -67,25 +67,36 @@ export interface SignInRequest {
 }
 
 /**
- * 회원가입 요청 타입
+ * 사장님 회원가입 API 요청 타입
  *
- * 회원가입 폼에서 입력한 값을 서버에 보낼 때 사용하는 형식입니다.
- * passwordConfirmation 필드는 서버에서 비밀번호 일치 여부를 검증하는 데 사용됩니다.
- *
- * 예시:
- * {
- *   email: "user@example.com",
- *   nickname: "ddumini",
- *   password: "password123",
- *   passwordConfirmation: "password123"
- * }
+ * 백엔드 API에 전송하는 실제 요청 형식
  */
-export interface SignUpRequest {
-  email: string; // 사용자 이메일 (ID로 사용)
-  nickname: string; // 사용자 닉네임
-  password: string; // 비밀번호
-  passwordConfirmation: string; // 비밀번호 확인 (프론트/백엔드 양쪽에서 검증)
+export interface OwnerSignUpRequest {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  role: 'OWNER';
 }
+
+/**
+ * 지원자 회원가입 API 요청 타입
+ *
+ * 백엔드 API에 전송하는 실제 요청 형식
+ */
+export interface ApplicantSignUpRequest {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordConfirmation: string;
+  name: string;
+  phoneNumber: string;
+  role: 'APPLICANT';
+}
+
+/**
+ * 통합 회원가입 API 요청 타입
+ */
+export type SignUpRequest = OwnerSignUpRequest | ApplicantSignUpRequest;
 
 /**
  * 토큰 갱신 요청 타입

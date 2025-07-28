@@ -22,36 +22,51 @@ export interface User {
   location?: string;
 }
 
-// 폼 데이터 타입 정의
+// 폼 데이터 타입 정의 (프론트엔드 폼용)
 export interface SignInFormData {
   email: string;
   password: string;
 }
 
-export interface SignUpFormData {
+/**
+ * 회원가입 첫 단계 폼 데이터 타입 (사장님과 지원자 모두 동일)
+ */
+export interface SignUpStep1FormData {
   email: string;
   password: string;
   confirmPassword: string;
-  name: string;
-  nickname: string;
-  phoneNumber: string;
 }
 
+/**
+ * 지원자 계정 정보 폼 데이터 타입 (회원가입 두 번째 단계)
+ */
 export interface ApplicantAccountInfoFormData {
   name: string;
   nickname: string;
   phoneNumber: string;
+}
+
+/**
+ * 사장님 계정 정보 폼 데이터 타입 (회원가입 두 번째 단계)
+ */
+export interface OwnerAccountInfoFormData {
+  storeName: string;
+  storePhoneNumber: string;
   location: string;
 }
 
-export interface OwnerAccountInfoFormData extends ApplicantAccountInfoFormData {
-  storeName: string;
-  storePhoneNumber: string;
-}
-
+/**
+ * 통합 계정 정보 폼 데이터 타입
+ */
 export type AccountInfoFormData =
   | ApplicantAccountInfoFormData
   | OwnerAccountInfoFormData;
+
+/**
+ * 통합 회원가입 폼 데이터 타입 (첫 단계만)
+ */
+export type SignUpFormData = SignUpStep1FormData;
+
 export type AuthFormData =
   | SignInFormData
   | SignUpFormData

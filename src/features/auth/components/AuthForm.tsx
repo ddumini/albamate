@@ -1,5 +1,5 @@
 'use client';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -37,13 +37,18 @@ import AuthFormFields from './AuthFormFields';
  */
 const AuthForm = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const authPageType = getAuthPageType(pathname);
   const authContext = useContext(AuthContext);
+  const router = useRouter();
 
   // 사용자 타입 (지원자/사장님)
   const userType = authContext?.userType;
   const isOwner = authContext?.isOwner || false;
   const isApplicant = authContext?.isApplicant || false;
+
+  // 쿼리 파라미터에서 role 가져오기
+  const roleFromQuery = searchParams.get('type');
 
   // 폼 구성 가져오기
   const formConfig = getFormConfig(authPageType, userType || undefined);
@@ -72,19 +77,83 @@ const AuthForm = () => {
         }
         case 'signup': {
           const signUpData = data as SignUpFormData;
-          // TODO: 회원가입 API 호출
-          console.log('회원가입 데이터:', signUpData);
+
+          // 회원가입 첫 단계: 기본 정보만 세션 스토리지에 저장하고 accountInfo로 이동
+          const basicSignUpData = {
+            email: signUpData.email,
+            password: signUpData.password,
+            confirmPassword: signUpData.confirmPassword,
+            role: userType === 'owner' ? 'OWNER' : 'APPLICANT',
+          };
+
+          // 세션 스토리지에 임시 저장
+          sessionStorage.setItem(
+            'tempSignUpData',
+            JSON.stringify(basicSignUpData)
+          );
+
+          // accountInfo 페이지로 이동 (사장님과 지원자 모두)
+          const accountInfoUrl =
+            userType === 'owner'
+              ? '/account-info?type=owner&step=signup'
+              : '/account-info?type=applicant&step=signup';
+
+          router.push(accountInfoUrl);
           break;
         }
         case 'accountInfo': {
           const accountData = data as AccountInfoFormData;
-          // TODO: 계정 정보 업데이트 API 호출 (사용자 타입별로 다른 엔드포인트)
-          console.log(
-            '계정 정보 데이터:',
-            accountData,
-            '사용자 타입:',
-            userType
-          );
+
+          // 회원가입 완료 단계인지 확인
+          const isSignUpStep = searchParams.get('step') === 'signup';
+
+          if (isSignUpStep) {
+            // 임시 저장된 회원가입 데이터 가져오기
+            const tempSignUpData = sessionStorage.getItem('tempSignUpData');
+            if (!tempSignUpData) {
+              console.error('임시 회원가입 데이터를 찾을 수 없습니다.');
+              return;
+            }
+
+            const basicData = JSON.parse(tempSignUpData);
+
+            // 최종 회원가입 데이터 구성
+            const finalSignUpData = {
+              ...basicData,
+              ...accountData,
+            };
+
+            console.log('최종 회원가입 데이터:', finalSignUpData);
+
+            // 최종 회원가입 API 호출
+            const result = await signIn('credentials', {
+              ...finalSignUpData,
+              redirect: false, // 자동 리다이렉트 비활성화
+            } as any);
+
+            // 임시 데이터 삭제
+            sessionStorage.removeItem('tempSignUpData');
+
+            console.log('회원가입 결과:', result);
+
+            // CredentialsSignin 에러가 있으면 실패로 처리
+            if (result?.ok && !result?.error) {
+              console.log('회원가입 성공, /albalist로 이동');
+              router.push('/albalist');
+            } else {
+              console.error('회원가입 실패:', result?.error);
+              // 에러 처리 (사용자에게 알림 등)
+              alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+            }
+          } else {
+            // 일반 계정 정보 업데이트
+            console.log(
+              '계정 정보 데이터:',
+              accountData,
+              '사용자 타입:',
+              userType
+            );
+          }
           break;
         }
       }
@@ -99,11 +168,18 @@ const AuthForm = () => {
       case 'signin':
         return '로그인 하기';
       case 'signup':
-        return '회원가입 하기';
-      case 'accountInfo':
+        return '다음'; // 회원가입에서 '다음'으로 변경
+      case 'accountInfo': {
+        const isSignUpStep = searchParams.get('step') === 'signup';
+        if (isSignUpStep) {
+          return userType === 'owner'
+            ? '사장님 회원가입 완료'
+            : '지원자 회원가입 완료';
+        }
         return userType === 'owner'
           ? '사장님 정보 저장하기'
           : '지원자 정보 저장하기';
+      }
       default:
         return '제출하기';
     }
