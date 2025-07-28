@@ -79,18 +79,15 @@ const AlbaListPage = () => {
   const error = isOwner ? ownerError : applicantError;
 
   // 필터 변경 핸들러
-  const handleFilterChange = useCallback(
-    (newFilters: Partial<FilterState>) => {
-      setFilters(prev => {
-        const updated = {
-          ...prev,
-          ...newFilters,
-        };
-        return updated;
-      });
-    },
-    [filters]
-  );
+  const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
+    setFilters(prev => {
+      const updated = {
+        ...prev,
+        ...newFilters,
+      };
+      return updated;
+    });
+  }, []);
 
   // 검색 입력 변경 핸들러
   const handleSearchChange = useCallback((value: string) => {
