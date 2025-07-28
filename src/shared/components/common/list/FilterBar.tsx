@@ -23,6 +23,10 @@ import { FilterBarProps } from '@/shared/types/filter';
  * @param {FilterBarProps} props - 필터 바에 필요한 모든 속성을 포함하는 props 객체
  * @param {boolean} props.isOwner - 사용자가 사장(OWNER)인지 여부 (공개/비공개 필터 노출 여부 결정)
  * @param {string} [props.searchPlaceholder] - 검색 입력창에 표시될 플레이스홀더 텍스트
+ * @param {string} [props.searchValue] - 검색 입력창의 현재 값
+ * @param {string} [props.recruitValue] - 모집 상태 필터의 현재 값
+ * @param {string} [props.publicValue] - 공개 여부 필터의 현재 값
+ * @param {string} [props.sortValue] - 정렬 옵션의 현재 값
  * @param {SearchHandlers} [props.searchHandlers] - 검색창 관련 이벤트 핸들러들을 모은 객체
  * @param {() => void} [props.searchHandlers.onIconClick] - 검색 아이콘 클릭 시 실행되는 핸들러
  * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} [props.searchHandlers.onInputChange] - 검색창 입력 변경 시 실행되는 핸들러
@@ -38,6 +42,10 @@ import { FilterBarProps } from '@/shared/types/filter';
  * <FilterBar
  *   isOwner={true}
  *   searchPlaceholder="어떤 알바를 찾고 계세요?"
+ *   searchValue={searchValue}
+ *   recruitValue={recruitValue}
+ *   publicValue={publicValue}
+ *   sortValue={sortValue}
  *   searchHandlers={{
  *     onIconClick: handleIconClick,
  *     onInputChange: handleInputChange,
@@ -53,6 +61,10 @@ import { FilterBarProps } from '@/shared/types/filter';
 const FilterBar = ({
   isOwner,
   searchPlaceholder,
+  searchValue,
+  recruitValue,
+  publicValue,
+  sortValue,
   searchHandlers,
   filterHandlers,
 }: FilterBarProps) => {
@@ -77,6 +89,7 @@ const FilterBar = ({
           inputClassName="rounded-2xl lg:rounded-3xl lg:pl-68"
           placeholder={searchPlaceholder}
           src="/icons/search.svg"
+          value={searchValue}
           onChange={searchHandlers?.onInputChange}
           onKeyDown={searchHandlers?.onInputKeyDown}
         />
@@ -86,6 +99,7 @@ const FilterBar = ({
             <Select
               options={recruitOptions}
               placeholder="전체"
+              value={recruitValue}
               variant="filter"
               onSelect={filterHandlers.handleRecruitChange}
             />
@@ -94,6 +108,7 @@ const FilterBar = ({
               <Select
                 options={PublicFilterOptions}
                 placeholder="전체"
+                value={publicValue}
                 variant="filter"
                 onSelect={filterHandlers.handlePublicChange}
               />
@@ -102,6 +117,7 @@ const FilterBar = ({
           {/* 정렬 */}
           <Select
             options={SortOptions}
+            value={sortValue}
             variant="sort"
             wrapperClassName="mt-8"
             onSelect={filterHandlers.handleSortChange}
