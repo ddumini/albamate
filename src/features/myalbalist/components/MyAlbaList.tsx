@@ -52,26 +52,11 @@ const AlbaListPage = () => {
     }));
   }, [debouncedSearchKeyword]);
 
-  // 세션 상태 로깅 (삭제예정)
-  console.log('세션 상태:', {
-    isAuthenticated,
-    isOwner,
-    user,
-    session: session
-      ? {
-          user: session.user,
-          accessToken: session.accessToken ? '존재함' : '없음',
-        }
-      : null,
-    isSessionLoading,
-  });
-
   // 필터 상태를 API 파라미터로 변환 (limit 포함)
   const apiParams = useMemo(
     () => convertFiltersToApiParams(filters, isOwner, 10),
     [filters, isOwner]
   );
-  console.log('API 파라미터:', apiParams);
 
   // 사용자 역할에 따라 다른 쿼리 사용
   const {
@@ -96,14 +81,11 @@ const AlbaListPage = () => {
   // 필터 변경 핸들러
   const handleFilterChange = useCallback(
     (newFilters: Partial<FilterState>) => {
-      console.log('필터 변경됨:', newFilters);
-      console.log('기존 필터:', filters);
       setFilters(prev => {
         const updated = {
           ...prev,
           ...newFilters,
         };
-        console.log('업데이트된 필터:', updated);
         return updated;
       });
     },
@@ -112,7 +94,6 @@ const AlbaListPage = () => {
 
   // 검색 입력 변경 핸들러
   const handleSearchChange = useCallback((value: string) => {
-    console.log('검색 입력 변경:', value);
     setSearchInput(value);
   }, []);
 
@@ -147,13 +128,6 @@ const AlbaListPage = () => {
       items = [];
     }
   }
-
-  // 삭제예정
-  console.log('isOwner:', isOwner);
-  console.log('filters:', filters);
-  console.log('apiParams:', apiParams);
-  console.log('currentData:', currentData);
-  console.log('items:', items);
 
   return (
     <div className="mb-68">

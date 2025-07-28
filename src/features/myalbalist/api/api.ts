@@ -23,13 +23,11 @@ export const useMyAlbalistApi = () => {
 
   return {
     getApplicantMyAlbalist: (params: ApplicantFilterParams = { limit: 10 }) => {
-      console.log('Applicant API 호출 파라미터:', params);
       return authAxios.get('users/me/applications', {
         params,
       });
     },
     getOwnerMyAlbalist: (params: OwnerFilterParams = { limit: 10 }) => {
-      console.log('Owner API 호출 파라미터:', params);
       return authAxios.get('users/me/forms', {
         params,
       });

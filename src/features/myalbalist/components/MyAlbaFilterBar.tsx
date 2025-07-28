@@ -29,17 +29,14 @@ const AlbaFilterBar = ({
   onFilterChange,
 }: Props) => {
   const handleFilterChange = (value: string) => {
-    console.log('모집 여부 필터 변경:', value);
     onFilterChange({ recruitStatus: value });
   };
 
   const handlePublicFilterChange = (value: string) => {
-    console.log('공개/비공개 필터 변경:', value);
     onFilterChange({ publicStatus: value });
   };
 
   const handleSortChange = (value: string) => {
-    console.log('정렬 변경:', value);
     onFilterChange({ sortStatus: value });
   };
 
