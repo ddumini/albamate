@@ -17,6 +17,7 @@ import { cn } from '@/shared/lib/cn';
  * @param {SelectProps} props
  * @param {SelectOption[]} props.options - 선택 옵션 배열
  * @param {string} [props.defaultValue] - 기본 선택된 값
+ * @param {string} [props.value] - 현재 선택된 값 (제어 컴포넌트용)
  * @param {string} [props.placeholder] - 선택 시 표시될 텍스트
  * @param {string} [props.variant] - 선택 컴포넌트 타입 (filter, sort)
  * @param {string} [props.className] - 추가 커스텀 클래스
@@ -32,6 +33,7 @@ interface SelectProps {
   options: SelectOption[];
   onSelect: (selectedValue: string) => void;
   defaultValue?: string;
+  value?: string;
   placeholder?: string;
   variant?: 'filter' | 'sort';
   wrapperClassName?: string;
@@ -42,16 +44,20 @@ const Select = ({
   options,
   onSelect,
   defaultValue,
+  value,
   placeholder,
   variant = 'filter',
   wrapperClassName = '',
   buttonClassName = '',
 }: SelectProps) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue || '');
+  const [internalValue, setInternalValue] = useState(defaultValue || '');
 
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    onSelect(value);
+  // 외부에서 value가 제공되면 그것을 사용, 아니면 내부 상태 사용
+  const selectedValue = value !== undefined ? value : internalValue;
+
+  const handleSelect = (newValue: string) => {
+    setInternalValue(newValue);
+    onSelect(newValue);
   };
 
   const selectedOption = options.find(option => option.value === selectedValue);

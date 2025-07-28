@@ -14,23 +14,23 @@ export const getDDayString = (endDate: string): string => {
 };
 
 /**
- * 날짜를 YYYY.MM.DD. 형식으로 포맷 (긴 형식)
+ * 날짜를 YYYY.MM.DD 형식으로 포맷 (긴 형식)
  * @param isoString ISO 형식의 날짜 문자열
- * @returns 예: "2025.07.24."
+ * @returns 예: "2025.07.24"
  */
 export const formatDateLong = (isoString: string): string => {
   const [year, month, day] = isoString.slice(0, 10).split('-');
-  return `${year}.${month}.${day}.`;
+  return `${year}.${month}.${day}`;
 };
 
 /**
- * 날짜를 YY.MM.DD. 형식으로 포맷 (짧은 형식)
+ * 날짜를 YY.MM.DD 형식으로 포맷 (짧은 형식)
  * @param isoString ISO 형식의 날짜 문자열
- * @returns 예: "25.07.24."
+ * @returns 예: "25.07.24"
  */
 export const formatDateShort = (isoString: string): string => {
   const [year, month, day] = isoString.slice(0, 10).split('-');
-  return `${year?.slice(2)}.${month}.${day}.`;
+  return `${year?.slice(2)}.${month}.${day}`;
 };
 
 /**
