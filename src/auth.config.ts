@@ -3,6 +3,7 @@ import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
 import { User } from '@/features/auth';
+import { axiosInstance } from '@/shared/lib/axios';
 
 export const authConfig = {
   providers: [
@@ -22,24 +23,17 @@ export const authConfig = {
         // 회원가입 인증
         // 로그인 인증
         // TODO: 엔드포인트 수정 (공통 api로 변경 예정)
-        const res = await fetch(
-          `https://fe-project-albaform.vercel.app/15-3/auth/sign-in`,
-          {
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-            headers: {
-              // eslint-disable-next-line @typescript-eslint/naming-convention
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await axiosInstance.post('/auth/sign-in', {
+          email,
+          password,
+        });
 
-        if (!res.ok) {
+        if (res.status !== 200) {
           console.error('Auth API error:', res.status, res.statusText);
           return null;
         }
 
-        const data = await res.json();
+        const data = res.data;
 
         return {
           id: data.user.id,
