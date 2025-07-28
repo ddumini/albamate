@@ -15,10 +15,6 @@ const GnbRenderer = () => {
     return <AuthGnb />;
   }
 
-  if (pathname === '/') {
-    return isAuthenticated ? <MainGnb /> : <LandingGnb />;
-  }
-
   return isAuthenticated ? <MainGnb /> : <LandingGnb />;
 };
 
