@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Checkbox from '@/shared/components/common/button/Checkbox';
@@ -17,9 +16,6 @@ import { CreateFormRequest } from '../schema/addform.schema';
 import AddFormSection from './AddFormSection';
 
 const WorkConditionForm = ({ className }: { className?: string }) => {
-  const [isNegotiableWorkDays, setIsNegotiableWorkDays] =
-    useState<boolean>(false);
-  const [isPublic, setIsPublic] = useState<boolean>(false);
   const {
     register,
     control,
