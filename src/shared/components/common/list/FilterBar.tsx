@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 
 import {
   MyAlbaSortOptions,
-  PublicFilterOptions,
   RecruitFilterOptions,
   SortOptions,
 } from '@/shared/constants/filterOptions';
@@ -63,7 +62,6 @@ const FilterBar = ({
   searchPlaceholder,
   searchValue,
   recruitValue,
-  publicValue,
   sortValue,
   searchHandlers,
   filterHandlers,
@@ -72,6 +70,12 @@ const FilterBar = ({
 
   // 현재 페이지가 마이 알바리스트인지 확인
   const isMyAlbaList = pathname.includes('/myalbalist');
+
+  // 현재 페이지가 알바 목록인지 확인
+  const isAlbaList = pathname.includes('/albalist');
+
+  // 공개 여부 필터 노출 여부 조건
+  const showPublicFilter = isOwner && !isAlbaList;
 
   // 모집 여부 필터 옵션 결정
   const recruitOptions =
@@ -104,13 +108,13 @@ const FilterBar = ({
               onSelect={filterHandlers.handleRecruitChange}
             />
             {/* 공개 여부 */}
-            {isOwner && (
+            {showPublicFilter && (
               <Select
-                options={PublicFilterOptions}
+                options={recruitOptions}
                 placeholder="전체"
-                value={publicValue}
+                value={recruitValue}
                 variant="filter"
-                onSelect={filterHandlers.handlePublicChange}
+                onSelect={filterHandlers.handleRecruitChange ?? (() => {})} // 빈 함수로 대체
               />
             )}
           </div>

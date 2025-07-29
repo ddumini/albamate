@@ -8,7 +8,7 @@ export interface SearchHandlers {
 
 export interface FilterHandlers {
   handleRecruitChange: (value: string) => void;
-  handlePublicChange: (value: string) => void;
+  handlePublicChange?: (value: string) => void;
   handleSortChange: (value: string) => void;
 }
 
