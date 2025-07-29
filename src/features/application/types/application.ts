@@ -12,7 +12,7 @@ export interface ApplicationData {
 // 지원서 생성 요청 타입
 export interface CreateApplicationRequest {
   formId: number;
-  ApplicationData: ApplicationData;
+  applicationData: ApplicationData;
 }
 
 // 지원서 응답 타입 (생성 후 반환되는 데이터)
