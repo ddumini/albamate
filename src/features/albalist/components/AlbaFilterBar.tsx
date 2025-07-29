@@ -2,44 +2,50 @@
 
 import FilterBar from '@common/list/FilterBar';
 
-interface FilterState {
-  recruit?: string;
-  isPublic?: string;
-  sort?: string;
-  search?: string;
-}
-
 interface Props {
   isOwner: boolean;
-  filters: FilterState;
-  setFilters: (filters: Partial<FilterState>) => void;
+  searchValue: string;
+  recruitValue?: string;
+  sortValue?: string;
+  onSearchChange: (value: string) => void;
+  onFilterChange: (filters: FilterState) => void;
 }
 
-const AlbaFilterBar = ({ isOwner, filters, setFilters }: Props) => {
-  const handleFilterChange = (value: string) => {
-    setFilters({ recruit: value });
-  };
+interface FilterState {
+  recruitStatus?: string;
+  sortStatus?: string;
+  searchKeyword?: string;
+}
 
-  const handlePublicFilterChange = (value: string) => {
-    setFilters({ isPublic: value });
+const AlbaFilterBar = ({
+  isOwner,
+  searchValue,
+  recruitValue,
+  sortValue,
+  onSearchChange,
+  onFilterChange,
+}: Props) => {
+  const handleFilterChange = (value: string) => {
+    onFilterChange({ recruitStatus: value });
   };
 
   const handleSortChange = (value: string) => {
-    setFilters({ sort: value });
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters({ search: e.target.value });
+    onFilterChange({ sortStatus: value });
   };
 
   const handleIconClick = () => {
-    // 검색 아이콘 클릭 시 현재 입력된 검색어로 검색 실행
-    setFilters({ search: filters.search });
+    onFilterChange({ searchKeyword: searchValue });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onSearchChange(e.target.value);
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setFilters({ search: filters.search }); // Enter 시 검색
+      const value = e.currentTarget.value;
+      onSearchChange(value);
+      onFilterChange({ searchKeyword: value });
     }
   };
 
@@ -47,20 +53,18 @@ const AlbaFilterBar = ({ isOwner, filters, setFilters }: Props) => {
     <FilterBar
       filterHandlers={{
         handleRecruitChange: handleFilterChange,
-        handlePublicChange: handlePublicFilterChange,
         handleSortChange: handleSortChange,
       }}
       isOwner={isOwner}
-      publicValue={filters.isPublic || ''}
-      recruitValue={filters.recruit || ''}
+      recruitValue={recruitValue}
       searchHandlers={{
         onIconClick: handleIconClick,
         onInputChange: handleInputChange,
         onInputKeyDown: handleInputKeyDown,
       }}
       searchPlaceholder="어떤 알바를 찾고 계세요?"
-      searchValue={filters.search || ''}
-      sortValue={filters.sort || ''}
+      searchValue={searchValue}
+      sortValue={sortValue}
     />
   );
 };
