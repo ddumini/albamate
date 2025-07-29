@@ -1,49 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useSession } from 'next-auth/react';
 
-import { useAxiosWithAuth } from '@/shared/lib/axios';
-
-// API 훅
-export const useApplicationDetailApi = () => {
-  const authAxios = useAxiosWithAuth();
-
-  return {
-    getAlbaformDetail: (formId: string) => {
-      return authAxios.get(`forms/${formId}`);
-    },
-
-    getMyApplication: (formId: string) => {
-      return authAxios.get(`forms/${formId}/my-application`);
-    },
-
-    getApplicationById: (applicationId: string) => {
-      return authAxios.get(`applications/${applicationId}`);
-    },
-
-    updateApplicationStatus: (applicationId: string, status: string) => {
-      return authAxios.patch(`applications/${applicationId}`, { status });
-    },
-  };
-};
-
-// 공통 에러 로깅 함수
-const logError = (errorName: string, error: AxiosError) => {
-  console.error(`${errorName} 에러:`, {
-    message: error.message,
-    status: error.response?.status,
-    statusText: error.response?.statusText,
-    data: error.response?.data,
-    url: error.config?.url,
-  });
-
-  console.error(
-    '에러 응답 데이터:',
-    error.response?.data
-      ? JSON.stringify(error.response.data, null, 2)
-      : '데이터 없음'
-  );
-};
+import { useApplicationDetailApi } from '../api/applicationDetail';
 
 // 알바폼 상세 조회 쿼리
 export const useAlbaformDetailQuery = (formId: string) => {
@@ -53,17 +11,8 @@ export const useAlbaformDetailQuery = (formId: string) => {
   return useQuery({
     queryKey: ['albaformDetail', formId],
     queryFn: async () => {
-      try {
-        const response = await api.getAlbaformDetail(formId);
-        return response.data;
-      } catch (error: any) {
-        console.error(
-          '에러 응답 데이터:',
-          JSON.stringify(error.response?.data, null, 2)
-        );
-
-        throw error;
-      }
+      const response = await api.getAlbaformDetail(formId);
+      return response.data;
     },
     retry: 1,
     retryDelay: 1000,
@@ -83,19 +32,8 @@ export const useMyApplicationQuery = (formId: string, options = {}) => {
   return useQuery({
     queryKey: ['myApplication', formId],
     queryFn: async () => {
-      try {
-        const response = await api.getMyApplication(formId);
-        return response.data;
-      } catch (error: any) {
-        logError('내 지원 내역 조회', error);
-
-        // 401이나 404는 null 반환 (지원서 없음)
-        if (error.response?.status === 401 || error.response?.status === 404) {
-          return null;
-        }
-
-        throw error;
-      }
+      const response = await api.getMyApplication(formId);
+      return response.data;
     },
     retry: 1,
     retryDelay: 1000,
@@ -121,19 +59,8 @@ export const useApplicationByIdQuery = (
     queryFn: async () => {
       if (!applicationId) return null;
 
-      try {
-        const response = await api.getApplicationById(applicationId);
-        return response.data;
-      } catch (error: any) {
-        logError('지원서 ID 조회', error);
-
-        // 404는 null 반환 (지원서 없음)
-        if (error.response?.status === 404) {
-          return null;
-        }
-
-        throw error;
-      }
+      const response = await api.getApplicationById(applicationId);
+      return response.data;
     },
     retry: 1,
     retryDelay: 1000,
