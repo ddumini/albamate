@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import AlbaDetail from '@/shared/components/alba/AlbaDetail';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import ImageCarousel from '@/shared/components/ui/ImageCarousel';
+import { Slide } from '@/shared/components/common/imageCarousel/carousel';
+import ImageCarousel from '@/shared/components/common/imageCarousel/ImageCarousel';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
-import { Slide } from '@/shared/types/carousel';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 import {
@@ -80,8 +80,6 @@ const ApplicationDetail = ({
 
   const isLoading =
     sessionLoading || albaLoading || appLoading || isInitialRender;
-
-  console.log(user);
 
   // 1. 로딩 처리
   if (isLoading) {
@@ -171,7 +169,7 @@ const ApplicationDetail = ({
   }
 
   // 권한 체크: 사장님인데 본인 공고가 아닌 경우
-  if (isOwner && albaformData.ownerId !== user?.id) {
+  if (isOwner && Number(albaformData.ownerId) !== Number(user?.id)) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold text-red-600">
@@ -195,7 +193,7 @@ const ApplicationDetail = ({
   if (
     isApplicant &&
     applicationData &&
-    applicationData.applicantId !== user?.id
+    Number(applicationData.applicantId) !== Number(user?.id)
   ) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
