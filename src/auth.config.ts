@@ -14,21 +14,56 @@ export const authConfig = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      authorize: async credentials => {
+      authorize: async (credentials, req) => {
         console.log('=== authorize 함수 시작 ===');
         console.log('받은 credentials:', credentials);
 
-        const { email, password } = credentials as any;
+        const {
+          email,
+          password,
+          userType: credentialsUserType,
+        } = credentials as any;
 
         console.log('파싱된 데이터:', {
           email,
           password,
+          userType: credentialsUserType,
         });
 
         if (!email || !password) {
           console.log('❌ 이메일 또는 비밀번호 누락');
           return null;
         }
+
+        // 사용자 타입 결정: credentials에서 전달받은 값 우선, 없으면 URL에서 확인
+        let userType: string | null = credentialsUserType;
+
+        // credentials에서 사용자 타입이 없으면 URL에서 확인
+        if (!userType && req.url) {
+          try {
+            const url = new URL(req.url);
+            userType = url.searchParams.get('type');
+            console.log('req.url에서 사용자 타입 확인:', userType);
+          } catch (error) {
+            console.error('URL 파싱 오류:', error);
+          }
+        }
+
+        // req.headers에서 referer 확인 (대안)
+        if (!userType && req.headers) {
+          const referer = (req.headers as any).referer;
+          if (referer) {
+            try {
+              const refererUrl = new URL(referer);
+              userType = refererUrl.searchParams.get('type');
+              console.log('referer에서 사용자 타입 확인:', userType);
+            } catch (error) {
+              console.error('Referer URL 파싱 오류:', error);
+            }
+          }
+        }
+
+        console.log('최종 사용자 타입:', userType);
 
         console.log('🔐 로그인 플로우 시작');
         // 로그인 처리
@@ -46,6 +81,34 @@ export const authConfig = {
           const data = res.data;
           console.log('로그인 성공:', data);
 
+          // 사용자 타입 검증
+          console.log('사용자 타입 검증 시작:', {
+            userType,
+            userRole: data.user.role,
+          });
+
+          if (userType) {
+            const expectedRole = userType === 'owner' ? 'OWNER' : 'APPLICANT';
+            console.log('역할 비교:', {
+              expected: expectedRole,
+              actual: data.user.role,
+              isMatch: data.user.role === expectedRole,
+            });
+
+            if (data.user.role !== expectedRole) {
+              console.error('사용자 타입 불일치:', {
+                expected: expectedRole,
+                actual: data.user.role,
+                userType,
+              });
+              throw new Error('USER_TYPE_MISMATCH');
+            }
+
+            console.log('사용자 타입 검증 성공');
+          } else {
+            console.log('사용자 타입이 없어 검증 건너뜀');
+          }
+
           return {
             id: data.user.id,
             email: data.user.email,
@@ -62,6 +125,15 @@ export const authConfig = {
           };
         } catch (error) {
           console.error('로그인 중 오류 발생:', error);
+
+          // 사용자 타입 불일치 에러 처리
+          if (
+            error instanceof Error &&
+            error.message === 'USER_TYPE_MISMATCH'
+          ) {
+            throw error;
+          }
+
           return null;
         }
       },

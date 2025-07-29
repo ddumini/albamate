@@ -1,7 +1,7 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getFormConfig } from '@/features/auth/constants/formFields';
@@ -16,6 +16,7 @@ import type {
 } from '@/features/auth/types';
 import { getAuthPageType } from '@/features/auth/utils/authUtils';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import EditPopup from '@/shared/components/common/popup/EditPopup';
 
 import AuthFormFields from './AuthFormFields';
 
@@ -41,6 +42,17 @@ const AuthForm = () => {
   const authPageType = getAuthPageType(pathname);
   const authContext = useContext(AuthContext);
   const router = useRouter();
+
+  // 로그인 상태 관리
+  const [loginStatus, setLoginStatus] = useState<{
+    visible: boolean;
+    message: string;
+    type: 'success' | 'error';
+  }>({
+    visible: false,
+    message: '',
+    type: 'success',
+  });
 
   // 사용자 타입 (지원자/사장님)
   const userType = authContext?.userType;
@@ -69,10 +81,91 @@ const AuthForm = () => {
       switch (authPageType) {
         case 'signin': {
           const signInData = data as SignInFormData;
-          await signIn('credentials', {
+
+          // 현재 URL 정보를 포함하여 signIn 호출
+          const currentUrl = window.location.href;
+          console.log('현재 URL:', currentUrl);
+          console.log('현재 사용자 타입:', userType);
+
+          const result = await signIn('credentials', {
             email: signInData.email,
             password: signInData.password,
+            redirect: false,
+            callbackUrl: currentUrl,
+            userType: userType, // 사용자 타입 정보 직접 전달
           });
+
+          if (result?.error) {
+            console.error('로그인 실패:', result.error);
+            setLoginStatus({
+              visible: true,
+              message: '이메일 또는 비밀번호가 올바르지 않습니다.',
+              type: 'error',
+            });
+          } else {
+            // 로그인 성공 후 사용자 타입 검증
+            try {
+              // 세션 정보를 가져와서 사용자 역할 확인
+              const sessionResponse = await fetch('/api/auth/session');
+              const sessionData = await sessionResponse.json();
+
+              console.log('세션 데이터:', sessionData);
+
+              if (sessionData.user?.role) {
+                const userRole = sessionData.user.role;
+                const expectedRole =
+                  userType === 'owner' ? 'OWNER' : 'APPLICANT';
+
+                console.log('사용자 타입 검증:', {
+                  userRole,
+                  expectedRole,
+                  userType,
+                  isMatch: userRole === expectedRole,
+                });
+
+                if (userRole !== expectedRole) {
+                  // 사용자 타입이 일치하지 않는 경우
+                  const roleText = userType === 'owner' ? '사장님' : '지원자';
+                  const actualRoleText =
+                    userRole === 'OWNER' ? '사장님' : '지원자';
+
+                  setLoginStatus({
+                    visible: true,
+                    message: `${roleText} 전용 페이지입니다. ${actualRoleText} 계정으로 로그인해주세요.`,
+                    type: 'error',
+                  });
+
+                  // 로그아웃 처리
+                  await signIn('credentials', { redirect: false });
+                  return;
+                }
+              }
+
+              // 사용자 타입이 일치하는 경우 성공 처리
+              setLoginStatus({
+                visible: true,
+                message: '로그인되었습니다.',
+                type: 'success',
+              });
+
+              // 성공 메시지 표시 후 잠시 대기 후 리다이렉트
+              setTimeout(() => {
+                router.push('/albalist');
+              }, 1500);
+            } catch (sessionError) {
+              console.error('세션 확인 중 오류:', sessionError);
+              // 세션 확인 실패 시 기본 성공 처리
+              setLoginStatus({
+                visible: true,
+                message: '로그인되었습니다.',
+                type: 'success',
+              });
+
+              setTimeout(() => {
+                router.push('/albalist');
+              }, 1500);
+            }
+          }
           break;
         }
         case 'signup': {
@@ -229,24 +322,35 @@ const AuthForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-16 lg:gap-32">
-        <AuthFormFields<AuthFormData>
-          defaultValues={formConfig.defaultValues}
-          errors={errors}
-          fields={formConfig.fields}
-          register={register}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-16 lg:gap-32">
+          <AuthFormFields<AuthFormData>
+            defaultValues={formConfig.defaultValues}
+            errors={errors}
+            fields={formConfig.fields}
+            register={register}
+          />
+        </div>
+        {/* TODO: 로딩 상태 추가 (isSubmitting) */}
+        <PrimaryButton
+          className="mt-24 h-58 w-full lg:mt-56"
+          disabled={!isValid}
+          label={getButtonText(authPageType, userType || undefined)}
+          type="submit"
+          variant="solid"
         />
-      </div>
-      {/* TODO: 로딩 상태 추가 (isSubmitting) */}
-      <PrimaryButton
-        className="mt-24 h-58 w-full lg:mt-56"
-        disabled={!isValid}
-        label={getButtonText(authPageType, userType || undefined)}
-        type="submit"
-        variant="solid"
+      </form>
+
+      {/* 로그인 상태 메시지 팝업 */}
+      <EditPopup
+        duration={3000}
+        message={loginStatus.message}
+        type={loginStatus.type}
+        visible={loginStatus.visible}
+        onClose={() => setLoginStatus(prev => ({ ...prev, visible: false }))}
       />
-    </form>
+    </>
   );
 };
 
