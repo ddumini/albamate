@@ -1,17 +1,27 @@
+import Image from 'next/image';
 import React from 'react';
 
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { getExperienceLabel } from '@/shared/utils/application';
 import { formatPhoneNumber } from '@/shared/utils/format';
 
-import { ApplyResponse } from '../../types/apply';
+import { ApplicationResponse } from '../../types/application';
 
-interface ApplyProfileProps {
-  data: ApplyResponse;
+interface ApplicationProfileProps {
+  data: ApplicationResponse;
 }
 
-const ApplyProfile = ({ data }: ApplyProfileProps) => {
+const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
+  const { isOwner } = useSessionUtils();
   const { name, phoneNumber, experienceMonths, resumeName, introduction } =
     data;
+
+  const handleDownloadResume = () => {
+    if (!data.resumeId) {
+      alert('다운로드에 필요한 정보가 부족합니다.');
+      return;
+    }
+  };
 
   return (
     <div>
@@ -47,6 +57,21 @@ const ApplyProfile = ({ data }: ApplyProfileProps) => {
               <span className="text-gray-700">
                 {resumeName || '이력서 없음'}
               </span>
+              {isOwner && (
+                <button
+                  aria-label="이력서 다운로드"
+                  className="flex"
+                  type="button"
+                  onClick={handleDownloadResume}
+                >
+                  <Image
+                    alt="다운로드 아이콘"
+                    height={24}
+                    src="/icons/download.svg"
+                    width={24}
+                  />
+                </button>
+              )}
             </div>
           </div>
 
@@ -65,4 +90,4 @@ const ApplyProfile = ({ data }: ApplyProfileProps) => {
   );
 };
 
-export default ApplyProfile;
+export default ApplicationProfile;

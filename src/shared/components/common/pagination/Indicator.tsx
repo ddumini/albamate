@@ -1,4 +1,4 @@
-import { IndicatorProps } from '@/shared/types/carousel';
+import { IndicatorProps } from '@/shared/components/common/imageCarousel/carousel';
 
 const Indicator = ({
   current,

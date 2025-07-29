@@ -9,11 +9,13 @@ import RadioButton, {
 } from '@/shared/components/common/button/RadioButton';
 import useModalStore from '@/shared/store/useModalStore';
 
-interface ApplyStateModalProps {
+interface ApplicationStateModalProps {
   currentStatus: string;
 }
 
-const ApplyStateModal = ({ currentStatus }: ApplyStateModalProps) => {
+const ApplicationStateModal = ({
+  currentStatus,
+}: ApplicationStateModalProps) => {
   const { closeModal } = useModalStore();
 
   const [selected, setSelected] = useState(currentStatus);
@@ -27,7 +29,7 @@ const ApplyStateModal = ({ currentStatus }: ApplyStateModalProps) => {
 
   const handleStateSubmit = () => {
     // TODO: API 호출로 실제 상태 업데이트
-    console.log('선택된 상태:', selected);
+    // console.log('선택된 상태:', selected);
     closeModal();
   };
 
@@ -72,4 +74,4 @@ const ApplyStateModal = ({ currentStatus }: ApplyStateModalProps) => {
   );
 };
 
-export default ApplyStateModal;
+export default ApplicationStateModal;
