@@ -1,5 +1,5 @@
 // 기본 지원서 데이터 타입
-export interface ApplyData {
+export interface ApplicationData {
   password: string;
   introduction: string;
   resumeData: string;
@@ -10,13 +10,13 @@ export interface ApplyData {
 }
 
 // 지원서 생성 요청 타입
-export interface CreateApplyRequest {
+export interface CreateApplicationRequest {
   formId: number;
-  ApplyData: ApplyData;
+  applicationData: ApplicationData;
 }
 
 // 지원서 응답 타입 (생성 후 반환되는 데이터)
-export interface ApplyResponse {
+export interface ApplicationResponse {
   id: number;
   name: string;
   phoneNumber: string;
@@ -24,30 +24,30 @@ export interface ApplyResponse {
   resumeId: number;
   resumeName: string;
   introduction: string;
-  status: ApplyStatus;
+  status: ApplicationStatus;
   createdAt: string;
   updatedAt: string;
   applicantId: number;
 }
 
 // 지원서 상태 타입
-export type ApplyStatus =
+export type ApplicationStatus =
   | 'INTERVIEW_PENDING'
   | 'REJECTED'
   | 'INTERVIEW_COMPLETED'
   | 'HIRED';
 
 // 지원서 상태 업데이트 요청 타입
-export interface UpdateApplyStatusRequest {
-  status: ApplyStatus;
+export interface UpdateApplicationStatusRequest {
+  status: ApplicationStatus;
 }
 
 // 지원서 상태 업데이트 응답 타입
-export interface UpdateApplyStatusResponse {
+export interface UpdateApplicationStatusResponse {
   applicantId: number;
   updatedAt: string;
   createdAt: string;
-  status: ApplyStatus;
+  status: ApplicationStatus;
   introduction: string;
   resumeName: string;
   resumeId: number;

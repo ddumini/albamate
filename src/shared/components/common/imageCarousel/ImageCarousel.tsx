@@ -2,13 +2,13 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import useCarousel from '@/shared/hooks/useCarousel';
-import { useSwipeGesture } from '@/shared/hooks/useSwipeGesture';
+import { CarouselProps } from '@/shared/components/common/imageCarousel/carousel';
+import useCarousel from '@/shared/components/common/imageCarousel/useCarousel';
+import { useSwipeGesture } from '@/shared/components/common/imageCarousel/useSwipeGesture';
 import { cn } from '@/shared/lib/cn';
-import { CarouselProps } from '@/shared/types/carousel';
 
-import CardPagination from '../common/pagination/CardPagination';
-import Indicator from '../common/pagination/Indicator';
+import CardPagination from '../pagination/CardPagination';
+import Indicator from '../pagination/Indicator';
 
 const ImageCarousel: React.FC<CarouselProps> = ({
   slides,
