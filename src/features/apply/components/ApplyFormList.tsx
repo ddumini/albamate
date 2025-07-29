@@ -38,6 +38,7 @@ const ApplyFormList = ({
 
   const handleFileDelete = () => {
     setSelectedFileName('');
+    onFileChange(undefined);
   };
 
   return (
