@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
 
-import { useAddformMutation } from '../queries/addformQueries';
+import { useAddformMutation } from '../queries/queries';
 import { createFormRequestSchema } from '../schema/addform.schema';
 import AddformButtons from './AddformButtons';
 import { MenuIndex } from './MenuItem';
