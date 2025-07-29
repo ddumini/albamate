@@ -80,7 +80,9 @@ export const useApplicantMyAlbalistQuery = (
     retry: 1,
     retryDelay: 1000,
     enabled:
-      status === 'authenticated' && !!session?.accessToken && isApplicant,
+      status === 'authenticated' &&
+      !!(session as any)?.accessToken &&
+      isApplicant,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화
@@ -146,7 +148,8 @@ export const useOwnerMyAlbalistQuery = (
     },
     retry: 1,
     retryDelay: 1000,
-    enabled: status === 'authenticated' && !!session?.accessToken && isOwner,
+    enabled:
+      status === 'authenticated' && !!(session as any)?.accessToken && isOwner,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화
