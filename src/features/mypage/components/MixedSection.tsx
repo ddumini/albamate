@@ -25,7 +25,7 @@ interface MixedSectionProps {
 const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
   const router = useRouter();
 
-  const firstItem = cardInfo[0];
+  const firstItem = cardInfo && cardInfo[0];
   const scrapWrapStyle =
     'grid-rows-auto relative grid grid-cols-1 gap-y-32 md:gap-y-48 lg:gap-x-25 lg:gap-y-45 lg:grid-cols-2 xl:grid-cols-3';
   const postCommentWrapStyle =
@@ -87,7 +87,7 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
 
   const cardWrapStyle = firstItem && getCardWrapStyle(firstItem);
 
-  if (cardInfo.length === 0) {
+  if (!cardInfo || cardInfo?.length === 0) {
     return <EmptyCard type={type} />;
   }
 

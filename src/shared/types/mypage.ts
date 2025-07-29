@@ -90,3 +90,26 @@ export type EmptyType =
   | 'albaList'
   | 'applyList'
   | 'albaTalkComment';
+
+// API Types
+export interface PostApi {
+  limit: number;
+  orderBy: string;
+  cursor?: number | null;
+  enabled?: boolean;
+}
+
+export interface ScrapApi {
+  limit: number;
+  orderBy: string;
+  cursor?: number | null;
+  isPublic?: boolean | null;
+  isRecruiting?: boolean | null;
+  enabled?: boolean;
+}
+
+export interface CommentsApi {
+  page: number;
+  pageSize: number;
+  enabled?: boolean;
+}
