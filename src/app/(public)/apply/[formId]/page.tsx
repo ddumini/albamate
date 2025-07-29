@@ -2,7 +2,12 @@ import ApplyForm from '@/features/apply/components/ApplyForm';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import InnerContainer from '@/shared/components/container/InnerContainer';
 
-const ApplyPage = () => {
+const ApplyPage = async ({
+  params,
+}: {
+  params: Promise<{ formId: string }>;
+}) => {
+  const { formId } = await params;
   return (
     <section className="pb-68">
       <h1 className="sr-only">알바메이트 지원하기 페이지</h1>
@@ -19,7 +24,7 @@ const ApplyPage = () => {
             variant="solid"
           />
         </div>
-        <ApplyForm />
+        <ApplyForm formId={formId} />
       </InnerContainer>
     </section>
   );
