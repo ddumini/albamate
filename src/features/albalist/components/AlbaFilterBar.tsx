@@ -2,31 +2,44 @@
 
 import FilterBar from '@common/list/FilterBar';
 
-interface Props {
-  isOwner: boolean;
+interface FilterState {
+  recruit?: string;
+  isPublic?: string;
+  sort?: string;
+  search?: string;
 }
 
-const AlbaFilterBar = ({ isOwner }: Props) => {
-  // 추후 API 연동 시 검색, 필터, 정렬 기능 구현
+interface Props {
+  isOwner: boolean;
+  filters: FilterState;
+  setFilters: (filters: Partial<FilterState>) => void;
+}
+
+const AlbaFilterBar = ({ isOwner, filters, setFilters }: Props) => {
   const handleFilterChange = (value: string) => {
-    console.log('모집 여부 필터 변경:', value);
+    setFilters({ recruit: value });
   };
+
   const handlePublicFilterChange = (value: string) => {
-    console.log('공개/비공개 필터 변경:', value);
+    setFilters({ isPublic: value });
   };
+
   const handleSortChange = (value: string) => {
-    console.log('정렬 변경:', value);
+    setFilters({ sort: value });
   };
-  const handleIconClick = () => {
-    alert('검색 아이콘 클릭');
-  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('검색어 입력:', e.target.value);
+    setFilters({ search: e.target.value });
   };
-  // 'Enter' 키를 눌렀을 때 검색을 실행하는 핸들러 추가
+
+  const handleIconClick = () => {
+    // 검색 아이콘 클릭 시 현재 입력된 검색어로 검색 실행
+    setFilters({ search: filters.search });
+  };
+
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      alert('Enter 키로 검색!');
+      setFilters({ search: filters.search }); // Enter 시 검색
     }
   };
 
@@ -38,12 +51,16 @@ const AlbaFilterBar = ({ isOwner }: Props) => {
         handleSortChange: handleSortChange,
       }}
       isOwner={isOwner}
+      publicValue={filters.isPublic || ''}
+      recruitValue={filters.recruit || ''}
       searchHandlers={{
         onIconClick: handleIconClick,
         onInputChange: handleInputChange,
         onInputKeyDown: handleInputKeyDown,
       }}
       searchPlaceholder="어떤 알바를 찾고 계세요?"
+      searchValue={filters.search || ''}
+      sortValue={filters.sort || ''}
     />
   );
 };
