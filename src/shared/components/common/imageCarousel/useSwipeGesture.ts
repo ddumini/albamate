@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useState } from 'react';
 
-import { TouchPosition, UseSwipeGestureProps } from '../types/carousel';
+import { TouchPosition, UseSwipeGestureProps } from './carousel';
 
 export const useSwipeGesture = ({
   onSwipeLeft,

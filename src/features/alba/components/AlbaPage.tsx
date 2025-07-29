@@ -8,10 +8,10 @@ import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import ImageCarousel from '@/shared/components/ui/ImageCarousel';
+import { Slide } from '@/shared/components/common/imageCarousel/carousel';
+import ImageCarousel from '@/shared/components/common/imageCarousel/ImageCarousel';
 import useViewport from '@/shared/hooks/useViewport';
 import useModalStore from '@/shared/store/useModalStore';
-import { Slide } from '@/shared/types/carousel';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 import { getDDayString } from '@/shared/utils/format';
 

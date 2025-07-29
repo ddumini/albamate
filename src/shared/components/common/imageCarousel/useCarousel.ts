@@ -2,11 +2,7 @@
 
 import { useCallback, useEffect, useReducer } from 'react';
 
-import {
-  CarouselAction,
-  CarouselState,
-  UseCarouselProps,
-} from '../types/carousel';
+import { CarouselAction, CarouselState, UseCarouselProps } from './carousel';
 
 function reducer(state: CarouselState, action: CarouselAction): CarouselState {
   switch (action.type) {
