@@ -25,6 +25,8 @@ const AlbaCard = ({ item }: Props) => {
   const [isScrapped, setIsScrapped] = useState(!!item.isScrapped);
 
   const toggleScrap = useCallback(async () => {
+    if (isLoading) return; // 요청 중이면 무시
+
     if (!isAuthenticated) {
       router.push('/signin');
       return;
@@ -33,12 +35,10 @@ const AlbaCard = ({ item }: Props) => {
     setIsLoading(true);
     try {
       if (isScrapped) {
-        // 이미 스크랩된 상태면 취소 요청
         await cancelScrapAlba(item.id);
         setIsScrapped(false);
         alert(`${item.title} 스크랩 취소 완료!`);
       } else {
-        // 스크랩 요청
         await scrapAlba(item.id);
         setIsScrapped(true);
         alert(`${item.title} 스크랩 완료!`);
@@ -51,6 +51,7 @@ const AlbaCard = ({ item }: Props) => {
     }
   }, [
     isScrapped,
+    isLoading,
     isAuthenticated,
     router,
     scrapAlba,
