@@ -7,6 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
 
+import { useAddformMutation } from '../queries/addformQueries';
 import { createFormRequestSchema } from '../schema/addform.schema';
 import AddformButtons from './AddformButtons';
 import { MenuIndex } from './MenuItem';
@@ -34,9 +35,14 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     },
   });
 
+  const { mutate, isPending } = useAddformMutation();
+
+  const handleSubmit = methods.handleSubmit(data => mutate(data));
+
   const handleMenuClick = (menuIndex: MenuIndex) => {
     setCurrentMenu(menuIndex);
   };
+
   return (
     <FormProvider {...methods}>
       <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
@@ -45,8 +51,10 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             className="3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
             currentMenu={currentMenu}
             isEdit={!!formId}
+            isSubmitting={isPending}
             writingMenu={writingMenu}
             onMenuClick={handleMenuClick}
+            onSubmit={handleSubmit}
           />
         )}
         <div className="w-full max-w-375 shrink-0 lg:max-w-720 3xl:mx-auto">
@@ -77,7 +85,12 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             <WorkConditionForm className={currentMenu === 3 ? '' : 'hidden'} />
           </form>
           {isDesktop || (
-            <AddformButtons className="mx-24 my-10" isEdit={!!formId} />
+            <AddformButtons
+              className="mx-24 my-10"
+              isEdit={!!formId}
+              isSubmitting={isPending}
+              onSubmit={handleSubmit}
+            />
           )}
         </div>
       </div>

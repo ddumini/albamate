@@ -11,6 +11,9 @@ interface SidebarProps {
   onMenuClick: (menuIndex: MenuIndex) => void;
   isEdit?: boolean;
   className?: string;
+  onSave?: () => void;
+  onSubmit?: () => void;
+  isSubmitting?: boolean;
 }
 
 const Sidebar = ({
@@ -19,6 +22,9 @@ const Sidebar = ({
   onMenuClick,
   isEdit,
   className,
+  onSave,
+  onSubmit,
+  isSubmitting,
 }: SidebarProps) => {
   const menuIndexList: MenuIndex[] = [1, 2, 3];
   return (
@@ -41,7 +47,12 @@ const Sidebar = ({
         ))}
       </ul>
 
-      <AddformButtons isEdit={isEdit} />
+      <AddformButtons
+        isEdit={isEdit}
+        isSubmitting={isSubmitting}
+        onSave={onSave}
+        onSubmit={onSubmit}
+      />
     </nav>
   );
 };
