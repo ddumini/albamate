@@ -36,6 +36,8 @@ export const createFormResponseSchema = createFormRequestSchema.extend({
   createdAt: z.iso.datetime(),
   ownerId: z.number(),
   id: z.number(),
+  applyCount: z.number(),
+  scrapCount: z.number(),
 });
 
 export type CreateFormRequest = z.infer<typeof createFormRequestSchema>;
