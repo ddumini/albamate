@@ -1,5 +1,3 @@
-import { User } from '@/features/auth';
-
 declare module 'next-auth' {
   interface Session {
     user: User;
@@ -23,6 +21,19 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    user: User;
+    id?: string;
+    email?: string;
+    name?: string;
+    role?: 'APPLICANT' | 'OWNER';
+    location?: string;
+    phoneNumber?: string;
+    storePhoneNumber?: string;
+    storeName?: string;
+    imageUrl?: string | null;
+    nickname?: string;
+    accessToken?: string;
+    refreshToken?: string;
+    accessTokenExpires?: number;
+    error?: 'RefreshAccessTokenError';
   }
 }

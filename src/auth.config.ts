@@ -49,7 +49,7 @@ export const authConfig = {
           }
         }
 
-        // req.headers에서 referer 확인 (대안)
+        // req.headers에서 referer 확인
         if (!userType && req.headers) {
           const referer = (req.headers as any).referer;
           if (referer) {
@@ -147,10 +147,13 @@ export const authConfig = {
     async jwt({
       token,
       user,
+      trigger,
     }: {
       token: JWT;
-      user: User & { accessToken: string };
+      user: User & { accessToken: string; refreshToken: string };
+      trigger?: 'update';
     }) {
+      // 초기 로그인 시 사용자 정보 저장
       if (user) {
         token.location = user.location;
         token.phoneNumber = user.phoneNumber;
@@ -163,22 +166,63 @@ export const authConfig = {
         token.email = user.email;
         token.id = user.id.toString();
         token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.accessTokenExpires = Date.now() + 5 * 60 * 1000; // 5분 후 만료 (테스트용)
+        return token;
       }
-      return token;
+
+      // 토큰이 만료되었는지 확인
+      const now = Date.now();
+      const expiresAt = token.accessTokenExpires as number;
+
+      console.log('=== JWT 콜백 실행 ===');
+      console.log('현재 시간:', new Date(now).toLocaleString());
+      console.log('토큰 만료 시간:', new Date(expiresAt).toLocaleString());
+      console.log(
+        '만료까지 남은 시간:',
+        Math.round((expiresAt - now) / 1000 / 60),
+        '분'
+      );
+
+      if (now < expiresAt) {
+        console.log('✅ 토큰이 유효합니다');
+        return token;
+      }
+
+      // 토큰이 만료되었으면 갱신 시도
+      console.log('❌ 토큰이 만료되었습니다. 갱신을 시도합니다...');
+      const refreshedToken = await refreshAccessToken(token);
+
+      // 갱신 실패 시 에러 토큰 반환
+      if (refreshedToken.error) {
+        console.error('❌ 토큰 갱신 실패, 로그아웃 처리 필요');
+        return refreshedToken;
+      }
+
+      console.log('✅ 토큰 갱신 성공');
+      return refreshedToken;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       if (token) {
-        session.user.id = token.id as number;
-        session.user.email = token.email as string;
-        session.user.name = token.name as string;
-        session.user.role = token.role as 'APPLICANT' | 'OWNER';
-        session.user.location = token.location as string;
-        session.user.phoneNumber = token.phoneNumber as string;
-        session.user.storePhoneNumber = token.storePhoneNumber as string;
-        session.user.storeName = token.storeName as string;
-        session.user.imageUrl = token.imageUrl as string | null;
-        session.user.nickname = token.nickname as string;
-        session.accessToken = token.accessToken as string;
+        // 필수 필드들이 존재하는지 확인하고 안전하게 할당
+        if (token.id) session.user.id = parseInt(token.id);
+        if (token.email) session.user.email = token.email;
+        if (token.name) session.user.name = token.name;
+        if (token.role) session.user.role = token.role;
+        if (token.location) session.user.location = token.location;
+        if (token.phoneNumber) session.user.phoneNumber = token.phoneNumber;
+        if (token.storePhoneNumber)
+          session.user.storePhoneNumber = token.storePhoneNumber;
+        if (token.storeName) session.user.storeName = token.storeName;
+        if (token.imageUrl !== undefined)
+          session.user.imageUrl = token.imageUrl;
+        if (token.nickname) session.user.nickname = token.nickname;
+        if (token.accessToken) session.accessToken = token.accessToken;
+
+        // 토큰 갱신 에러가 있으면 세션에도 전달
+        if (token.error) {
+          session.error = token.error;
+        }
       }
       return session;
     },
@@ -204,3 +248,37 @@ export const authConfig = {
     error: '/signin', // 인증 관련 에러 발생 시 리다이렉트 될 페이지
   },
 } as const;
+
+/**
+ * 액세스 토큰 갱신 함수
+ */
+async function refreshAccessToken(token: JWT): Promise<JWT> {
+  try {
+    console.log('토큰 갱신 요청 시작');
+
+    const response = await axiosInstance.post('/auth/refresh', {
+      refreshToken: token.refreshToken,
+    });
+
+    if (response.status !== 200) {
+      throw new Error('토큰 갱신 실패');
+    }
+
+    const refreshedTokens = response.data;
+    console.log('토큰 갱신 성공');
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.accessToken,
+      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken, // 새로운 refreshToken이 없으면 기존 것 유지
+      accessTokenExpires: Date.now() + 60 * 60 * 1000, // 1시간 후 만료
+    };
+  } catch (error) {
+    console.error('토큰 갱신 중 오류 발생:', error);
+
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError',
+    };
+  }
+}
