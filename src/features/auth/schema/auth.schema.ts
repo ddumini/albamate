@@ -61,6 +61,21 @@ export const phoneNumberSchema = z
   .string()
   .min(1, '전화번호는 필수 입력입니다.');
 
+/**
+ * 매장명 유효성 검사 스키마
+ */
+export const storeNameSchema = z.string().optional();
+
+/**
+ * 매장 전화번호 유효성 검사 스키마
+ */
+export const storePhoneNumberSchema = z.string().optional();
+
+/**
+ * 위치 유효성 검사 스키마
+ */
+export const locationSchema = z.string().optional();
+
 // --- 폼 유효성 검사 스키마 (클라이언트 전용) ---
 
 /**
@@ -105,10 +120,32 @@ export const ownerSignupSchema = z
     path: ['passwordConfirmation'],
   });
 
+/**
+ * 지원자 계정 정보 폼 유효성 스키마
+ */
+export const applicantAccountInfoSchema = z.object({
+  name: nameSchema,
+  nickname: nicknameSchema,
+  phoneNumber: phoneNumberSchema,
+});
+
+/**
+ * 사장님 계정 정보 폼 유효성 스키마
+ */
+export const ownerAccountInfoSchema = z.object({
+  storeName: storeNameSchema,
+  storePhoneNumber: storePhoneNumberSchema,
+  location: locationSchema,
+});
+
 // 폼 데이터 타입 추론
 export type SignInFormData = z.infer<typeof signInSchema>;
 export type ApplicantSignUpFormData = z.infer<typeof applicantSignupSchema>;
 export type OwnerSignUpFormData = z.infer<typeof ownerSignupSchema>;
+export type ApplicantAccountInfoFormData = z.infer<
+  typeof applicantAccountInfoSchema
+>;
+export type OwnerAccountInfoFormData = z.infer<typeof ownerAccountInfoSchema>;
 
 // --- API 요청 Body 스키마 ---
 

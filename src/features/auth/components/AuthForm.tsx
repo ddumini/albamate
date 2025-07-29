@@ -1,4 +1,5 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useContext, useState } from 'react';
@@ -73,6 +74,7 @@ const AuthForm = () => {
   } = useForm<AuthFormData>({
     mode: 'onChange',
     defaultValues: formConfig.defaultValues,
+    resolver: zodResolver(formConfig.validationSchema),
   });
 
   // 폼 제출 처리
