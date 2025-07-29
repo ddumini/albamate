@@ -20,14 +20,14 @@
  * }
  */
 export interface User {
-  location?: string; // 가게 위치 (선택적)
-  phoneNumber?: string; // 사용자 전화번호 (선택적)
-  storePhoneNumber?: string; // 가게 전화번호 (선택적)
-  storeName?: string; // 가게 이름 (선택적)
+  location: string | null; // 가게 위치 (nullable)
+  phoneNumber: string | null; // 사용자 전화번호 (nullable)
+  storePhoneNumber: string | null; // 가게 전화번호 (nullable)
+  storeName: string | null; // 가게 이름 (nullable)
   role: 'APPLICANT' | 'OWNER';
   imageUrl: string | null; // 프로필 이미지 URL, 없으면 null
-  nickname: string; // 사용자 별명 (UI에서 이름 대신 보여줄 수 있음)
-  name: string; // 사용자 이름
+  nickname: string | null; // 사용자 별명 (nullable)
+  name: string | null; // 사용자 이름 (nullable)
   email: string; // 사용자 이메일 (로그인 ID)
   id: number; // 사용자의 고유 ID (DB의 PK)
 }

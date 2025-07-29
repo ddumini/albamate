@@ -19,14 +19,18 @@ export const useAuthSession = () => {
 
   // 토큰 갱신 에러 감지 시 자동 로그아웃
   useEffect(() => {
-    if (session?.error === 'RefreshAccessTokenError') {
+    if (
+      session &&
+      'error' in session &&
+      session.error === 'RefreshAccessTokenError'
+    ) {
       console.warn('토큰 갱신 오류 감지. 로그아웃을 진행합니다.');
       signOut({
         callbackUrl: '/signin',
         redirect: true,
       });
     }
-  }, [session?.error]);
+  }, [session]);
 
   /**
    * 세션 강제 갱신
@@ -44,7 +48,10 @@ export const useAuthSession = () => {
   /**
    * 인증된 사용자인지 확인
    */
-  const isAuthenticated = status === 'authenticated' && !session?.error;
+  const isAuthenticated =
+    status === 'authenticated' &&
+    session &&
+    (!('error' in session) || session.error !== 'RefreshAccessTokenError');
 
   /**
    * 로딩 상태인지 확인
@@ -55,7 +62,11 @@ export const useAuthSession = () => {
    * 에러 메시지 반환
    */
   const getErrorMessage = () => {
-    if (session?.error === 'RefreshAccessTokenError') {
+    if (
+      session &&
+      'error' in session &&
+      session.error === 'RefreshAccessTokenError'
+    ) {
       return ERROR_MESSAGES.TOKEN_REFRESH_FAILED;
     }
     return null;
@@ -69,7 +80,8 @@ export const useAuthSession = () => {
     refreshSession,
     errorMessage: getErrorMessage(),
     user: session?.user || null,
-    accessToken: session?.accessToken || null,
+    accessToken:
+      session && 'accessToken' in session ? session.accessToken : null,
   };
 };
 

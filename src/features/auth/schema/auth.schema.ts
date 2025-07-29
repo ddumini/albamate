@@ -49,6 +49,18 @@ export const nicknameSchema = z
   .min(1, '닉네임은 필수 입력입니다.')
   .max(20, '닉네임은 최대 20자까지 가능합니다.');
 
+/**
+ * 이름 유효성 검사 스키마
+ */
+export const nameSchema = z.string().min(1, '이름은 필수 입력입니다.');
+
+/**
+ * 전화번호 유효성 검사 스키마
+ */
+export const phoneNumberSchema = z
+  .string()
+  .min(1, '전화번호는 필수 입력입니다.');
+
 // --- 폼 유효성 검사 스키마 (클라이언트 전용) ---
 
 /**
@@ -63,17 +75,28 @@ export const signInSchema = z.object({
 });
 
 /**
- * 회원가입 폼 유효성 스키마
- *
- * - email: 이메일 형식 검증
- * - nickname: 닉네임 필수 + 길이 제한
- * - password: 복잡도 및 정규식 검증 포함
- * - passwordConfirmation: 확인용 입력값, 최소 1자 필요 및 password 일치 여부 검증
+ * 지원자 회원가입 폼 유효성 스키마
  */
-export const signupSchema = z
+export const applicantSignupSchema = z
   .object({
     email: emailSchema,
     nickname: nicknameSchema,
+    password: passwordSchema,
+    passwordConfirmation: passwordConfirmationSchema,
+    name: nameSchema,
+    phoneNumber: phoneNumberSchema,
+  })
+  .refine(data => data.password === data.passwordConfirmation, {
+    message: '비밀번호가 일치하지 않습니다.',
+    path: ['passwordConfirmation'],
+  });
+
+/**
+ * 사장님 회원가입 폼 유효성 스키마
+ */
+export const ownerSignupSchema = z
+  .object({
+    email: emailSchema,
     password: passwordSchema,
     passwordConfirmation: passwordConfirmationSchema,
   })
@@ -84,7 +107,8 @@ export const signupSchema = z
 
 // 폼 데이터 타입 추론
 export type SignInFormData = z.infer<typeof signInSchema>;
-export type SignUpFormData = z.infer<typeof signupSchema>;
+export type ApplicantSignUpFormData = z.infer<typeof applicantSignupSchema>;
+export type OwnerSignUpFormData = z.infer<typeof ownerSignupSchema>;
 
 // --- API 요청 Body 스키마 ---
 
@@ -93,12 +117,27 @@ export const signInRequestSchema = z.object({
   password: z.string().min(1, '비밀번호를 입력해 주세요.'),
 });
 
-export const signUpRequestSchema = z
+export const applicantSignUpRequestSchema = z
   .object({
     email: emailSchema,
     nickname: nicknameSchema,
     password: passwordSchema,
     passwordConfirmation: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
+    name: nameSchema,
+    phoneNumber: phoneNumberSchema,
+    role: z.literal('APPLICANT'),
+  })
+  .refine(data => data.password === data.passwordConfirmation, {
+    message: '비밀번호가 일치하지 않습니다.',
+    path: ['passwordConfirmation'],
+  });
+
+export const ownerSignUpRequestSchema = z
+  .object({
+    email: emailSchema,
+    password: passwordSchema,
+    passwordConfirmation: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
+    role: z.literal('OWNER'),
   })
   .refine(data => data.password === data.passwordConfirmation, {
     message: '비밀번호가 일치하지 않습니다.',
@@ -107,21 +146,18 @@ export const signUpRequestSchema = z
 
 /**
  * 사용자 정보 타입에 대한 Zod 스키마
+ * API 스키마에 따라 모든 필드를 nullable로 설정
  */
-
 export const userSchema = z.object({
   id: z.number().int().positive(),
-  location: z.string().min(1, '위치는 필수입니다.').optional(),
-  phoneNumber: z.string().min(1, '전화번호는 필수입니다.').optional(),
-  storePhoneNumber: z.string().min(1, '가게 전화번호는 필수입니다.').optional(),
-  storeName: z.string().min(1, '가게 이름은 필수입니다.').optional(),
+  location: z.string().nullable(),
+  phoneNumber: z.string().nullable(),
+  storePhoneNumber: z.string().nullable(),
+  storeName: z.string().nullable(),
   role: z.enum(['APPLICANT', 'OWNER']),
-  imageUrl: z.string().url('유효한 이미지 URL이어야 합니다.').nullable(),
-  nickname: z
-    .string()
-    .min(1, '닉네임은 1자 이상이어야 합니다.')
-    .max(20, '닉네임은 20자 이하여야 합니다.'),
-  name: z.string().min(1, '이름은 필수입니다.'),
+  imageUrl: z.string().nullable(),
+  nickname: z.string().nullable(),
+  name: z.string().nullable(),
   email: z.string().email(),
 });
 
@@ -150,7 +186,15 @@ export type SignInRequestBodyType = z.infer<typeof signInRequestSchema>;
 const _typeCheckSignInRequest: SignInRequest = {} as SignInRequestBodyType;
 void _typeCheckSignInRequest;
 
-export type SignUpRequestBodyType = z.infer<typeof signUpRequestSchema>;
+export type ApplicantSignUpRequestBodyType = z.infer<
+  typeof applicantSignUpRequestSchema
+>;
+export type OwnerSignUpRequestBodyType = z.infer<
+  typeof ownerSignUpRequestSchema
+>;
+export type SignUpRequestBodyType =
+  | ApplicantSignUpRequestBodyType
+  | OwnerSignUpRequestBodyType;
 const _typeCheckSignUpRequest: SignUpRequest = {} as SignUpRequestBodyType;
 void _typeCheckSignUpRequest;
 

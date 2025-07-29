@@ -12,10 +12,15 @@ export type {
 
 // Schemas and validation
 export type {
+  ApplicantSignUpFormData,
+  OwnerSignUpFormData,
   SignInFormData,
-  SignUpFormData,
 } from '@/features/auth/schema/auth.schema';
-export { signInSchema, signupSchema } from '@/features/auth/schema/auth.schema';
+export {
+  applicantSignupSchema,
+  ownerSignupSchema,
+  signInSchema,
+} from '@/features/auth/schema/auth.schema';
 
 // Actions
 // export { signUpAction } from './actions/auth.action';

@@ -9,14 +9,14 @@ declare module 'next-auth' {
   interface User {
     id: number;
     email: string;
-    name: string;
+    name: string | null;
     role: 'APPLICANT' | 'OWNER';
-    location: string;
-    phoneNumber: string;
-    storePhoneNumber: string;
-    storeName: string;
+    location: string | null;
+    phoneNumber: string | null;
+    storePhoneNumber: string | null;
+    storeName: string | null;
     imageUrl: string | null;
-    nickname: string;
+    nickname: string | null;
   }
 }
 
@@ -24,14 +24,14 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id?: string;
     email?: string;
-    name?: string;
+    name?: string | null;
     role?: 'APPLICANT' | 'OWNER';
-    location?: string;
-    phoneNumber?: string;
-    storePhoneNumber?: string;
-    storeName?: string;
+    location?: string | null;
+    phoneNumber?: string | null;
+    storePhoneNumber?: string | null;
+    storeName?: string | null;
     imageUrl?: string | null;
-    nickname?: string;
+    nickname?: string | null;
     accessToken?: string;
     refreshToken?: string;
     accessTokenExpires?: number;

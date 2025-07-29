@@ -150,11 +150,13 @@ export function useSessionUtils() {
   const { data: user, isLoading: userLoading } = useUserQuery();
   const refreshSessionMutation = useRefreshSessionMutation();
 
-  const isAuthenticated = !!session?.user && !session?.error;
+  const isAuthenticated =
+    !!session?.user &&
+    (!('error' in session) || session.error !== 'RefreshAccessTokenError');
   const isLoading = sessionLoading || userLoading;
 
   const hasRole = (role: 'OWNER' | 'APPLICANT'): boolean => {
-    return user?.role === role;
+    return !!(user && 'role' in user && user.role === role);
   };
 
   const isOwner = hasRole('OWNER');
@@ -168,7 +170,8 @@ export function useSessionUtils() {
     // 세션 데이터
     session,
     user,
-    accessToken: session?.accessToken,
+    accessToken:
+      session && 'accessToken' in session ? session.accessToken : undefined,
 
     // 상태
     isLoading,
