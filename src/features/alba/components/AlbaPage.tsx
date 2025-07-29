@@ -18,9 +18,8 @@ import { getDDayString } from '@/shared/utils/format';
 import { addBookmark, removeBookmark } from '../api/bookmark';
 import { albaMockData } from '../mocks/mockData';
 import ApplicationList from './ApplicationList';
-import AlbaPageDesktop from './desktop/AlbaPageDesktop';
 import RecruitCloseModal from './modal/RecruitClosedModal';
-import AlbaPageTablet from './tablet/AlbaPageTablet';
+import PageContent from './PageContent';
 
 const AlbaPage = () => {
   const { formId } = useParams();
@@ -118,11 +117,8 @@ const AlbaPage = () => {
       </FloatingButtonContainer>
 
       <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
-      {isDesktop ? (
-        <AlbaPageDesktop isOwner={isOwner} item={item} />
-      ) : (
-        <AlbaPageTablet isOwner={isOwner} item={item} />
-      )}
+
+      <PageContent isOwner={isOwner} item={item} />
 
       {isOwner && (
         <div>
