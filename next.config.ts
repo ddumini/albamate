@@ -19,11 +19,10 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-      // 추후 API 반영 후 삭제 예정
+      // 추후 실제 이미지 넣으며 삭제 예정
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
+        hostname: 'example.com',
         pathname: '/**',
       },
     ],
