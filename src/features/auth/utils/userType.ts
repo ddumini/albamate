@@ -9,10 +9,10 @@ import type { UserType } from '@/features/auth/types';
  * @returns 사용자 타입 (owner | applicant | undefined)
  */
 export const getUserTypeFromPath = (pathname: string): UserType | undefined => {
-  if (pathname.startsWith('/owner')) {
+  if (pathname.startsWith('/owner') || pathname.includes('/application/')) {
     return 'owner';
   }
-  if (pathname.startsWith('/applicant')) {
+  if (pathname.startsWith('/applicant') || pathname.includes('/myapply/')) {
     return 'applicant';
   }
   return undefined;
