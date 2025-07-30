@@ -4,7 +4,7 @@ import AlbaCardItem from '@common/list/AlbaCardItem';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useAuthSession } from '@/features/auth';
 import type { AlbaItem } from '@/shared/types/alba';
@@ -23,7 +23,13 @@ const AlbaCard = ({ item }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isScrapped, setIsScrapped] = useState(item.isScrapped ?? false);
-  const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount); // 로컬 스크랩 카운트 추가
+  const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount);
+
+  // item이 변경될 때마다 로컬 상태 동기화
+  useEffect(() => {
+    setIsScrapped(item.isScrapped ?? false);
+    setLocalScrapCount(item.scrapCount);
+  }, [item.isScrapped, item.scrapCount]);
 
   const handleCardClick = async () => {
     try {
@@ -83,6 +89,20 @@ const AlbaCard = ({ item }: Props) => {
 
       queryClient.invalidateQueries({ queryKey: ['albaList'] });
       queryClient.invalidateQueries({ queryKey: ['albaDetail', item.id] });
+
+      // 알바 상세 페이지 데이터도 즉시 업데이트 (상세 페이지가 열려있을 경우)
+      queryClient.setQueryData(['albaDetail', item.id], (oldData: any) => {
+        if (oldData) {
+          return {
+            ...oldData,
+            isScrapped: isScrapped ? false : true, // 토글된 상태로 업데이트
+            scrapCount: isScrapped
+              ? Math.max(0, oldData.scrapCount - 1)
+              : oldData.scrapCount + 1,
+          };
+        }
+        return oldData;
+      });
     } catch (error: any) {
       if (error?.response?.status !== 401) {
         alert('요청 중 오류가 발생했습니다.');
