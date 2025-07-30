@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
-import { useAuthSession } from '@/features/auth';
 import useModalStore from '@/shared/store/useModalStore';
 import { getDDayString } from '@/shared/utils/format';
 
@@ -20,9 +19,7 @@ const AlbaPage = () => {
   const { formId } = useParams();
   const router = useRouter();
   const { openModal } = useModalStore();
-  const { isAuthenticated } = useAuthSession();
 
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [isOwner, setIsOwner] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
@@ -79,9 +76,6 @@ const AlbaPage = () => {
 
       <FloatingButtons
         formId={Number(formId)}
-        isBookmarked={isBookmarked}
-        isLoggedIn={isAuthenticated}
-        setIsBookmarked={setIsBookmarked}
         onSigninRedirect={() => router.push('/signin')}
         onToggleOwner={() => setIsOwner(prev => !prev)}
       />
