@@ -23,6 +23,7 @@ const AlbaCard = ({ item }: Props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isScrapped, setIsScrapped] = useState(item.isScrapped ?? false);
+  const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount); // 로컬 스크랩 카운트 추가
 
   const handleCardClick = async () => {
     try {
@@ -58,11 +59,13 @@ const AlbaCard = ({ item }: Props) => {
       if (isScrapped) {
         await cancelScrapAlba(item.id);
         setIsScrapped(false);
+        setLocalScrapCount(prev => Math.max(0, prev - 1)); // 스크랩 카운트 감소
         alert(`${item.title} 스크랩 취소 완료!`);
       } else {
         try {
           await scrapAlba(item.id);
           setIsScrapped(true);
+          setLocalScrapCount(prev => prev + 1); // 스크랩 카운트 증가
           alert(`${item.title} 스크랩 완료!`);
         } catch (error: any) {
           if (
@@ -70,6 +73,7 @@ const AlbaCard = ({ item }: Props) => {
           ) {
             await cancelScrapAlba(item.id);
             setIsScrapped(false);
+            setLocalScrapCount(prev => Math.max(0, prev - 1)); // 스크랩 카운트 감소
             alert(`${item.title} 스크랩 취소 완료!`);
           } else {
             throw error;
@@ -97,7 +101,7 @@ const AlbaCard = ({ item }: Props) => {
     scrapAlba,
     cancelScrapAlba,
     queryClient,
-    refreshSession, // 추가
+    refreshSession,
   ]);
 
   const applyScrapOptions = [
@@ -112,11 +116,17 @@ const AlbaCard = ({ item }: Props) => {
     },
   ];
 
+  // item 객체에 로컬 스크랩 카운트를 적용한 새로운 객체 생성
+  const itemWithLocalScrapCount = {
+    ...item,
+    scrapCount: localScrapCount,
+  };
+
   return (
     <AlbaCardItem
       dropdownOptions={applyScrapOptions}
       isScrapped={isScrapped}
-      item={item}
+      item={itemWithLocalScrapCount} // 로컬 스크랩 카운트가 적용된 item 전달
       onClick={handleCardClick}
     />
   );
