@@ -3,8 +3,8 @@ import {
   FieldValues,
   Path,
   UseFormRegister,
-  UseFormSetValue, // 추가
-  UseFormWatch, // 추가
+  UseFormSetValue,
+  UseFormWatch,
 } from 'react-hook-form';
 
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
@@ -36,8 +36,8 @@ interface AuthFormFieldsProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   defaultValues?: Record<string, string>;
-  setValue: UseFormSetValue<T>; // 추가
-  watch: UseFormWatch<T>; // 추가
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
 }
 
 /**
@@ -60,8 +60,8 @@ const AuthFormFields = <T extends FieldValues>({
   register,
   errors,
   defaultValues,
-  setValue, // 추가
-  watch, // 추가
+  setValue,
+  watch,
 }: AuthFormFieldsProps<T>) => {
   const typedFields = createTypedFormFields<T>(fields);
 
