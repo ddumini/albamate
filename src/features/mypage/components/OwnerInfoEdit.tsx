@@ -19,10 +19,13 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   } = useForm<FormData>({
     defaultValues: {
       nickname: userInfo.nickname,
-      storeName: userInfo.storeName,
-      storePhoneNumber: userInfo.storePhoneNumber,
+      storeName: userInfo.storeName === 'undefined' ? '' : userInfo.storeName,
+      storePhoneNumber:
+        userInfo.storePhoneNumber === 'undefined'
+          ? ''
+          : userInfo.storePhoneNumber,
       phoneNumber: userInfo.phoneNumber,
-      location: userInfo.location,
+      location: userInfo.location === 'undefined' ? '' : userInfo.location,
     },
   });
 
