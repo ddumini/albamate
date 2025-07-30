@@ -7,7 +7,6 @@ import { postApplication, postResume } from '@/features/apply/api';
 import {
   CreateApplicationRequest,
   createApplicationResponseSchema,
-  uploadResumeResponseSchema,
 } from '@/features/apply/schema/apply.schema';
 
 export const useApplyMutation = () => {
@@ -54,16 +53,6 @@ export const useApplyMutation = () => {
 export const useResumeMutation = () => {
   return useMutation({
     mutationFn: (file: File) => postResume(file),
-    onSuccess: response => {
-      const parseResponse = uploadResumeResponseSchema.safeParse(response.data);
-      if (!parseResponse.success) {
-        console.error(
-          '서버 응답 데이터 Zod 유효성 검사 실패',
-          parseResponse.error
-        );
-        return;
-      }
-    },
     onError: error => {
       console.error('이력서 업로드 실패', error);
     },

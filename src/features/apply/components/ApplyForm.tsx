@@ -10,7 +10,10 @@ import {
   useApplyMutation,
   useResumeMutation,
 } from '@/features/apply/queries/mutations';
-import { createApplicationRequestSchema } from '@/features/apply/schema/apply.schema';
+import {
+  createApplicationRequestSchema,
+  uploadResumeResponseSchema,
+} from '@/features/apply/schema/apply.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 
 const ApplyForm = ({ formId }: { formId: string }) => {
@@ -33,12 +36,23 @@ const ApplyForm = ({ formId }: { formId: string }) => {
   };
 
   const handleSubmit = async () => {
-    if (selectedFile) {
-      const resume = await resumeMutate(selectedFile);
-      methods.setValue('resumeId', resume.data.resumeId);
-      methods.setValue('resumeName', resume.data.resumeName);
-      applyMutate({ formId: Number(formId), form: methods.getValues() });
-    }
+    if (selectedFile)
+      try {
+        const resume = await resumeMutate(selectedFile);
+        const parseResponse = uploadResumeResponseSchema.safeParse(resume.data);
+        if (!parseResponse.success) {
+          console.error(
+            '서버 응답 데이터 Zod 유효성 검사 실패',
+            parseResponse.error
+          );
+          return;
+        }
+        methods.setValue('resumeId', resume.data.resumeId);
+        methods.setValue('resumeName', resume.data.resumeName);
+        applyMutate({ formId: Number(formId), form: methods.getValues() });
+      } catch (error) {
+        console.error('제출 중 오류 발생:', error);
+      }
   };
 
   return (
