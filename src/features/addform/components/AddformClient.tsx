@@ -4,11 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useAddformMutation } from '@/features/addform/queries/mutations';
+import { createFormRequestSchema } from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
 
-import { useAddformMutation } from '../queries/queries';
-import { createFormRequestSchema } from '../schema/addform.schema';
 import AddformButtons from './AddformButtons';
 import { MenuIndex } from './MenuItem';
 import RecruitConditionForm from './RecruitConditionForm';

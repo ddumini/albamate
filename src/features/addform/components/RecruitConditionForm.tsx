@@ -1,11 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import Label from '@/shared/components/common/input/Label';
 import InputDropdown from '@/shared/components/common/input-dropdown';
 import { cn } from '@/shared/lib/cn';
 
-import { CreateFormRequest } from '../schema/addform.schema';
 import AddFormSection from './AddFormSection';
 
 const RecruitConditionForm = ({ className }: { className?: string }) => {

@@ -2,12 +2,11 @@
 
 import { AxiosResponse } from 'axios';
 
-import { useAxiosWithAuth } from '@/shared/lib/axios';
-
 import {
   CreateFormRequest,
   CreateFormResponse,
-} from '../schema/addform.schema';
+} from '@/features/addform/schema/addform.schema';
+import { useAxiosWithAuth } from '@/shared/lib/axios';
 
 export const useAddformApi = () => {
   const authAxios = useAxiosWithAuth();

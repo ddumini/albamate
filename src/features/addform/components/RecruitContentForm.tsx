@@ -2,6 +2,7 @@
 
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import DatePicker from '@/shared/components/common/date-picker';
 import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
@@ -9,7 +10,6 @@ import Textarea from '@/shared/components/common/input/Textarea';
 import UploadMultipleImage from '@/shared/components/common/uploadImage/UploadMultipleImage';
 import { cn } from '@/shared/lib/cn';
 
-import { CreateFormRequest } from '../schema/addform.schema';
 import AddFormSection from './AddFormSection';
 
 const RecruitContentForm = ({ className }: { className?: string }) => {

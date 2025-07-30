@@ -2,6 +2,7 @@
 
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import Checkbox from '@/shared/components/common/button/Checkbox';
 import DatePicker from '@/shared/components/common/date-picker';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
@@ -12,7 +13,6 @@ import TimePicker from '@/shared/components/common/time-picker';
 import WeekPicker from '@/shared/components/common/week-picker';
 import { cn } from '@/shared/lib/cn';
 
-import { CreateFormRequest } from '../schema/addform.schema';
 import AddFormSection from './AddFormSection';
 
 const WorkConditionForm = ({ className }: { className?: string }) => {

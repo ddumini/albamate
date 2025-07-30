@@ -3,11 +3,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-import { useAddformApi } from '../api/api';
+import { useAddformApi } from '@/features/addform/api';
 import {
   CreateFormRequest,
   createFormResponseSchema,
-} from '../schema/addform.schema';
+} from '@/features/addform/schema/addform.schema';
 
 export const useAddformMutation = () => {
   const { postAddform } = useAddformApi();
