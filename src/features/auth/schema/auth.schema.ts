@@ -95,11 +95,11 @@ export const signInSchema = z.object({
 export const applicantSignupSchema = z
   .object({
     email: emailSchema,
-    nickname: nicknameSchema,
+    // nickname: nicknameSchema,
     password: passwordSchema,
     passwordConfirmation: passwordConfirmationSchema,
-    name: nameSchema,
-    phoneNumber: phoneNumberSchema,
+    // name: nameSchema,
+    // phoneNumber: phoneNumberSchema,
   })
   .refine(data => data.password === data.passwordConfirmation, {
     message: '비밀번호가 일치하지 않습니다.',
@@ -157,11 +157,11 @@ export const signInRequestSchema = z.object({
 export const applicantSignUpRequestSchema = z
   .object({
     email: emailSchema,
-    nickname: nicknameSchema,
+    // nickname: nicknameSchema,
     password: passwordSchema,
     passwordConfirmation: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
-    name: nameSchema,
-    phoneNumber: phoneNumberSchema,
+    // name: nameSchema,
+    // phoneNumber: phoneNumberSchema,
     role: z.literal('APPLICANT'),
   })
   .refine(data => data.password === data.passwordConfirmation, {

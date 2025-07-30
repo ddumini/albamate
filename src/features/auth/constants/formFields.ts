@@ -55,13 +55,6 @@ const APPLICANT_SIGNUP_FIELDS: FormField[] = [
     placeholder: '이메일을 입력해주세요',
   },
   {
-    name: 'nickname',
-    label: '닉네임',
-    type: 'text',
-    required: true,
-    placeholder: '닉네임을 입력해주세요',
-  },
-  {
     name: 'password',
     label: '비밀번호',
     type: 'password',
@@ -74,20 +67,6 @@ const APPLICANT_SIGNUP_FIELDS: FormField[] = [
     type: 'password',
     required: true,
     placeholder: '비밀번호를 다시 입력해주세요',
-  },
-  {
-    name: 'name',
-    label: '이름',
-    type: 'text',
-    required: true,
-    placeholder: '이름을 입력해주세요',
-  },
-  {
-    name: 'phoneNumber',
-    label: '전화번호',
-    type: 'tel',
-    required: true,
-    placeholder: '전화번호를 입력해주세요',
   },
 ];
 

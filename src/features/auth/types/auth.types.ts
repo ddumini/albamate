@@ -85,11 +85,8 @@ export interface OwnerSignUpRequest {
  */
 export interface ApplicantSignUpRequest {
   email: string;
-  nickname: string;
   password: string;
   passwordConfirmation: string;
-  name: string;
-  phoneNumber: string;
   role: 'APPLICANT';
 }
 

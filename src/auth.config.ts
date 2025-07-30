@@ -1,8 +1,8 @@
-import { Session } from 'next-auth';
+import { type NextAuthConfig, Session, User } from 'next-auth';
+import { type AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 
-import { User } from '@/features/auth';
 import { axiosInstance } from '@/shared/lib/axios';
 
 export const authConfig = {
@@ -14,7 +14,10 @@ export const authConfig = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      authorize: async (credentials, req) => {
+      authorize: async (
+        credentials: Record<string, unknown>,
+        req
+      ): Promise<User | null> => {
         console.log('=== authorize 함수 시작 ===');
         console.log('받은 credentials:', credentials);
 
@@ -22,7 +25,11 @@ export const authConfig = {
           email,
           password,
           userType: credentialsUserType,
-        } = credentials as any;
+        } = credentials as {
+          email: string;
+          password: string;
+          userType: string | null;
+        };
 
         console.log('파싱된 데이터:', {
           email,
@@ -140,19 +147,11 @@ export const authConfig = {
     }),
   ],
   session: {
-    strategy: 'jwt' as const,
-    maxAge: 60 * 60 * 24, // 24시간
+    strategy: 'jwt',
+    maxAge: 5 * 60 * 1000, // 5분
   },
   callbacks: {
-    async jwt({
-      token,
-      user,
-      trigger,
-    }: {
-      token: JWT;
-      user: User & { accessToken: string; refreshToken: string };
-      trigger?: 'update';
-    }) {
+    async jwt({ token, user }: { token: JWT; user: User | AdapterUser }) {
       // 초기 로그인 시 사용자 정보 저장
       if (user) {
         token.location = user.location;
@@ -168,6 +167,7 @@ export const authConfig = {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.accessTokenExpires = Date.now() + 5 * 60 * 1000; // 5분 후 만료 (테스트용)
+
         return token;
       }
 
@@ -243,11 +243,11 @@ export const authConfig = {
   },
   pages: {
     signIn: '/signin',
-    signUp: '/signup',
-    accountInfo: '/accountInfo',
-    error: '/signin', // 인증 관련 에러 발생 시 리다이렉트 될 페이지
+    // signUp: '/signup',
+    // accountInfo: '/accountInfo',
+    // error: '/signin', // 인증 관련 에러 발생 시 리다이렉트 될 페이지
   },
-} as const;
+} satisfies NextAuthConfig;
 
 /**
  * 액세스 토큰 갱신 함수

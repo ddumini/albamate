@@ -34,7 +34,7 @@ export interface SignInFormData {
 export interface SignUpStep1FormData {
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirmation: string; // confirmPassword → passwordConfirmation으로 수정
 }
 
 /**
