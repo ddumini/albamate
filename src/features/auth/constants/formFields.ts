@@ -11,7 +11,7 @@ import type { AuthPageType, UserType } from '../types';
 export interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'tel' | 'number';
+  type: 'text' | 'email' | 'password' | 'tel' | 'number' | 'image';
   required?: boolean;
   placeholder?: string;
 }
@@ -102,11 +102,25 @@ const OWNER_SIGNUP_FIELDS: FormField[] = [
  */
 const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
   {
+    name: 'imageUrl',
+    label: '프로필 이미지',
+    type: 'image',
+    required: false,
+    placeholder: '프로필 이미지를 선택해주세요',
+  },
+  {
     name: 'name',
     label: '이름',
     type: 'text',
     required: true,
     placeholder: '이름을 입력해주세요',
+  },
+  {
+    name: 'phoneNumber',
+    label: '연락처',
+    type: 'tel',
+    required: true,
+    placeholder: '연락처를 입력해주세요',
   },
   {
     name: 'nickname',
@@ -115,13 +129,6 @@ const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
     required: true,
     placeholder: '닉네임을 입력해주세요',
   },
-  {
-    name: 'phoneNumber',
-    label: '전화번호',
-    type: 'tel',
-    required: true,
-    placeholder: '전화번호를 입력해주세요',
-  },
 ];
 
 /**
@@ -129,25 +136,39 @@ const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
  */
 const OWNER_ACCOUNT_FIELDS: FormField[] = [
   {
-    name: 'storeName',
-    label: '매장명',
+    name: 'nickname',
+    label: '닉네임',
     type: 'text',
-    required: false,
-    placeholder: '매장명을 입력해주세요 (선택사항)',
+    required: true,
+    placeholder: '닉네임을 입력해주세요',
+  },
+  {
+    name: 'storeName',
+    label: '가게 이름',
+    type: 'text',
+    required: true,
+    placeholder: '가게 이름을 입력해주세요',
   },
   {
     name: 'storePhoneNumber',
-    label: '매장 전화번호',
+    label: '가게 전화번호',
+    type: 'tel',
+    required: true,
+    placeholder: '가게 전화번호를 입력해주세요',
+  },
+  {
+    name: 'ownerPhoneNumber',
+    label: '사장님 전화번호',
     type: 'tel',
     required: false,
-    placeholder: '매장 전화번호를 입력해주세요 (선택사항)',
+    placeholder: '사장님 전화번호를 입력해주세요 (선택사항)',
   },
   {
     name: 'location',
-    label: '위치',
+    label: '가게 위치',
     type: 'text',
-    required: false,
-    placeholder: '위치를 입력해주세요 (선택사항)',
+    required: true,
+    placeholder: '가게 위치를 입력해주세요',
   },
 ];
 
@@ -199,6 +220,7 @@ export const getFormDefaultValues = (
   const defaultValues: Record<string, string> = {};
 
   fields.forEach(field => {
+    // 이미지 필드는 빈 문자열로 설정 (null 대신)
     defaultValues[field.name] = '';
   });
 

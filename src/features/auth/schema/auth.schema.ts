@@ -76,6 +76,16 @@ export const storePhoneNumberSchema = z.string().optional();
  */
 export const locationSchema = z.string().optional();
 
+/**
+ * 사장님 전화번호 유효성 검사 스키마
+ */
+export const ownerPhoneNumberSchema = z.string().optional();
+
+/**
+ * 프로필 이미지 URL 유효성 검사 스키마
+ */
+export const imageUrlSchema = z.string().optional();
+
 // --- 폼 유효성 검사 스키마 (클라이언트 전용) ---
 
 /**
@@ -124,18 +134,21 @@ export const ownerSignupSchema = z
  * 지원자 계정 정보 폼 유효성 스키마
  */
 export const applicantAccountInfoSchema = z.object({
+  imageUrl: imageUrlSchema,
   name: nameSchema,
-  nickname: nicknameSchema,
   phoneNumber: phoneNumberSchema,
+  nickname: nicknameSchema,
 });
 
 /**
  * 사장님 계정 정보 폼 유효성 스키마
  */
 export const ownerAccountInfoSchema = z.object({
-  storeName: storeNameSchema,
-  storePhoneNumber: storePhoneNumberSchema,
-  location: locationSchema,
+  nickname: nicknameSchema,
+  storeName: z.string().min(1, '가게 이름은 필수 입력입니다.'),
+  storePhoneNumber: z.string().min(1, '가게 전화번호는 필수 입력입니다.'),
+  ownerPhoneNumber: ownerPhoneNumberSchema,
+  location: z.string().min(1, '가게 위치는 필수 입력입니다.'),
 });
 
 // 폼 데이터 타입 추론
@@ -190,6 +203,7 @@ export const userSchema = z.object({
   location: z.string().nullable(),
   phoneNumber: z.string().nullable(),
   storePhoneNumber: z.string().nullable(),
+  ownerPhoneNumber: z.string().nullable(),
   storeName: z.string().nullable(),
   role: z.enum(['APPLICANT', 'OWNER']),
   imageUrl: z.string().nullable(),

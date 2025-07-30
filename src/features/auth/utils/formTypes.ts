@@ -76,7 +76,9 @@ export const createTypedFormFields = <T extends Record<string, any>>(
     }
     if (
       !field.type ||
-      !['text', 'email', 'password', 'tel', 'number'].includes(field.type)
+      !['text', 'email', 'password', 'tel', 'number', 'image'].includes(
+        field.type
+      )
     ) {
       throw new Error('Each form field must have a valid type property');
     }

@@ -71,6 +71,7 @@ const AuthForm = () => {
     handleSubmit,
     formState: { isValid, errors },
     watch,
+    setValue,
   } = useForm<AuthFormData>({
     mode: 'onChange',
     defaultValues: formConfig.defaultValues,
@@ -332,6 +333,8 @@ const AuthForm = () => {
             errors={errors}
             fields={formConfig.fields}
             register={register}
+            setValue={setValue}
+            watch={watch}
           />
         </div>
         {/* TODO: 로딩 상태 추가 (isSubmitting) */}

@@ -23,6 +23,7 @@ export interface User {
   location: string | null; // 가게 위치 (nullable)
   phoneNumber: string | null; // 사용자 전화번호 (nullable)
   storePhoneNumber: string | null; // 가게 전화번호 (nullable)
+  ownerPhoneNumber: string | null; // 사장님 전화번호 (nullable)
   storeName: string | null; // 가게 이름 (nullable)
   role: 'APPLICANT' | 'OWNER';
   imageUrl: string | null; // 프로필 이미지 URL, 없으면 null

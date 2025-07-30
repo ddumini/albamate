@@ -18,8 +18,10 @@ export interface User {
   role: UserRole;
   storeName?: string;
   storePhoneNumber?: string;
+  ownerPhoneNumber?: string;
   phoneNumber?: string;
   location?: string;
+  imageUrl?: string;
 }
 
 // 폼 데이터 타입 정의 (프론트엔드 폼용)
@@ -41,17 +43,20 @@ export interface SignUpStep1FormData {
  * 지원자 계정 정보 폼 데이터 타입 (회원가입 두 번째 단계)
  */
 export interface ApplicantAccountInfoFormData {
+  imageUrl?: string;
   name: string;
-  nickname: string;
   phoneNumber: string;
+  nickname: string;
 }
 
 /**
  * 사장님 계정 정보 폼 데이터 타입 (회원가입 두 번째 단계)
  */
 export interface OwnerAccountInfoFormData {
+  nickname: string;
   storeName: string;
   storePhoneNumber: string;
+  ownerPhoneNumber?: string;
   location: string;
 }
 

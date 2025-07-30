@@ -3,17 +3,41 @@ import {
   FieldValues,
   Path,
   UseFormRegister,
+  UseFormSetValue, // 추가
+  UseFormWatch, // 추가
 } from 'react-hook-form';
+
+import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
+import Label from '@/shared/components/common/input/Label';
+import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 
 import type { FormField } from '../constants/formFields';
 import { createTypedFormFields, validateFormFields } from '../utils/formTypes';
 import AuthFormItem from './AuthFormItem';
 
+// 파일 검증 로직 추가
+const validateImageFile = (file: File) => {
+  const maxSize = 5 * 1024 * 1024; // 5MB
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+  if (file.size > maxSize) {
+    throw new Error('파일 크기는 5MB 이하여야 합니다.');
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error('JPG, PNG, WebP 형식만 지원됩니다.');
+  }
+
+  return true;
+};
+
 interface AuthFormFieldsProps<T extends FieldValues> {
   fields: FormField[];
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  defaultValues?: Record<string, string>; // 선택적 prop으로 변경
+  defaultValues?: Record<string, string>;
+  setValue: UseFormSetValue<T>; // 추가
+  watch: UseFormWatch<T>; // 추가
 }
 
 /**
@@ -36,6 +60,8 @@ const AuthFormFields = <T extends FieldValues>({
   register,
   errors,
   defaultValues,
+  setValue, // 추가
+  watch, // 추가
 }: AuthFormFieldsProps<T>) => {
   const typedFields = createTypedFormFields<T>(fields);
 
@@ -46,16 +72,58 @@ const AuthFormFields = <T extends FieldValues>({
 
   return (
     <>
-      {typedFields.map(field => (
-        <AuthFormItem<T>
-          key={field.name}
-          errors={errors}
-          label={field.label}
-          name={field.name as Path<T>}
-          register={register}
-          type={field.type}
-        />
-      ))}
+      {typedFields.map(field => {
+        // 이미지 타입인 경우 별도 처리
+        if (field.type === 'image') {
+          const fieldError = errors?.[field.name as Path<T>];
+          const hasError = !!fieldError;
+          const currentImageUrl = watch(field.name as Path<T>);
+
+          return (
+            <div key={field.name}>
+              <Label>{field.label}</Label>
+              <div className="mt-8 lg:mt-16">
+                <ProfileEdit
+                  imageUrl={currentImageUrl}
+                  onImageChange={file => {
+                    try {
+                      validateImageFile(file);
+
+                      // 파일을 FormData에 저장 (File 객체 대신 파일명 저장)
+                      setValue(field.name as Path<T>, file.name as any);
+
+                      // 미리보기 URL 생성
+                      const previewUrl = URL.createObjectURL(file);
+                      setValue(
+                        `${field.name}Preview` as Path<T>,
+                        previewUrl as any
+                      );
+                    } catch (error) {
+                      console.error('Image validation failed:', error);
+                    }
+                  }}
+                />
+                <ErrorMessage
+                  isVisible={hasError}
+                  message={fieldError?.message as string}
+                />
+              </div>
+            </div>
+          );
+        }
+
+        // 일반 입력 필드
+        return (
+          <AuthFormItem<T>
+            key={field.name}
+            errors={errors}
+            label={field.label}
+            name={field.name as Path<T>}
+            register={register}
+            type={field.type}
+          />
+        );
+      })}
     </>
   );
 };
