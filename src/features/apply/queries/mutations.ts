@@ -3,12 +3,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-import { postApplication, postResume } from '../api/api';
+import { postApplication, postResume } from '@/features/apply/api';
 import {
   CreateApplicationRequest,
   createApplicationResponseSchema,
   uploadResumeResponseSchema,
-} from '../schema/apply.schema';
+} from '@/features/apply/schema/apply.schema';
 
 export const useApplyMutation = () => {
   const router = useRouter();

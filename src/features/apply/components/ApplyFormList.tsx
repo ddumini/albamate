@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { APPLY_FORM_STYLE } from '@/features/apply/constants/styles';
+import { CreateApplicationRequest } from '@/features/apply/schema/apply.schema';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import IconInput from '@/shared/components/common/input/IconInput';
 import Input from '@/shared/components/common/input/Input';
@@ -10,9 +12,6 @@ import InputFile from '@/shared/components/common/input/InputFile';
 import Label from '@/shared/components/common/input/Label';
 import Textarea from '@/shared/components/common/input/Textarea';
 import { cn } from '@/shared/lib/cn';
-
-import { APPLY_FORM_STYLE } from '../constants/styles';
-import { CreateApplicationRequest } from '../schema/apply.schema';
 
 const ApplyFormList = ({
   onFileChange,

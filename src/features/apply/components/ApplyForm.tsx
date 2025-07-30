@@ -6,10 +6,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import ApplyFormList from '@/features/apply/components/ApplyFormList';
 import { APPLY_FORM_STYLE } from '@/features/apply/constants/styles';
+import {
+  useApplyMutation,
+  useResumeMutation,
+} from '@/features/apply/queries/mutations';
+import { createApplicationRequestSchema } from '@/features/apply/schema/apply.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-
-import { useApplyMutation, useResumeMutation } from '../queries/queries';
-import { createApplicationRequestSchema } from '../schema/apply.schema';
 
 const ApplyForm = ({ formId }: { formId: string }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
