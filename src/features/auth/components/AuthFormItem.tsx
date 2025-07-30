@@ -7,7 +7,9 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 
+import AddressSearchModal from '@/shared/components/common/input/AddressSearchModal';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
+import IconInput from '@/shared/components/common/input/IconInput';
 import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
@@ -86,6 +88,42 @@ const AuthFormItem = <T extends FieldValues>({
               }
             }}
           />
+          <ErrorMessage
+            isVisible={hasError}
+            message={fieldError?.message as string}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // 주소 타입인 경우 AddressSearchModal 컴포넌트 렌더링
+  if (type === 'address') {
+    const currentAddress = watch?.(name);
+
+    return (
+      <div>
+        <Label htmlFor={name} isRequired={isRequired}>
+          {label}
+        </Label>
+        <div className="mt-8 lg:mt-16">
+          <AddressSearchModal
+            currentAddress={currentAddress as string}
+            onAddressSelect={address => {
+              setValue?.(name, address as any);
+            }}
+          >
+            <IconInput
+              readOnly
+              alt="주소 검색"
+              className="w-full"
+              iconClassName="cursor-pointer"
+              inputClassName="cursor-pointer"
+              placeholder={field?.placeholder || '주소를 검색해주세요'}
+              src="/icons/pin-solid.svg"
+              value={currentAddress}
+            />
+          </AddressSearchModal>
           <ErrorMessage
             isVisible={hasError}
             message={fieldError?.message as string}

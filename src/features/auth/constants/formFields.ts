@@ -11,7 +11,7 @@ import type { AuthPageType, UserType } from '../types';
 export interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'tel' | 'number' | 'image';
+  type: 'text' | 'email' | 'password' | 'tel' | 'number' | 'image' | 'address';
   required?: boolean;
   placeholder?: string;
 }
@@ -166,7 +166,7 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
   {
     name: 'location',
     label: '가게 위치',
-    type: 'text',
+    type: 'address',
     required: true,
     placeholder: '가게 위치를 입력해주세요',
   },

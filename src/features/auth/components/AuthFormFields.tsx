@@ -112,7 +112,7 @@ const AuthFormFields = <T extends FieldValues>({
           );
         }
 
-        // 일반 입력 필드
+        // 일반/ 주소 입력 필드
         return (
           <AuthFormItem<T>
             key={field.name}
