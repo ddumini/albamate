@@ -3,23 +3,23 @@
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import { cn } from '@/shared/lib/cn';
 
-interface PostHeaderProps {
+interface AlbatalkHeaderProps {
   title: string;
-  postId: number;
+  albatalkId: number;
   className?: string;
   titleClassName?: string;
 }
 
-const PostCardHeader = ({
+const AlbatalkCardHeader = ({
   title,
-  postId,
+  albatalkId,
   className,
   titleClassName,
-}: PostHeaderProps) => {
+}: AlbatalkHeaderProps) => {
   const handleActionClick = (option: string) => {
     if (option === 'edit') {
       //TODO: 수정 로직
-      alert(postId);
+      alert(albatalkId);
     } else if (option === 'delete') {
       //TODO: 삭제 로직
     }
@@ -45,4 +45,4 @@ const PostCardHeader = ({
   );
 };
 
-export default PostCardHeader;
+export default AlbatalkCardHeader;

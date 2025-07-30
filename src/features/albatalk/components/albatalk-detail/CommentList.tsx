@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { Comment } from '../../types/albatalk';
+import { Comment } from '../../schemas/albatalk.schema';
 import CommentItem from './CommentItem';
 
 interface CommentListProps {
