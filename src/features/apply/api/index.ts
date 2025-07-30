@@ -2,13 +2,12 @@
 
 import { AxiosResponse } from 'axios';
 
-import { axiosInstance } from '@/shared/lib/axios';
-
 import {
   CreateApplicationRequest,
   CreateApplicationResponse,
   UploadResumeResponse,
-} from '../schema/apply.schema';
+} from '@/features/apply/schema/apply.schema';
+import { axiosInstance } from '@/shared/lib/axios';
 
 export const postApplication = ({
   formId,
@@ -25,9 +24,5 @@ export const postResume = (
 ): Promise<AxiosResponse<UploadResumeResponse>> => {
   const formData = new FormData();
   formData.append('file', file);
-  return axiosInstance.post(`/resume/upload`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return axiosInstance.post(`/resume/upload`, formData);
 };
