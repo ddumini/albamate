@@ -14,10 +14,10 @@ interface AlbaFilterParams extends PaginationParams {
   isRecruiting?: boolean;
 }
 
-// 커스텀 훅으로 인증된 axios 인스턴스 사용
 const useAlbaListApi = () => {
   const authAxios = useAxiosWithAuth();
 
+  // 알바 리스트 조회
   const getAlbas = useCallback(
     (params: AlbaFilterParams = { limit: 10 }) => {
       return authAxios.get('forms', { params });
@@ -25,6 +25,15 @@ const useAlbaListApi = () => {
     [authAxios]
   );
 
+  // 알바 상세 조회
+  const getAlbaDetail = useCallback(
+    (formId: number) => {
+      return authAxios.get(`forms/${formId}`);
+    },
+    [authAxios]
+  );
+
+  // 스크랩
   const scrapAlba = useCallback(
     (formId: number) => {
       return authAxios.post(`forms/${formId}/scrap`);
@@ -32,6 +41,7 @@ const useAlbaListApi = () => {
     [authAxios]
   );
 
+  // 스크랩 취소
   const cancelScrapAlba = useCallback(
     (formId: number) => {
       return authAxios.delete(`forms/${formId}/scrap`);
@@ -39,7 +49,12 @@ const useAlbaListApi = () => {
     [authAxios]
   );
 
-  return { getAlbas, scrapAlba, cancelScrapAlba };
+  return {
+    getAlbas,
+    getAlbaDetail,
+    scrapAlba,
+    cancelScrapAlba,
+  };
 };
 
 export default useAlbaListApi;
