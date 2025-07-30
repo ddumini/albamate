@@ -1,98 +1,72 @@
 'use client';
 
-// 컴파운드 네임스페이스
-import FloatingButton from '@common/button/FloatingButton';
-import FloatingButtonContainer from '@common/button/FloatingButtonContainer';
 import ToastPopup from '@common/popup/ToastPopup';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import ImageCarousel from '@/shared/components/ui/ImageCarousel';
-import useViewport from '@/shared/hooks/useViewport';
+import useAlbaListApi from '@/features/albalist/api/albaListApi';
+import { useAuthSession } from '@/features/auth';
 import useModalStore from '@/shared/store/useModalStore';
-import { Slide } from '@/shared/types/carousel';
-import { createSlidesFromUrls } from '@/shared/utils/carousel';
 import { getDDayString } from '@/shared/utils/format';
 
-import { addBookmark, removeBookmark } from '../api/bookmark';
-import { albaMockData } from '../mocks/mockData';
 import ApplicationList from './ApplicationList';
+import FloatingButtons from './button/FloatingButtons';
+import ImageCarousel from './ImageCarousel';
 import RecruitCloseModal from './modal/RecruitClosedModal';
 import PageContent from './PageContent';
 
 const AlbaPage = () => {
   const { formId } = useParams();
+  const router = useRouter();
+  const { openModal } = useModalStore();
+  const { isAuthenticated } = useAuthSession();
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isOwner, setIsOwner] = useState(true);
-  const { isDesktop } = useViewport();
   const [hasMounted, setHasMounted] = useState(false);
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  const { getAlbaDetail } = useAlbaListApi();
 
-  const { openModal } = useModalStore();
+  // React Query로 상세 데이터 조회
+  const {
+    data: item,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['albaDetail', Number(formId)],
+    queryFn: () => getAlbaDetail(Number(formId)).then(res => res.data),
+    staleTime: 1000 * 60 * 30, // 개발기간 동안만 30분 캐시 유지
+  });
 
-  const router = useRouter();
-  const item = albaMockData.find(alba => alba.id === Number(formId));
+  useEffect(() => setHasMounted(true), []);
 
-  // 진입 시 모집 마감 여부 확인 후 모달 띄우기
+  // 모집 마감 모달 띄우기
   useEffect(() => {
     if (!item) return;
 
     const dDayText = getDDayString(item.recruitmentEndDate);
-    const isRecruitClosed = dDayText === '모집 마감';
-
-    if (isRecruitClosed) {
+    if (dDayText === '모집 마감') {
       openModal(<RecruitCloseModal />);
     }
 
     setPopupVisible(true);
   }, [item, openModal]);
 
-  const handleBookmarkToggle = async () => {
-    if (!isLoggedIn) {
-      router.push('/signin');
-      return;
-    }
-
-    const newBookmarkState = !isBookmarked;
-
-    try {
-      if (newBookmarkState) {
-        await addBookmark(Number(formId));
-        alert('스크랩했어요!');
-      } else {
-        await removeBookmark(Number(formId));
-        alert('스크랩을 취소했어요.');
-      }
-
-      setIsBookmarked(newBookmarkState);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   if (!hasMounted) return null;
 
-  if (!item) {
+  if (isLoading) {
+    return <div className="py-40 text-center">불러오는 중...</div>;
+  }
+
+  if (isError || !item) {
     return (
       <div className="py-40 text-center text-error">
         해당 알바 정보를 찾을 수 없습니다.
       </div>
     );
   }
-
-  const images = [
-    '/images/landing/albaform-clock.png',
-    '/images/landing/apply-girl.png',
-    '/images/landing/anywhere-application.png',
-  ];
-
-  const sampleSlides: Slide[] = createSlidesFromUrls(images);
 
   return (
     <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-120 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
@@ -102,21 +76,17 @@ const AlbaPage = () => {
         visible={popupVisible}
         onClose={() => setPopupVisible(false)}
       />
-      <FloatingButtonContainer position="right-center">
-        <FloatingButton
-          isBookmarked={isBookmarked}
-          type="bookmark"
-          onClick={handleBookmarkToggle}
-        />
-        <FloatingButton type="share" />
-        {/* 사장님/지원자 변경을 위한 임시 floatingBtn */}
-        <FloatingButton
-          type="addAlbatalk"
-          onClick={() => setIsOwner(!isOwner)}
-        />
-      </FloatingButtonContainer>
 
-      <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
+      <FloatingButtons
+        formId={Number(formId)}
+        isBookmarked={isBookmarked}
+        isLoggedIn={isAuthenticated}
+        setIsBookmarked={setIsBookmarked}
+        onSigninRedirect={() => router.push('/signin')}
+        onToggleOwner={() => setIsOwner(prev => !prev)}
+      />
+
+      <ImageCarousel />
 
       <PageContent isOwner={isOwner} item={item} />
 
