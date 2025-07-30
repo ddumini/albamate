@@ -3,9 +3,9 @@ import { useRouter } from 'next/navigation';
 import useViewport from '@/shared/hooks/useViewport';
 import useModalStore from '@/shared/store/useModalStore';
 
+import ApplicationModal from '../modal/ApplicationModal';
+import FormDeleteModal from '../modal/FormDeleteModal';
 import ApplicantButtons from './ApplicantButtons';
-import ApplicationModal from './modal/ApplicationModal';
-import FormDeleteModal from './modal/FormDeleteModal';
 import OwnerButtons from './OwnerButtons';
 
 interface ApplyButtonProps {

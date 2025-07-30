@@ -9,7 +9,7 @@ import { albaMockData } from '../mocks/mockData';
 import AlbaCondition from './AlbaCondition';
 import AlbaContact from './AlbaContact';
 import AlbaInfo from './AlbaInfo';
-import ApplyButton from './ApplyButton';
+import ApplyButton from './button/ApplyButton';
 
 interface PageContentProps {
   item: (typeof albaMockData)[0];
