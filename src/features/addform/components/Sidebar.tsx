@@ -3,12 +3,12 @@
 import { cn } from '@/shared/lib/cn';
 
 import AddformButtons from './AddformButtons';
-import MenuItem, { MenuIndex } from './MenuItem';
+import MenuItem, { Menu } from './MenuItem';
 
 interface SidebarProps {
-  currentMenu: MenuIndex;
-  writingMenu: Record<MenuIndex, boolean>;
-  onMenuClick: (menuIndex: MenuIndex) => void;
+  currentMenu: Menu;
+  writingMenu: Record<Menu, boolean>;
+  onMenuClick: (menu: Menu) => void;
   isEdit?: boolean;
   className?: string;
   onSave?: () => void;
@@ -17,8 +17,12 @@ interface SidebarProps {
 }
 
 const Sidebar = ({
-  currentMenu = 1,
-  writingMenu = { 1: false, 2: false, 3: false },
+  currentMenu = 'recruitContent',
+  writingMenu = {
+    recruitContent: false,
+    recruitCondition: false,
+    workCondition: false,
+  },
   onMenuClick,
   isEdit,
   className,
@@ -26,7 +30,11 @@ const Sidebar = ({
   onSubmit,
   isSubmitting,
 }: SidebarProps) => {
-  const menuIndexList: MenuIndex[] = [1, 2, 3];
+  const menuList: Menu[] = [
+    'recruitContent',
+    'recruitCondition',
+    'workCondition',
+  ];
   return (
     <nav
       className={cn(
@@ -35,12 +43,13 @@ const Sidebar = ({
       )}
     >
       <ul className="flex flex-col gap-8">
-        {menuIndexList.map(menuIndex => (
-          <li key={menuIndex}>
+        {menuList.map(menu => (
+          <li key={menu}>
             <MenuItem
-              isActive={currentMenu === menuIndex}
-              isWriting={writingMenu[menuIndex]}
-              menuIndex={menuIndex}
+              isActive={currentMenu === menu}
+              isWriting={writingMenu[menu]}
+              menu={menu}
+              menuIndex={menuList.indexOf(menu)}
               onClick={onMenuClick}
             />
           </li>

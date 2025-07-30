@@ -10,7 +10,7 @@ import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
 
 import AddformButtons from './AddformButtons';
-import { MenuIndex } from './MenuItem';
+import { Menu } from './MenuItem';
 import RecruitConditionForm from './RecruitConditionForm';
 import RecruitContentForm from './RecruitContentForm';
 import Sidebar from './Sidebar';
@@ -18,11 +18,11 @@ import TabMenu from './TabMenu';
 import WorkConditionForm from './WorkConditionForm';
 
 const AddformClient = ({ formId }: { formId?: string }) => {
-  const [currentMenu, setCurrentMenu] = useState<MenuIndex>(1);
-  const [writingMenu, setWritingMenu] = useState({
-    1: true,
-    2: true,
-    3: false,
+  const [currentMenu, setCurrentMenu] = useState<Menu>('recruitContent');
+  const [writingMenu, setWritingMenu] = useState<Record<Menu, boolean>>({
+    recruitContent: true,
+    recruitCondition: true,
+    workCondition: false,
   });
   const { isDesktop } = useViewport();
   const methods = useForm({
@@ -39,8 +39,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
 
   const handleSubmit = methods.handleSubmit(data => mutate(data));
 
-  const handleMenuClick = (menuIndex: MenuIndex) => {
-    setCurrentMenu(menuIndex);
+  const handleMenuClick = (menu: Menu) => {
+    setCurrentMenu(menu);
   };
 
   return (
@@ -78,11 +78,15 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             />
           )}
           <form>
-            <RecruitContentForm className={currentMenu === 1 ? '' : 'hidden'} />
-            <RecruitConditionForm
-              className={currentMenu === 2 ? '' : 'hidden'}
+            <RecruitContentForm
+              className={currentMenu === 'recruitContent' ? '' : 'hidden'}
             />
-            <WorkConditionForm className={currentMenu === 3 ? '' : 'hidden'} />
+            <RecruitConditionForm
+              className={currentMenu === 'recruitCondition' ? '' : 'hidden'}
+            />
+            <WorkConditionForm
+              className={currentMenu === 'workCondition' ? '' : 'hidden'}
+            />
           </form>
           {isDesktop || (
             <AddformButtons
