@@ -1,7 +1,7 @@
-import { PostDetailResponse } from '../types/albatalk';
+import { PostDetailResponse } from '../schemas/albatalk.schema';
 
 const mockAlbatalkDetail: PostDetailResponse = {
-  id: 370,
+  id: 392,
   title: 'ㅂㅈㄷㄱ',
   content: 'ㅂㅈㄷㄱ',
   imageUrl:
