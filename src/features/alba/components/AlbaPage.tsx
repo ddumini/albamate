@@ -34,7 +34,10 @@ const AlbaPage = () => {
   } = useQuery({
     queryKey: ['albaDetail', Number(formId)],
     queryFn: () => getAlbaDetail(Number(formId)).then(res => res.data),
-    staleTime: 1000 * 60 * 30, // 개발기간 동안만 30분 캐시 유지
+    staleTime: 1000 * 60 * 5, // 5분간 신선한 데이터로 간주
+    gcTime: 1000 * 60 * 10, // 10분간 캐시 유지
+    refetchOnWindowFocus: true, // 윈도우 포커스 시 리페치
+    refetchOnMount: true, // 컴포넌트 마운트 시 리페치
   });
 
   useEffect(() => setHasMounted(true), []);
