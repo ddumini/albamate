@@ -3,9 +3,13 @@ import * as z from 'zod';
 export const createFormRequestSchema = z.object({
   isPublic: z.boolean(),
   hourlyWage: z
-    .number({ error: '최저시급(10,030원) 이상을 입력해야 합니다.' })
+    .number({
+      error: `최저시급(${process.env.NEXT_PUBLIC_MINIMUM_WAGE}원) 이상을 입력해야 합니다.`,
+    })
     .int()
-    .min(10030, { error: '최저시급(10,030원) 이상을 입력해야 합니다.' }),
+    .min(10030, {
+      error: `최저시급(${process.env.NEXT_PUBLIC_MINIMUM_WAGE}원) 이상을 입력해야 합니다.`,
+    }),
   isNegotiableWorkDays: z.boolean(),
   workDays: z.array(z.string()),
   workEndTime: z.string(),
