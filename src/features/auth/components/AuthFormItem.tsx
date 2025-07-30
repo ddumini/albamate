@@ -12,6 +12,8 @@ import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 
+import { FormField } from '../constants/formFields';
+
 // 파일 검증 로직
 const validateImageFile = (file: File) => {
   const maxSize = 5 * 1024 * 1024; // 5MB
@@ -36,6 +38,7 @@ interface AuthFormItemProps<T extends FieldValues> {
   errors?: FieldErrors<T>;
   setValue?: UseFormSetValue<T>;
   watch?: UseFormWatch<T>;
+  field?: FormField; // field 정보 추가
 }
 
 const AuthFormItem = <T extends FieldValues>({
@@ -46,9 +49,12 @@ const AuthFormItem = <T extends FieldValues>({
   errors,
   setValue,
   watch,
+  field,
 }: AuthFormItemProps<T>) => {
   const fieldError = errors?.[name];
   const hasError = !!fieldError;
+
+  const isRequired = field?.required ?? false;
 
   // 이미지 타입인 경우 ProfileEdit 컴포넌트 렌더링
   if (type === 'image') {
@@ -56,9 +62,12 @@ const AuthFormItem = <T extends FieldValues>({
 
     return (
       <div>
-        <Label>{label}</Label>
+        <Label htmlFor={name} isRequired={isRequired}>
+          {label}
+        </Label>
         <div className="mt-8 lg:mt-16">
           <ProfileEdit
+            id={name}
             imageUrl={currentImageUrl}
             onImageChange={file => {
               try {
@@ -89,9 +98,12 @@ const AuthFormItem = <T extends FieldValues>({
   // 일반 입력 필드 렌더링
   return (
     <div>
-      <Label>{label}</Label>
+      <Label htmlFor={name} isRequired={isRequired}>
+        {label}
+      </Label>
       <div className="mt-8 lg:mt-16">
         <Input
+          id={name}
           isInvalid={hasError}
           type={type}
           variant="outlined"

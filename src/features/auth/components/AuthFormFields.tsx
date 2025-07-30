@@ -117,6 +117,7 @@ const AuthFormFields = <T extends FieldValues>({
           <AuthFormItem<T>
             key={field.name}
             errors={errors}
+            field={field}
             label={field.label}
             name={field.name as Path<T>}
             register={register}
