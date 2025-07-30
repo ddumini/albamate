@@ -83,23 +83,11 @@ const FloatingButtons = ({
         }
       }
 
-      // 관련 쿼리들 무효화하여 데이터 동기화
-      queryClient.invalidateQueries({ queryKey: ['albaList'] });
-      queryClient.invalidateQueries({ queryKey: ['albaDetail', formId] });
-
-      // 알바 상세 데이터의 스크랩 상태도 즉시 업데이트
-      queryClient.setQueryData(['albaDetail', formId], (oldData: any) => {
-        if (oldData) {
-          return {
-            ...oldData,
-            isScrapped: !isBookmarked,
-            scrapCount: isBookmarked
-              ? Math.max(0, oldData.scrapCount - 1)
-              : oldData.scrapCount + 1,
-          };
-        }
-        return oldData;
-      });
+      // 강제로 모든 관련 쿼리를 다시 불러오기
+      await Promise.all([
+        queryClient.refetchQueries({ queryKey: ['albaList'] }),
+        queryClient.refetchQueries({ queryKey: ['albaDetail', formId] }),
+      ]);
     } catch (error: any) {
       if (error?.response?.status !== 401) {
         alert('요청 중 오류가 발생했습니다.');
