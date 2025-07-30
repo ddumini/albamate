@@ -11,7 +11,7 @@ import {
   useMyScrapQuery,
 } from '../queries';
 import MyPageContentSection from './MyPageContentSection';
-import MemoizedMyPageHeader from './MyPageHeader';
+import MyPageHeader from './MyPageHeader';
 
 const MyPageContent = () => {
   const [tabValue, setTabValue] = useState('post');
@@ -51,31 +51,9 @@ const MyPageContent = () => {
   });
 
   const handleClickTab = (value: string) => setTabValue(value);
-
   const handlePublicValue = (value: string) => setPublicValue(value);
-
   const handleRecruitValue = (value: string) => setRecruitValue(value);
-
   const handleBasicOrderBy = (value: string) => setSortOrderBy(value);
-
-  useEffect(() => {
-    setSortOrderBy('mostRecent');
-  }, [tabValue]);
-
-  const getFilterCommentData = () => {
-    if (isCommentsLoading || !comments) return [];
-
-    const getTime = (item: CommentCardItem) =>
-      new Date(item.updatedAt ?? item.createdAt).getTime();
-
-    const sorted = [...comments.data].sort((a, b) => {
-      if (sortOrderBy === 'mostRecent') return getTime(b) - getTime(a);
-      if (sortOrderBy === 'mostOld') return getTime(a) - getTime(b);
-      return 0;
-    });
-
-    return sorted;
-  };
 
   const getBoolValue = (str: string) => {
     switch (str) {
@@ -97,13 +75,33 @@ const MyPageContent = () => {
   }, [recruitValue, setIsRecruiting]);
 
   useEffect(() => {
+    setSortOrderBy('mostRecent');
+  }, [tabValue]);
+
+  const getFilterCommentData = () => {
+    if (isCommentsLoading || !comments) return [];
+
+    const getTime = (item: CommentCardItem) =>
+      new Date(item.updatedAt ?? item.createdAt).getTime();
+
+    const sorted = [...comments.data].sort((a, b) => {
+      if (sortOrderBy === 'mostRecent') return getTime(b) - getTime(a);
+      if (sortOrderBy === 'mostOld') return getTime(a) - getTime(b);
+      return 0;
+    });
+
+    return sorted;
+  };
+
+  useEffect(() => {
     if (tabValue === 'post') setPostOrderBy(sortOrderBy);
     if (tabValue === 'scrap') setScrapOrderBy(sortOrderBy);
   }, [sortOrderBy, tabValue, setPostOrderBy, setScrapOrderBy]);
+  console.log(postParams.postOrderBy);
 
   return (
     <div className="mb-40 w-full max-w-1480">
-      <MemoizedMyPageHeader
+      <MyPageHeader
         tabValue={tabValue}
         onClickTab={handleClickTab}
         onSelectPublic={handlePublicValue}

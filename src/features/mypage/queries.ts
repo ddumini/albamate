@@ -5,10 +5,13 @@ import {
   EditPassword,
   PostApi,
   ScrapApi,
-  UpdateMyProfile,
 } from '@/shared/types/mypage';
 
 import useMyPageApi from './api/api';
+import {
+  UpdateMyProfileRequest,
+  UpdateWorkerMyProfileRequest,
+} from './schema/mypage.schema';
 
 export const useMyProfileQuery = () => {
   const api = useMyPageApi();
@@ -22,9 +25,11 @@ export const useMyProfileQuery = () => {
 export const useUpdateMyProfileQuery = () => {
   const queryClient = useQueryClient();
   const api = useMyPageApi();
+
   return useMutation({
-    mutationFn: async (data: UpdateMyProfile) =>
-      await api.updateMyProfile(data),
+    mutationFn: async (
+      data: UpdateMyProfileRequest | UpdateWorkerMyProfileRequest
+    ) => await api.updateMyProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] });
     },

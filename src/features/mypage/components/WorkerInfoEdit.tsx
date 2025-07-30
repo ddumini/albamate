@@ -2,26 +2,44 @@ import PrimaryButton from '@common/button/PrimaryButton';
 import Input from '@common/input/Input';
 import { useForm } from 'react-hook-form';
 
-interface FormData {
-  name: string;
-  nickname: string;
-  phone: string;
-}
+import { FormData } from '@/shared/types/mypage';
+
+import { useUpdateMyProfileQuery } from '../queries';
+import { UpdateWorkerMyProfileRequest } from '../schema/mypage.schema';
 
 interface WorkerInfoEditProps {
+  userInfo: FormData;
   close: () => void;
 }
 
-const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
+const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<UpdateWorkerMyProfileRequest>({
+    defaultValues: {
+      name: userInfo.name,
+      nickname: userInfo.nickname,
+      phoneNumber: userInfo.phoneNumber,
+    },
+  });
 
-  const onSubmit = (data: FormData) => {
-    console.error(data);
-    close();
+  const updateProfile = useUpdateMyProfileQuery();
+
+  const onSubmit = (data: UpdateWorkerMyProfileRequest) => {
+    console.log(data);
+
+    updateProfile.mutate(data, {
+      onSuccess: () => {
+        alert('프로필이 성공적으로 수정되었습니다.');
+        close();
+      },
+      onError: error => {
+        alert('수정 중 오류가 발생했습니다.');
+        console.error(error);
+      },
+    });
   };
 
   return (
@@ -64,17 +82,17 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('phone', {
+          {...register('phoneNumber', {
             required: '연락처는 필수입니다.',
             pattern: {
               value: /^[0-9]+$/,
               message: '숫자만 입력해주세요.',
             },
           })}
-          isInvalid={!!errors.phone}
+          isInvalid={!!errors.phoneNumber}
         />
-        {errors.phone && (
-          <p className="text-sm text-red-500">{errors.phone.message}</p>
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
         )}
       </div>
 

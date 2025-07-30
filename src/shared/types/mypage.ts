@@ -91,6 +91,29 @@ export type EmptyType =
   | 'applyList'
   | 'albaTalkComment';
 
+export interface FormData {
+  nickname: string;
+  storeName: string;
+  storePhoneNumber: string;
+  phoneNumber: string;
+  location: string;
+  role: 'APPLICANT' | 'OWNER';
+  imageUrl: string;
+  name: string;
+  email: string;
+  id: number;
+}
+
+export interface UpdateMyProfile {
+  name: string;
+  nickname: string;
+  phoneNumber: string;
+  storeName?: string;
+  storePhoneNumber?: string;
+  location?: string;
+  imageUrl: string;
+}
+
 // API Types
 export interface PostApi {
   limit: number;

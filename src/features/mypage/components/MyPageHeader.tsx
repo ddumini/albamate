@@ -1,5 +1,3 @@
-import { memo, useMemo } from 'react';
-
 import Tab from '@/shared/components/common/tab/Tab';
 import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
 import { ContentType, SortOption } from '@/shared/types/mypage';
@@ -30,20 +28,13 @@ const MyPageHeader = ({
 }: MyPageHeader) => {
   const { isOwner } = useSessionUtils();
 
-  const tapOption = useMemo(
-    () =>
-      [
-        { id: 'post', label: '내가 쓴 글' },
-        { id: 'comment', label: '내가 쓴 댓글' },
-        !isOwner && { id: 'scrap', label: '스크랩' },
-      ].filter((item): item is TabOption => Boolean(item)),
-    [isOwner]
-  );
+  const tapOption = [
+    { id: 'post', label: '내가 쓴 글' },
+    { id: 'comment', label: '내가 쓴 댓글' },
+    !isOwner && { id: 'scrap', label: '스크랩' },
+  ].filter((item): item is TabOption => Boolean(item));
 
-  const sortOption: SortOption[] = useMemo(
-    () => SORT_OPTIONS[tabValue as ContentType] || [],
-    [tabValue]
-  );
+  const sortOption: SortOption[] = SORT_OPTIONS[tabValue as ContentType] || [];
 
   const publicOption = [
     { value: '', label: '전체' },
@@ -91,6 +82,4 @@ const MyPageHeader = ({
   );
 };
 
-const MemoizedMyPageHeader = memo(MyPageHeader);
-
-export default MemoizedMyPageHeader;
+export default MyPageHeader;

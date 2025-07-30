@@ -3,14 +3,16 @@ import IconInput from '@common/input/IconInput';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface FormData {
-  currentPw: string;
-  newPw: string;
-  checkNewPw: string;
-}
+import { EditPassword } from '@/shared/types/mypage';
+
+import { useUpdateMyPasswordQuery } from '../queries';
 
 interface PwChangeFormProps {
   close: () => void;
+}
+
+interface PasswordProps extends EditPassword {
+  checkNewPw: string;
 }
 
 const PwChangeForm = ({ close }: PwChangeFormProps) => {
@@ -22,10 +24,22 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<FormData>();
+  } = useForm<PasswordProps>();
 
-  const onSubmit = (data: FormData) => {
-    console.error(data);
+  const updatePassword = useUpdateMyPasswordQuery();
+
+  const onSubmit = (data: PasswordProps) => {
+    const { checkNewPw, ...rquestData } = data;
+    updatePassword.mutate(rquestData, {
+      onSuccess: () => {
+        alert('비밀번호가 성공적으로 수정되었습니다.');
+        close();
+      },
+      onError: error => {
+        alert('변경 중 오류가 발생했습니다.');
+        console.error(error);
+      },
+    });
   };
 
   return (
@@ -49,13 +63,15 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           }
           type={!curIsVisible ? 'password' : 'text'}
           variant="outlined"
-          {...register('currentPw', {
+          {...register('currentPassword', {
             required: '현재 비밀번호를 입력해주세요',
           })}
-          isInvalid={!!errors.currentPw}
+          isInvalid={!!errors.currentPassword}
         />
-        {errors.currentPw && (
-          <p className="text-sm text-red-500">{errors.currentPw.message}</p>
+        {errors.currentPassword && (
+          <p className="text-sm text-red-500">
+            {errors.currentPassword.message}
+          </p>
         )}
       </div>
 
@@ -78,11 +94,13 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           }
           type={!newIsVisible ? 'password' : 'text'}
           variant="outlined"
-          {...register('newPw', { required: '새로운 비밀번호를 입력해주세요' })}
-          isInvalid={!!errors.newPw}
+          {...register('newPassword', {
+            required: '새로운 비밀번호를 입력해주세요',
+          })}
+          isInvalid={!!errors.newPassword}
         />
-        {errors.newPw && (
-          <p className="text-sm text-red-500">{errors.newPw.message}</p>
+        {errors.newPassword && (
+          <p className="text-sm text-red-500">{errors.newPassword.message}</p>
         )}
       </div>
 
@@ -108,7 +126,7 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           {...register('checkNewPw', {
             required: '새로운 비밀번호를 다시 한번 입력해주세요',
             validate: value =>
-              value === watch('newPw') || '비밀번호가 일치하지 않습니다.',
+              value === watch('newPassword') || '비밀번호가 일치하지 않습니다.',
           })}
           isInvalid={!!errors.checkNewPw}
         />

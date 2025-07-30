@@ -1,10 +1,10 @@
 import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { EditPassword, PostApi, ScrapApi } from '@/shared/types/mypage';
+
 import {
-  EditPassword,
-  PostApi,
-  ScrapApi,
-  UpdateMyProfile,
-} from '@/shared/types/mypage';
+  UpdateMyProfileRequest,
+  UpdateWorkerMyProfileRequest,
+} from '../schema/mypage.schema';
 
 const useMyPageApi = () => {
   const authAxios = useAxiosWithAuth();
@@ -14,12 +14,22 @@ const useMyPageApi = () => {
     getMyProfile: () => authAxios.get('/users/me'),
 
     // 내 정보 수정
-    updateMyProfile: (data: UpdateMyProfile) =>
-      authAxios.patch('/users/me', data),
+    updateMyProfile: (
+      data: UpdateMyProfileRequest | UpdateWorkerMyProfileRequest
+    ) =>
+      authAxios.patch('/users/me', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
 
     // 비밀번호 변경
     updatePassword: (data: EditPassword) =>
-      authAxios.patch('/users/me/password', data),
+      authAxios.patch('/users/me/password', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
 
     // 내가 작성한 게시글 목록 조회
     getMyPosts: ({ limit, orderBy, cursor }: PostApi) =>

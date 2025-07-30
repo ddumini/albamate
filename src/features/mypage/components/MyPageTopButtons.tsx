@@ -8,16 +8,19 @@ import { ReactNode, useMemo } from 'react';
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
 
+import { useMyProfileQuery } from '../queries';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
 const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
+  const { data: userInfo, isPending } = useMyProfileQuery();
   const { openModal, closeModal } = useModalStore();
+
   const infoComponent = isOwner ? (
-    <OwnerInfoEdit close={closeModal} />
+    <OwnerInfoEdit close={closeModal} userInfo={userInfo?.data} />
   ) : (
-    <WorkerInfoEdit close={closeModal} />
+    <WorkerInfoEdit close={closeModal} userInfo={userInfo?.data} />
   );
 
   const renderModalContent = (title: string, content: ReactNode) => (

@@ -3,28 +3,42 @@ import IconInput from '@common/input/IconInput';
 import Input from '@common/input/Input';
 import { useForm } from 'react-hook-form';
 
-interface FormData {
-  nickname: string;
-  storeName: string;
-  storePhone: string;
-  ownerPhone: string;
-  location: string;
-}
+import { FormData } from '../../../shared/types/mypage';
+import { useUpdateMyProfileQuery } from '../queries';
 
 interface OwnerInfoEditProps {
+  userInfo: FormData;
   close: () => void;
 }
 
-const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
+const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      nickname: userInfo.nickname,
+      storeName: userInfo.storeName,
+      storePhoneNumber: userInfo.storePhoneNumber,
+      phoneNumber: userInfo.phoneNumber,
+      location: userInfo.location,
+    },
+  });
+
+  const updateProfile = useUpdateMyProfileQuery();
 
   const onSubmit = (data: FormData) => {
-    console.error(data);
-    close();
+    updateProfile.mutate(data, {
+      onSuccess: () => {
+        alert('프로필이 성공적으로 수정되었습니다.');
+        close();
+      },
+      onError: error => {
+        alert('수정 중 오류가 발생했습니다');
+        console.error(error);
+      },
+    });
   };
 
   return (
@@ -67,17 +81,19 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('storePhone', {
+          {...register('storePhoneNumber', {
             required: '연락처는 필수입니다.',
             pattern: {
               value: /^[0-9]+$/,
               message: '숫자만 입력해주세요.',
             },
           })}
-          isInvalid={!!errors.storePhone}
+          isInvalid={!!errors.storePhoneNumber}
         />
-        {errors.storePhone && (
-          <p className="text-sm text-red-500">{errors.storePhone.message}</p>
+        {errors.storePhoneNumber && (
+          <p className="text-sm text-red-500">
+            {errors.storePhoneNumber.message}
+          </p>
         )}
       </div>
 
@@ -88,16 +104,16 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('ownerPhone', {
+          {...register('phoneNumber', {
             pattern: {
               value: /^[0-9]+$/,
               message: '숫자만 입력해주세요.',
             },
           })}
-          isInvalid={!!errors.ownerPhone}
+          isInvalid={!!errors.phoneNumber}
         />
-        {errors.ownerPhone && (
-          <p className="text-sm text-red-500">{errors.ownerPhone.message}</p>
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
         )}
       </div>
 
