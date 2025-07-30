@@ -120,7 +120,9 @@ const AuthFormFields = <T extends FieldValues>({
             label={field.label}
             name={field.name as Path<T>}
             register={register}
+            setValue={setValue}
             type={field.type}
+            watch={watch}
           />
         );
       })}
