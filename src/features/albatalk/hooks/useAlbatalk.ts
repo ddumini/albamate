@@ -75,5 +75,8 @@ export const useRemoveAlbatalkLike = () => {
         queryKey: albatalkKeys.lists(),
       });
     },
+    onError: error => {
+      console.error('좋아요 취소 실패:', error);
+    },
   });
 };
