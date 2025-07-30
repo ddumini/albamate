@@ -21,6 +21,7 @@ interface Props {
   item: AlbaItem | OwnerMyAlbaItem;
   onClick: () => void;
   dropdownOptions: DropdownOption[];
+  isScrapped?: boolean; // 새로 추가
 }
 
 /**
@@ -34,7 +35,12 @@ interface Props {
  * <AlbaCard key={`${item.id}-${item.recruitmentEndDate}`} item={item} />
  *
  */
-const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
+const AlbaCardItem = ({
+  item,
+  onClick,
+  dropdownOptions,
+  isScrapped,
+}: Props) => {
   const {
     title,
     isPublic,
@@ -114,7 +120,24 @@ const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <h3 className="Text-black mt-12 ml-4 text-2lg font-semibold">{title}</h3>
+      <h3 className="Text-black mt-12 ml-4 flex items-center gap-4 text-2lg font-semibold">
+        {title}
+        {isScrapped ? (
+          <Image
+            alt="스크랩 완료"
+            height={20}
+            src="/icons/bookmark-mint.svg"
+            width={20}
+          />
+        ) : (
+          <Image
+            alt="스크랩 안됨"
+            height={20}
+            src="/icons/bookmark-gray.svg"
+            width={20}
+          />
+        )}
+      </h3>
 
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (
