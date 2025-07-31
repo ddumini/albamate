@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   CommentCardItem,
   ContentType,
+  EmptyType,
   PostCardItem,
   ScrapCardItem,
 } from '@/shared/types/mypage';
@@ -16,6 +17,13 @@ import MyPostCard from './MyPostCard';
 import MyScrapCard from './MyScrapCard';
 
 type CardInfoItem = PostCardItem | CommentCardItem | ScrapCardItem;
+
+type UsedEmptyType = Extract<EmptyType, 'post' | 'comment' | 'scrap'>;
+
+interface EmptyInfo {
+  title: string;
+  description?: string;
+}
 
 interface MixedSectionProps {
   cardInfo: CardInfoItem[];
@@ -87,8 +95,27 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
 
   const cardWrapStyle = firstItem && getCardWrapStyle(firstItem);
 
+  const EMPTY_DATA: Record<UsedEmptyType, EmptyInfo> = {
+    post: {
+      title: '작성한 게시글이 없어요.',
+      description: '궁금한 점, 고민 등의 게시글을 올려보세요',
+    },
+    comment: {
+      title: '작성한 댓글이 없어요.',
+    },
+    scrap: {
+      title: '스크랩한 알바폼이 없어요.',
+    },
+  };
+
   if (!cardInfo || cardInfo?.length === 0) {
-    return <EmptyCard type={type} />;
+    return (
+      <EmptyCard
+        description={EMPTY_DATA[type]?.description ?? ''}
+        title={EMPTY_DATA[type].title}
+        type={type}
+      />
+    );
   }
 
   return (

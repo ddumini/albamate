@@ -47,8 +47,8 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
 
   const dropDownItem = useMemo(
     () => [
-      { label: '내 정보 수정', onClick: myInfoEdit },
-      { label: '비밀번호 변경', onClick: pwChange },
+      { label: '내 정보 수정', onClick: () => myInfoEdit() },
+      { label: '비밀번호 변경', onClick: () => pwChange() },
     ],
     []
   );

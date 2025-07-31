@@ -16,20 +16,20 @@ interface OwnerInfoEditProps {
 }
 
 const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
-  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
+  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      nickname: userInfo.nickname,
+      nickname: userInfo?.nickname,
       storeName: userInfo.storeName === 'undefined' ? '' : userInfo.storeName,
       storePhoneNumber:
         userInfo.storePhoneNumber === 'undefined'
           ? ''
           : userInfo.storePhoneNumber,
-      phoneNumber: userInfo.phoneNumber,
+      phoneNumber: userInfo?.phoneNumber,
       location: userInfo.location === 'undefined' ? '' : userInfo.location,
     },
   });

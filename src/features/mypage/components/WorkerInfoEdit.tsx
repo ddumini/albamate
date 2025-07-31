@@ -16,17 +16,17 @@ interface WorkerInfoEditProps {
 }
 
 const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
-  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
+  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateWorkerMyProfileRequest>({
     defaultValues: {
-      name: userInfo.name,
-      nickname: userInfo.nickname,
-      phoneNumber: userInfo.phoneNumber,
-      imageUrl: userInfo.imageUrl,
+      name: userInfo?.name,
+      nickname: userInfo?.nickname,
+      phoneNumber: userInfo?.phoneNumber,
+      imageUrl: userInfo?.imageUrl,
     },
   });
 

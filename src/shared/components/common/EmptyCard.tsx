@@ -5,12 +5,12 @@ import { EmptyType } from '@/shared/types/mypage';
 
 interface EmptyInfo {
   image: string;
-  title: string;
-  description?: string;
 }
 
 interface EmptyCardProps {
   type: EmptyType;
+  title: string;
+  description: string;
   wrapClassName?: string;
   imgWrapClassName?: string;
   textClassName?: string;
@@ -19,41 +19,33 @@ interface EmptyCardProps {
 const EMPTY_DATA: Record<EmptyType, EmptyInfo> = {
   post: {
     image: '/images/mypage/non-post.svg',
-    title: '작성한 게시글이 없어요.',
-    description: '궁금한 점, 고민 등의 게시글을 올려보세요',
   },
   comment: {
     image: '/images/mypage/non-post.svg',
-    title: '작성한 댓글이 없어요.',
   },
   scrap: {
     image: '/images/mypage/non-scrap.svg',
-    title: '스크랩한 알바폼이 없어요.',
   },
   albaList: {
     image: '/images/non-form.svg',
-    title: '등록된 알바폼이 없어요.',
-    description: '1분 만에 등록하고 알바를 구해보세요!',
   },
   applyList: {
     image: '/images/non-form.svg',
-    title: '지원한 알바폼이 없어요.',
-    description: '알바폼을 둘러보고 지원해보세요!',
   },
   albaTalkComment: {
     image: '/images/mypage/non-post.svg',
-    title: '등록된 댓글이 없어요.',
-    description: '댓글을 등록하고 의견을 공유해보세요.',
   },
 };
 
 const EmptyCard = ({
   type,
+  title,
+  description,
   wrapClassName,
   imgWrapClassName,
   textClassName,
 }: EmptyCardProps) => {
-  const { image, title, description } = EMPTY_DATA[type];
+  const { image } = EMPTY_DATA[type];
   return (
     <div
       className={cn(
