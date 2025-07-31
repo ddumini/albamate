@@ -5,30 +5,38 @@ import { useState } from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
-import MenuItem, { MenuIndex } from './MenuItem';
+import MenuItem, { Menu } from './MenuItem';
 
 interface TabMenuProps {
-  currentMenu: MenuIndex;
-  writingMenu: Record<MenuIndex, boolean>;
-  onMenuClick: (menuIndex: MenuIndex) => void;
+  currentMenu: Menu;
+  writingMenu: Record<Menu, boolean>;
+  onMenuClick: (menu: Menu) => void;
   className?: string;
 }
 
 const TabMenu = ({
-  currentMenu = 1,
-  writingMenu = { 1: false, 2: false, 3: false },
+  currentMenu = 'recruitContent',
+  writingMenu = {
+    recruitContent: false,
+    recruitCondition: false,
+    workCondition: false,
+  },
   onMenuClick,
   className,
 }: TabMenuProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const menuIndexList: MenuIndex[] = [1, 2, 3];
+  const menuList: Menu[] = [
+    'recruitContent',
+    'recruitCondition',
+    'workCondition',
+  ];
   const currentMenuList = [
     currentMenu,
-    ...menuIndexList.filter(index => index !== currentMenu),
+    ...menuList.filter(menu => menu !== currentMenu),
   ];
-  const handleMenuClick = (menuIndex: MenuIndex) => {
+  const handleMenuClick = (menu: Menu) => {
     setIsOpen(false);
-    onMenuClick(menuIndex);
+    onMenuClick(menu);
   };
   return (
     <nav
@@ -39,18 +47,19 @@ const TabMenu = ({
       )}
     >
       <ul>
-        {currentMenuList.map((menuIndex, i) => (
-          <li key={menuIndex}>
+        {currentMenuList.map((menu, index) => (
+          <li key={menu}>
             <MenuItem
               className={cn(
-                i === 0 && 'rounded-b-none',
-                i === 1 && 'rounded-none',
-                i === 2 && 'rounded-t-none',
+                index === 0 && 'rounded-b-none',
+                index === 1 && 'rounded-none',
+                index === 2 && 'rounded-t-none',
                 !isOpen && 'cursor-auto'
               )}
-              isActive={currentMenu === menuIndex}
-              isWriting={writingMenu[menuIndex]}
-              menuIndex={menuIndex}
+              isActive={currentMenu === menu}
+              isWriting={writingMenu[menu]}
+              menu={menu}
+              menuIndex={menuList.indexOf(menu)}
               onClick={isOpen ? handleMenuClick : undefined}
             />
           </li>

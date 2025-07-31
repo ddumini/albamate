@@ -8,24 +8,26 @@ import WritingBadge from './WritingBadge';
 interface MenuItemProps {
   isActive?: boolean;
   isWriting?: boolean;
-  menuIndex: MenuIndex;
-  onClick?: (menuIndex: MenuIndex) => void;
+  menu: Menu;
+  menuIndex: number;
+  onClick?: (menu: Menu) => void;
   className?: string;
 }
 
-export type MenuIndex = 1 | 2 | 3;
+export type Menu = 'recruitContent' | 'recruitCondition' | 'workCondition';
 
 const MenuItem = ({
   isActive,
   isWriting,
+  menu,
   menuIndex,
   onClick,
   className,
 }: MenuItemProps) => {
-  const itemLabels: Record<MenuIndex, string> = {
-    1: '모집내용',
-    2: '모집조건',
-    3: '근무조건',
+  const itemLabels: Record<Menu, string> = {
+    recruitContent: '모집내용',
+    recruitCondition: '모집조건',
+    workCondition: '근무조건',
   };
   return (
     <button
@@ -38,10 +40,10 @@ const MenuItem = ({
         className
       )}
       type="button"
-      onClick={() => onClick?.(menuIndex)}
+      onClick={() => onClick?.(menu)}
     >
       <div className="flex items-center gap-10 lg:gap-24">
-        <NumberCircle isActive={isActive}>{menuIndex}</NumberCircle>
+        <NumberCircle isActive={isActive}>{menuIndex + 1}</NumberCircle>
         <span
           className={cn(
             'text-lg font-bold lg:text-xl',
@@ -50,7 +52,7 @@ const MenuItem = ({
               : 'text-black-100 dark:text-gray-500'
           )}
         >
-          {itemLabels[menuIndex]}
+          {itemLabels[menu]}
         </span>
       </div>
       {isWriting && <WritingBadge isActive={isActive} />}
