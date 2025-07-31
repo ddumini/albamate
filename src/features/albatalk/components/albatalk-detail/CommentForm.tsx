@@ -26,9 +26,6 @@ const CommentForm = ({ albatalkId, onSubmit }: CommentFormProps) => {
       {
         onSuccess: () => {
           setContent('');
-          if (textareaRef.current) {
-            textareaRef.current.value = '';
-          }
           onSubmit?.(trimmedContent);
         },
         onError: error => {
