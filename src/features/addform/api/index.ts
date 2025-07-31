@@ -22,5 +22,10 @@ export const useAddformApi = () => {
     ): Promise<AxiosResponse<CreateFormResponse>> => {
       return authAxios.patch('/forms', form);
     },
+    uploadImage: (file: File): Promise<AxiosResponse<{ url: string }>> => {
+      const formData = new FormData();
+      formData.append('image', file);
+      return authAxios.post('/images/upload', formData);
+    },
   };
 };
