@@ -96,13 +96,12 @@ const AlbaCard = ({ item }: Props) => {
       }
 
       if (error?.response?.status === 400) {
-        console.error(error);
-        alert('요청이 올바르지 않습니다. 다시 시도해주세요.');
-        router.refresh();
-      } else {
-        alert('스크랩 처리 중 오류가 발생했습니다.');
-        console.error(error);
+        alert(error.response?.data?.message || '요청 오류가 발생했습니다.');
+        return;
       }
+
+      alert('스크랩 처리 중 오류가 발생했습니다.');
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
