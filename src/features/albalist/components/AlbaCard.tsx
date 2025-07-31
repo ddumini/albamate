@@ -12,7 +12,7 @@ import type { AlbaItem } from '@/shared/types/alba';
 import useAlbaListApi from '../api/albaListApi';
 
 interface Props {
-  item: AlbaItem & { isScrapped?: boolean };
+  item: AlbaItem;
 }
 
 const AlbaCard = ({ item }: Props) => {
@@ -22,14 +22,21 @@ const AlbaCard = ({ item }: Props) => {
   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isScrapped, setIsScrapped] = useState(item.isScrapped ?? false);
+  const [isScrapped, setIsScrapped] = useState(false);
   const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount);
 
-  // item이 변경될 때마다 로컬 상태 동기화
   useEffect(() => {
-    setIsScrapped(item.isScrapped ?? false);
-    setLocalScrapCount(item.scrapCount);
-  }, [item.isScrapped, item.scrapCount]);
+    const fetchScrapStatus = async () => {
+      try {
+        const res = await getAlbaDetail(item.id);
+        setIsScrapped(res.data.isScrapped);
+        setLocalScrapCount(res.data.scrapCount);
+      } catch (err) {
+        console.error('스크랩 상태 불러오기 실패:', err);
+      }
+    };
+    fetchScrapStatus();
+  }, [item.id, getAlbaDetail]);
 
   const handleCardClick = async () => {
     try {
@@ -52,76 +59,63 @@ const AlbaCard = ({ item }: Props) => {
     }
 
     setIsLoading(true);
-    try {
-      // 세션 강제 갱신 시도
-      try {
-        await refreshSession();
-      } catch (refreshError) {
-        console.warn('세션 갱신 실패. 로그아웃을 진행합니다.');
-        signOut({ callbackUrl: '/signin', redirect: true });
-        return;
-      }
 
-      if (isScrapped) {
+    // optimistic update
+    const prevScrapped = isScrapped;
+    const prevScrapCount = localScrapCount;
+    setIsScrapped(!prevScrapped);
+    setLocalScrapCount(prevScrapCount + (prevScrapped ? -1 : 1));
+
+    try {
+      if (prevScrapped) {
         await cancelScrapAlba(item.id);
-        setIsScrapped(false);
-        setLocalScrapCount(prev => Math.max(0, prev - 1)); // 스크랩 카운트 감소
         alert(`${item.title} 스크랩 취소 완료!`);
       } else {
-        try {
-          await scrapAlba(item.id);
-          setIsScrapped(true);
-          setLocalScrapCount(prev => prev + 1); // 스크랩 카운트 증가
-          alert(`${item.title} 스크랩 완료!`);
-        } catch (error: any) {
-          if (
-            error?.response?.data?.message === '이미 스크랩한 알바폼입니다.'
-          ) {
-            await cancelScrapAlba(item.id);
-            setIsScrapped(false);
-            setLocalScrapCount(prev => Math.max(0, prev - 1)); // 스크랩 카운트 감소
-            alert(`${item.title} 스크랩 취소 완료!`);
-          } else {
-            throw error;
-          }
-        }
+        await scrapAlba(item.id);
+        alert(`${item.title} 스크랩 완료!`);
       }
 
       queryClient.invalidateQueries({ queryKey: ['albaList'] });
       queryClient.invalidateQueries({ queryKey: ['albaDetail', item.id] });
-
-      // 알바 상세 페이지 데이터도 즉시 업데이트 (상세 페이지가 열려있을 경우)
-      queryClient.setQueryData(['albaDetail', item.id], (oldData: any) => {
-        if (oldData) {
-          return {
-            ...oldData,
-            isScrapped: isScrapped ? false : true, // 토글된 상태로 업데이트
-            scrapCount: isScrapped
-              ? Math.max(0, oldData.scrapCount - 1)
-              : oldData.scrapCount + 1,
-          };
-        }
-        return oldData;
-      });
     } catch (error: any) {
-      if (error?.response?.status !== 401) {
-        alert('요청 중 오류가 발생했습니다.');
+      // rollback
+      setIsScrapped(prevScrapped);
+      setLocalScrapCount(prevScrapCount);
+
+      if (error?.response?.status === 400) {
+        try {
+          await refreshSession(); // 세션 갱신 시도
+          console.info('세션 갱신 성공');
+          // 갱신 성공 시 아무 일도 하지 않음
+        } catch (refreshError) {
+          console.warn('세션 갱신 실패. 로그아웃을 진행합니다.');
+          alert('로그인이 필요합니다');
+          signOut({ callbackUrl: '/signin', redirect: true });
+        }
+        return;
+      }
+
+      if (error?.response?.status === 401) {
+        signOut({ callbackUrl: '/signin', redirect: true });
+      } else {
+        alert('스크랩 처리 중 오류가 발생했습니다.');
         console.error(error);
       }
     } finally {
       setIsLoading(false);
     }
   }, [
-    isLoading,
     isAuthenticated,
+    isLoading,
     item.id,
     item.title,
     isScrapped,
-    router,
+    localScrapCount,
+    refreshSession,
     scrapAlba,
     cancelScrapAlba,
     queryClient,
-    refreshSession,
+    router,
   ]);
 
   const applyScrapOptions = [
@@ -136,7 +130,6 @@ const AlbaCard = ({ item }: Props) => {
     },
   ];
 
-  // item 객체에 로컬 스크랩 카운트를 적용한 새로운 객체 생성
   const itemWithLocalScrapCount = {
     ...item,
     scrapCount: localScrapCount,
@@ -146,7 +139,7 @@ const AlbaCard = ({ item }: Props) => {
     <AlbaCardItem
       dropdownOptions={applyScrapOptions}
       isScrapped={isScrapped}
-      item={itemWithLocalScrapCount} // 로컬 스크랩 카운트가 적용된 item 전달
+      item={itemWithLocalScrapCount}
       onClick={handleCardClick}
     />
   );
