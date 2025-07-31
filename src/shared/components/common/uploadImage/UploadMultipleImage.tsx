@@ -8,6 +8,10 @@ interface UploadMultipleImageProps {
    * 선택된 `File`들의 배열을 인자로 받습니다.
    */
   onImageChange: (files: File[]) => void;
+  /**
+   * input 요소의 고유 ID입니다. `label`의 `htmlFor` 속성과 연결하는 데 사용될 수 있습니다.
+   */
+  id?: string;
 }
 
 /**
@@ -16,7 +20,10 @@ interface UploadMultipleImageProps {
  * 미리보기 위의 x 버튼을 통해 선택된 이미지를 삭제할 수도 있습니다.
  * 선택된 `File` 리스트를 `onImageChange` 콜백을 통해 상위 컴포넌트로 전달합니다.
  */
-const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
+const UploadMultipleImage = ({
+  onImageChange,
+  id,
+}: UploadMultipleImageProps) => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const previewImagesRef = useRef<string[]>([]);
@@ -55,7 +62,7 @@ const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
   };
 
   return (
-    <div className="flex gap-20 lg:gap-24">
+    <div className="flex flex-wrap gap-20 lg:gap-24">
       <div className="relative flex size-80 items-center justify-center rounded-lg bg-background-200 transition-all duration-200 ease-in-out hover:bg-background-300 lg:size-116 dark:bg-gray-800 hover:dark:bg-gray-700">
         <Image
           alt="이미지 넣기"
@@ -69,6 +76,7 @@ const UploadMultipleImage = ({ onImageChange }: UploadMultipleImageProps) => {
         <InputFileImage
           multiple
           className="absolute inset-0 cursor-pointer"
+          id={id}
           onImageChange={handleImageChange}
         />
       </div>

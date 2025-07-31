@@ -9,9 +9,8 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 
-import { cn } from '@/shared/lib/cn';
-
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { cn } from '@/shared/lib/cn';
 
 /**
  * DatePicker 컴포넌트
@@ -43,6 +42,7 @@ interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  defaultValue?: DateRange;
 }
 
 const DatePicker = ({
@@ -50,9 +50,12 @@ const DatePicker = ({
   placeholder = '시작일 - 종료일',
   disabled = false,
   className,
+  defaultValue,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(
+    defaultValue
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 

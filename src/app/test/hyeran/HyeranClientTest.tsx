@@ -9,10 +9,10 @@ import Modal from '@common/modal/Modal';
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { Slide } from '@/shared/components/common/imageCarousel/carousel';
+import ImageCarousel from '@/shared/components/common/imageCarousel/ImageCarousel';
 import ThemeToggle from '@/shared/components/ThemeToggle';
-import ImageCarousel from '@/shared/components/ui/ImageCarousel';
 import useModalStore from '@/shared/store/useModalStore';
-import { Slide } from '@/shared/types/carousel';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 const RADIO_OPTIONS: RadioOption[] = [

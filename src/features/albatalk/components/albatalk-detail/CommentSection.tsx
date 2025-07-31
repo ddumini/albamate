@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-import { CommentsResponse } from '../../types/albatalk';
+import { CommentsResponse } from '../../schemas/albatalk.schema';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import CommentStatus from './CommentStatus';
