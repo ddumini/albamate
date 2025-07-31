@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { CommentCardItem } from '@/shared/types/mypage';
 
+import { CommentsApi, PostApi, ScrapApi } from '../../../shared/types/mypage';
 import useMyPageApi from '../api/api';
 import useMyPageParams from '../hooks/useMyPageParams';
 import MyPageContentSection from './MyPageContentSection';
@@ -39,7 +40,7 @@ const MyPageContent = () => {
   } = useInfiniteScroll({
     mode: 'cursor',
     queryKey: ['myPosts', limit, postParams.postOrderBy],
-    fetcher: async (params: any) => {
+    fetcher: async (params: PostApi) => {
       return await api.getMyPosts(params);
     },
     initialParams: { limit, orderBy: postParams.postOrderBy },
@@ -61,7 +62,7 @@ const MyPageContent = () => {
       String(scrapParams.isPublic ?? ''),
       String(scrapParams.isRecruiting ?? ''),
     ],
-    fetcher: async (params: any) => {
+    fetcher: async (params: ScrapApi) => {
       return await api.getMyScrapAlba(params);
     },
     initialParams: {
@@ -83,7 +84,7 @@ const MyPageContent = () => {
   } = useInfiniteScroll({
     mode: 'page',
     queryKey: ['myComments', commentParams.pageSize],
-    fetcher: async (params: any) => {
+    fetcher: async (params: CommentsApi) => {
       return await api.getMyComments(params.page, params.pageSize);
     },
     initialParams: { pageSize: commentParams.pageSize },

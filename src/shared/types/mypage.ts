@@ -132,7 +132,15 @@ export interface ScrapApi {
 }
 
 export interface CommentsApi {
-  page: number;
+  page?: number;
   pageSize: number;
   enabled?: boolean;
+}
+
+export interface Params {
+  limit?: number;
+  orderBy?: string;
+  cursor?: number;
+  page?: number;
+  pageSize?: number;
 }
