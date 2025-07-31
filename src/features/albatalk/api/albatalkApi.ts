@@ -7,8 +7,13 @@ import {
   AlbatalkDetailResponseSchema,
   type AlbatalksResponse,
   AlbatalksResponseSchema,
+  CommentResponse,
+  CommentResponseSchema,
+  CommentsResponse,
+  CommentsResponseSchema,
   type GetAlbatalksParams,
   GetAlbatalksParamsSchema,
+  GetCommentsParams,
 } from '../schemas/albatalk.schema';
 
 /**
@@ -65,4 +70,67 @@ export const removeAlbatalkLike = async (
   authAxios: AxiosInstance
 ): Promise<void> => {
   await authAxios.delete(`/posts/${postId}/like`);
+};
+
+/**
+ * 댓글 목록 조회
+ * GET /{teamId}/posts/{postId}/comments
+ */
+export const fetchComments = async (
+  postId: number,
+  authAxios: AxiosInstance,
+  params?: GetCommentsParams
+): Promise<CommentsResponse> => {
+  const queryParams = new URLSearchParams();
+
+  if (params?.page) queryParams.append('page', params.page.toString());
+  if (params?.pageSize)
+    queryParams.append('pageSize', params.pageSize.toString());
+
+  const queryString = queryParams.toString();
+  const url = `/posts/${postId}/comments${queryString ? `?${queryString}` : ''}`;
+
+  const response = await authAxios.get(url);
+  return CommentsResponseSchema.parse(response.data);
+};
+
+/**
+ * 댓글 작성
+ * POST /posts/{postId}/comments
+ */
+export const createComment = async (
+  postId: number,
+  content: string,
+  authAxios: AxiosInstance
+): Promise<CommentResponse> => {
+  const response = await authAxios.post(`/posts/${postId}/comments`, {
+    content,
+  });
+  return CommentResponseSchema.parse(response.data);
+};
+
+/**
+ * 댓글 수정
+ * PATCH /comments/{commentId}
+ */
+export const updateComment = async (
+  commentId: number,
+  content: string,
+  authAxios: AxiosInstance
+): Promise<CommentResponse> => {
+  const response = await authAxios.patch(`/comments/${commentId}`, {
+    content,
+  });
+  return CommentResponseSchema.parse(response.data);
+};
+
+/**
+ * 댓글 삭제
+ * DELETE /comments/{commentId}
+ */
+export const deleteComment = async (
+  commentId: number,
+  authAxios: AxiosInstance
+): Promise<void> => {
+  await authAxios.delete(`/comments/${commentId}`);
 };
