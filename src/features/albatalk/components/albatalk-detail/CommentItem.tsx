@@ -6,8 +6,8 @@ import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Textarea from '@/shared/components/common/input/Textarea';
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 
-import { Comment } from '../../types/albatalk';
-import PostMetaInfoUser from '../post-item/PostMetaInfoUser';
+import { Comment } from '../../schemas/albatalk.schema';
+import AlbatalkMetaInfoUser from '../albatalk-item/AlbatalkMetaInfoUser';
 
 interface CommentItemProps {
   comment: Comment;
@@ -60,7 +60,7 @@ const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
   return (
     <div className="flex flex-col items-start gap-24 border-b border-gray-100 py-16 last:border-b-0">
       <div className="flex w-full justify-between">
-        <PostMetaInfoUser
+        <AlbatalkMetaInfoUser
           className="text-xs text-gray-500 lg:text-base"
           createdAt={comment.createdAt}
           writer={comment.writer}

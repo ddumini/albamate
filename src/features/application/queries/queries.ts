@@ -1,10 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
+import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
+
 import { useApplicationDetailApi } from '../api/applicationDetail';
 
+const DEFAULT_QUERY_OPTIONS = {
+  retry: 1,
+  retryDelay: 1000,
+  staleTime: 30000,
+  gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+};
+
 // 알바폼 상세 조회 쿼리
-export const useAlbaformDetailQuery = (formId: string) => {
+export const useAlbaformDetailQuery = (
+  formId: string,
+  initialData?: MockAlbaItem,
+  options = {}
+) => {
   const { data: session, status } = useSession();
   const api = useApplicationDetailApi();
 
@@ -14,13 +29,10 @@ export const useAlbaformDetailQuery = (formId: string) => {
       const response = await api.getAlbaformDetail(formId);
       return response.data;
     },
-    retry: 1,
-    retryDelay: 1000,
     enabled: status === 'authenticated' && !!session?.accessToken && !!formId,
-    staleTime: 30000,
-    gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    initialData,
+    ...DEFAULT_QUERY_OPTIONS,
+    ...options,
   });
 };
 
@@ -35,13 +47,8 @@ export const useMyApplicationQuery = (formId: string, options = {}) => {
       const response = await api.getMyApplication(formId);
       return response.data;
     },
-    retry: 1,
-    retryDelay: 1000,
     enabled: status === 'authenticated' && !!session?.accessToken && !!formId,
-    staleTime: 30000,
-    gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    ...DEFAULT_QUERY_OPTIONS,
     ...options, // 외부 옵션 적용
   });
 };
@@ -62,14 +69,9 @@ export const useApplicationByIdQuery = (
       const response = await api.getApplicationById(applicationId);
       return response.data;
     },
-    retry: 1,
-    retryDelay: 1000,
     enabled:
       status === 'authenticated' && !!session?.accessToken && !!applicationId,
-    staleTime: 30000,
-    gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    ...DEFAULT_QUERY_OPTIONS,
     ...options, // 외부 옵션 적용
   });
 };

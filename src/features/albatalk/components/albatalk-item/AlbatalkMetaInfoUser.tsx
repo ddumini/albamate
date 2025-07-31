@@ -1,20 +1,20 @@
 import Profile from '@/shared/components/common/profile/Profile';
 import { cn } from '@/shared/lib/cn';
-import { formatDate } from '@/shared/utils/date';
+import { formatDateLong } from '@/shared/utils/format';
 
-import { Writer } from '../../types/albatalk';
+import { Writer } from '../../schemas/albatalk.schema';
 
-interface PostMetaInfoUserProps {
+interface AlbatalkMetaInfoUserProps {
   writer: Writer;
   createdAt: string;
   className?: string;
 }
 
-const PostMetaInfoUser = ({
+const AlbatalkMetaInfoUser = ({
   writer,
   createdAt,
   className,
-}: PostMetaInfoUserProps) => {
+}: AlbatalkMetaInfoUserProps) => {
   return (
     <div className={cn('flex items-center gap-7', className)}>
       {/* 프로필 이미지 */}
@@ -29,9 +29,9 @@ const PostMetaInfoUser = ({
       <span>{writer.nickname}</span>
       <div className="h-12 w-px bg-line-200" />
       {/* 날짜 */}
-      <time>{formatDate(createdAt, 'post')}</time>
+      <time>{formatDateLong(createdAt)}</time>
     </div>
   );
 };
 
-export default PostMetaInfoUser;
+export default AlbatalkMetaInfoUser;

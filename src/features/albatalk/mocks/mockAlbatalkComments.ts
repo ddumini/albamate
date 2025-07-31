@@ -1,4 +1,4 @@
-import { CommentsResponse } from '../types/albatalk';
+import { CommentsResponse } from '../schemas/albatalk.schema';
 
 const mockAlbatalkComments: CommentsResponse = {
   data: [
