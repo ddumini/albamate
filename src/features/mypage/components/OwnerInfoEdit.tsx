@@ -1,14 +1,19 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import IconInput from '@common/input/IconInput';
 import Input from '@common/input/Input';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useUploadImage } from '@/features/common/api';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
+import { FormData } from '@/shared/types/mypage';
 
-import { FormData } from '../../../shared/types/mypage';
 import { useUpdateMyProfileQuery } from '../queries';
+import {
+  createOwnerSchema,
+  UpdateOwnerMyProfile,
+} from '../schema/mypage.schema';
 
 interface OwnerInfoEditProps {
   userInfo: FormData;
@@ -21,7 +26,8 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<UpdateOwnerMyProfile>({
+    resolver: zodResolver(createOwnerSchema),
     defaultValues: {
       nickname: userInfo?.nickname,
       storeName: userInfo.storeName === 'undefined' ? '' : userInfo.storeName,
@@ -47,9 +53,14 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: UpdateOwnerMyProfile) => {
     updateProfile.mutate(
-      { ...data, imageUrl },
+      {
+        ...data,
+        imageUrl,
+        name: userInfo.name,
+        role: userInfo.role,
+      },
       {
         onSuccess: () => {
           alert('프로필이 성공적으로 수정되었습니다.');
@@ -75,7 +86,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
         <Input
           placeholder="닉네임을 입력해주세요."
           variant="outlined"
-          {...register('nickname', { required: '닉네임은 필수입니다.' })}
+          {...register('nickname')}
           isInvalid={!!errors.nickname}
         />
         {errors.nickname && (
@@ -91,7 +102,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
           id="storeName"
           placeholder="이름을 입력해주세요."
           variant="outlined"
-          {...register('storeName', { required: '가게 이름은 필수입니다.' })}
+          {...register('storeName')}
           isInvalid={!!errors.storeName}
         />
         {errors.storeName && (
@@ -106,13 +117,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('storePhoneNumber', {
-            required: '연락처는 필수입니다.',
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
+          {...register('storePhoneNumber')}
           isInvalid={!!errors.storePhoneNumber}
         />
         {errors.storePhoneNumber && (
@@ -129,12 +134,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('phoneNumber', {
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
+          {...register('phoneNumber')}
           isInvalid={!!errors.phoneNumber}
         />
         {errors.phoneNumber && (
@@ -153,7 +153,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
           position="left"
           src="/icons/pin-solid.svg"
           variant="outlined"
-          {...register('location', { required: '가게 위치는 필수입니다.' })}
+          {...register('location')}
           isInvalid={!!errors.location}
         />
         {errors.location && (

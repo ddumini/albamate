@@ -1,11 +1,14 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import IconInput from '@common/input/IconInput';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { EditPassword } from '@/shared/types/mypage';
 
 import { useUpdateMyPasswordQuery } from '../queries';
+import { PasswordFormValues, passwordSchema } from '../schema/mypage.schema';
 
 interface PwChangeFormProps {
   close: () => void;
@@ -24,7 +27,9 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<PasswordProps>();
+  } = useForm<PasswordFormValues>({
+    resolver: zodResolver(passwordSchema),
+  });
 
   const updatePassword = useUpdateMyPasswordQuery();
 
@@ -36,8 +41,10 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
         close();
       },
       onError: error => {
-        alert('변경 중 오류가 발생했습니다.');
-        console.error(error);
+        const axiosError = error as AxiosError<{ message?: string }>;
+        const errorMessage =
+          axiosError.response?.data?.message ?? '변경 중 오류가 발생했습니다.';
+        alert(errorMessage);
       },
     });
   };
@@ -63,9 +70,7 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           }
           type={!curIsVisible ? 'password' : 'text'}
           variant="outlined"
-          {...register('currentPassword', {
-            required: '현재 비밀번호를 입력해주세요',
-          })}
+          {...register('currentPassword')}
           isInvalid={!!errors.currentPassword}
         />
         {errors.currentPassword && (
@@ -94,9 +99,7 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           }
           type={!newIsVisible ? 'password' : 'text'}
           variant="outlined"
-          {...register('newPassword', {
-            required: '새로운 비밀번호를 입력해주세요',
-          })}
+          {...register('newPassword')}
           isInvalid={!!errors.newPassword}
         />
         {errors.newPassword && (
@@ -123,11 +126,7 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
           }
           type={!checkIsVisible ? 'password' : 'text'}
           variant="outlined"
-          {...register('checkNewPw', {
-            required: '새로운 비밀번호를 다시 한번 입력해주세요',
-            validate: value =>
-              value === watch('newPassword') || '비밀번호가 일치하지 않습니다.',
-          })}
+          {...register('checkNewPw')}
           isInvalid={!!errors.checkNewPw}
         />
         {errors.checkNewPw && (

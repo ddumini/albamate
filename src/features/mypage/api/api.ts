@@ -2,7 +2,7 @@ import { useAxiosWithAuth } from '@/shared/lib/axios';
 import { EditPassword, PostApi, ScrapApi } from '@/shared/types/mypage';
 
 import {
-  UpdateMyProfileRequest,
+  UpdateOwnerMyProfile,
   UpdateWorkerMyProfileRequest,
 } from '../schema/mypage.schema';
 
@@ -15,7 +15,7 @@ const useMyPageApi = () => {
 
     // 내 정보 수정
     updateMyProfile: (
-      data: UpdateMyProfileRequest | UpdateWorkerMyProfileRequest
+      data: UpdateWorkerMyProfileRequest | UpdateOwnerMyProfile
     ) =>
       authAxios.patch('/users/me', data, {
         headers: {

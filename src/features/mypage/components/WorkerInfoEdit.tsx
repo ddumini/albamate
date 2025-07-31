@@ -1,5 +1,6 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import Input from '@common/input/Input';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -8,7 +9,10 @@ import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import { FormData } from '@/shared/types/mypage';
 
 import { useUpdateMyProfileQuery } from '../queries';
-import { UpdateWorkerMyProfileRequest } from '../schema/mypage.schema';
+import {
+  createWorkerSchema,
+  UpdateWorkerMyProfileRequest,
+} from '../schema/mypage.schema';
 
 interface WorkerInfoEditProps {
   userInfo: FormData;
@@ -22,6 +26,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateWorkerMyProfileRequest>({
+    resolver: zodResolver(createWorkerSchema),
     defaultValues: {
       name: userInfo?.name,
       nickname: userInfo?.nickname,
@@ -75,7 +80,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
           id="name"
           placeholder="이름을 입력해주세요."
           variant="outlined"
-          {...register('name', { required: '이름은 필수입니다.' })}
+          {...register('name')}
           isInvalid={!!errors.name}
         />
         {errors.name && (
@@ -90,7 +95,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
         <Input
           placeholder="닉네임을 입력해주세요."
           variant="outlined"
-          {...register('nickname', { required: '닉네임은 필수입니다.' })}
+          {...register('nickname')}
           isInvalid={!!errors.nickname}
         />
         {errors.nickname && (
@@ -105,13 +110,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('phoneNumber', {
-            required: '연락처는 필수입니다.',
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
+          {...register('phoneNumber')}
           isInvalid={!!errors.phoneNumber}
         />
         {errors.phoneNumber && (
