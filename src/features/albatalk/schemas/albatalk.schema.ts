@@ -20,7 +20,7 @@ export const AlbatalkSchema = z.object({
   writer: WriterSchema,
 });
 
-// AlbatalksResponse 스미카
+// AlbatalksResponse 스키마
 export const AlbatalksResponseSchema = z.object({
   data: z.array(AlbatalkSchema),
   nextCursor: z.number().nullable(),
