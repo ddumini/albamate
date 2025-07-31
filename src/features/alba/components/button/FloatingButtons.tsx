@@ -66,9 +66,12 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
           await scrapAlba(formId);
           setIsBookmarked(true);
           alert('스크랩했어요!');
-        } catch (error: any) {
+        } catch (error) {
           if (
-            error?.response?.data?.message === '이미 스크랩한 알바폼입니다.'
+            error instanceof Error &&
+            'response' in error &&
+            (error as any).response?.data?.message ===
+              '이미 스크랩한 알바폼입니다.'
           ) {
             // 실제로는 이미 스크랩된 상태이므로 취소 동작 수행
             await cancelScrapAlba(formId);
