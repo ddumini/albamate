@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AlbaDescriptionProps {
   description: string;
@@ -8,25 +8,36 @@ interface AlbaDescriptionProps {
 
 const AlbaDescription: React.FC<AlbaDescriptionProps> = ({ description }) => {
   const [expanded, setExpanded] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = paragraphRef.current;
+    if (el) {
+      setIsOverflowing(el.scrollHeight > el.clientHeight);
+    }
+  }, [description]);
 
   return (
     <div className="max-w-375 min-w-320 text-sm lg:max-w-770 lg:text-2lg">
       <p
+        ref={paragraphRef}
         className={`overflow-hidden text-ellipsis whitespace-pre-line ${
-          expanded ? '' : 'line-clamp-7' // Tailwind CSS line-clamp 유틸리티 사용
+          expanded ? '' : 'line-clamp-5'
         }`}
       >
         {description}
       </p>
 
-      {/* 더보기 / 접기 버튼 */}
-      <button
-        className="mt-8 text-mint-400 hover:underline"
-        type="button"
-        onClick={() => setExpanded(prev => !prev)}
-      >
-        {expanded ? '접기' : '더보기'}
-      </button>
+      {isOverflowing && (
+        <button
+          className="mt-8 text-mint-400 hover:underline"
+          type="button"
+          onClick={() => setExpanded(prev => !prev)}
+        >
+          {expanded ? '접기' : '더보기'}
+        </button>
+      )}
     </div>
   );
 };
