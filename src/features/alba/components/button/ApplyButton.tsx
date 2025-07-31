@@ -25,33 +25,19 @@ const ApplyButton = ({ isOwner, id }: ApplyButtonProps) => {
 
   const isSmallScreen = isMobile || isTablet;
 
-  return isSmallScreen ? (
-    <div className="fixed right-0 bottom-0 left-0 z-50 flex flex-row gap-10 bg-white/70 px-16 py-12 backdrop-blur lg:hidden dark:bg-gray-900/70">
+  return (
+    <div
+      className={` ${isSmallScreen ? 'fixed right-0 bottom-0 left-0 z-50 flex flex-row gap-10 bg-white/70 px-16 py-12 backdrop-blur lg:hidden dark:bg-gray-900/70' : 'hidden flex-col gap-10 py-16 lg:flex'} `}
+    >
       {isOwner ? (
         <OwnerButtons
-          isSmall
+          isSmall={isSmallScreen}
           onDelete={handleFormDeleteModal}
           onModify={handleModify}
         />
       ) : (
         <ApplicantButtons
-          isSmall
-          onApply={handleApply}
-          onViewApplication={handleApplicationModal}
-        />
-      )}
-    </div>
-  ) : (
-    <div className="hidden flex-col gap-10 py-16 lg:flex">
-      {isOwner ? (
-        <OwnerButtons
-          isSmall={false}
-          onDelete={handleFormDeleteModal}
-          onModify={handleModify}
-        />
-      ) : (
-        <ApplicantButtons
-          isSmall={false}
+          isSmall={isSmallScreen}
           onApply={handleApply}
           onViewApplication={handleApplicationModal}
         />
