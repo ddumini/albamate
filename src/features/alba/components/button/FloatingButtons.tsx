@@ -12,14 +12,9 @@ import { useAuthSession } from '@/features/auth';
 interface Props {
   onToggleOwner: () => void;
   formId: number;
-  onSigninRedirect: () => void;
 }
 
-const FloatingButtons = ({
-  onToggleOwner,
-  formId,
-  onSigninRedirect,
-}: Props) => {
+const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
   const { isAuthenticated, refreshSession } = useAuthSession();
   const { scrapAlba, cancelScrapAlba } = useAlbaListApi();
   const queryClient = useQueryClient();
@@ -40,8 +35,10 @@ const FloatingButtons = ({
   }, [formId, queryClient]);
 
   const handleBookmarkToggle = useCallback(async () => {
+    await refreshSession();
+
     if (!isAuthenticated) {
-      onSigninRedirect();
+      signOut({ callbackUrl: '/signin' });
       return;
     }
 
@@ -101,7 +98,6 @@ const FloatingButtons = ({
     isLoading,
     isBookmarked,
     formId,
-    onSigninRedirect,
     refreshSession,
     scrapAlba,
     cancelScrapAlba,

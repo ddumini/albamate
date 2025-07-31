@@ -2,7 +2,7 @@
 
 import ToastPopup from '@common/popup/ToastPopup';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
@@ -17,7 +17,6 @@ import PageContent from './PageContent';
 
 const AlbaPage = () => {
   const { formId } = useParams();
-  const router = useRouter();
   const { openModal } = useModalStore();
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -79,7 +78,6 @@ const AlbaPage = () => {
 
       <FloatingButtons
         formId={Number(formId)}
-        onSigninRedirect={() => router.push('/signin')}
         onToggleOwner={() => setIsOwner(prev => !prev)}
       />
 
