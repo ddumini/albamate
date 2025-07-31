@@ -12,7 +12,13 @@ import { cn } from '@/shared/lib/cn';
 
 import AddFormSection from './AddFormSection';
 
-const RecruitContentForm = ({ className }: { className?: string }) => {
+const RecruitContentForm = ({
+  className,
+  onImageChange,
+}: {
+  className?: string;
+  onImageChange: (files: File[]) => void;
+}) => {
   const {
     register,
     control,
@@ -82,7 +88,7 @@ const RecruitContentForm = ({ className }: { className?: string }) => {
       </AddFormSection>
       <AddFormSection>
         <Label htmlFor="uploadImage">이미지 첨부</Label>
-        <UploadMultipleImage id="uploadImage" onImageChange={() => {}} />
+        <UploadMultipleImage id="uploadImage" onImageChange={onImageChange} />
       </AddFormSection>
     </div>
   );

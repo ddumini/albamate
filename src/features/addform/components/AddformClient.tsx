@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useAddformMutation } from '@/features/addform/queries/mutations';
+import {
+  useAddformMutation,
+  useImageMutation,
+} from '@/features/addform/queries/mutations';
 import { createFormRequestSchema } from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
@@ -24,6 +27,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     recruitCondition: true,
     workCondition: false,
   });
+  const [currentFiles, setCurrentFiles] = useState<File[]>([]);
+
   const { isDesktop } = useViewport();
   const methods = useForm({
     resolver: zodResolver(createFormRequestSchema),
@@ -35,12 +40,32 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     },
   });
 
-  const { mutate, isPending } = useAddformMutation();
+  const { mutateAsync: imageMutate, isPending: isImagePending } =
+    useImageMutation();
+  const { mutate: addformMutate, isPending: isAddformPending } =
+    useAddformMutation();
 
-  const handleSubmit = methods.handleSubmit(data => mutate(data));
+  const handleSubmit = async () => {
+    try {
+      const results = await Promise.all(
+        currentFiles.map(file => imageMutate(file))
+      );
+      methods.setValue(
+        'imageUrls',
+        results.map(result => result.data.url)
+      );
+      addformMutate(methods.getValues());
+    } catch (error) {
+      console.error('제출 중 오류 발생:', error);
+    }
+  };
 
   const handleMenuClick = (menu: Menu) => {
     setCurrentMenu(menu);
+  };
+
+  const handleImageChange = (files: File[]) => {
+    setCurrentFiles(files);
   };
 
   return (
@@ -51,7 +76,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             className="3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
             currentMenu={currentMenu}
             isEdit={!!formId}
-            isSubmitting={isPending}
+            isSubmitting={isImagePending || isAddformPending}
             writingMenu={writingMenu}
             onMenuClick={handleMenuClick}
             onSubmit={handleSubmit}
@@ -80,6 +105,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
           <form>
             <RecruitContentForm
               className={currentMenu === 'recruitContent' ? '' : 'hidden'}
+              onImageChange={handleImageChange}
             />
             <RecruitConditionForm
               className={currentMenu === 'recruitCondition' ? '' : 'hidden'}
@@ -92,7 +118,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             <AddformButtons
               className="mx-24 my-10"
               isEdit={!!formId}
-              isSubmitting={isPending}
+              isSubmitting={isImagePending || isAddformPending}
               onSubmit={handleSubmit}
             />
           )}
