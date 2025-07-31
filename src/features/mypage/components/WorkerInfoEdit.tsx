@@ -44,6 +44,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
       const uploadUrl = response.url;
       setImageUrl(uploadUrl);
     } catch (error) {
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
       console.error(error);
     }
   };

@@ -6,7 +6,7 @@ import { useSessionUtils } from '../../../shared/lib/auth/use-session-utils';
 import ScrapFilterControls from './FilterControl';
 import MyPageTop from './MyPageTop';
 
-interface MyPageHeader {
+interface MyPageHeaderProps {
   tabValue: string;
   onClickTab: (value: string) => void;
   onSelectPublic: (value: string) => void;
@@ -25,10 +25,10 @@ const MyPageHeader = ({
   onSelectPublic,
   onSelectRecruit,
   onSelectSort,
-}: MyPageHeader) => {
+}: MyPageHeaderProps) => {
   const { isOwner } = useSessionUtils();
 
-  const tapOption = [
+  const tabOption = [
     { id: 'post', label: '내가 쓴 글' },
     { id: 'comment', label: '내가 쓴 댓글' },
     !isOwner && { id: 'scrap', label: '스크랩' },
@@ -72,7 +72,7 @@ const MyPageHeader = ({
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
       >
         <div className={`h-60 ${tabClassName}`}>
-          <Tab handleClick={onClickTab} tabs={tapOption} />
+          <Tab handleClick={onClickTab} tabs={tabOption} />
         </div>
         <div className={`self-end ${selectWrapClassName} py-14 lg:py-24`}>
           <ScrapFilterControls {...ScrapFilterControlsProps} />

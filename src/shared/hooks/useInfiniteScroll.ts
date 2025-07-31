@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+import { CursorResponse, PageResponse } from '../types/mypage';
 import { useIntersectionObserver } from './useIntersectionObserver';
 
 /**
@@ -54,19 +55,6 @@ import { useIntersectionObserver } from './useIntersectionObserver';
  * ```
  */
 
-// API 응답 타입 정의
-interface CursorResponse<T> {
-  data: T[];
-  nextCursor: number | null;
-}
-
-interface PageResponse<T> {
-  data: T[];
-  currentPage: number;
-  totalPages: number;
-  totalItemCount: number;
-}
-
 type InfiniteScrollMode = 'cursor' | 'page';
 
 interface UseInfiniteScrollOptions<T, P> {
@@ -77,7 +65,10 @@ interface UseInfiniteScrollOptions<T, P> {
   enabled?: boolean;
 }
 
-export function useInfiniteScroll<T, P extends Record<string, any>>({
+export function useInfiniteScroll<
+  T,
+  P extends Record<string, any> & { cursor?: number | null; page?: number },
+>({
   mode,
   queryKey,
   fetcher,
@@ -88,9 +79,9 @@ export function useInfiniteScroll<T, P extends Record<string, any>>({
     queryKey,
     queryFn: async ({ pageParam }) => {
       if (mode === 'cursor') {
-        return await fetcher({ ...initialParams, cursor: pageParam } as any);
+        return await fetcher({ ...initialParams, cursor: pageParam } as P);
       } else {
-        return await fetcher({ ...initialParams, page: pageParam } as any);
+        return await fetcher({ ...initialParams, page: pageParam } as P);
       }
     },
     initialPageParam: mode === 'cursor' ? null : 1,

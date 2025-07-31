@@ -6,7 +6,7 @@ const useMyPageParams = () => {
   const [postOrderBy, setPostOrderBy] = useState('mostRecent');
   const [scrapOrderBy, setScrapOrderBy] = useState('mostRecent');
   const [postCursor, setPostCursor] = useState<number | null>(null);
-  const [ScrapCursor, setScrapCursor] = useState<number | null>(null);
+  const [scrapCursor, setScrapCursor] = useState<number | null>(null);
   // Comments
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
@@ -40,7 +40,7 @@ const useMyPageParams = () => {
     // scrap params 관련
     scrapParams: {
       scrapOrderBy,
-      ScrapCursor,
+      scrapCursor,
       isPublic,
       isRecruiting,
     },

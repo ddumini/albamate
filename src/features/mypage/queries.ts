@@ -1,4 +1,5 @@
 import {
+  InfiniteData,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -6,30 +7,22 @@ import {
 } from '@tanstack/react-query';
 
 import {
+  CommentCardItem,
   CommentsApi,
+  CursorResponse,
   EditPassword,
+  PageResponse,
   PostApi,
+  PostCardItem,
   ScrapApi,
+  ScrapCardItem,
 } from '@/shared/types/mypage';
 
 import useMyPageApi from './api/api';
 import {
-  UpdateMyProfileRequest,
+  UpdateOwnerMyProfile,
   UpdateWorkerMyProfileRequest,
 } from './schema/mypage.schema';
-
-// API 응답 타입 정의
-interface CursorResponse<T> {
-  data: T[];
-  nextCursor: number | null;
-}
-
-interface PageResponse<T> {
-  data: T[];
-  currentPage: number;
-  totalPages: number;
-  totalItemCount: number;
-}
 
 export const useMyProfileQuery = () => {
   const api = useMyPageApi();
@@ -46,7 +39,7 @@ export const useUpdateMyProfileQuery = () => {
 
   return useMutation({
     mutationFn: async (
-      data: UpdateMyProfileRequest | UpdateWorkerMyProfileRequest
+      data: UpdateOwnerMyProfile | UpdateWorkerMyProfileRequest
     ) => await api.updateMyProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] });
@@ -74,9 +67,9 @@ export const useMyPostsInfiniteQuery = ({
   const api = useMyPageApi();
 
   return useInfiniteQuery<
-    CursorResponse<any>,
+    CursorResponse<PostCardItem>,
     Error,
-    any,
+    InfiniteData<CursorResponse<PostCardItem>>,
     (string | number)[],
     number | null
   >({
@@ -106,9 +99,9 @@ export const useMyScrapInfiniteQuery = ({
   const api = useMyPageApi();
 
   return useInfiniteQuery<
-    CursorResponse<any>,
+    CursorResponse<ScrapCardItem>,
     Error,
-    any,
+    InfiniteData<CursorResponse<ScrapCardItem>>,
     (string | number | boolean | null | undefined)[],
     number | null
   >({
@@ -138,9 +131,9 @@ export const useMyCommentsInfiniteQuery = ({
   const api = useMyPageApi();
 
   return useInfiniteQuery<
-    PageResponse<any>,
+    PageResponse<CommentCardItem>,
     Error,
-    any,
+    InfiniteData<CursorResponse<CommentCardItem>>,
     (string | number)[],
     number
   >({
@@ -155,57 +148,6 @@ export const useMyCommentsInfiniteQuery = ({
       }
       return undefined;
     },
-    enabled,
-  });
-};
-
-// 기존 쿼리들 (하위 호환성을 위해 유지)
-export const useMyScrapQuery = ({
-  limit,
-  orderBy,
-  cursor,
-  isPublic,
-  isRecruiting,
-  enabled,
-}: ScrapApi) => {
-  const api = useMyPageApi();
-  return useQuery({
-    queryKey: ['myScrap', orderBy, cursor, isPublic, isRecruiting],
-    queryFn: async () =>
-      await api.getMyScrapAlba({
-        limit,
-        orderBy,
-        cursor,
-        isPublic,
-        isRecruiting,
-      }),
-    enabled,
-  });
-};
-
-export const useMyPostsQuery = ({
-  limit,
-  orderBy,
-  cursor,
-  enabled,
-}: PostApi) => {
-  const api = useMyPageApi();
-  return useQuery({
-    queryKey: ['myPosts', limit, orderBy, cursor],
-    queryFn: async () => await api.getMyPosts({ limit, orderBy, cursor }),
-    enabled,
-  });
-};
-
-export const useMyCommentsQuery = ({
-  page,
-  pageSize,
-  enabled,
-}: CommentsApi) => {
-  const api = useMyPageApi();
-  return useQuery({
-    queryKey: ['myComment', page, pageSize],
-    queryFn: async () => await api.getMyComments(page, pageSize),
     enabled,
   });
 };

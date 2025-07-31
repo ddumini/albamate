@@ -137,10 +137,15 @@ export interface CommentsApi {
   enabled?: boolean;
 }
 
-export interface Params {
-  limit?: number;
-  orderBy?: string;
-  cursor?: number;
-  page?: number;
-  pageSize?: number;
+// API 응답 타입 정의
+export interface CursorResponse<T> {
+  data: T[];
+  nextCursor: number | null;
+}
+
+export interface PageResponse<T> {
+  data: T[];
+  currentPage: number;
+  totalPages: number;
+  totalItemCount: number;
 }

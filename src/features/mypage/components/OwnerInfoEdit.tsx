@@ -49,6 +49,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
       const uploadUrl = response.url;
       setImageUrl(uploadUrl);
     } catch (error) {
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
       console.error(error);
     }
   };
@@ -59,7 +60,6 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
         ...data,
         imageUrl,
         name: userInfo.name,
-        role: userInfo.role,
       },
       {
         onSuccess: () => {

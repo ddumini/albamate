@@ -95,7 +95,13 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
         ))}
       </section>
 
-      {albatalks.length === 0 && <EmptyCard type="post" />}
+      {albatalks.length === 0 && (
+        <EmptyCard
+          description="궁금한 점, 고민 등의 게시글을 올려보세요"
+          title="작성한 게시글이 없어요."
+          type="post"
+        />
+      )}
 
       <FloatingButtonContainer>
         <FloatingButton href="/addtalk" type="addAlbatalk" />
