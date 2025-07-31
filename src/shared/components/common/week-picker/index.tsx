@@ -4,13 +4,20 @@ import { useState } from 'react';
 
 import DayCheckbox from '@/shared/components/ui/DayCheckbox';
 
-const WeekPicker = () => {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+interface WeekPickerProps {
+  defaultValue?: string[];
+  onChange?: (value: string[]) => void;
+}
+
+const WeekPicker = ({ defaultValue = [], onChange }: WeekPickerProps) => {
+  const [selectedDays, setSelectedDays] = useState<string[]>(defaultValue);
 
   const handleDayChange = (checked: boolean, value: string) => {
-    setSelectedDays(prev =>
-      checked ? [...prev, value] : prev.filter(day => day !== value)
-    );
+    const newSelectedDays = checked
+      ? [...selectedDays, value]
+      : selectedDays.filter(day => day !== value);
+    setSelectedDays(newSelectedDays);
+    onChange?.(newSelectedDays);
   };
 
   const weekDays = ['월', '화', '수', '목', '금', '토', '일'];

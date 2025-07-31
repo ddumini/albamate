@@ -1,10 +1,13 @@
-import { CommentsResponse, PostDetailResponse } from '../../types/albatalk';
+import {
+  AlbatalkDetailResponse,
+  CommentsResponse,
+} from '../../schemas/albatalk.schema';
 import AlbatalkDetailContent from './AlbatalkDetailContent';
 import AlbatalkDetailHeader from './AlbatalkDetailHeader';
 import CommentSection from './CommentSection';
 
 interface AlbatalkDetailProps {
-  data: PostDetailResponse;
+  data: AlbatalkDetailResponse;
   comments: CommentsResponse;
 }
 
