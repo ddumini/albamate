@@ -2,11 +2,16 @@ import { type NextAuthConfig, Session, User } from 'next-auth';
 import { type AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
+import KakaoProvider from 'next-auth/providers/kakao';
 
 import { axiosInstance } from '@/shared/lib/axios';
 
 export const authConfig = {
   providers: [
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET,
+    }),
     Credentials({
       id: 'credentials',
       name: 'credentials',
@@ -243,9 +248,6 @@ export const authConfig = {
   },
   pages: {
     signIn: '/signin',
-    // signUp: '/signup',
-    // accountInfo: '/accountInfo',
-    // error: '/signin', // 인증 관련 에러 발생 시 리다이렉트 될 페이지
   },
 } satisfies NextAuthConfig;
 
