@@ -17,6 +17,7 @@ export const createWorkerSchema = z.object({
   name: z.string(),
   nickname: z.string(),
   phoneNumber: z.string(),
+  imageUrl: z.string(),
 });
 
 export type UpdateMyProfile = z.infer<typeof createUserSchema>;

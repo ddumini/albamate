@@ -1,7 +1,10 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import Input from '@common/input/Input';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useUploadImage } from '@/features/common/api';
+import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import { FormData } from '@/shared/types/mypage';
 
 import { useUpdateMyProfileQuery } from '../queries';
@@ -13,6 +16,7 @@ interface WorkerInfoEditProps {
 }
 
 const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
+  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
   const {
     register,
     handleSubmit,
@@ -22,28 +26,47 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
       name: userInfo.name,
       nickname: userInfo.nickname,
       phoneNumber: userInfo.phoneNumber,
+      imageUrl: userInfo.imageUrl,
     },
   });
 
   const updateProfile = useUpdateMyProfileQuery();
+  const api = useUploadImage();
+
+  const handleImageChange = async (file: File) => {
+    try {
+      const response = await api.getImageUrl(file);
+      const uploadUrl = response.url;
+      setImageUrl(uploadUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit = (data: UpdateWorkerMyProfileRequest) => {
-    console.log(data);
-
-    updateProfile.mutate(data, {
-      onSuccess: () => {
-        alert('프로필이 성공적으로 수정되었습니다.');
-        close();
-      },
-      onError: error => {
-        alert('수정 중 오류가 발생했습니다.');
-        console.error(error);
-      },
-    });
+    updateProfile.mutate(
+      { ...data, imageUrl },
+      {
+        onSuccess: () => {
+          alert('프로필이 성공적으로 수정되었습니다.');
+          close();
+        },
+        onError: error => {
+          alert('수정 중 오류가 발생했습니다.');
+          console.error(error);
+        },
+      }
+    );
   };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-53 flex w-full justify-center">
+        <ProfileEdit
+          imageUrl={imageUrl}
+          onImageChange={file => handleImageChange(file)}
+        />
+      </div>
       <div className="mb-16 h-112 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="name">
           이름 <span className="text-mint-100">*</span>

@@ -2,7 +2,6 @@
 
 import PrimaryButton from '@common/button/PrimaryButton';
 import Modal from '@common/modal/Modal';
-import ProfileEdit from '@common/profile/ProfileEdit';
 import { ReactNode, useMemo } from 'react';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
@@ -26,7 +25,7 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
   const renderModalContent = (title: string, content: ReactNode) => (
     <div className="BG-white w-375 px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
       <Modal.Header>
-        <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-36 lg:text-3xl">
+        <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-53 lg:text-3xl">
           {title}
         </h1>
       </Modal.Header>
@@ -37,15 +36,7 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
   );
 
   const myInfoEdit = () => {
-    openModal(
-      renderModalContent(
-        '내 정보 수정',
-        <>
-          <ProfileEdit onImageChange={() => {}} />
-          {infoComponent}
-        </>
-      )
-    );
+    openModal(renderModalContent('내 정보 수정', <>{infoComponent}</>));
   };
 
   const pwChange = () => {

@@ -1,7 +1,11 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import IconInput from '@common/input/IconInput';
 import Input from '@common/input/Input';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { useUploadImage } from '@/features/common/api';
+import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 
 import { FormData } from '../../../shared/types/mypage';
 import { useUpdateMyProfileQuery } from '../queries';
@@ -12,6 +16,7 @@ interface OwnerInfoEditProps {
 }
 
 const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
+  const [imageUrl, setImageUrl] = useState(userInfo.imageUrl);
   const {
     register,
     handleSubmit,
@@ -30,22 +35,39 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   });
 
   const updateProfile = useUpdateMyProfileQuery();
+  const api = useUploadImage();
+
+  const handleImageChange = async (file: File) => {
+    try {
+      const response = await api.getImageUrl(file);
+      const uploadUrl = response.url;
+      setImageUrl(uploadUrl);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit = (data: FormData) => {
-    updateProfile.mutate(data, {
-      onSuccess: () => {
-        alert('프로필이 성공적으로 수정되었습니다.');
-        close();
-      },
-      onError: error => {
-        alert('수정 중 오류가 발생했습니다');
-        console.error(error);
-      },
-    });
+    updateProfile.mutate(
+      { ...data, imageUrl },
+      {
+        onSuccess: () => {
+          alert('프로필이 성공적으로 수정되었습니다.');
+          close();
+        },
+        onError: error => {
+          alert('수정 중 오류가 발생했습니다');
+          console.error(error);
+        },
+      }
+    );
   };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-53 flex w-full justify-center">
+        <ProfileEdit imageUrl={imageUrl} onImageChange={handleImageChange} />
+      </div>
       <div className="mb-10 h-100 lg:h-110">
         <label className="mb-8 text-md" htmlFor="nickname">
           닉네임 <span className="text-mint-100">*</span>

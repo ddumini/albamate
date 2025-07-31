@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import {
   CommentsApi,
@@ -12,6 +17,19 @@ import {
   UpdateMyProfileRequest,
   UpdateWorkerMyProfileRequest,
 } from './schema/mypage.schema';
+
+// API 응답 타입 정의
+interface CursorResponse<T> {
+  data: T[];
+  nextCursor: number | null;
+}
+
+interface PageResponse<T> {
+  data: T[];
+  currentPage: number;
+  totalPages: number;
+  totalItemCount: number;
+}
 
 export const useMyProfileQuery = () => {
   const api = useMyPageApi();
@@ -47,6 +65,101 @@ export const useUpdateMyPasswordQuery = () => {
   });
 };
 
+// 커서 기반 무한 스크롤 (Post, Scrap)
+export const useMyPostsInfiniteQuery = ({
+  limit,
+  orderBy,
+  enabled,
+}: Omit<PostApi, 'cursor'> & { enabled?: boolean }) => {
+  const api = useMyPageApi();
+
+  return useInfiniteQuery<
+    CursorResponse<any>,
+    Error,
+    any,
+    (string | number)[],
+    number | null
+  >({
+    queryKey: ['myPosts', limit, orderBy],
+    queryFn: async ({ pageParam }) => {
+      return await api.getMyPosts({
+        limit,
+        orderBy,
+        cursor: pageParam,
+      });
+    },
+    initialPageParam: null,
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor ?? undefined;
+    },
+    enabled,
+  });
+};
+
+export const useMyScrapInfiniteQuery = ({
+  limit,
+  orderBy,
+  isPublic,
+  isRecruiting,
+  enabled,
+}: Omit<ScrapApi, 'cursor'> & { enabled?: boolean }) => {
+  const api = useMyPageApi();
+
+  return useInfiniteQuery<
+    CursorResponse<any>,
+    Error,
+    any,
+    (string | number | boolean | null | undefined)[],
+    number | null
+  >({
+    queryKey: ['myScrap', limit, orderBy, isPublic, isRecruiting],
+    queryFn: async ({ pageParam }) => {
+      return await api.getMyScrapAlba({
+        limit,
+        orderBy,
+        cursor: pageParam,
+        isPublic,
+        isRecruiting,
+      });
+    },
+    initialPageParam: null,
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor ?? undefined;
+    },
+    enabled,
+  });
+};
+
+// 페이지 기반 무한 스크롤 (Comments)
+export const useMyCommentsInfiniteQuery = ({
+  pageSize,
+  enabled,
+}: Omit<CommentsApi, 'page'> & { enabled?: boolean }) => {
+  const api = useMyPageApi();
+
+  return useInfiniteQuery<
+    PageResponse<any>,
+    Error,
+    any,
+    (string | number)[],
+    number
+  >({
+    queryKey: ['myComments', pageSize],
+    queryFn: async ({ pageParam }) => {
+      return await api.getMyComments(pageParam, pageSize);
+    },
+    initialPageParam: 1,
+    getNextPageParam: lastPage => {
+      if (lastPage.currentPage < lastPage.totalPages) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    enabled,
+  });
+};
+
+// 기존 쿼리들 (하위 호환성을 위해 유지)
 export const useMyScrapQuery = ({
   limit,
   orderBy,

@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { CommentCardItem } from '@/shared/types/mypage';
 
+import useMyPageApi from '../api/api';
 import useMyPageParams from '../hooks/useMyPageParams';
-import {
-  useMyCommentsQuery,
-  useMyPostsQuery,
-  useMyScrapQuery,
-} from '../queries';
 import MyPageContentSection from './MyPageContentSection';
 import MyPageHeader from './MyPageHeader';
 
@@ -30,25 +27,76 @@ const MyPageContent = () => {
     setScrapOrderBy,
   } = useMyPageParams();
 
-  const { data: posts, isLoading: isPostLoading } = useMyPostsQuery({
-    limit,
-    orderBy: postParams.postOrderBy,
-    cursor: postParams.postCursor,
+  const api = useMyPageApi();
+
+  // 커서 기반 무한 스크롤 (Post, Scrap)
+  const {
+    data: postsData,
+    isLoading: isPostLoading,
+    isFetchingNextPage: isFetchingNextPosts,
+    loadMoreRef: postsLoadMoreRef,
+    getData: getPostsData,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: ['myPosts', limit, postParams.postOrderBy],
+    fetcher: async (params: any) => {
+      return await api.getMyPosts(params);
+    },
+    initialParams: { limit, orderBy: postParams.postOrderBy },
     enabled: tabValue === 'post',
   });
-  const { data: comments, isLoading: isCommentsLoading } = useMyCommentsQuery({
-    page: commentParams.page,
-    pageSize: commentParams.pageSize,
-    enabled: tabValue === 'comment',
-  });
-  const { data: scrap, isLoading: isScrapLoading } = useMyScrapQuery({
-    limit,
-    orderBy: scrapParams.scrapOrderBy,
-    cursor: scrapParams.ScrapCursor,
-    isPublic: scrapParams.isPublic,
-    isRecruiting: scrapParams.isRecruiting,
+
+  const {
+    data: scrapData,
+    isLoading: isScrapLoading,
+    isFetchingNextPage: isFetchingNextScrap,
+    loadMoreRef: scrapLoadMoreRef,
+    getData: getScrapData,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: [
+      'myScrap',
+      limit,
+      scrapParams.scrapOrderBy,
+      String(scrapParams.isPublic ?? ''),
+      String(scrapParams.isRecruiting ?? ''),
+    ],
+    fetcher: async (params: any) => {
+      return await api.getMyScrapAlba(params);
+    },
+    initialParams: {
+      limit,
+      orderBy: scrapParams.scrapOrderBy,
+      isPublic: scrapParams.isPublic,
+      isRecruiting: scrapParams.isRecruiting,
+    },
     enabled: tabValue === 'scrap',
   });
+
+  // 페이지 기반 무한 스크롤 (Comments)
+  const {
+    data: commentsData,
+    isLoading: isCommentsLoading,
+    isFetchingNextPage: isFetchingNextComments,
+    loadMoreRef: commentsLoadMoreRef,
+    getData: getCommentsData,
+  } = useInfiniteScroll({
+    mode: 'page',
+    queryKey: ['myComments', commentParams.pageSize],
+    fetcher: async (params: any) => {
+      return await api.getMyComments(params.page, params.pageSize);
+    },
+    initialParams: { pageSize: commentParams.pageSize },
+    enabled: tabValue === 'comment',
+  });
+
+  // 현재 활성화된 loadMoreRef 선택
+  const getActiveLoadMoreRef = () => {
+    if (tabValue === 'post') return postsLoadMoreRef;
+    if (tabValue === 'comment') return commentsLoadMoreRef;
+    if (tabValue === 'scrap') return scrapLoadMoreRef;
+    return null;
+  };
 
   const handleClickTab = (value: string) => setTabValue(value);
   const handlePublicValue = (value: string) => setPublicValue(value);
@@ -79,12 +127,13 @@ const MyPageContent = () => {
   }, [tabValue]);
 
   const getFilterCommentData = () => {
-    if (isCommentsLoading || !comments) return [];
+    if (isCommentsLoading || !commentsData) return [];
 
+    const commentData = getCommentsData();
     const getTime = (item: CommentCardItem) =>
       new Date(item.updatedAt ?? item.createdAt).getTime();
 
-    const sorted = [...comments.data].sort((a, b) => {
+    const sorted = [...commentData].sort((a, b) => {
       if (sortOrderBy === 'mostRecent') return getTime(b) - getTime(a);
       if (sortOrderBy === 'mostOld') return getTime(a) - getTime(b);
       return 0;
@@ -97,7 +146,6 @@ const MyPageContent = () => {
     if (tabValue === 'post') setPostOrderBy(sortOrderBy);
     if (tabValue === 'scrap') setScrapOrderBy(sortOrderBy);
   }, [sortOrderBy, tabValue, setPostOrderBy, setScrapOrderBy]);
-  console.log(postParams.postOrderBy);
 
   return (
     <div className="mb-40 w-full max-w-1480">
@@ -110,11 +158,24 @@ const MyPageContent = () => {
       />
       <MyPageContentSection
         comment={getFilterCommentData()}
-        post={posts?.data ?? []}
-        scrap={scrap?.data ?? []}
+        post={getPostsData()}
+        scrap={getScrapData()}
         tabValue={tabValue}
       />
+
+      {/* 무한 스크롤 감지용 요소 */}
+      <div ref={getActiveLoadMoreRef()} className="h-4 w-full" />
+
+      {/* 로딩 상태 표시 */}
+      {(isFetchingNextPosts ||
+        isFetchingNextComments ||
+        isFetchingNextScrap) && (
+        <div className="flex justify-center py-4">
+          <div className="text-gray-500">더 많은 데이터를 불러오는 중...</div>
+        </div>
+      )}
     </div>
   );
 };
+
 export default MyPageContent;
