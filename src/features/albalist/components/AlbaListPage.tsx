@@ -78,16 +78,19 @@ const AlbaListPage = () => {
         onSearchChange={handleSearchChange}
       />
 
-      <ListWrapper
-        items={items}
-        renderItem={(item: AlbaItem) => <AlbaCard key={item.id} item={item} />}
-      >
-        {items.length === 0 ? (
-          <EmptyCard type="albaList" />
-        ) : (
-          isOwner && <FloatingFormButton />
-        )}
-      </ListWrapper>
+      {items.length === 0 ? (
+        <EmptyCard type="albaList" wrapClassName="min-h-[60vh]" />
+      ) : (
+        <ListWrapper
+          className="mb-68"
+          items={items}
+          renderItem={(item: AlbaItem) => (
+            <AlbaCard key={item.id} item={item} />
+          )}
+        >
+          {isOwner && <FloatingFormButton />}
+        </ListWrapper>
+      )}
     </div>
   );
 };
