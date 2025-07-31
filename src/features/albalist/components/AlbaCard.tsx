@@ -26,16 +26,22 @@ const AlbaCard = ({ item }: Props) => {
   const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchScrapStatus = async () => {
       try {
         const res = await getAlbaDetail(item.id);
-        setIsScrapped(res.data.isScrapped);
-        setLocalScrapCount(res.data.scrapCount);
+        if (isMounted) {
+          setIsScrapped(res.data.isScrapped);
+          setLocalScrapCount(res.data.scrapCount);
+        }
       } catch (err) {
         console.error('스크랩 상태 불러오기 실패:', err);
       }
     };
     fetchScrapStatus();
+    return () => {
+      isMounted = false;
+    };
   }, [item.id, getAlbaDetail]);
 
   const handleCardClick = async () => {
