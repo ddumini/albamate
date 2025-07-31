@@ -9,11 +9,13 @@ import { useAuthSession } from '@/features/auth/hooks/useAuthSession';
 
 const GnbRenderer = () => {
   const pathname = usePathname();
-  const { isAuthenticated } = useAuthSession();
+  const { isAuthenticated, isLoading } = useAuthSession();
 
   if (pathname.startsWith('/signup') || pathname.startsWith('/signin')) {
     return <AuthGnb />;
   }
+
+  if (isLoading) return null;
 
   return isAuthenticated ? <MainGnb /> : <LandingGnb />;
 };
