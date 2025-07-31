@@ -78,14 +78,12 @@ export const GetCommentsParamsSchema = z.object({
 
 // 댓글 작성 파라미터
 export const CreateCommentParamsSchema = z.object({
-  teamId: z.string(),
   postId: z.number(),
   content: z.string().min(1, '댓글 내용을 입력해주세요'),
 });
 
 // 댓글 수정 파라미터
 export const UpdateCommentParamsSchema = z.object({
-  teamId: z.string(),
   commentId: z.number(),
   postId: z.number(),
   content: z.string().min(1, '댓글 내용을 입력해주세요'),

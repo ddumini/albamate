@@ -74,7 +74,6 @@ export const removeAlbatalkLike = async (
 
 /**
  * 댓글 목록 조회
- * GET /{teamId}/posts/{postId}/comments
  */
 export const fetchComments = async (
   postId: number,
