@@ -96,7 +96,7 @@ const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
         </div>
       ) : (
         // 일반 보기 모드일 때 (댓글 내용을 보여줌)
-        <p className="pl-4 text-sm leading-relaxed md:text-base lg:text-xl">
+        <p className="pl-4 text-sm leading-relaxed break-words whitespace-pre-wrap md:text-base lg:text-xl">
           {comment.content}
         </p>
       )}

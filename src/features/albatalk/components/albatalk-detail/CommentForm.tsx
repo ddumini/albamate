@@ -1,43 +1,67 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Textarea from '@/shared/components/common/input/Textarea';
 
+import { useCreateAlbatalkComment } from '../../hooks/useAlbatalk';
+
 interface CommentFormProps {
-  postId: number;
+  albatalkId: number;
   onSubmit?: (content: string) => void;
 }
 
-const CommentForm = ({ postId, onSubmit }: CommentFormProps) => {
+const CommentForm = ({ albatalkId, onSubmit }: CommentFormProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [content, setContent] = useState('');
+  const createCommentMutation = useCreateAlbatalkComment();
 
   const handleSubmit = () => {
-    const content = textareaRef.current?.value ?? '';
-    if (!content.trim()) return;
-    onSubmit?.(content);
-    if (textareaRef.current) {
-      textareaRef.current.value = '';
-    }
-    //TODO: 실제 댓글 등록 API 호출
-    console.log('댓글 등록: ', { postId, content });
+    const trimmedContent = content.trim();
+    if (!trimmedContent) return;
+
+    createCommentMutation.mutate(
+      { postId: albatalkId, content: trimmedContent },
+      {
+        onSuccess: () => {
+          setContent('');
+          if (textareaRef.current) {
+            textareaRef.current.value = '';
+          }
+          onSubmit?.(trimmedContent);
+        },
+        onError: error => {
+          console.error('댓글 작성 실패: ', error);
+        },
+      }
+    );
   };
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
+  };
+
+  const isSubmitting = createCommentMutation.isPending;
+  const isDisabled = !content.trim() || isSubmitting;
 
   return (
     <div className="flex flex-col rounded-lg lg:mb-16">
       <Textarea
         ref={textareaRef}
         required
-        className=""
+        className="min-h-[80px] resize-y whitespace-pre-wrap"
+        disabled={isSubmitting}
         id="commentContent"
         placeholder="댓글을 작성해주세요."
+        value={content}
+        onChange={handleTextareaChange}
       />
       <div className="mt-8 flex w-108 self-end md:w-136">
         <PrimaryButton
           className="w-full py-12 text-lg lg:w-214 lg:text-xl"
-          disabled={false}
-          label="등록하기"
+          disabled={isDisabled}
+          label={isSubmitting ? '등록 중...' : '등록하기'}
           type="button"
           variant="solid"
           onClick={handleSubmit}
