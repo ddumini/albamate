@@ -70,6 +70,36 @@ export const CommentsResponseSchema = z.object({
   totalPages: z.number(),
 });
 
+// 댓글 조회 파라미터
+export const GetCommentsParamsSchema = z.object({
+  page: z.number().optional().default(1),
+  pageSize: z.number().optional().default(10),
+});
+
+// 댓글 작성 파라미터
+export const CreateCommentParamsSchema = z.object({
+  teamId: z.string(),
+  postId: z.number(),
+  content: z.string().min(1, '댓글 내용을 입력해주세요'),
+});
+
+// 댓글 수정 파라미터
+export const UpdateCommentParamsSchema = z.object({
+  teamId: z.string(),
+  commentId: z.number(),
+  postId: z.number(),
+  content: z.string().min(1, '댓글 내용을 입력해주세요'),
+});
+
+// 댓글 작성/수정 응답 스키마
+export const CommentResponseSchema = z.object({
+  id: z.number(),
+  writer: WriterSchema,
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  content: z.string(),
+});
+
 // 스키마로부터 타입을 추론
 export type Writer = z.infer<typeof WriterSchema>;
 export type Albatalk = z.infer<typeof AlbatalkSchema>;
@@ -78,6 +108,11 @@ export type AlbatalkDetailResponse = z.infer<
   typeof AlbatalkDetailResponseSchema
 >;
 export type GetAlbatalksParams = z.infer<typeof GetAlbatalksParamsSchema>;
+export type SearchParams = z.infer<typeof SearchParamsSchema>;
+
 export type Comment = z.infer<typeof CommentSchema>;
 export type CommentsResponse = z.infer<typeof CommentsResponseSchema>;
-export type SearchParams = z.infer<typeof SearchParamsSchema>;
+export type GetCommentsParams = z.infer<typeof GetCommentsParamsSchema>;
+export type CreateCommentParams = z.infer<typeof CreateCommentParamsSchema>;
+export type UpdateCommentParams = z.infer<typeof UpdateCommentParamsSchema>;
+export type CommentResponse = z.infer<typeof CommentResponseSchema>;
