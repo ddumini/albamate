@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -87,12 +88,14 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             <h1 className="text-xl font-semibold lg:text-3xl">
               {formId ? '알바폼 수정하기' : '알바폼 만들기'}
             </h1>
-            <PrimaryButton
-              className="h-40 w-80 text-md text-gray-25 lg:h-56 lg:w-122 lg:text-xl"
-              label="작성 취소"
-              type="button"
-              variant="cancelSolid"
-            />
+            <Link href="/albalist">
+              <PrimaryButton
+                className="h-40 w-80 text-md text-gray-25 lg:h-56 lg:w-122 lg:text-xl"
+                label="작성 취소"
+                type="button"
+                variant="cancelSolid"
+              />
+            </Link>
           </header>
           {isDesktop || (
             <TabMenu
