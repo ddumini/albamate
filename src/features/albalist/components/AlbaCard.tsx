@@ -97,6 +97,7 @@ const AlbaCard = ({ item }: Props) => {
 
       if (error?.response?.status === 400) {
         alert(error.response?.data?.message || '요청 오류가 발생했습니다.');
+        router.push('/');
         return;
       }
 
