@@ -18,7 +18,14 @@ export const useAlbalistQuery = (params: AlbaQueryParams = { limit: 10 }) => {
 
   return useQuery<AlbaItem[], Error>({
     queryKey: ['Albalist', params],
-    queryFn: () => getAlbas(params).then(res => res.data.data as AlbaItem[]),
+    queryFn: async () => {
+      // 타입 안정성 보장
+      const res = await getAlbas(params);
+      if (!res.data?.data || !Array.isArray(res.data.data)) {
+        throw new Error('Invalid API response format');
+      }
+      return res.data.data as AlbaItem[];
+    },
     enabled: true, // 무조건 요청 실행
     staleTime: 30_000,
     gcTime: 5 * 60_000,
