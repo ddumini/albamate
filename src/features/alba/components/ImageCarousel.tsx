@@ -1,7 +1,8 @@
 'use client';
 
-import ImageCarousel from '@/shared/components/ui/ImageCarousel';
-import { Slide } from '@/shared/types/carousel';
+import { Slide } from '@common/imageCarousel/carousel';
+import ImageCarousel from '@common/imageCarousel/ImageCarousel';
+
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 const images = [
