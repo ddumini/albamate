@@ -1,5 +1,6 @@
 'use client';
 
+import EmptyCard from '@common/EmptyCard';
 import ListWrapper from '@common/list/ListWrapper';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -81,7 +82,11 @@ const AlbaListPage = () => {
         items={items}
         renderItem={(item: AlbaItem) => <AlbaCard key={item.id} item={item} />}
       >
-        {isOwner && <FloatingFormButton />}
+        {items.length === 0 ? (
+          <EmptyCard type="albaList" />
+        ) : (
+          isOwner && <FloatingFormButton />
+        )}
       </ListWrapper>
     </div>
   );
