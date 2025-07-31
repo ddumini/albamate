@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 
 import {
   MyAlbaSortOptions,
+  PublicFilterOptions,
   RecruitFilterOptions,
   SortOptions,
 } from '@/shared/constants/filterOptions';
@@ -65,6 +66,7 @@ const FilterBar = ({
   sortValue,
   searchHandlers,
   filterHandlers,
+  publicValue,
 }: FilterBarProps) => {
   const pathname = usePathname();
 
@@ -110,11 +112,11 @@ const FilterBar = ({
             {/* 공개 여부 */}
             {showPublicFilter && (
               <Select
-                options={recruitOptions}
+                options={PublicFilterOptions}
                 placeholder="전체"
-                value={recruitValue}
+                value={publicValue}
                 variant="filter"
-                onSelect={filterHandlers.handleRecruitChange ?? (() => {})} // 빈 함수로 대체
+                onSelect={filterHandlers.handlePublicChange ?? (() => {})}
               />
             )}
           </div>
