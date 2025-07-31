@@ -32,17 +32,25 @@ const AlbatalkDetail = ({ albatalkId }: AlbatalkDetailProps) => {
     }
   }, [status, router]);
 
+  if (status === 'loading') {
+    return <LoadingSpinner size="lg" />;
+  }
+
   if (isPending) {
     return <LoadingSpinner size="lg" />;
   }
 
-  if (!albatalk) {
-    return <EmptyCard type="post" />;
+  if (status === 'unauthenticated') {
+    return <LoadingSpinner size="lg" />;
   }
 
   if (isError) {
     console.error('알바톡 상세 조회 에러:', error);
     return <div>에러 발생: {error?.message}</div>;
+  }
+
+  if (!albatalk) {
+    return <EmptyCard type="post" />;
   }
 
   return (
