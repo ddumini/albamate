@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 
 import { useAxiosWithAuth } from '@/shared/lib/axios';
 
 import {
   addAlbatalkLike,
+  fetchAlbatalkDetail,
   fetchAlbatalks,
   removeAlbatalkLike,
 } from '../api/albatalkApi';
@@ -34,6 +36,26 @@ export const useAlbatalks = (params: GetAlbatalksParams) => {
 };
 
 /**
+ * 게시글 상세 조회 훅
+ * @returns
+ */
+export const useAlbatalkDetail = (postId: number) => {
+  const authAxios = useAxiosWithAuth();
+  const { data: session, status } = useSession(); // 세션과 상태 가져오기
+
+  const isSessionLoading = status === 'loading';
+  const hasAccessToken = !!session?.accessToken;
+
+  return useQuery({
+    queryKey: albatalkKeys.detail(postId),
+    queryFn: () => fetchAlbatalkDetail(postId, authAxios),
+    enabled: !isSessionLoading && hasAccessToken,
+    staleTime: 1000 * 60 * 5, // 5분
+    gcTime: 1000 * 60 * 10, // 10분
+  });
+};
+
+/**
  * 게시글 좋아요 토글 훅
  */
 export const useAddAlbatalkLike = () => {
@@ -53,7 +75,7 @@ export const useAddAlbatalkLike = () => {
       });
     },
     onError: error => {
-      console.error('좋아요 토글 실패:', error);
+      console.error('좋아요 실패:', error);
     },
   });
 };

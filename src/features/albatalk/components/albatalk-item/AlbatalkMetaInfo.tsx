@@ -35,6 +35,8 @@ const AlbatalkMetaInfo = ({
 }: AlbatalkMetaInfoProps) => {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
+  const [isToggling, setIsToggling] = useState(false);
+
   const likeIconSrc = isLiked ? '/icons/like-active.svg' : '/icons/like.svg';
 
   const addLikeMutation = useAddAlbatalkLike();
@@ -43,10 +45,13 @@ const AlbatalkMetaInfo = ({
   const isLoading = addLikeMutation.isPending || removeLikeMutation.isPending;
 
   const handleLikeToggle = async (e: React.MouseEvent) => {
-    if (!isInteractive || !albatalkId) return;
+    // 중복 클릭 방지
+    if (!isInteractive || !albatalkId || isLoading || isToggling) return;
 
     e.preventDefault();
     e.stopPropagation();
+
+    setIsToggling(true); // 토글 시작
 
     // 낙관적 업데이트 (Optimistic Update)
     const previousLiked = isLiked;
@@ -66,6 +71,8 @@ const AlbatalkMetaInfo = ({
       setIsLiked(previousLiked);
       setLikeCount(previousCount);
       console.error('좋아요 토글 실패 : ', error);
+    } finally {
+      setIsToggling(false); // 토글 완료
     }
   };
 

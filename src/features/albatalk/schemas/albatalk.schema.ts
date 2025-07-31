@@ -81,7 +81,3 @@ export type GetAlbatalksParams = z.infer<typeof GetAlbatalksParamsSchema>;
 export type Comment = z.infer<typeof CommentSchema>;
 export type CommentsResponse = z.infer<typeof CommentsResponseSchema>;
 export type SearchParams = z.infer<typeof SearchParamsSchema>;
-
-// 기존 코드와의 호환성을 위한 타입 별칭
-export type Post = Albatalk;
-export type PostDetailResponse = AlbatalkDetailResponse;

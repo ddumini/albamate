@@ -3,6 +3,8 @@ import { AxiosInstance } from 'axios';
 import { axiosInstance } from '@/shared/lib/axios';
 
 import {
+  type AlbatalkDetailResponse,
+  AlbatalkDetailResponseSchema,
   type AlbatalksResponse,
   AlbatalksResponseSchema,
   type GetAlbatalksParams,
@@ -31,6 +33,18 @@ export const fetchAlbatalks = async (
 
   // 응답 데이터 검증
   return AlbatalksResponseSchema.parse(response.data);
+};
+
+/**
+ * 게시글 상세 조회 API
+ */
+export const fetchAlbatalkDetail = async (
+  postId: number,
+  authAxios: AxiosInstance
+): Promise<AlbatalkDetailResponse> => {
+  const response = await authAxios.get(`/posts/${postId}`);
+
+  return AlbatalkDetailResponseSchema.parse(response.data);
 };
 
 /**
