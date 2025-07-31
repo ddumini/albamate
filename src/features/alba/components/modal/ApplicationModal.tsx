@@ -15,11 +15,11 @@ type FormValues = {
   password: string;
 };
 
-interface ApplicationListModalProps {
+interface ApplicationModalProps {
   id: number;
 }
 
-const ApplicationListModal = ({ id }: ApplicationListModalProps) => {
+const ApplicationModal = ({ id }: ApplicationModalProps) => {
   const { closeModal } = useModalStore();
   const router = useRouter();
 
@@ -110,4 +110,4 @@ const ApplicationListModal = ({ id }: ApplicationListModalProps) => {
   );
 };
 
-export default ApplicationListModal;
+export default ApplicationModal;
