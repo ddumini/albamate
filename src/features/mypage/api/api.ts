@@ -34,8 +34,10 @@ const useMyPageApi = () => {
     // 내가 작성한 게시글 목록 조회
     getMyPosts: ({ limit, orderBy, cursor }: PostApi) =>
       authAxios
-        .get(`/users/me/posts?limit=${limit}&orderBy=${orderBy}`, {
+        .get(`/users/me/posts`, {
           params: {
+            limit,
+            orderBy,
             cursor,
           },
         })
@@ -56,8 +58,10 @@ const useMyPageApi = () => {
       isRecruiting,
     }: ScrapApi) =>
       authAxios
-        .get(`/users/me/scrap?limit=${limit}&orderBy=${orderBy}`, {
+        .get(`/users/me/scrap`, {
           params: {
+            limit,
+            orderBy,
             cursor,
             isPublic,
             isRecruiting,
