@@ -99,7 +99,7 @@ const ApplicationList = ({ formId }: ApplicantListProps) => {
               <Tooltip content="지원자 상세 정보를 확인할 수 있습니다.">
                 <Link
                   className="hover:text-mint-500 text-left underline underline-offset-2"
-                  href={`/application/${applicant.applicantId}/form/${formId}`}
+                  href={`/application/${applicant.id}/form/${formId}`}
                 >
                   {applicant.name}
                 </Link>
