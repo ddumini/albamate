@@ -147,7 +147,7 @@ export const ownerAccountInfoSchema = z.object({
   nickname: nicknameSchema,
   storeName: z.string().min(1, '가게 이름은 필수 입력입니다.'),
   storePhoneNumber: z.string().min(1, '가게 전화번호는 필수 입력입니다.'),
-  ownerPhoneNumber: ownerPhoneNumberSchema,
+  ownerPhoneNumber: z.string().optional(), // 선택사항으로 명확히 설정
   location: z.string().min(1, '가게 위치는 필수 입력입니다.'),
 });
 

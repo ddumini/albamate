@@ -74,10 +74,26 @@ const AuthForm = () => {
     watch,
     setValue,
   } = useForm<AuthFormData>({
-    mode: 'onChange',
+    mode: 'onBlur', // onChange에서 onBlur로 변경
     defaultValues: formConfig.defaultValues,
     resolver: zodResolver(formConfig.validationSchema),
   });
+
+  const formValues = watch();
+
+  // 필수 필드가 모두 채워졌는지 확인하는 함수
+  const isFormComplete = () => {
+    if (authPageType !== 'accountInfo') return isValid;
+
+    const requiredFields = formConfig.fields
+      .filter(field => field.required)
+      .map(field => field.name);
+
+    return requiredFields.every(fieldName => {
+      const value = (formValues as Record<string, any>)[fieldName];
+      return value && value.trim() !== '';
+    });
+  };
 
   // 폼 제출 처리
   const onSubmit: SubmitHandler<AuthFormData> = async data => {
@@ -330,7 +346,7 @@ const AuthForm = () => {
         {/* TODO: 로딩 상태 추가 (isSubmitting) */}
         <PrimaryButton
           className="mt-24 h-58 w-full lg:mt-56"
-          disabled={!isValid}
+          disabled={!isFormComplete()}
           label={getButtonText(authPageType, userType || undefined)}
           type="submit"
           variant="solid"
