@@ -12,6 +12,7 @@ import {
 } from '@/features/addform/queries/mutations';
 import { createFormRequestSchema } from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import EditPopup from '@/shared/components/common/popup/EditPopup';
 import useViewport from '@/shared/hooks/useViewport';
 
 import AddformButtons from './AddformButtons';
@@ -30,6 +31,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     workCondition: false,
   });
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
+
+  const [visible, setVisible] = useState<boolean>(false);
 
   const { isDesktop } = useViewport();
 
@@ -103,6 +106,25 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     setCurrentFiles(files);
   };
 
+  const handleSave = async () => {
+    try {
+      const results = await Promise.all(
+        currentFiles.map(file => imageMutate(file))
+      );
+      methods.setValue(
+        'imageUrls',
+        results.map(result => result.data.url)
+      );
+      localStorage.setItem(
+        'addform-draft',
+        JSON.stringify(methods.getValues())
+      );
+      setVisible(true);
+    } catch (error) {
+      console.error('임시 저장 중 오류 발생:', error);
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
@@ -114,6 +136,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             isSubmitting={isImagePending || isAddformPending}
             writingMenu={writingMenu}
             onMenuClick={handleMenuClick}
+            onSave={handleSave}
             onSubmit={handleSubmit}
           />
         )}
@@ -156,11 +179,19 @@ const AddformClient = ({ formId }: { formId?: string }) => {
               className="mx-24 my-10"
               isEdit={!!formId}
               isSubmitting={isImagePending || isAddformPending}
+              onSave={handleSave}
               onSubmit={handleSubmit}
             />
           )}
         </div>
       </div>
+      <EditPopup
+        message="임시저장 되었습니다"
+        visible={visible}
+        onClose={() => {
+          setVisible(false);
+        }}
+      />
     </FormProvider>
   );
 };
