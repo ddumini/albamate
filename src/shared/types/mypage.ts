@@ -90,3 +90,62 @@ export type EmptyType =
   | 'albaList'
   | 'applyList'
   | 'albaTalkComment';
+
+export interface FormData {
+  nickname: string;
+  storeName: string;
+  storePhoneNumber: string;
+  phoneNumber: string;
+  location: string;
+  role: 'APPLICANT' | 'OWNER';
+  imageUrl: string;
+  name: string;
+  email: string;
+  id: number;
+}
+
+export interface UpdateMyProfile {
+  name: string;
+  nickname: string;
+  phoneNumber: string;
+  storeName?: string;
+  storePhoneNumber?: string;
+  location?: string;
+  imageUrl: string;
+}
+
+// API Types
+export interface PostApi {
+  limit: number;
+  orderBy: string;
+  cursor?: number | null;
+  enabled?: boolean;
+}
+
+export interface ScrapApi {
+  limit: number;
+  orderBy: string;
+  cursor?: number | null;
+  isPublic?: boolean | null;
+  isRecruiting?: boolean | null;
+  enabled?: boolean;
+}
+
+export interface CommentsApi {
+  page?: number;
+  pageSize: number;
+  enabled?: boolean;
+}
+
+// API 응답 타입 정의
+export interface CursorResponse<T> {
+  data: T[];
+  nextCursor: number | null;
+}
+
+export interface PageResponse<T> {
+  data: T[];
+  currentPage: number;
+  totalPages: number;
+  totalItemCount: number;
+}

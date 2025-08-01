@@ -1,31 +1,78 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import Input from '@common/input/Input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface FormData {
-  name: string;
-  nickname: string;
-  phone: string;
-}
+import { useUploadImage } from '@/features/common/api';
+import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
+import { FormData } from '@/shared/types/mypage';
+
+import { useUpdateMyProfileQuery } from '../queries';
+import {
+  createWorkerSchema,
+  UpdateWorkerMyProfileRequest,
+} from '../schema/mypage.schema';
 
 interface WorkerInfoEditProps {
+  userInfo: FormData;
   close: () => void;
 }
 
-const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
+const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
+  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<UpdateWorkerMyProfileRequest>({
+    resolver: zodResolver(createWorkerSchema),
+    defaultValues: {
+      name: userInfo?.name,
+      nickname: userInfo?.nickname,
+      phoneNumber: userInfo?.phoneNumber,
+      imageUrl: userInfo?.imageUrl,
+    },
+  });
 
-  const onSubmit = (data: FormData) => {
-    console.error(data);
-    close();
+  const updateProfile = useUpdateMyProfileQuery();
+  const api = useUploadImage();
+
+  const handleImageChange = async (file: File) => {
+    try {
+      const response = await api.getImageUrl(file);
+      const uploadUrl = response.url;
+      setImageUrl(uploadUrl);
+    } catch (error) {
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      console.error(error);
+    }
+  };
+
+  const onSubmit = (data: UpdateWorkerMyProfileRequest) => {
+    updateProfile.mutate(
+      { ...data, imageUrl },
+      {
+        onSuccess: () => {
+          alert('프로필이 성공적으로 수정되었습니다.');
+          close();
+        },
+        onError: error => {
+          alert('수정 중 오류가 발생했습니다.');
+          console.error(error);
+        },
+      }
+    );
   };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-53 flex w-full justify-center">
+        <ProfileEdit
+          imageUrl={imageUrl}
+          onImageChange={file => handleImageChange(file)}
+        />
+      </div>
       <div className="mb-16 h-112 lg:mb-20">
         <label className="mb-8 text-md" htmlFor="name">
           이름 <span className="text-mint-100">*</span>
@@ -34,7 +81,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
           id="name"
           placeholder="이름을 입력해주세요."
           variant="outlined"
-          {...register('name', { required: '이름은 필수입니다.' })}
+          {...register('name')}
           isInvalid={!!errors.name}
         />
         {errors.name && (
@@ -49,7 +96,7 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         <Input
           placeholder="닉네임을 입력해주세요."
           variant="outlined"
-          {...register('nickname', { required: '닉네임은 필수입니다.' })}
+          {...register('nickname')}
           isInvalid={!!errors.nickname}
         />
         {errors.nickname && (
@@ -64,17 +111,11 @@ const WorkerInfoEdit = ({ close }: WorkerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('phone', {
-            required: '연락처는 필수입니다.',
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
-          isInvalid={!!errors.phone}
+          {...register('phoneNumber')}
+          isInvalid={!!errors.phoneNumber}
         />
-        {errors.phone && (
-          <p className="text-sm text-red-500">{errors.phone.message}</p>
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
         )}
       </div>
 

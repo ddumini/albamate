@@ -20,7 +20,7 @@ const MyScrapCard = ({ cardContent, dropdownItem }: MyScrapCardProps) => {
   };
 
   return (
-    <PrivateWrapper isPrivate={cardContent.isPublic}>
+    <PrivateWrapper isPrivate={!cardContent.isPublic}>
       <AlbaCardItem
         dropdownOptions={dropdownItem}
         item={cardContent}

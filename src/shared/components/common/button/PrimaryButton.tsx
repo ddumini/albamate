@@ -76,7 +76,7 @@ const PrimaryButton = ({
 }: ButtonProps) => {
   // 공통 base 스타일 정의
   const baseStyles =
-    'rounded-lg font-semibold transition-colors duration-200 ease-in-out flex items-center justify-center text-center gap-1 cursor-pointer disabled:cursor-default ';
+    'rounded-lg font-semibold transition-colors duration-200 ease-in-out flex items-center justify-center text-center gap-1 cursor-pointer disabled:cursor-default';
 
   // variant별 스타일 정의
   const solidStyles =

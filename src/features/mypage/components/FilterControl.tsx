@@ -7,9 +7,9 @@ interface ScrapFilterControlsProps {
   publicOption: { value: string; label: string }[];
   recruitOption: { value: string; label: string }[];
   sortOption: { value: string; label: string }[];
-  setPublicValue: (value: string) => void;
-  setRecruitValue: (value: string) => void;
-  setSortValue: (value: string) => void;
+  onSelectPublic: (value: string) => void;
+  onSelectRecruit: (value: string) => void;
+  onSelectSort: (value: string) => void;
 }
 
 const ScrapFilterControls = ({
@@ -17,9 +17,9 @@ const ScrapFilterControls = ({
   publicOption,
   recruitOption,
   sortOption,
-  setPublicValue,
-  setRecruitValue,
-  setSortValue,
+  onSelectPublic,
+  onSelectRecruit,
+  onSelectSort,
 }: ScrapFilterControlsProps) => {
   return (
     <>
@@ -29,13 +29,13 @@ const ScrapFilterControls = ({
             options={publicOption}
             placeholder="전체"
             variant="filter"
-            onSelect={setPublicValue}
+            onSelect={onSelectPublic}
           />
           <Select
             options={recruitOption}
             placeholder="전체"
             variant="filter"
-            onSelect={setRecruitValue}
+            onSelect={onSelectRecruit}
           />
         </div>
       )}
@@ -43,7 +43,7 @@ const ScrapFilterControls = ({
         options={sortOption}
         placeholder="최신순"
         variant="sort"
-        onSelect={setSortValue}
+        onSelect={onSelectSort}
       />
     </>
   );

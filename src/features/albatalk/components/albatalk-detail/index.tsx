@@ -51,7 +51,13 @@ const AlbatalkDetail = ({ albatalkId }: AlbatalkDetailProps) => {
   }
 
   if (!albatalk) {
-    return <EmptyCard type="post" />;
+    return (
+      <EmptyCard
+        description="궁금한 점, 고민 등의 게시글을 올려보세요"
+        title="작성한 게시글이 없어요."
+        type="post"
+      />
+    );
   }
 
   return (
