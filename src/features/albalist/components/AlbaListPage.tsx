@@ -79,7 +79,12 @@ const AlbaListPage = () => {
       />
 
       {items.length === 0 ? (
-        <EmptyCard type="albaList" wrapClassName="min-h-[60vh]" />
+        <EmptyCard
+          description="1분 만에 등록하고 알바를 구해보세요!"
+          title="등록된 알바폼이 없어요."
+          type="albaList"
+          wrapClassName="min-h-[60vh]"
+        />
       ) : (
         <ListWrapper
           className="mb-68"
