@@ -1,7 +1,7 @@
-import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 
 export const useApplicationDetailApi = () => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return {
     // 알바폼 상세 조회
