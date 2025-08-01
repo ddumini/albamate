@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
-import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 
 import {
   addAlbatalkLike,
@@ -50,7 +50,7 @@ export const useAlbatalks = (params: GetAlbatalksParams) => {
  * @returns
  */
 export const useAlbatalkDetail = (postId: number) => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
   const { data: session, status } = useSession(); // 세션과 상태 가져오기
 
   const isSessionLoading = status === 'loading';
@@ -70,7 +70,7 @@ export const useAlbatalkDetail = (postId: number) => {
  */
 export const useAddAlbatalkLike = () => {
   const queryClient = useQueryClient();
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: (postId: number) => addAlbatalkLike(postId, authAxios),
@@ -95,7 +95,7 @@ export const useAddAlbatalkLike = () => {
  */
 export const useRemoveAlbatalkLike = () => {
   const queryClient = useQueryClient();
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: (postId: number) => removeAlbatalkLike(postId, authAxios),
@@ -122,7 +122,7 @@ export const useAlbatalkComments = (
   postId: number,
   params?: GetCommentsParams
 ) => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
   const { data: session, status } = useSession();
 
   const isSessionLoading = status === 'loading';
@@ -142,7 +142,7 @@ export const useAlbatalkComments = (
  */
 export const useCreateAlbatalkComment = () => {
   const queryClient = useQueryClient();
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: ({ postId, content }: { postId: number; content: string }) =>
@@ -169,7 +169,7 @@ export const useCreateAlbatalkComment = () => {
  */
 export const useUpdateAlbatalkComment = () => {
   const queryClient = useQueryClient();
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: ({
@@ -198,7 +198,7 @@ export const useUpdateAlbatalkComment = () => {
  */
 export const useDeleteAlbatalkComment = () => {
   const queryClient = useQueryClient();
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: ({
