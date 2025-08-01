@@ -126,7 +126,7 @@ export const authConfig = {
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 5 * 60 * 1000, // 5분
+    maxAge: 24 * 60 * 60, // 24시간
   },
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: User | AdapterUser }) {
@@ -144,7 +144,7 @@ export const authConfig = {
         token.id = user.id.toString();
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
-        token.accessTokenExpires = Date.now() + 5 * 60 * 1000; // 5분 후 만료 (테스트용)
+        token.accessTokenExpires = Date.now() + 60 * 60 * 1000; // 1시간 후 만료
 
         return token;
       }
