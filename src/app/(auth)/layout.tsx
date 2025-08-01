@@ -7,7 +7,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     <AuthProvider>
       <main>
         <InnerContainer
-          className="flex flex-col gap-48 pt-94 md:pt-130 lg:pt-200"
+          className="flex flex-col gap-48 py-94 md:pt-130 lg:pt-200"
           size="sm"
         >
           <AuthTitleArea />

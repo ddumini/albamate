@@ -6,10 +6,10 @@ import {
   CreateFormRequest,
   CreateFormResponse,
 } from '@/features/addform/schema/addform.schema';
-import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 
 export const useAddformApi = () => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return {
     postAddform: (
@@ -21,6 +21,11 @@ export const useAddformApi = () => {
       form: CreateFormRequest
     ): Promise<AxiosResponse<CreateFormResponse>> => {
       return authAxios.patch('/forms', form);
+    },
+    uploadImage: (file: File): Promise<AxiosResponse<{ url: string }>> => {
+      const formData = new FormData();
+      formData.append('image', file);
+      return authAxios.post('/images/upload', formData);
     },
   };
 };

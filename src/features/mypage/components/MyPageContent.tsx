@@ -1,182 +1,182 @@
 'use client';
 
-import Tab from '@common/tab/Tab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
-import { ContentType, PostCardItem, SortOption } from '@/shared/types/mypage';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { CommentCardItem } from '@/shared/types/mypage';
 
-import { comment, post, scrap } from '../mock/dummy';
-import ScrapFilterControls from './FilterControl';
-import MixedSection from './MixedSection';
-import MyPageTop from './MyPageTop';
-
-interface TabOption {
-  id: string;
-  label: string;
-}
+import { CommentsApi, PostApi, ScrapApi } from '../../../shared/types/mypage';
+import useMyPageApi from '../api/api';
+import useMyPageParams from '../hooks/useMyPageParams';
+import MyPageContentSection from './MyPageContentSection';
+import MyPageHeader from './MyPageHeader';
 
 const MyPageContent = () => {
   const [tabValue, setTabValue] = useState('post');
-  const [sortValue, setSortValue] = useState('latest');
-  const [publicValue, setPublicValue] = useState('all');
-  const [recruitValue, setRecruitValue] = useState('all');
-  const [isOwner, setIsOwner] = useState(false);
+  const [publicValue, setPublicValue] = useState('');
+  const [recruitValue, setRecruitValue] = useState('');
+  const [sortOrderBy, setSortOrderBy] = useState('mostRecent');
 
-  const filterWrapClassName =
-    tabValue === 'scrap' ? 'lg:flex-col' : 'lg:flex-row lg:items-center';
-  const selectWrapClassName =
-    tabValue === 'scrap' ? 'w-full flex items-center justify-between' : '';
-  const tabClassName =
-    tabValue === 'scrap'
-      ? 'flex items-center lg:justify-start w-full mb-16'
-      : '';
+  const {
+    limit,
+    postParams,
+    commentParams,
+    scrapParams,
+    setIsPublic,
+    setPostOrderBy,
+    setIsRecruiting,
+    setScrapOrderBy,
+  } = useMyPageParams();
 
-  const sortOption: SortOption[] = SORT_OPTIONS[tabValue as ContentType] || [];
+  const api = useMyPageApi();
 
-  const tapOption = [
-    { id: 'post', label: '내가 쓴 글' },
-    { id: 'comment', label: '내가 쓴 댓글' },
-    !isOwner && { id: 'scrap', label: '스크랩' },
-  ].filter((item): item is TabOption => Boolean(item));
+  // 커서 기반 무한 스크롤 (Post, Scrap)
+  const {
+    data: postsData,
+    isLoading: isPostLoading,
+    isFetchingNextPage: isFetchingNextPosts,
+    loadMoreRef: postsLoadMoreRef,
+    getData: getPostsData,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: ['myPosts', limit, postParams.postOrderBy],
+    fetcher: async (params: PostApi) => {
+      return await api.getMyPosts(params);
+    },
+    initialParams: { limit, orderBy: postParams.postOrderBy },
+    enabled: tabValue === 'post',
+  });
 
-  const publicOption = [
-    { value: 'all', label: '전체' },
-    { value: 'public', label: '공개' },
-    { value: 'private', label: '비공개' },
-  ];
-  const recruitOption = [
-    { value: 'all', label: '전체' },
-    { value: 'recruit', label: '모집중' },
-    { value: 'close', label: '모집 마감' },
-  ];
+  const {
+    data: scrapData,
+    isLoading: isScrapLoading,
+    isFetchingNextPage: isFetchingNextScrap,
+    loadMoreRef: scrapLoadMoreRef,
+    getData: getScrapData,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: [
+      'myScrap',
+      limit,
+      scrapParams.scrapOrderBy,
+      String(scrapParams.isPublic ?? ''),
+      String(scrapParams.isRecruiting ?? ''),
+    ],
+    fetcher: async (params: ScrapApi) => {
+      return await api.getMyScrapAlba(params);
+    },
+    initialParams: {
+      limit,
+      orderBy: scrapParams.scrapOrderBy,
+      isPublic: scrapParams.isPublic,
+      isRecruiting: scrapParams.isRecruiting,
+    },
+    enabled: tabValue === 'scrap',
+  });
 
-  const handleClickTab = (value: string) => {
-    setTabValue(value);
+  // 페이지 기반 무한 스크롤 (Comments)
+  const {
+    data: commentsData,
+    isLoading: isCommentsLoading,
+    isFetchingNextPage: isFetchingNextComments,
+    loadMoreRef: commentsLoadMoreRef,
+    getData: getCommentsData,
+  } = useInfiniteScroll({
+    mode: 'page',
+    queryKey: ['myComments', commentParams.pageSize],
+    fetcher: async (params: CommentsApi) => {
+      return await api.getMyComments(params.page, params.pageSize);
+    },
+    initialParams: { pageSize: commentParams.pageSize },
+    enabled: tabValue === 'comment',
+  });
+
+  // 현재 활성화된 loadMoreRef 선택
+  const getActiveLoadMoreRef = () => {
+    if (tabValue === 'post') return postsLoadMoreRef;
+    if (tabValue === 'comment') return commentsLoadMoreRef;
+    if (tabValue === 'scrap') return scrapLoadMoreRef;
+    return null;
   };
 
-  const getFilterPostData = (): PostCardItem[] => {
-    if (!post.data || post.data.length === 0) return [];
-    let filtered: PostCardItem[] = [...post.data];
+  const handleClickTab = (value: string) => setTabValue(value);
+  const handlePublicValue = (value: string) => setPublicValue(value);
+  const handleRecruitValue = (value: string) => setRecruitValue(value);
+  const handleBasicOrderBy = (value: string) => setSortOrderBy(value);
 
-    switch (sortValue) {
-      case 'latest':
-        filtered = filtered.sort(
-          (a, b) =>
-            new Date(b.updatedAt ?? b.createdAt).getTime() -
-            new Date(a.updatedAt ?? a.createdAt).getTime()
-        );
-        break;
-
-      case 'comments':
-        filtered = filtered.sort((a, b) => b.commentCount - a.commentCount);
-        break;
-
-      case 'like':
-        filtered = filtered.sort((a, b) => b.likeCount - a.likeCount);
-        break;
+  const getBoolValue = (str: string) => {
+    switch (str) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        return null;
     }
-
-    return filtered;
   };
+
+  useEffect(() => {
+    setIsPublic(getBoolValue(publicValue));
+  }, [publicValue, setIsPublic]);
+
+  useEffect(() => {
+    setIsRecruiting(getBoolValue(recruitValue));
+  }, [recruitValue, setIsRecruiting]);
+
+  useEffect(() => {
+    setSortOrderBy('mostRecent');
+  }, [tabValue]);
 
   const getFilterCommentData = () => {
-    let filtered = [...comment.data];
+    if (isCommentsLoading || !commentsData) return [];
 
-    switch (sortValue) {
-      case 'latest':
-        filtered = filtered.sort(
-          (a, b) =>
-            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime() -
-            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime()
-        );
-        break;
+    const commentData = getCommentsData();
+    const getTime = (item: CommentCardItem) =>
+      new Date(item.updatedAt ?? item.createdAt).getTime();
 
-      case 'old':
-        filtered = filtered.sort(
-          (a, b) =>
-            new Date(a.updatedAt ? a.updatedAt : a.createdAt).getTime() -
-            new Date(b.updatedAt ? b.updatedAt : b.createdAt).getTime()
-        );
-        break;
-    }
+    const sorted = [...commentData].sort((a, b) => {
+      if (sortOrderBy === 'mostRecent') return getTime(b) - getTime(a);
+      if (sortOrderBy === 'mostOld') return getTime(a) - getTime(b);
+      return 0;
+    });
 
-    return filtered;
+    return sorted;
   };
 
-  const getFilterScrapData = () => {
-    let filtered = [...scrap.data];
-
-    if (publicValue !== 'all' && publicValue === 'public') {
-      filtered = filtered.filter(item => item.isPublic === false);
-    }
-    if (publicValue !== 'all' && publicValue === 'private') {
-      filtered = filtered.filter(item => item.isPublic === true);
-    }
-
-    if (recruitValue !== 'all' && recruitValue === 'recruit') {
-      filtered = filtered.filter(
-        item => new Date(item.recruitmentEndDate) >= new Date()
-      );
-    }
-
-    if (recruitValue !== 'all' && recruitValue === 'close') {
-      filtered = filtered.filter(
-        item => new Date(item.recruitmentEndDate) < new Date()
-      );
-    }
-
-    switch (sortValue) {
-      case 'latest':
-        filtered.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-        break;
-      case 'scrap':
-        filtered.sort((a, b) => b.scrapCount - a.scrapCount);
-        break;
-      case 'apply':
-        filtered.sort((a, b) => b.applyCount - a.applyCount);
-        break;
-    }
-
-    return filtered;
-  };
-
-  const ScrapFilterControlsProps = {
-    publicOption,
-    recruitOption,
-    setPublicValue,
-    setRecruitValue,
-    setSortValue,
-    sortOption,
-    tabValue,
-  };
+  useEffect(() => {
+    if (tabValue === 'post') setPostOrderBy(sortOrderBy);
+    if (tabValue === 'scrap') setScrapOrderBy(sortOrderBy);
+  }, [sortOrderBy, tabValue, setPostOrderBy, setScrapOrderBy]);
 
   return (
     <div className="mb-40 w-full max-w-1480">
-      <MyPageTop isOwner={isOwner} />
-      <section
-        className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
-      >
-        <div className={`h-60 ${tabClassName}`}>
-          <Tab handleClick={handleClickTab} tabs={tapOption} />
+      <MyPageHeader
+        tabValue={tabValue}
+        onClickTab={handleClickTab}
+        onSelectPublic={handlePublicValue}
+        onSelectRecruit={handleRecruitValue}
+        onSelectSort={handleBasicOrderBy}
+      />
+      <MyPageContentSection
+        comment={getFilterCommentData()}
+        post={getPostsData()}
+        scrap={getScrapData()}
+        tabValue={tabValue}
+      />
+
+      {/* 무한 스크롤 감지용 요소 */}
+      <div ref={getActiveLoadMoreRef()} className="h-4 w-full" />
+
+      {/* 로딩 상태 표시 */}
+      {(isFetchingNextPosts ||
+        isFetchingNextComments ||
+        isFetchingNextScrap) && (
+        <div className="flex justify-center py-4">
+          <div className="text-gray-500">더 많은 데이터를 불러오는 중...</div>
         </div>
-        <div className={`self-end ${selectWrapClassName} py-14 lg:py-24`}>
-          <ScrapFilterControls {...ScrapFilterControlsProps} />
-        </div>
-      </section>
-      {tabValue === 'post' && (
-        <MixedSection cardInfo={getFilterPostData()} type="post" />
-      )}
-      {tabValue === 'comment' && (
-        <MixedSection cardInfo={getFilterCommentData()} type="comment" />
-      )}
-      {tabValue === 'scrap' && (
-        <MixedSection cardInfo={getFilterScrapData()} type="scrap" />
       )}
     </div>
   );
 };
+
 export default MyPageContent;

@@ -30,3 +30,10 @@ export const useAddformMutation = () => {
     },
   });
 };
+
+export const useImageMutation = () => {
+  const { uploadImage } = useAddformApi();
+  return useMutation({
+    mutationFn: (file: File) => uploadImage(file),
+  });
+};

@@ -1,34 +1,84 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import IconInput from '@common/input/IconInput';
 import Input from '@common/input/Input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface FormData {
-  nickname: string;
-  storeName: string;
-  storePhone: string;
-  ownerPhone: string;
-  location: string;
-}
+import { useUploadImage } from '@/features/common/api';
+import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
+import { FormData } from '@/shared/types/mypage';
+
+import { useUpdateMyProfileQuery } from '../queries';
+import {
+  createOwnerSchema,
+  UpdateOwnerMyProfile,
+} from '../schema/mypage.schema';
 
 interface OwnerInfoEditProps {
+  userInfo: FormData;
   close: () => void;
 }
 
-const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
+const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
+  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<UpdateOwnerMyProfile>({
+    resolver: zodResolver(createOwnerSchema),
+    defaultValues: {
+      nickname: userInfo?.nickname,
+      storeName: userInfo.storeName === 'undefined' ? '' : userInfo.storeName,
+      storePhoneNumber:
+        userInfo.storePhoneNumber === 'undefined'
+          ? ''
+          : userInfo.storePhoneNumber,
+      phoneNumber: userInfo?.phoneNumber,
+      location: userInfo.location === 'undefined' ? '' : userInfo.location,
+    },
+  });
 
-  const onSubmit = (data: FormData) => {
-    console.error(data);
-    close();
+  const updateProfile = useUpdateMyProfileQuery();
+  const api = useUploadImage();
+
+  const handleImageChange = async (file: File) => {
+    try {
+      const response = await api.getImageUrl(file);
+      const uploadUrl = response.url;
+      setImageUrl(uploadUrl);
+    } catch (error) {
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      console.error(error);
+    }
+  };
+
+  const onSubmit = (data: UpdateOwnerMyProfile) => {
+    updateProfile.mutate(
+      {
+        ...data,
+        imageUrl,
+        name: userInfo.name,
+      },
+      {
+        onSuccess: () => {
+          alert('프로필이 성공적으로 수정되었습니다.');
+          close();
+        },
+        onError: error => {
+          alert('수정 중 오류가 발생했습니다');
+          console.error(error);
+        },
+      }
+    );
   };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-53 flex w-full justify-center">
+        <ProfileEdit imageUrl={imageUrl} onImageChange={handleImageChange} />
+      </div>
       <div className="mb-10 h-100 lg:h-110">
         <label className="mb-8 text-md" htmlFor="nickname">
           닉네임 <span className="text-mint-100">*</span>
@@ -36,7 +86,7 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <Input
           placeholder="닉네임을 입력해주세요."
           variant="outlined"
-          {...register('nickname', { required: '닉네임은 필수입니다.' })}
+          {...register('nickname')}
           isInvalid={!!errors.nickname}
         />
         {errors.nickname && (
@@ -52,7 +102,7 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
           id="storeName"
           placeholder="이름을 입력해주세요."
           variant="outlined"
-          {...register('storeName', { required: '가게 이름은 필수입니다.' })}
+          {...register('storeName')}
           isInvalid={!!errors.storeName}
         />
         {errors.storeName && (
@@ -67,17 +117,13 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('storePhone', {
-            required: '연락처는 필수입니다.',
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
-          isInvalid={!!errors.storePhone}
+          {...register('storePhoneNumber')}
+          isInvalid={!!errors.storePhoneNumber}
         />
-        {errors.storePhone && (
-          <p className="text-sm text-red-500">{errors.storePhone.message}</p>
+        {errors.storePhoneNumber && (
+          <p className="text-sm text-red-500">
+            {errors.storePhoneNumber.message}
+          </p>
         )}
       </div>
 
@@ -88,16 +134,11 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
         <Input
           placeholder="숫자만 입력해주세요."
           variant="outlined"
-          {...register('ownerPhone', {
-            pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요.',
-            },
-          })}
-          isInvalid={!!errors.ownerPhone}
+          {...register('phoneNumber')}
+          isInvalid={!!errors.phoneNumber}
         />
-        {errors.ownerPhone && (
-          <p className="text-sm text-red-500">{errors.ownerPhone.message}</p>
+        {errors.phoneNumber && (
+          <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
         )}
       </div>
 
@@ -112,7 +153,7 @@ const OwnerInfoEdit = ({ close }: OwnerInfoEditProps) => {
           position="left"
           src="/icons/pin-solid.svg"
           variant="outlined"
-          {...register('location', { required: '가게 위치는 필수입니다.' })}
+          {...register('location')}
           isInvalid={!!errors.location}
         />
         {errors.location && (

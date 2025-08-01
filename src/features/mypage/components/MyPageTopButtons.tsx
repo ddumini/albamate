@@ -2,28 +2,30 @@
 
 import PrimaryButton from '@common/button/PrimaryButton';
 import Modal from '@common/modal/Modal';
-import ProfileEdit from '@common/profile/ProfileEdit';
 import { ReactNode, useMemo } from 'react';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
 
+import { useMyProfileQuery } from '../queries';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
 const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
+  const { data: userInfo, isPending } = useMyProfileQuery();
   const { openModal, closeModal } = useModalStore();
+
   const infoComponent = isOwner ? (
-    <OwnerInfoEdit close={closeModal} />
+    <OwnerInfoEdit close={closeModal} userInfo={userInfo?.data} />
   ) : (
-    <WorkerInfoEdit close={closeModal} />
+    <WorkerInfoEdit close={closeModal} userInfo={userInfo?.data} />
   );
 
   const renderModalContent = (title: string, content: ReactNode) => (
     <div className="BG-white w-375 px-24 py-20 lg:w-720 lg:px-40 lg:py-32">
       <Modal.Header>
-        <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-36 lg:text-3xl">
+        <h1 className="Text-black mb-20 text-2lg font-semibold lg:mb-53 lg:text-3xl">
           {title}
         </h1>
       </Modal.Header>
@@ -34,15 +36,7 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
   );
 
   const myInfoEdit = () => {
-    openModal(
-      renderModalContent(
-        '내 정보 수정',
-        <>
-          <ProfileEdit onImageChange={() => {}} />
-          {infoComponent}
-        </>
-      )
-    );
+    openModal(renderModalContent('내 정보 수정', <>{infoComponent}</>));
   };
 
   const pwChange = () => {
@@ -53,8 +47,8 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
 
   const dropDownItem = useMemo(
     () => [
-      { label: '내 정보 수정', onClick: myInfoEdit },
-      { label: '비밀번호 변경', onClick: pwChange },
+      { label: '내 정보 수정', onClick: () => myInfoEdit() },
+      { label: '비밀번호 변경', onClick: () => pwChange() },
     ],
     []
   );

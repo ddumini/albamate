@@ -1,15 +1,16 @@
 import { axiosInstance } from '@/shared/lib/axios';
 
 // 이미지 업로드
-export const uploadImage = (file: File) => {
-  const formData = new FormData();
-  formData.append('file', file);
+export const useUploadImage = () => {
+  const authAxios = axiosInstance;
 
-  return axiosInstance.post(`/images/upload`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  return {
+    getImageUrl: (file: File) => {
+      const formData = new FormData();
+      formData.append('image', file);
+      return authAxios.post(`/images/upload`, formData).then(res => res.data);
     },
-  });
+  };
 };
 
 // 알바폼 상세 조회

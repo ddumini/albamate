@@ -11,9 +11,12 @@ const CardSection = <T extends { id: number }>({
   renderCard,
   cardWrapStyle,
 }: CardSectionProps<T>) => {
+  const uniqueCardInfo = Array.from(
+    new Map(cardInfo.map(item => [item.id, item])).values()
+  );
   return (
     <section className={cardWrapStyle}>
-      {cardInfo.map(item => (
+      {uniqueCardInfo.map(item => (
         <Fragment key={item.id}>{renderCard(item)}</Fragment>
       ))}
     </section>
