@@ -8,6 +8,10 @@ interface InputFileImageProps
    * 유효성 검사를 통과한 이미지 파일 목록이 변경될 때 호출되는 콜백 함수입니다.
    */
   onImageChange: (files: File[]) => void;
+  /**
+   * 파일 유효성 검사 실패 시 호출되는 콜백 함수입니다.
+   */
+  onError?: (error: string) => void;
 }
 
 const validImageTypes = [
@@ -33,6 +37,7 @@ const InputFileImage = ({
   multiple,
   className,
   onImageChange,
+  onError,
 }: InputFileImageProps) => {
   const handleImageChange = (files: File[]) => {
     onImageChange(files);
@@ -46,6 +51,7 @@ const InputFileImage = ({
       multiple={multiple}
       validFileTypes={validImageTypes}
       onChange={handleImageChange}
+      onError={onError}
     />
   );
 };

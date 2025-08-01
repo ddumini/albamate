@@ -33,6 +33,10 @@ export interface InputFileProps {
    * 유효성 검사를 통과한 파일 목록이 변경될 때 호출되는 콜백 함수입니다.
    */
   onChange: (files: File[]) => void;
+  /**
+   * 파일 유효성 검사 실패 시 호출되는 콜백 함수입니다.
+   */
+  onError?: (error: string) => void;
 }
 
 /**
@@ -57,6 +61,7 @@ const InputFile = ({
   maxFileSizeMb,
   validFileTypes,
   onChange,
+  onError,
 }: InputFileProps) => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -64,11 +69,11 @@ const InputFile = ({
     if (!files) return;
     for (const file of files) {
       if (maxFileSizeMb && file.size > maxFileSizeMb * 1024 * 1024) {
-        alert(`${file.name}의 크기가 ${maxFileSizeMb}MB보다 큽니다.`); //토스트나 에러 메시지로 변경 가능 할 거 같습니다.
+        onError?.(`${file.name}의 크기가 ${maxFileSizeMb}MB보다 큽니다.`);
         continue;
       }
       if (validFileTypes && !validFileTypes.includes(file.type)) {
-        alert(`${file.name}의 ${file.type}형식이 지원되지 않습니다.`);
+        onError?.(`${file.name}의 ${file.type}형식이 지원되지 않습니다.`);
         continue;
       }
       validFiles.push(file);
