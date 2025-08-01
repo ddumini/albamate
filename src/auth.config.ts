@@ -23,9 +23,6 @@ export const authConfig = {
         credentials: Record<string, unknown>,
         req
       ): Promise<User | null> => {
-        console.log('=== authorize 함수 시작 ===');
-        console.log('받은 credentials:', credentials);
-
         const {
           email,
           password,
@@ -36,14 +33,7 @@ export const authConfig = {
           userType: string | null;
         };
 
-        console.log('파싱된 데이터:', {
-          email,
-          password,
-          userType: credentialsUserType,
-        });
-
         if (!email || !password) {
-          console.log('❌ 이메일 또는 비밀번호 누락');
           return null;
         }
 
@@ -55,7 +45,6 @@ export const authConfig = {
           try {
             const url = new URL(req.url);
             userType = url.searchParams.get('type');
-            console.log('req.url에서 사용자 타입 확인:', userType);
           } catch (error) {
             console.error('URL 파싱 오류:', error);
           }
@@ -68,16 +57,12 @@ export const authConfig = {
             try {
               const refererUrl = new URL(referer);
               userType = refererUrl.searchParams.get('type');
-              console.log('referer에서 사용자 타입 확인:', userType);
             } catch (error) {
               console.error('Referer URL 파싱 오류:', error);
             }
           }
         }
 
-        console.log('최종 사용자 타입:', userType);
-
-        console.log('🔐 로그인 플로우 시작');
         // 로그인 처리
         try {
           const res = await axiosInstance.post('/auth/sign-in', {
@@ -91,21 +76,9 @@ export const authConfig = {
           }
 
           const data = res.data;
-          console.log('로그인 성공:', data);
-
-          // 사용자 타입 검증
-          console.log('사용자 타입 검증 시작:', {
-            userType,
-            userRole: data.user.role,
-          });
 
           if (userType) {
             const expectedRole = userType === 'owner' ? 'OWNER' : 'APPLICANT';
-            console.log('역할 비교:', {
-              expected: expectedRole,
-              actual: data.user.role,
-              isMatch: data.user.role === expectedRole,
-            });
 
             if (data.user.role !== expectedRole) {
               console.error('사용자 타입 불일치:', {
@@ -115,10 +88,6 @@ export const authConfig = {
               });
               throw new Error('USER_TYPE_MISMATCH');
             }
-
-            console.log('사용자 타입 검증 성공');
-          } else {
-            console.log('사용자 타입이 없어 검증 건너뜀');
           }
 
           return {
@@ -180,22 +149,11 @@ export const authConfig = {
       const now = Date.now();
       const expiresAt = token.accessTokenExpires as number;
 
-      console.log('=== JWT 콜백 실행 ===');
-      console.log('현재 시간:', new Date(now).toLocaleString());
-      console.log('토큰 만료 시간:', new Date(expiresAt).toLocaleString());
-      console.log(
-        '만료까지 남은 시간:',
-        Math.round((expiresAt - now) / 1000 / 60),
-        '분'
-      );
-
       if (now < expiresAt) {
-        console.log('✅ 토큰이 유효합니다');
         return token;
       }
 
       // 토큰이 만료되었으면 갱신 시도
-      console.log('❌ 토큰이 만료되었습니다. 갱신을 시도합니다...');
       const refreshedToken = await refreshAccessToken(token);
 
       // 갱신 실패 시 에러 토큰 반환
@@ -204,7 +162,6 @@ export const authConfig = {
         return refreshedToken;
       }
 
-      console.log('✅ 토큰 갱신 성공');
       return refreshedToken;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
@@ -232,11 +189,8 @@ export const authConfig = {
       return session;
     },
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      console.log('Redirect callback - url:', url, 'baseUrl:', baseUrl);
-
       // 회원가입 완료 후 /albalist로 리다이렉트
       if (url.startsWith('/signin') || url.startsWith('/signup')) {
-        console.log('회원가입/로그인 완료, /albalist로 리다이렉트');
         return `${baseUrl}/albalist`;
       }
 
@@ -256,8 +210,6 @@ export const authConfig = {
  */
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
-    console.log('토큰 갱신 요청 시작');
-
     const response = await axiosInstance.post('/auth/refresh', {
       refreshToken: token.refreshToken,
     });
@@ -267,7 +219,6 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
     }
 
     const refreshedTokens = response.data;
-    console.log('토큰 갱신 성공');
 
     return {
       ...token,
