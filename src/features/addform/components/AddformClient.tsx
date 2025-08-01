@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAddformWritingMenu } from '@/features/addform/hooks';
@@ -10,7 +10,10 @@ import {
   useAddformMutation,
   useImageMutation,
 } from '@/features/addform/queries/mutations';
-import { createFormRequestSchema } from '@/features/addform/schema/addform.schema';
+import {
+  CreateFormRequest,
+  createFormRequestSchema,
+} from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import EditPopup from '@/shared/components/common/popup/EditPopup';
 import useViewport from '@/shared/hooks/useViewport';
@@ -79,6 +82,24 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     setValue,
     getValues,
   } = methods;
+
+  useEffect(() => {
+    const draft = localStorage.getItem('addform-draft');
+    if (draft) {
+      const parsed = JSON.parse(draft);
+      const { imageUrls, ...formValues } = parsed;
+      Object.entries(formValues).forEach(([key, value]) => {
+        setValue(
+          key as keyof CreateFormRequest,
+          value as CreateFormRequest[keyof CreateFormRequest],
+          { shouldDirty: true, shouldValidate: true }
+        );
+      });
+      setUploadedImageUrls(imageUrls);
+      setMessage('임시 저장한 데이터를 가져왔습니다.');
+      setVisible(true);
+    }
+  }, [setValue]);
 
   useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
