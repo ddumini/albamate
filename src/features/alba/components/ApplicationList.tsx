@@ -13,7 +13,11 @@ import {
 
 import { mockApplications } from '../mocks/mockApplicationData';
 
-const ApplicationList = () => {
+interface ApplicantListProps {
+  formId: number;
+}
+
+const ApplicationList = ({ formId }: ApplicantListProps) => {
   const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
 
   const handleLoadMore = () => {
@@ -70,7 +74,7 @@ const ApplicationList = () => {
               <Tooltip content="지원자 상세 정보를 확인할 수 있습니다.">
                 <Link
                   className="hover:text-mint-500 text-left underline underline-offset-2"
-                  href={`/applications/${applicant.applicantId}`}
+                  href={`/application/${applicant.applicantId}/form/${formId}`}
                 >
                   {applicant.name}
                 </Link>
