@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
-import { useMyAlbalistApi } from '../api/api';
+import { myAlbalistApi } from '../api/api';
 
 export interface ApplicantQueryParams {
   limit?: number;
@@ -26,13 +26,12 @@ export const useApplicantMyAlbalistQuery = (
 ) => {
   const { data: session, status } = useSession();
   const { isApplicant } = useSessionUtils();
-  const api = useMyAlbalistApi();
 
   return useQuery({
     queryKey: ['applicantMyAlbalist', params],
     queryFn: async () => {
       try {
-        const response = await api.getApplicantMyAlbalist(params);
+        const response = await myAlbalistApi.getApplicantMyAlbalist(params);
         console.log('Applicant API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
@@ -80,7 +79,9 @@ export const useApplicantMyAlbalistQuery = (
     retry: 1,
     retryDelay: 1000,
     enabled:
-      status === 'authenticated' && !!session?.accessToken && isApplicant,
+      status === 'authenticated' &&
+      !!(session as any)?.accessToken &&
+      isApplicant,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화
@@ -93,13 +94,12 @@ export const useOwnerMyAlbalistQuery = (
 ) => {
   const { data: session, status } = useSession();
   const { isOwner } = useSessionUtils();
-  const api = useMyAlbalistApi();
 
   return useQuery({
     queryKey: ['ownerMyAlbalist', params],
     queryFn: async () => {
       try {
-        const response = await api.getOwnerMyAlbalist(params);
+        const response = await myAlbalistApi.getOwnerMyAlbalist(params);
         console.log('Owner API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
@@ -146,7 +146,8 @@ export const useOwnerMyAlbalistQuery = (
     },
     retry: 1,
     retryDelay: 1000,
-    enabled: status === 'authenticated' && !!session?.accessToken && isOwner,
+    enabled:
+      status === 'authenticated' && !!(session as any)?.accessToken && isOwner,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화

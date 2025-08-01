@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
@@ -16,12 +16,21 @@ import {
   getUserTypeFromQuery,
   getUserTypeFromSession,
 } from '../utils/userType';
-import { AuthContext, type AuthContextValue } from './AuthContextValue';
+import {
+  AuthContext,
+  type AuthContextValue,
+  type TempSignUpData,
+} from './AuthContextValue';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { session, isOwner, isApplicant } = useSessionUtils();
+
+  // 임시 회원가입 데이터 상태 관리
+  const [tempSignUpData, setTempSignUpData] = useState<TempSignUpData | null>(
+    null
+  );
 
   const authPageType = getAuthPageType(pathname);
 
@@ -53,6 +62,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     authContent,
     isOwner: isOwner,
     isApplicant: isApplicant,
+    tempSignUpData,
+    setTempSignUpData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

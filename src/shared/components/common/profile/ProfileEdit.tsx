@@ -20,6 +20,10 @@ interface ProfileEditProps {
    * 선택된 `File`을 인자로 받습니다.
    */
   onImageChange: (file: File) => void;
+  /**
+   * 파일 유효성 검사 실패 시 호출되는 콜백 함수입니다.
+   */
+  onError?: (error: string) => void;
 }
 
 /**
@@ -32,6 +36,7 @@ const ProfileEdit = ({
   imageUrl,
   id = 'editProfile',
   onImageChange,
+  onError,
 }: ProfileEditProps) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   useEffect(() => {
@@ -65,6 +70,7 @@ const ProfileEdit = ({
       <InputFileImage
         className="sr-only"
         id={id}
+        onError={onError}
         onImageChange={handleImageChange}
       />
     </div>
