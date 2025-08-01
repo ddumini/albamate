@@ -125,18 +125,17 @@ const AuthForm = () => {
         case 'signup': {
           const signUpData = data as SignUpFormData;
 
-          // 회원가입 첫 단계: 기본 정보만 세션 스토리지에 저장하고 accountInfo로 이동
+          // 회원가입 첫 단계: 기본 정보를 Context에 저장하고 accountInfo로 이동
           const basicSignUpData = {
             email: signUpData.email,
             password: signUpData.password,
-            role: userType === 'owner' ? 'OWNER' : 'APPLICANT',
+            role: (userType === 'owner' ? 'OWNER' : 'APPLICANT') as
+              | 'OWNER'
+              | 'APPLICANT',
           };
 
-          // 세션 스토리지에 임시 저장
-          sessionStorage.setItem(
-            'tempSignUpData',
-            JSON.stringify(basicSignUpData)
-          );
+          // Context에 임시 저장 (메모리 상태 관리)
+          authContext?.setTempSignUpData(basicSignUpData);
 
           // accountInfo 페이지로 이동 (사장님과 지원자 모두)
           const accountInfoUrl =
@@ -155,13 +154,27 @@ const AuthForm = () => {
 
           if (isSignUpStep) {
             // 임시 저장된 회원가입 데이터 가져오기
-            const tempSignUpData = sessionStorage.getItem('tempSignUpData');
+            const tempSignUpData = authContext?.tempSignUpData;
             if (!tempSignUpData) {
               console.error('임시 회원가입 데이터를 찾을 수 없습니다.');
+              setLoginStatus({
+                visible: true,
+                message:
+                  '회원가입 정보가 만료되었습니다. 다시 회원가입을 진행해주세요.',
+                type: 'error',
+              });
+              // 회원가입 페이지로 리다이렉트
+              setTimeout(() => {
+                const signupUrl =
+                  userType === 'owner'
+                    ? '/signup?type=owner'
+                    : '/signup?type=applicant';
+                router.push(signupUrl);
+              }, 2000);
               return;
             }
 
-            const basicData = JSON.parse(tempSignUpData);
+            const basicData = tempSignUpData;
 
             // 최종 회원가입 데이터 구성
             const finalSignUpData = {
@@ -188,7 +201,7 @@ const AuthForm = () => {
                 console.log('회원가입 성공');
 
                 // 임시 데이터 삭제
-                sessionStorage.removeItem('tempSignUpData');
+                authContext?.setTempSignUpData(null);
 
                 // 자동 로그인 처리
                 try {
@@ -200,17 +213,35 @@ const AuthForm = () => {
 
                   if (signInResult && !signInResult.error) {
                     console.log('자동 로그인 성공');
-                    alert('회원가입이 완료되었습니다!');
-                    router.push('/albalist');
+                    setLoginStatus({
+                      visible: true,
+                      message: '회원가입이 완료되었습니다!',
+                      type: 'success',
+                    });
+                    setTimeout(() => {
+                      router.push('/albalist');
+                    }, 1500);
                   } else {
                     console.error('자동 로그인 실패:', signInResult?.error);
-                    alert('회원가입이 완료되었습니다. 로그인해주세요.');
-                    router.push('/signin');
+                    setLoginStatus({
+                      visible: true,
+                      message: '회원가입이 완료되었습니다. 로그인해주세요.',
+                      type: 'success',
+                    });
+                    setTimeout(() => {
+                      router.push('/signin');
+                    }, 1500);
                   }
                 } catch (signInError) {
                   console.error('자동 로그인 중 오류:', signInError);
-                  alert('회원가입이 완료되었습니다. 로그인해주세요.');
-                  router.push('/signin');
+                  setLoginStatus({
+                    visible: true,
+                    message: '회원가입이 완료되었습니다. 로그인해주세요.',
+                    type: 'success',
+                  });
+                  setTimeout(() => {
+                    router.push('/signin');
+                  }, 1500);
                 }
               } else {
                 // 응답 텍스트를 먼저 가져와서 JSON 파싱 시도
@@ -228,12 +259,20 @@ const AuthForm = () => {
                 console.error('회원가입 실패:', errorData);
                 const errorMessage =
                   errorData.error || '회원가입에 실패했습니다.';
-                alert(errorMessage);
+                setLoginStatus({
+                  visible: true,
+                  message: errorMessage,
+                  type: 'error',
+                });
               }
             } catch (error) {
               console.error('회원가입 중 오류 발생:', error);
               console.error('에러 상세:', error);
-              alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+              setLoginStatus({
+                visible: true,
+                message: '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.',
+                type: 'error',
+              });
             }
           } else {
             // 일반 계정 정보 업데이트
