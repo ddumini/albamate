@@ -11,7 +11,7 @@ const AlbaCondition: React.FC<AlbaConditionProps> = ({ item }) => {
     { label: '모집인원', value: `${item.numberOfPositions}명` },
     { label: '성별', value: item.gender },
     { label: '학력', value: item.education },
-    { label: '연령', value: `${item.age}세` },
+    { label: '연령', value: `${item.age}` },
     { label: '우대사항', value: item.preferred },
   ];
 
