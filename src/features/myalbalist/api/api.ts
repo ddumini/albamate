@@ -26,4 +26,7 @@ export const myAlbalistApi = {
       params,
     });
   },
+  deleteForm: (formId: number) => {
+    return axiosInstance.delete(`forms/${formId}`);
+  },
 };

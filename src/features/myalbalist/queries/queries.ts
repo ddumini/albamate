@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
@@ -152,5 +152,28 @@ export const useOwnerMyAlbalistQuery = (
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화
     refetchOnMount: false, // 컴포넌트 마운트 시 자동 리페치 비활성화
+  });
+};
+
+/**
+ * 알바폼 삭제 뮤테이션
+ */
+export const useDeleteFormMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (formId: number) => myAlbalistApi.deleteForm(formId),
+    onSuccess: () => {
+      // 관련 쿼리들 무효화하여 목록 새로고침
+      queryClient.invalidateQueries({
+        queryKey: ['ownerMyAlbalist'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['applicantMyAlbalist'],
+      });
+    },
+    onError: error => {
+      console.error('알바폼 삭제 실패:', error);
+    },
   });
 };
