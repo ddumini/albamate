@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import { getSession, signOut, useSession } from 'next-auth/react';
-import { useMemo } from 'react';
+import { getSession, signOut } from 'next-auth/react';
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'https://fe-project-albaform.vercel.app';
@@ -152,30 +151,3 @@ axiosInstance.interceptors.response.use(
   createResponseInterceptor(axiosInstance).onFulfilled,
   createResponseInterceptor(axiosInstance).onRejected
 );
-
-export const useAxiosWithAuth = () => {
-  const { data: session } = useSession();
-
-  const authAxios = useMemo(() => {
-    const instance = axios.create({
-      baseURL,
-      withCredentials: !isDevelopment,
-      headers: {
-        ...((session as any)?.accessToken && {
-          Authorization: `Bearer ${(session as any).accessToken}`,
-        }),
-      },
-    });
-
-    // 공통 인터셉터 적용
-    instance.interceptors.request.use(createRequestInterceptor());
-    instance.interceptors.response.use(
-      createResponseInterceptor(instance).onFulfilled,
-      createResponseInterceptor(instance).onRejected
-    );
-
-    return instance;
-  }, [session]);
-
-  return authAxios;
-};

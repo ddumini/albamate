@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
-import { useMyAlbalistApi } from '../api/api';
+import { myAlbalistApi } from '../api/api';
 
 export interface ApplicantQueryParams {
   limit?: number;
@@ -26,13 +26,12 @@ export const useApplicantMyAlbalistQuery = (
 ) => {
   const { data: session, status } = useSession();
   const { isApplicant } = useSessionUtils();
-  const api = useMyAlbalistApi();
 
   return useQuery({
     queryKey: ['applicantMyAlbalist', params],
     queryFn: async () => {
       try {
-        const response = await api.getApplicantMyAlbalist(params);
+        const response = await myAlbalistApi.getApplicantMyAlbalist(params);
         console.log('Applicant API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
@@ -95,13 +94,12 @@ export const useOwnerMyAlbalistQuery = (
 ) => {
   const { data: session, status } = useSession();
   const { isOwner } = useSessionUtils();
-  const api = useMyAlbalistApi();
 
   return useQuery({
     queryKey: ['ownerMyAlbalist', params],
     queryFn: async () => {
       try {
-        const response = await api.getOwnerMyAlbalist(params);
+        const response = await myAlbalistApi.getOwnerMyAlbalist(params);
         console.log('Owner API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
