@@ -14,8 +14,8 @@ const WeekPicker = ({ value = [], onChange }: WeekPickerProps) => {
     const newSelectedDays = checked
       ? [...selectedDays, value]
       : selectedDays.filter(day => day !== value);
-
-    onChange?.(newSelectedDays);
+    const sortedDays = weekDays.filter(day => newSelectedDays.includes(day));
+    onChange?.(sortedDays);
   };
 
   const weekDays = ['월', '화', '수', '목', '금', '토', '일'];
