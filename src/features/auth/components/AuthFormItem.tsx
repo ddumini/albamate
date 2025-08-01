@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import {
   FieldErrors,
   FieldValues,
@@ -55,8 +56,19 @@ const AuthFormItem = <T extends FieldValues>({
 }: AuthFormItemProps<T>) => {
   const fieldError = errors?.[name];
   const hasError = !!fieldError;
-
   const isRequired = field?.required ?? false;
+
+  // 메모리 누수 방지를 위한 URL 참조
+  const previewUrlRef = useRef<string | null>(null);
+
+  // 컴포넌트 언마운트 시 메모리 정리
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    };
+  }, []);
 
   // 이미지 타입인 경우 ProfileEdit 컴포넌트 렌더링
   if (type === 'image') {
@@ -76,15 +88,28 @@ const AuthFormItem = <T extends FieldValues>({
                 // 파일 유효성 검사
                 validateImageFile(file);
 
+                // 이전 미리보기 URL 정리
+                if (previewUrlRef.current) {
+                  URL.revokeObjectURL(previewUrlRef.current);
+                }
+
                 // 파일을 FormData에 저장 (File 객체 대신 파일명 저장)
                 setValue?.(name, file.name as any);
 
-                // 미리보기 URL 생성
+                // 미리보기 URL 생성 및 참조 저장
                 const previewUrl = URL.createObjectURL(file);
+                previewUrlRef.current = previewUrl;
                 setValue?.(`${name}Preview` as Path<T>, previewUrl as any);
               } catch (error) {
                 console.error('Image validation failed:', error);
-                // 에러 처리 로직 추가 가능
+                // 에러 메시지를 폼 에러로 설정
+                if (setValue) {
+                  setValue(name, '' as any);
+                  setValue(
+                    `${name}Error` as Path<T>,
+                    (error as Error).message as any
+                  );
+                }
               }
             }}
           />
