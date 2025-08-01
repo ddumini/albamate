@@ -9,8 +9,8 @@ interface EmptyInfo {
 
 interface EmptyCardProps {
   type: EmptyType;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   wrapClassName?: string;
   imgWrapClassName?: string;
   textClassName?: string;
@@ -67,9 +67,11 @@ const EmptyCard = ({
           src={image}
         />
       </div>
-      <p className={cn('text-md text-gray-400 lg:text-2lg', textClassName)}>
-        {title}
-      </p>
+      {title && (
+        <p className={cn('text-md text-gray-400 lg:text-2lg', textClassName)}>
+          {title}
+        </p>
+      )}
       {description && (
         <p className={cn('text-md text-gray-400 lg:text-2lg', textClassName)}>
           {description}
