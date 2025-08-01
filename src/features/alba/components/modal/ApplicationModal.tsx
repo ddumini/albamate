@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import useApplicationStore from '@/shared/store/useApplicationStore';
 import useModalStore from '@/shared/store/useModalStore';
 
 import albaApi from '../../api/albaApi';
@@ -24,6 +25,7 @@ interface ApplicationModalProps {
 const ApplicationModal = ({ id }: ApplicationModalProps) => {
   const { closeModal } = useModalStore();
   const router = useRouter();
+  const { setGuestApplication, setGuestMode } = useApplicationStore(); // Zustand hooks
 
   const {
     register,
@@ -40,10 +42,14 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
       });
 
       const application = response.data;
+
+      // Zustand에 저장
+      setGuestApplication(application);
+      setGuestMode(true);
+
       closeModal();
       router.push(`/myapply/${id}`);
     } catch (error) {
-      console.error('인증 실패:', error);
       alert('지원자 정보를 확인할 수 없습니다.');
     }
   };
