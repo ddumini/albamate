@@ -106,6 +106,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
         'imageUrls',
         results.map(result => result.data.url)
       );
+      localStorage.removeItem('addform-draft');
       addformMutate(getValues());
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
