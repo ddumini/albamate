@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useAddformWritingMenu } from '@/features/addform/hooks';
 import {
   useAddformMutation,
   useImageMutation,
@@ -24,22 +25,55 @@ import WorkConditionForm from './WorkConditionForm';
 const AddformClient = ({ formId }: { formId?: string }) => {
   const [currentMenu, setCurrentMenu] = useState<Menu>('recruitContent');
   const [writingMenu, setWritingMenu] = useState<Record<Menu, boolean>>({
-    recruitContent: true,
-    recruitCondition: true,
+    recruitContent: false,
+    recruitCondition: false,
     workCondition: false,
   });
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
 
   const { isDesktop } = useViewport();
+
+  const recruitContentDefault = {
+    title: '',
+    description: '',
+    recruitmentStartDate: '',
+    recruitmentEndDate: '',
+    imageUrls: [],
+  };
+  const recruitConditionDefault = {
+    numberOfPositions: undefined,
+    gender: '',
+    education: '',
+    age: '',
+    preferred: '',
+  };
+  const workContentDefault = {
+    location: '',
+    workStartDate: '',
+    workEndDate: '',
+    workStartTime: '',
+    workEndTime: '',
+    workDays: [],
+    isNegotiableWorkDays: false,
+    hourlyWage: undefined,
+    isPublic: false,
+  };
+
   const methods = useForm({
     resolver: zodResolver(createFormRequestSchema),
     mode: 'onChange',
     defaultValues: {
-      imageUrls: [],
-      isNegotiableWorkDays: false,
-      isPublic: false,
+      ...recruitContentDefault,
+      ...recruitConditionDefault,
+      ...workContentDefault,
     },
   });
+
+  const {
+    formState: { dirtyFields },
+  } = methods;
+
+  useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
   const { mutateAsync: imageMutate, isPending: isImagePending } =
     useImageMutation();
