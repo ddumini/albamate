@@ -1,12 +1,12 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
+import { Slide } from '@common/imageCarousel/carousel';
+import ImageCarousel from '@common/imageCarousel/ImageCarousel';
 import { useRouter } from 'next/navigation';
 
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import AlbaDetail from '@/shared/components/alba/AlbaDetail';
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import { Slide } from '@/shared/components/common/imageCarousel/carousel';
-import ImageCarousel from '@/shared/components/common/imageCarousel/ImageCarousel';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
