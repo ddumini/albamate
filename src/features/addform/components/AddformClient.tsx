@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAddformWritingMenu } from '@/features/addform/hooks';
@@ -31,6 +31,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     workCondition: false,
   });
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
 
   const [visible, setVisible] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
@@ -77,18 +78,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     formState: { dirtyFields },
     setValue,
     getValues,
-    reset,
   } = methods;
-
-  useEffect(() => {
-    const draft = localStorage.getItem('addform-draft');
-    if (draft) {
-      const parsed = JSON.parse(draft);
-      reset(parsed);
-      setMessage('임시 저장한 데이터를 가져왔습니다.');
-      setVisible(true);
-    }
-  }, [reset]);
 
   useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
@@ -102,10 +92,11 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       const results = await Promise.all(
         currentFiles.map(file => imageMutate(file))
       );
-      setValue(
-        'imageUrls',
-        results.map(result => result.data.url)
-      );
+      const imageUrls = [
+        ...uploadedImageUrls,
+        ...results.map(result => result.data.url),
+      ];
+      setValue('imageUrls', imageUrls);
       localStorage.removeItem('addform-draft');
       addformMutate(getValues());
     } catch (error) {
@@ -126,11 +117,16 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       const results = await Promise.all(
         currentFiles.map(file => imageMutate(file))
       );
-      setValue(
-        'imageUrls',
-        results.map(result => result.data.url)
-      );
-      localStorage.setItem('addform-draft', JSON.stringify(getValues()));
+      const imageUrls = [
+        ...uploadedImageUrls,
+        ...results.map(result => result.data.url),
+      ];
+      const values = getValues();
+      const draft = {
+        ...values,
+        imageUrls,
+      };
+      localStorage.setItem('addform-draft', JSON.stringify(draft));
       setMessage('알바폼이 임시 저장되었습니다');
       setVisible(true);
     } catch (error) {
@@ -178,6 +174,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
           <form>
             <RecruitContentForm
               className={currentMenu === 'recruitContent' ? '' : 'hidden'}
+              setUploadedImageUrls={setUploadedImageUrls}
+              uploadedImageUrls={uploadedImageUrls}
               onImageChange={handleImageChange}
             />
             <RecruitConditionForm

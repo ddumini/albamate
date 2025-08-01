@@ -1,5 +1,6 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
@@ -15,9 +16,13 @@ import AddFormSection from './AddFormSection';
 const RecruitContentForm = ({
   className,
   onImageChange,
+  uploadedImageUrls,
+  setUploadedImageUrls,
 }: {
   className?: string;
   onImageChange: (files: File[]) => void;
+  uploadedImageUrls: string[];
+  setUploadedImageUrls: Dispatch<SetStateAction<string[]>>;
 }) => {
   const {
     register,
@@ -88,7 +93,12 @@ const RecruitContentForm = ({
       </AddFormSection>
       <AddFormSection>
         <Label htmlFor="uploadImage">이미지 첨부</Label>
-        <UploadMultipleImage id="uploadImage" onImageChange={onImageChange} />
+        <UploadMultipleImage
+          id="uploadImage"
+          setUploadedImageUrls={setUploadedImageUrls}
+          uploadedImageUrls={uploadedImageUrls}
+          onImageChange={onImageChange}
+        />
       </AddFormSection>
     </div>
   );
