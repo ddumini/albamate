@@ -10,11 +10,10 @@ import useAlbaListApi from '@/features/albalist/api/albaListApi';
 import { useAuthSession } from '@/features/auth';
 
 interface Props {
-  onToggleOwner: () => void;
   formId: number;
 }
 
-const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
+const FloatingButtons = ({ formId }: Props) => {
   const { isAuthenticated, refreshSession } = useAuthSession();
   const { scrapAlba, cancelScrapAlba } = useAlbaListApi();
   const queryClient = useQueryClient();
@@ -115,7 +114,6 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
         onClick={handleBookmarkToggle}
       />
       <FloatingButton type="share" />
-      <FloatingButton type="addAlbatalk" onClick={onToggleOwner} />
     </FloatingButtonContainer>
   );
 };
