@@ -45,21 +45,6 @@ const refreshToken = async (
   return response.data;
 };
 
-// 개발 환경에서 토큰 만료 시뮬레이션을 위한 함수
-export const simulateTokenExpiration = () => {
-  if (process.env.NODE_ENV === 'development') {
-    console.log('🧪 토큰 만료 시뮬레이션 활성화');
-    // JWT 토큰의 만료 시간을 강제로 과거로 설정
-    const expiredToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-
-    // 세션에 만료된 토큰 설정 (실제로는 NextAuth JWT 콜백에서 처리)
-    console.log('⚠️ 만료된 토큰으로 요청 시뮬레이션');
-    return expiredToken;
-  }
-  return null;
-};
-
 export const axiosInstance = axios.create({
   baseURL,
   withCredentials: !isDevelopment,
