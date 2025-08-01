@@ -1,11 +1,34 @@
 import PrimaryButton from '@common/button/PrimaryButton';
 import Modal from '@common/modal/Modal';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useParams, useRouter } from 'next/navigation';
 
 import useModalStore from '@/shared/store/useModalStore';
 
-const RecruitCloseModal = () => {
+import albaApi from '../../api/albaApi';
+
+const FormDeleteModal = () => {
   const { closeModal } = useModalStore();
+  const router = useRouter();
+  const { deleteForm } = albaApi();
+  const { formId } = useParams();
+  const queryClient = useQueryClient();
+
+  const handleDelete = async () => {
+    try {
+      await deleteForm(Number(formId));
+      await queryClient.invalidateQueries({ queryKey: ['Albalist'] });
+      await queryClient.refetchQueries({ queryKey: ['Albalist'] });
+
+      closeModal();
+      alert('알바폼이 삭제되었어요!');
+      router.push('/albalist');
+    } catch (error) {
+      console.error('폼 삭제 실패:', error);
+      alert('폼 삭제에 실패했어요!');
+    }
+  };
 
   return (
     <div className="flex w-full flex-col gap-8 rounded-xl p-24 text-center">
@@ -33,7 +56,7 @@ const RecruitCloseModal = () => {
             label="삭제하기"
             type="button"
             variant="cancelSolid"
-            onClick={closeModal}
+            onClick={handleDelete}
           />
           <PrimaryButton
             className="mt-12 h-58 w-327 rounded-md border border-mint-200 bg-gray-25 text-mint-300 hover:bg-gray-100"
@@ -48,4 +71,4 @@ const RecruitCloseModal = () => {
   );
 };
 
-export default RecruitCloseModal;
+export default FormDeleteModal;
