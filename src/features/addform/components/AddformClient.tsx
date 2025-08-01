@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAddformWritingMenu } from '@/features/addform/hooks';
@@ -33,6 +33,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
 
   const [visible, setVisible] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const { isDesktop } = useViewport();
 
@@ -74,7 +75,20 @@ const AddformClient = ({ formId }: { formId?: string }) => {
 
   const {
     formState: { dirtyFields },
+    setValue,
+    getValues,
+    reset,
   } = methods;
+
+  useEffect(() => {
+    const draft = localStorage.getItem('addform-draft');
+    if (draft) {
+      const parsed = JSON.parse(draft);
+      reset(parsed);
+      setMessage('임시 저장한 데이터를 가져왔습니다.');
+      setVisible(true);
+    }
+  }, [reset]);
 
   useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
@@ -88,11 +102,11 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       const results = await Promise.all(
         currentFiles.map(file => imageMutate(file))
       );
-      methods.setValue(
+      setValue(
         'imageUrls',
         results.map(result => result.data.url)
       );
-      addformMutate(methods.getValues());
+      addformMutate(getValues());
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
     }
@@ -111,14 +125,12 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       const results = await Promise.all(
         currentFiles.map(file => imageMutate(file))
       );
-      methods.setValue(
+      setValue(
         'imageUrls',
         results.map(result => result.data.url)
       );
-      localStorage.setItem(
-        'addform-draft',
-        JSON.stringify(methods.getValues())
-      );
+      localStorage.setItem('addform-draft', JSON.stringify(getValues()));
+      setMessage('알바폼이 임시 저장되었습니다');
       setVisible(true);
     } catch (error) {
       console.error('임시 저장 중 오류 발생:', error);
@@ -186,7 +198,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
         </div>
       </div>
       <EditPopup
-        message="임시저장 되었습니다"
+        message={message}
         visible={visible}
         onClose={() => {
           setVisible(false);
