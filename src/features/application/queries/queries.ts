@@ -20,7 +20,6 @@ export const useAlbaformDetailQuery = (
   initialData?: MockAlbaItem,
   options = {}
 ) => {
-  const { data: session, status } = useSession();
   const api = useApplicationDetailApi();
 
   return useQuery({
@@ -29,7 +28,7 @@ export const useAlbaformDetailQuery = (
       const response = await api.getAlbaformDetail(formId);
       return response.data;
     },
-    enabled: status === 'authenticated' && !!session?.accessToken && !!formId,
+    enabled: !!formId,
     initialData,
     ...DEFAULT_QUERY_OPTIONS,
     ...options,
