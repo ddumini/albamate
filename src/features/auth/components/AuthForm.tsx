@@ -70,7 +70,7 @@ const AuthForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { isValid, errors },
+    formState: { isValid, errors, isSubmitting }, // isSubmitting 추가
     watch,
     setValue,
   } = useForm<AuthFormData>({
@@ -134,7 +134,7 @@ const AuthForm = () => {
             // 성공 메시지 표시 후 잠시 대기 후 리다이렉트
             setTimeout(() => {
               router.push('/albalist');
-            }, 1500);
+            }, 1000);
           }
           break;
         }
@@ -307,13 +307,32 @@ const AuthForm = () => {
     }
   };
 
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   // 버튼 텍스트 설정
-  const getButtonText = (pageType: AuthPageType, userType?: UserType) => {
+  const getButtonText = (
+    pageType: AuthPageType,
+    userType?: UserType,
+    isLoading?: boolean
+  ) => {
+    if (isLoading) {
+      switch (pageType) {
+        case 'signin':
+          return '로그인 중...';
+        case 'signup':
+          return '처리 중...';
+        case 'accountInfo':
+          return '저장 중...';
+        default:
+          return '처리 중...';
+      }
+    }
+
     switch (pageType) {
       case 'signin':
         return '로그인 하기';
       case 'signup':
-        return '다음'; // 회원가입에서 '다음'으로 변경
+        return '다음';
       case 'accountInfo': {
         const isSignUpStep = searchParams.get('step') === 'signup';
         if (isSignUpStep) {
@@ -346,8 +365,12 @@ const AuthForm = () => {
         {/* TODO: 로딩 상태 추가 (isSubmitting) */}
         <PrimaryButton
           className="mt-24 h-58 w-full lg:mt-56"
-          disabled={!isFormComplete()}
-          label={getButtonText(authPageType, userType || undefined)}
+          disabled={!isFormComplete() || isSubmitting || isRedirecting} // isSubmitting 추가
+          label={getButtonText(
+            authPageType,
+            userType || undefined,
+            isSubmitting
+          )} // isSubmitting 전달
           type="submit"
           variant="solid"
         />
