@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { usePopupStore } from '@/shared/store/popupStore';
+
 /**
  * FloatingButton 컴포넌트의 Props 인터페이스
  */
@@ -73,6 +75,8 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   isBookmarked = false,
   href,
 }) => {
+  const { showPopup } = usePopupStore();
+
   /** 기본 스타일 클래스 */
   const baseClasses =
     'flex items-center cursor-pointer justify-center rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-mint-400';
@@ -125,10 +129,10 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     try {
       const currentUrl = window.location.href;
       await navigator.clipboard.writeText(currentUrl);
-      alert('현재 페이지 링크가 복사되었습니다!');
+      showPopup('현재 페이지 링크가 복사되었습니다!', 'success');
     } catch (error) {
       console.error('클립보드 복사 실패:', error);
-      alert('링크 복사에 실패했습니다.');
+      showPopup('링크 복사에 실패했습니다.', 'error');
     }
 
     // 외부에서 전달된 onClick도 실행

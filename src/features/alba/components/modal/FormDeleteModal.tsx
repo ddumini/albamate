@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 
+import { usePopupStore } from '@/shared/store/popupStore';
 import useModalStore from '@/shared/store/useModalStore';
 
 import albaApi from '../../api/albaApi';
@@ -14,6 +15,7 @@ const FormDeleteModal = () => {
   const { deleteForm } = albaApi();
   const { formId } = useParams();
   const queryClient = useQueryClient();
+  const { showPopup } = usePopupStore();
 
   const handleDelete = async () => {
     try {
@@ -22,11 +24,11 @@ const FormDeleteModal = () => {
       await queryClient.refetchQueries({ queryKey: ['Albalist'] });
 
       closeModal();
-      alert('알바폼이 삭제되었어요!');
+      showPopup('알바폼이 삭제되었어요!', 'info');
       router.push('/albalist');
     } catch (error) {
       console.error('폼 삭제 실패:', error);
-      alert('폼 삭제에 실패했어요!');
+      showPopup('폼 삭제에 실패했어요!', 'error');
     }
   };
 

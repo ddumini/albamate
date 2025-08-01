@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAuthSession } from '@/features/auth';
+import { usePopupStore } from '@/shared/store/popupStore';
 import type { AlbaItem } from '@/shared/types/alba';
 
 import useAlbaListApi from '../api/albaListApi';
@@ -20,6 +21,7 @@ const AlbaCard = ({ item }: Props) => {
   const { isAuthenticated, refreshSession } = useAuthSession();
   const { scrapAlba, cancelScrapAlba, getAlbaDetail } = useAlbaListApi();
   const queryClient = useQueryClient();
+  const { showPopup } = usePopupStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isScrapped, setIsScrapped] = useState(false);
@@ -75,10 +77,10 @@ const AlbaCard = ({ item }: Props) => {
     try {
       if (prevScrapped) {
         await cancelScrapAlba(item.id);
-        alert(`${item.title} 스크랩 취소 완료!`);
+        showPopup(`${item.title} 스크랩 취소 완료!`, 'error');
       } else {
         await scrapAlba(item.id);
-        alert(`${item.title} 스크랩 완료!`);
+        showPopup(`${item.title} 스크랩 완료!`, 'success');
       }
 
       queryClient.invalidateQueries({ queryKey: ['albaList'] });
@@ -95,19 +97,22 @@ const AlbaCard = ({ item }: Props) => {
           // 갱신 성공 시 아무 일도 하지 않음
         } catch (refreshError) {
           console.warn('세션 갱신 실패. 로그아웃을 진행합니다.');
-          alert('로그인이 필요합니다');
+          showPopup('로그인이 필요합니다', 'info');
           signOut({ callbackUrl: '/signin', redirect: true });
         }
         return;
       }
 
       if (error?.response?.status === 400) {
-        alert(error.response?.data?.message || '요청 오류가 발생했습니다.');
+        showPopup(
+          error.response?.data?.message || '요청 오류가 발생했습니다.',
+          'error'
+        );
         router.push('/');
         return;
       }
 
-      alert('스크랩 처리 중 오류가 발생했습니다.');
+      showPopup('스크랩 처리 중 오류가 발생했습니다.', 'error');
       console.error(error);
     } finally {
       setIsLoading(false);

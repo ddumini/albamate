@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { usePopupStore } from '@/shared/store/popupStore';
 import useApplicationStore from '@/shared/store/useApplicationStore';
 import useModalStore from '@/shared/store/useModalStore';
 
@@ -26,6 +27,7 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
   const { closeModal } = useModalStore();
   const router = useRouter();
   const { setGuestApplication, setGuestMode } = useApplicationStore(); // Zustand hooks
+  const { showPopup } = usePopupStore();
 
   const {
     register,
@@ -50,7 +52,7 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
       closeModal();
       router.push(`/myapply/${id}`);
     } catch (error) {
-      alert('지원자 정보를 확인할 수 없습니다.');
+      showPopup('지원자 정보를 확인할 수 없습니다.', 'error');
     }
   };
 

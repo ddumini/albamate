@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
+import { usePopupStore } from '@/shared/store/popupStore';
 import { getExperienceLabel } from '@/shared/utils/application';
 import { formatPhoneNumber } from '@/shared/utils/format';
 
@@ -15,10 +16,11 @@ const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
   const { isOwner } = useSessionUtils();
   const { name, phoneNumber, experienceMonths, resumeName, introduction } =
     data;
+  const { showPopup } = usePopupStore();
 
   const handleDownloadResume = () => {
     if (!data.resumeId) {
-      alert('다운로드에 필요한 정보가 부족합니다.');
+      showPopup('다운로드에 필요한 정보가 부족합니다.', 'info');
       return;
     }
   };

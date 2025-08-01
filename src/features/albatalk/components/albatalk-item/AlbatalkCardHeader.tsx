@@ -2,6 +2,7 @@
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import { cn } from '@/shared/lib/cn';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 interface AlbatalkHeaderProps {
   title: string;
@@ -16,10 +17,12 @@ const AlbatalkCardHeader = ({
   className,
   titleClassName,
 }: AlbatalkHeaderProps) => {
+  const { showPopup } = usePopupStore();
+
   const handleActionClick = (option: string) => {
     if (option === 'edit') {
       //TODO: 수정 로직
-      alert(albatalkId);
+      showPopup(`${albatalkId}`, 'info');
     } else if (option === 'delete') {
       //TODO: 삭제 로직
     }
