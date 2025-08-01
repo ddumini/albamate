@@ -64,17 +64,17 @@ export const phoneNumberSchema = z
 /**
  * 매장명 유효성 검사 스키마
  */
-export const storeNameSchema = z.string().optional();
+export const storeNameSchema = z.string();
 
 /**
  * 매장 전화번호 유효성 검사 스키마
  */
-export const storePhoneNumberSchema = z.string().optional();
+export const storePhoneNumberSchema = z.string();
 
 /**
  * 위치 유효성 검사 스키마
  */
-export const locationSchema = z.string().optional();
+export const locationSchema = z.string();
 
 /**
  * 사장님 전화번호 유효성 검사 스키마

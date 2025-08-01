@@ -14,7 +14,7 @@ import { axiosInstance } from '@/shared/lib/axios';
 export const authConfig = {
   providers: [
     KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID,
+      clientId: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
     }),
     Credentials({
