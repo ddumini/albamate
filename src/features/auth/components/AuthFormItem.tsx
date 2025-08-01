@@ -76,10 +76,10 @@ const AuthFormItem = <T extends FieldValues>({
 
     return (
       <div>
-        <Label htmlFor={name} isRequired={isRequired}>
+        <Label className="sr-only" htmlFor={name} isRequired={isRequired}>
           {label}
         </Label>
-        <div className="mt-8 lg:mt-16">
+        <div className="mt-8 flex justify-center lg:mt-16">
           <ProfileEdit
             id={name}
             imageUrl={currentImageUrl}
