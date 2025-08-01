@@ -56,7 +56,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
@@ -86,7 +86,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <TimePicker
-                defaultValue={timeRange}
+                value={timeRange}
                 onChange={range => {
                   field.onChange(range.workStartTime);
                   setValue('workEndTime', range.workEndTime as any, {
@@ -105,7 +105,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           control={control}
           name="workDays"
           render={({ field }) => (
-            <WeekPicker defaultValue={field.value} onChange={field.onChange} />
+            <WeekPicker value={field.value} onChange={field.onChange} />
           )}
         />
         <div className="px-10 py-8 lg:px-14 lg:py-16">

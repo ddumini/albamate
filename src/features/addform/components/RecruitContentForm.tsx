@@ -74,7 +74,7 @@ const RecruitContentForm = ({
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
