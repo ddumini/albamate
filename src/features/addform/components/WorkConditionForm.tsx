@@ -132,7 +132,10 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             className="pr-46 pl-24 lg:pr-60 lg:pl-32"
             id="hourlyWage"
             placeholder={`${process.env.NEXT_PUBLIC_MINIMUM_WAGE}`}
-            {...register('hourlyWage', { valueAsNumber: true })}
+            {...register('hourlyWage', {
+              setValueAs: value =>
+                value === '' || value === undefined ? undefined : Number(value),
+            })}
           />
           <span className="absolute top-14 right-30 text-lg font-medium text-black-400 lg:top-16 lg:right-40 lg:text-xl dark:text-gray-100">
             원
