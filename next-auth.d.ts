@@ -26,20 +26,10 @@ declare module 'next-auth' {
 }
 
 declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string;
-    email: string;
-    name: string | null;
-    role: 'APPLICANT' | 'OWNER';
-    location: string | null;
-    phoneNumber: string | null;
-    storePhoneNumber: string | null;
-    storeName: string | null;
-    imageUrl: string | null;
-    nickname: string | null;
-    accessToken: string;
-    refreshToken: string;
-    accessTokenExpires: number;
+  interface JWT
+    extends Omit<import('next-auth').User, 'id' | 'accessTokenExpires'> {
+    id: string; // User의 number 타입을 string으로 오버라이드
+    accessTokenExpires: number; // User의 optional 타입을 required로 오버라이드
     error?: 'RefreshAccessTokenError';
   }
 }
