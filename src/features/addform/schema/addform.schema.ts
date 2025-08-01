@@ -11,12 +11,12 @@ export const createFormRequestSchema = z.object({
       error: `최저시급(${process.env.NEXT_PUBLIC_MINIMUM_WAGE}원) 이상을 입력해야 합니다.`,
     }),
   isNegotiableWorkDays: z.boolean(),
-  workDays: z.array(z.string()),
-  workEndTime: z.string(),
-  workStartTime: z.string(),
+  workDays: z.array(z.string()).min(1, { error: '근무 요일을 입력해주세요.' }),
+  workEndTime: z.string().min(1, { error: '근무 시작 시간을 입력해주세요.' }),
+  workStartTime: z.string().min(1, { error: '근무 종료 시간을 입력해주세요.' }),
   workEndDate: z.iso.datetime(),
   workStartDate: z.iso.datetime(),
-  location: z.string(),
+  location: z.string().min(1, { error: '근무 위치를 입력해주세요.' }),
   preferred: z
     .string()
     .min(1, { error: '우대사항을 선택하거나 입력해주세요.' }),
@@ -31,8 +31,9 @@ export const createFormRequestSchema = z.object({
   recruitmentStartDate: z.iso.datetime(),
   description: z
     .string()
+    .min(1, { error: '소개글을 입력해주세요.' })
     .max(200, { error: '최대 200자까지 입력 가능합니다.' }),
-  title: z.string(),
+  title: z.string().min(1, { error: '제목을 입력해주세요.' }),
 });
 
 export const createFormResponseSchema = createFormRequestSchema.extend({
