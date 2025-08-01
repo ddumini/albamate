@@ -91,7 +91,7 @@ const FloatingButtons = ({ formId }: Props) => {
       ]);
     } catch (error: any) {
       if (error?.response?.status !== 401) {
-        showPopup('요청 중 오류가 발생했습니다.');
+        showPopup('요청 중 오류가 발생했습니다.', 'error');
         console.error(error);
       }
     } finally {

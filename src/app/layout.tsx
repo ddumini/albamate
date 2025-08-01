@@ -8,6 +8,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
+import EditPopup from '@/shared/components/common/popup/EditPopup';
 
 const pretendard = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -44,6 +45,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
               {children}
               <ModalManager />
+              <EditPopup />
             </Providers>
           </ThemeProvider>
         </SessionProvider>
