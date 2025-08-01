@@ -6,8 +6,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log('회원가입 API 호출:', body);
-
     // 사용자 타입에 따라 다른 데이터 구조 생성
     let signUpData;
 
@@ -39,13 +37,8 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    console.log('백엔드로 전송할 데이터:', signUpData);
-
     // 백엔드 API로 회원가입 요청
     const response = await axiosInstance.post('/auth/sign-up', signUpData);
-
-    console.log('백엔드 회원가입 응답 상태:', response.status);
-    console.log('백엔드 회원가입 응답 데이터:', response.data);
 
     if (response.status === 200) {
       return NextResponse.json(response.data, { status: 200 });

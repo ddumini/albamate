@@ -18,6 +18,7 @@ import type {
 import { getAuthPageType } from '@/features/auth/utils/authUtils';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import EditPopup from '@/shared/components/common/popup/EditPopup';
+import { extractAuthErrorMessage } from '@/shared/lib/auth/error-messages';
 
 import AuthFormFields from './AuthFormFields';
 
@@ -100,74 +101,24 @@ const AuthForm = () => {
 
           if (result?.error) {
             console.error('로그인 실패:', result.error);
+            const errorMessage = extractAuthErrorMessage(result);
             setLoginStatus({
               visible: true,
-              message: '이메일 또는 비밀번호가 올바르지 않습니다.',
+              message: errorMessage || '로그인 중 오류가 발생했습니다.',
               type: 'error',
             });
           } else {
-            // 로그인 성공 후 사용자 타입 검증
-            try {
-              // 세션 정보를 가져와서 사용자 역할 확인
-              const sessionResponse = await fetch('/api/auth/session');
-              const sessionData = await sessionResponse.json();
+            // 로그인 성공 처리
+            setLoginStatus({
+              visible: true,
+              message: '로그인되었습니다.',
+              type: 'success',
+            });
 
-              console.log('세션 데이터:', sessionData);
-
-              if (sessionData.user?.role) {
-                const userRole = sessionData.user.role;
-                const expectedRole =
-                  userType === 'owner' ? 'OWNER' : 'APPLICANT';
-
-                console.log('사용자 타입 검증:', {
-                  userRole,
-                  expectedRole,
-                  userType,
-                  isMatch: userRole === expectedRole,
-                });
-
-                if (userRole !== expectedRole) {
-                  // 사용자 타입이 일치하지 않는 경우
-                  const roleText = userType === 'owner' ? '사장님' : '지원자';
-                  const actualRoleText =
-                    userRole === 'OWNER' ? '사장님' : '지원자';
-
-                  setLoginStatus({
-                    visible: true,
-                    message: `${roleText} 전용 페이지입니다. ${actualRoleText} 계정으로 로그인해주세요.`,
-                    type: 'error',
-                  });
-
-                  // 로그아웃 처리
-                  await signIn('credentials', { redirect: false });
-                  return;
-                }
-              }
-
-              // 사용자 타입이 일치하는 경우 성공 처리
-              setLoginStatus({
-                visible: true,
-                message: '로그인되었습니다.',
-                type: 'success',
-              });
-
-              // 성공 메시지 표시 후 잠시 대기 후 리다이렉트
-              setTimeout(() => {
-                router.push('/albalist');
-              }, 1500);
-            } catch (sessionError) {
-              console.error('세션 확인 중 오류:', sessionError);
-              // 세션 확인 실패 시 기본 성공 처리
-              setLoginStatus({
-                visible: true,
-                message: '로그인되었습니다.',
-                type: 'success',
-              });
-
-              setTimeout(() => {
-                router.push('/albalist');
-              }, 1500);
-            }
+            // 성공 메시지 표시 후 잠시 대기 후 리다이렉트
+            setTimeout(() => {
+              router.push('/albalist');
+            }, 1500);
           }
           break;
         }

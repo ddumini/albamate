@@ -1,4 +1,9 @@
-import { type NextAuthConfig, Session, User } from 'next-auth';
+import {
+  CredentialsSignin,
+  type NextAuthConfig,
+  Session,
+  User,
+} from 'next-auth';
 import { type AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
@@ -86,7 +91,8 @@ export const authConfig = {
                 actual: data.user.role,
                 userType,
               });
-              throw new Error('USER_TYPE_MISMATCH');
+              // NextAuth v5 커스텀 에러로 던져야 error 코드가 querystring에 노출됩니다.
+              throw new CredentialsSignin('USER_TYPE_MISMATCH');
             }
           }
 
@@ -107,14 +113,12 @@ export const authConfig = {
         } catch (error) {
           console.error('로그인 중 오류 발생:', error);
 
-          // 사용자 타입 불일치 에러 처리
-          if (
-            error instanceof Error &&
-            error.message === 'USER_TYPE_MISMATCH'
-          ) {
+          // CredentialsSignin 에러는 그대로 전달하여 클라이언트에서 처리할 수 있도록 함
+          if (error instanceof CredentialsSignin) {
             throw error;
           }
 
+          // 기타 에러는 null 반환하여 일반적인 인증 실패로 처리
           return null;
         }
       },
