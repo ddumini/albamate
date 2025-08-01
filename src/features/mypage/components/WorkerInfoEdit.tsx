@@ -131,7 +131,7 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
           label="취소"
           type="button"
           variant="cancelSolid"
-          onClick={() => console.log(errors)}
+          onClick={() => close()}
         />
         <PrimaryButton
           className="w-158 flex-1 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
