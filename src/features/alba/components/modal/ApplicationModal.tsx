@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 
 import useModalStore from '@/shared/store/useModalStore';
 
+import albaApi from '../../api/albaApi';
+
 type FormValues = {
   name: string;
   phone: string;
@@ -29,10 +31,21 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log('입력 데이터:', data);
-    closeModal();
-    router.push(`/myapply/${id}`);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await albaApi().verifyMyApplication(id, {
+        name: data.name,
+        phoneNumber: data.phone,
+        password: data.password,
+      });
+
+      const application = response.data;
+      closeModal();
+      router.push(`/myapply/${id}`);
+    } catch (error) {
+      console.error('인증 실패:', error);
+      alert('지원자 정보를 확인할 수 없습니다.');
+    }
   };
 
   return (
