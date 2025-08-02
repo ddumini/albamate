@@ -3,6 +3,7 @@ import Modal from '@common/modal/Modal';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { usePopupStore } from '@/shared/store/popupStore';
 import useModalStore from '@/shared/store/useModalStore';
@@ -16,9 +17,12 @@ const FormDeleteModal = () => {
   const { formId } = useParams();
   const queryClient = useQueryClient();
   const { showPopup } = usePopupStore();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
+    if (isDeleting) return;
     try {
+      setIsDeleting(true);
       await deleteForm(Number(formId));
       await queryClient.invalidateQueries({ queryKey: ['Albalist'] });
       await queryClient.refetchQueries({ queryKey: ['Albalist'] });
@@ -29,6 +33,8 @@ const FormDeleteModal = () => {
     } catch (error) {
       console.error('폼 삭제 실패:', error);
       showPopup('폼 삭제에 실패했어요!', 'error');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -55,7 +61,8 @@ const FormDeleteModal = () => {
         <div>
           <PrimaryButton
             className="BG-error mt-12 h-58 w-327 rounded-md hover:brightness-90"
-            label="삭제하기"
+            disabled={isDeleting}
+            label={isDeleting ? '삭제 중...' : '삭제하기'}
             type="button"
             variant="cancelSolid"
             onClick={handleDelete}

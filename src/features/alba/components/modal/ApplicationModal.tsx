@@ -52,7 +52,18 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
       closeModal();
       router.push(`/myapply/${id}`);
     } catch (error) {
-      showPopup('지원자 정보를 확인할 수 없습니다.', 'error');
+      if (error instanceof Error && 'response' in error) {
+        const errorResponse = (error as any).response;
+        if (errorResponse?.status === 404) {
+          showPopup('일치하는 지원 정보가 없습니다.', 'error');
+        } else if (errorResponse?.status === 401) {
+          showPopup('비밀번호가 올바르지 않습니다.', 'error');
+        } else {
+          showPopup('지원자 정보를 확인할 수 없습니다.', 'error');
+        }
+      } else {
+        showPopup('네트워크 오류가 발생했습니다.', 'error');
+      }
     }
   };
 
