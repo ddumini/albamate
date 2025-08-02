@@ -15,8 +15,8 @@ import {
   createFormRequestSchema,
 } from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import EditPopup from '@/shared/components/common/popup/EditPopup';
 import useViewport from '@/shared/hooks/useViewport';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import AddformButtons from './AddformButtons';
 import { Menu } from './MenuItem';
@@ -36,8 +36,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
 
-  const [visible, setVisible] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const { showPopup } = usePopupStore();
 
   const { isDesktop } = useViewport();
 
@@ -96,8 +95,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
         );
       });
       setUploadedImageUrls(imageUrls);
-      setMessage('임시 저장한 데이터를 가져왔습니다.');
-      setVisible(true);
+      showPopup('임시 저장한 데이터를 가져왔습니다', 'success');
     }
   }, [setValue]);
 
@@ -148,8 +146,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
         imageUrls,
       };
       localStorage.setItem('addform-draft', JSON.stringify(draft));
-      setMessage('알바폼이 임시 저장되었습니다');
-      setVisible(true);
+      showPopup('알바폼이 임시 저장되었습니다.', 'success');
     } catch (error) {
       console.error('임시 저장 중 오류 발생:', error);
     }
@@ -217,13 +214,6 @@ const AddformClient = ({ formId }: { formId?: string }) => {
           )}
         </div>
       </div>
-      <EditPopup
-        message={message}
-        visible={visible}
-        onClose={() => {
-          setVisible(false);
-        }}
-      />
     </FormProvider>
   );
 };

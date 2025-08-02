@@ -31,6 +31,28 @@ export const useAddformMutation = () => {
   });
 };
 
+export const useEditformMutation = () => {
+  const { editAddform } = useAddformApi();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: (form: CreateFormRequest) => editAddform(form),
+    onSuccess: response => {
+      const parseResponse = createFormResponseSchema.safeParse(response.data);
+      if (!parseResponse.success) {
+        console.error(
+          '서버 응답 데이터 Zod 유효성 검사 실패',
+          parseResponse.error
+        );
+        return;
+      }
+      router.push(`/alba/${parseResponse.data.id}`);
+    },
+    onError: error => {
+      console.error('폼 제출 실패', error);
+    },
+  });
+};
+
 export const useImageMutation = () => {
   const { uploadImage } = useAddformApi();
   return useMutation({
