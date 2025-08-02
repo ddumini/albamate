@@ -4,8 +4,8 @@
  * @returns - 고유한 새로운 파일 이름 (확장자 포함)
  */
 export const generateUniqueFileName = (originalFile: File): string => {
-  const fileExtension = originalFile.name.split('.').pop();
-  const uniquePart = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+  const fileExtension = originalFile.name.split('.').pop() || '';
+  const uniquePart = `${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
-  return `${uniquePart}.${fileExtension}`;
+  return fileExtension ? `${uniquePart}.${fileExtension}` : uniquePart;
 };

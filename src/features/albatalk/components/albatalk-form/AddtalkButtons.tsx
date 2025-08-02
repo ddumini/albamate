@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
@@ -32,16 +31,14 @@ const AddtalkButtons = ({
 
   return (
     <div className={cn('flex flex-col gap-8 md:flex-row lg:gap-12', className)}>
-      <Link href="/albatalk">
-        <PrimaryButton
-          className="h-58 w-full md:h-46 md:w-108 lg:h-58 lg:w-180"
-          disabled={isSubmitting}
-          label="취소"
-          type="button"
-          variant="cancelSolid"
-          onClick={handleCancel}
-        />
-      </Link>
+      <PrimaryButton
+        className="h-58 w-full md:h-46 md:w-108 lg:h-58 lg:w-180"
+        disabled={isSubmitting}
+        label="취소"
+        type="button"
+        variant="cancelSolid"
+        onClick={handleCancel}
+      />
       <PrimaryButton
         className="h-58 w-full md:h-46 md:w-108 lg:h-58 lg:w-180"
         label={label}

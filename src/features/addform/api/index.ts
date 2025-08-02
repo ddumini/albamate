@@ -6,11 +6,11 @@ import {
   CreateFormRequest,
   CreateFormResponse,
 } from '@/features/addform/schema/addform.schema';
-import { axiosInstance } from '@/shared/lib/axios';
+import { useAxiosWithAuth } from '@/shared/lib/axios';
 import { generateUniqueFileName } from '@/shared/utils/generateUniqueFileName';
 
 export const useAddformApi = () => {
-  const authAxios = axiosInstance;
+  const authAxios = useAxiosWithAuth();
 
   return {
     postAddform: (
