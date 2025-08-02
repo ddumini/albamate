@@ -25,7 +25,7 @@ export const useApplicantMyAlbalistQuery = (
   params: ApplicantQueryParams = { limit: 10 }
 ) => {
   const { data: session, status } = useSession();
-  const { isApplicant } = useSessionUtils();
+  const { isApplicant, isAuthenticated } = useSessionUtils();
 
   return useQuery({
     queryKey: ['applicantMyAlbalist', params],
@@ -80,6 +80,7 @@ export const useApplicantMyAlbalistQuery = (
     retryDelay: 1000,
     enabled:
       status === 'authenticated' &&
+      isAuthenticated &&
       !!(session as any)?.accessToken &&
       isApplicant,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
@@ -93,7 +94,7 @@ export const useOwnerMyAlbalistQuery = (
   params: OwnerQueryParams = { limit: 10 }
 ) => {
   const { data: session, status } = useSession();
-  const { isOwner } = useSessionUtils();
+  const { isOwner, isAuthenticated } = useSessionUtils();
 
   return useQuery({
     queryKey: ['ownerMyAlbalist', params],
@@ -147,7 +148,10 @@ export const useOwnerMyAlbalistQuery = (
     retry: 1,
     retryDelay: 1000,
     enabled:
-      status === 'authenticated' && !!(session as any)?.accessToken && isOwner,
+      status === 'authenticated' &&
+      isAuthenticated &&
+      !!(session as any)?.accessToken &&
+      isOwner,
     staleTime: 30000, // 30초 동안 데이터를 신선하다고 간주
     gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
     refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리페치 비활성화
