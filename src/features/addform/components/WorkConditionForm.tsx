@@ -5,6 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import Checkbox from '@/shared/components/common/button/Checkbox';
 import DatePicker from '@/shared/components/common/date-picker';
+import AddressSearchModal from '@/shared/components/common/input/AddressSearchModal';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import IconInput from '@/shared/components/common/input/IconInput';
 import Input from '@/shared/components/common/input/Input';
@@ -35,12 +36,28 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
         <Label isRequired htmlFor="location">
           근무 위치
         </Label>
-        <IconInput
-          alt="근무 위치"
-          id="location"
-          placeholder="위치를 입력해주세요."
-          src="/icons/pin-stroke.svg"
-          {...register('location')}
+        <Controller
+          control={control}
+          name="location"
+          render={({ field }) => (
+            <AddressSearchModal
+              currentAddress={field.value}
+              onAddressSelect={address => {
+                field.onChange(address);
+              }}
+            >
+              <IconInput
+                readOnly
+                alt="주소 검색"
+                className="w-full"
+                iconClassName="cursor-pointer"
+                inputClassName="cursor-pointer"
+                placeholder="주소를 검색해주세요"
+                src="/icons/pin-solid.svg"
+                value={field.value ?? ''}
+              />
+            </AddressSearchModal>
+          )}
         />
       </AddFormSection>
       <AddFormSection>
