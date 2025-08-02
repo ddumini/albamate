@@ -57,16 +57,18 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
         <Controller
           control={control}
           name="numberOfPositions"
-          render={({ field }) => (
-            <InputDropdown
-              defaultValue={field.value ? String(field.value) : undefined}
-              name="numberOfPositions"
-              options={numberOfPositionsOptions}
-              onChange={value => {
-                field.onChange(parseInt(value));
-              }}
-            />
-          )}
+          render={({ field }) => {
+            return (
+              <InputDropdown
+                name="numberOfPositions"
+                options={numberOfPositionsOptions}
+                value={field.value ? String(field.value) : undefined}
+                onChange={value => {
+                  field.onChange(parseInt(value));
+                }}
+              />
+            );
+          }}
         />
         <ErrorMessage
           isVisible={!!errors.numberOfPositions}
@@ -82,9 +84,9 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="gender"
           render={({ field }) => (
             <InputDropdown
-              defaultValue={field.value ? String(field.value) : undefined}
               name="gender"
               options={genderOptions}
+              value={field.value ? String(field.value) : undefined}
               onChange={field.onChange}
             />
           )}
@@ -103,9 +105,9 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="education"
           render={({ field }) => (
             <InputDropdown
-              defaultValue={field.value ? String(field.value) : undefined}
               name="education"
               options={educationOptions}
+              value={field.value ? String(field.value) : undefined}
               onChange={field.onChange}
             />
           )}
@@ -124,9 +126,9 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="age"
           render={({ field }) => (
             <InputDropdown
-              defaultValue={field.value ? String(field.value) : undefined}
               name="age"
               options={ageOptions}
+              value={field.value ? String(field.value) : undefined}
               onChange={field.onChange}
             />
           )}
@@ -142,9 +144,9 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="preferred"
           render={({ field }) => (
             <InputDropdown
-              defaultValue={field.value ? String(field.value) : undefined}
               name="preferred"
               options={preferredOptions}
+              value={field.value ? String(field.value) : undefined}
               onChange={field.onChange}
             />
           )}

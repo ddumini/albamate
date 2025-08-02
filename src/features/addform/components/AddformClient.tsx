@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAddformWritingMenu } from '@/features/addform/hooks';
@@ -10,8 +10,12 @@ import {
   useAddformMutation,
   useImageMutation,
 } from '@/features/addform/queries/mutations';
-import { createFormRequestSchema } from '@/features/addform/schema/addform.schema';
+import {
+  CreateFormRequest,
+  createFormRequestSchema,
+} from '@/features/addform/schema/addform.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import EditPopup from '@/shared/components/common/popup/EditPopup';
 import useViewport from '@/shared/hooks/useViewport';
 
 import AddformButtons from './AddformButtons';
@@ -30,6 +34,10 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     workCondition: false,
   });
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
+
+  const [visible, setVisible] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const { isDesktop } = useViewport();
 
@@ -71,7 +79,27 @@ const AddformClient = ({ formId }: { formId?: string }) => {
 
   const {
     formState: { dirtyFields },
+    setValue,
+    getValues,
   } = methods;
+
+  useEffect(() => {
+    const draft = localStorage.getItem('addform-draft');
+    if (draft) {
+      const parsed = JSON.parse(draft);
+      const { imageUrls, ...formValues } = parsed;
+      Object.entries(formValues).forEach(([key, value]) => {
+        setValue(
+          key as keyof CreateFormRequest,
+          value as CreateFormRequest[keyof CreateFormRequest],
+          { shouldDirty: true, shouldValidate: true }
+        );
+      });
+      setUploadedImageUrls(imageUrls);
+      setMessage('임시 저장한 데이터를 가져왔습니다.');
+      setVisible(true);
+    }
+  }, [setValue]);
 
   useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
@@ -85,11 +113,13 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       const results = await Promise.all(
         currentFiles.map(file => imageMutate(file))
       );
-      methods.setValue(
-        'imageUrls',
-        results.map(result => result.data.url)
-      );
-      addformMutate(methods.getValues());
+      const imageUrls = [
+        ...uploadedImageUrls,
+        ...results.map(result => result.data.url),
+      ];
+      setValue('imageUrls', imageUrls);
+      localStorage.removeItem('addform-draft');
+      addformMutate(getValues());
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
     }
@@ -103,6 +133,28 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     setCurrentFiles(files);
   };
 
+  const handleSave = async () => {
+    try {
+      const results = await Promise.all(
+        currentFiles.map(file => imageMutate(file))
+      );
+      const imageUrls = [
+        ...uploadedImageUrls,
+        ...results.map(result => result.data.url),
+      ];
+      const values = getValues();
+      const draft = {
+        ...values,
+        imageUrls,
+      };
+      localStorage.setItem('addform-draft', JSON.stringify(draft));
+      setMessage('알바폼이 임시 저장되었습니다');
+      setVisible(true);
+    } catch (error) {
+      console.error('임시 저장 중 오류 발생:', error);
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
@@ -114,6 +166,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             isSubmitting={isImagePending || isAddformPending}
             writingMenu={writingMenu}
             onMenuClick={handleMenuClick}
+            onSave={handleSave}
             onSubmit={handleSubmit}
           />
         )}
@@ -142,6 +195,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
           <form>
             <RecruitContentForm
               className={currentMenu === 'recruitContent' ? '' : 'hidden'}
+              setUploadedImageUrls={setUploadedImageUrls}
+              uploadedImageUrls={uploadedImageUrls}
               onImageChange={handleImageChange}
             />
             <RecruitConditionForm
@@ -156,11 +211,19 @@ const AddformClient = ({ formId }: { formId?: string }) => {
               className="mx-24 my-10"
               isEdit={!!formId}
               isSubmitting={isImagePending || isAddformPending}
+              onSave={handleSave}
               onSubmit={handleSubmit}
             />
           )}
         </div>
       </div>
+      <EditPopup
+        message={message}
+        visible={visible}
+        onClose={() => {
+          setVisible(false);
+        }}
+      />
     </FormProvider>
   );
 };
