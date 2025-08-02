@@ -6,10 +6,8 @@ import {
   CreateFormRequest,
   CreateFormResponse,
 } from '@/features/addform/schema/addform.schema';
-
-import { generateUniqueFileName } from '@/shared/utils/generateUniqueFileName';
 import { axiosInstance } from '@/shared/lib/axios';
-
+import { generateUniqueFileName } from '@/shared/utils/generateUniqueFileName';
 
 export const useAddformApi = () => {
   const authAxios = axiosInstance;
@@ -20,10 +18,14 @@ export const useAddformApi = () => {
     ): Promise<AxiosResponse<CreateFormResponse>> => {
       return authAxios.post('/forms', form);
     },
-    editAddform: (
-      form: CreateFormRequest
-    ): Promise<AxiosResponse<CreateFormResponse>> => {
-      return authAxios.patch('/forms', form);
+    editAddform: ({
+      formId,
+      form,
+    }: {
+      formId: number;
+      form: CreateFormRequest;
+    }): Promise<AxiosResponse<CreateFormResponse>> => {
+      return authAxios.patch(`/forms/${formId}`, form);
     },
     uploadImage: (file: File): Promise<AxiosResponse<{ url: string }>> => {
       const formData = new FormData();
