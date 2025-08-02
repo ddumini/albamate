@@ -4,6 +4,8 @@ import ListWrapper from '@common/list/ListWrapper';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
+import EmptyCard from '@/shared/components/common/EmptyCard';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { cn } from '@/shared/lib/cn';
 
 import {
@@ -31,6 +33,7 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] = useState('');
+  const [isInitialLoad, setIsInitialLoad] = useState(true); // 초기 로딩 상태 추가
 
   // 디바운스된 검색어 업데이트
   useEffect(() => {
@@ -59,6 +62,7 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   const {
     data: applicantData,
     isLoading: isApplicantLoading,
+    isFetching: isApplicantFetching,
     error: applicantError,
   } = useApplicantMyAlbalistQuery(
     userRole === 'APPLICANT'
@@ -71,17 +75,27 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   const {
     data: ownerData,
     isLoading: isOwnerLoading,
+    isFetching: isOwnerFetching,
     error: ownerError,
   } = useOwnerMyAlbalistQuery(
     userRole === 'OWNER' ? (apiParams as OwnerQueryParams) : { limit: 10 },
     userRole
   );
 
-  // 현재 사용자 역할에 맞는 데이터 선택
+  // 현재 사용자 역할에 맞는 상태 선택
   const currentData = userRole === 'OWNER' ? ownerData : applicantData;
   const isLoadingData =
     userRole === 'OWNER' ? isOwnerLoading : isApplicantLoading;
+  const isFetchingData =
+    userRole === 'OWNER' ? isOwnerFetching : isApplicantFetching;
   const error = userRole === 'OWNER' ? ownerError : applicantError;
+
+  // 초기 로딩 완료 감지
+  useEffect(() => {
+    if (!isLoadingData && isInitialLoad) {
+      setIsInitialLoad(false);
+    }
+  }, [isLoadingData, isInitialLoad]);
 
   // 필터 변경 핸들러
   const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
@@ -116,19 +130,29 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   }
 
   const renderContent = () => {
-    if (isLoadingData) {
+    // 초기 로딩 중이거나 데이터를 가져오는 중일 때
+    if (isLoadingData || isFetchingData) {
       return (
         <div className="flex min-h-[60vh] items-center justify-center">
-          <div>데이터를 불러오는 중...</div>
+          <LoadingSpinner size="lg" />
         </div>
       );
     }
 
-    if (items.length === 0) {
-      return (
-        <div className="flex min-h-[60vh] items-center justify-center">
-          <div>등록된 알바가 없습니다.</div>
-        </div>
+    // 데이터가 없고 로딩도 완료된 경우에만 EmptyCard 표시
+    if (!currentData || items.length === 0) {
+      return userRole === 'APPLICANT' ? (
+        <EmptyCard
+          description="알바폼을 둘러보고 지원해보세요!"
+          title="지원한 알바폼이 없어요."
+          type="albaList"
+        />
+      ) : (
+        <EmptyCard
+          description="1분 만에 등록하고 알바를 구해보세요!"
+          title="등록된 알바폼이 없어요."
+          type="albaList"
+        />
       );
     }
 
