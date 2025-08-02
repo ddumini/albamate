@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { cn } from '@/shared/lib/cn';
 
 import TimeSelect from './TimeSelect';
@@ -25,21 +23,16 @@ import TimeSelect from './TimeSelect';
 
 interface TimePickerProps {
   className?: string;
-  defaultValue?: { workStartTime: string; workEndTime: string };
+  value?: { workStartTime: string; workEndTime: string };
   onChange?: (range: {
     workStartTime: string | null;
     workEndTime: string | null;
   }) => void;
 }
 
-const TimePicker = ({ className, defaultValue, onChange }: TimePickerProps) => {
-  const [startTime, setStartTime] = useState<string | null>(
-    defaultValue?.workStartTime || null
-  );
-  const [endTime, setEndTime] = useState<string | null>(
-    defaultValue?.workEndTime || null
-  );
-
+const TimePicker = ({ className, value, onChange }: TimePickerProps) => {
+  const startTime = value?.workStartTime || null;
+  const endTime = value?.workEndTime || null;
   // 표시용 값 (선택되지 않았으면 '00:00', 선택되었으면 실제 값)
   const displayStartTime = startTime || '00:00';
   const displayEndTime = endTime || '00:00';
@@ -49,12 +42,10 @@ const TimePicker = ({ className, defaultValue, onChange }: TimePickerProps) => {
   const isEndTimeSelected = endTime !== null;
 
   const handleStartTimeChange = (value: string) => {
-    setStartTime(value);
     onChange?.({ workStartTime: value, workEndTime: endTime });
   };
 
   const handleEndTimeChange = (value: string) => {
-    setEndTime(value);
     onChange?.({ workStartTime: startTime, workEndTime: value });
   };
 

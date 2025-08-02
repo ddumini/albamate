@@ -1,8 +1,8 @@
-import { axiosInstance, useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 
 // 이미지 업로드
 export const useUploadImage = () => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return {
     getImageUrl: (file: File) => {

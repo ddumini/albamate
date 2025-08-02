@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 
 interface PaginationParams {
   limit?: number;
@@ -15,7 +15,7 @@ interface AlbaFilterParams extends PaginationParams {
 }
 
 const useAlbaListApi = () => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   // 알바 리스트 조회
   const getAlbas = useCallback(

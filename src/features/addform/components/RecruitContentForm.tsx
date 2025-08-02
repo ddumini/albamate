@@ -1,5 +1,6 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
@@ -12,7 +13,17 @@ import { cn } from '@/shared/lib/cn';
 
 import AddFormSection from './AddFormSection';
 
-const RecruitContentForm = ({ className }: { className?: string }) => {
+const RecruitContentForm = ({
+  className,
+  onImageChange,
+  uploadedImageUrls,
+  setUploadedImageUrls,
+}: {
+  className?: string;
+  onImageChange: (files: File[]) => void;
+  uploadedImageUrls: string[];
+  setUploadedImageUrls: Dispatch<SetStateAction<string[]>>;
+}) => {
   const {
     register,
     control,
@@ -63,7 +74,7 @@ const RecruitContentForm = ({ className }: { className?: string }) => {
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
@@ -82,7 +93,12 @@ const RecruitContentForm = ({ className }: { className?: string }) => {
       </AddFormSection>
       <AddFormSection>
         <Label htmlFor="uploadImage">이미지 첨부</Label>
-        <UploadMultipleImage id="uploadImage" onImageChange={() => {}} />
+        <UploadMultipleImage
+          id="uploadImage"
+          setUploadedImageUrls={setUploadedImageUrls}
+          uploadedImageUrls={uploadedImageUrls}
+          onImageChange={onImageChange}
+        />
       </AddFormSection>
     </div>
   );

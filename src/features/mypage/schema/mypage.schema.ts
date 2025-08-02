@@ -8,7 +8,7 @@ export const createWorkerSchema = z.object({
     .string()
     .min(1, '연락처는 필수입니다.')
     .regex(/^[0-9]+$/, '숫자만 입력해주세요.'),
-  imageUrl: z.string().optional(), // 이미지 필드는 useState로 관리
+  imageUrl: z.string().optional().nullable(), // 이미지 필드는 useState로 관리
 });
 
 export type UpdateWorkerMyProfile = z.infer<typeof createWorkerSchema>;
@@ -29,7 +29,7 @@ export const createOwnerSchema = z.object({
       message: '숫자만 입력해주세요.',
     }),
   location: z.string().min(1, '가게 위치는 필수입니다.'),
-  imageUrl: z.string().optional(), // 프로필 이미지 업로드 후 별도로 다룸
+  imageUrl: z.string().optional().nullable(), // 프로필 이미지 업로드 후 별도로 다룸
 });
 
 export type UpdateOwnerMyProfile = z.infer<typeof createOwnerSchema>;

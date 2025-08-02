@@ -1,23 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-
 import DayCheckbox from '@/shared/components/ui/DayCheckbox';
 
 interface WeekPickerProps {
-  defaultValue?: string[];
+  value?: string[];
   onChange?: (value: string[]) => void;
 }
 
-const WeekPicker = ({ defaultValue = [], onChange }: WeekPickerProps) => {
-  const [selectedDays, setSelectedDays] = useState<string[]>(defaultValue);
+const WeekPicker = ({ value = [], onChange }: WeekPickerProps) => {
+  const selectedDays = value;
 
   const handleDayChange = (checked: boolean, value: string) => {
     const newSelectedDays = checked
       ? [...selectedDays, value]
       : selectedDays.filter(day => day !== value);
-    setSelectedDays(newSelectedDays);
-    onChange?.(newSelectedDays);
+    const sortedDays = weekDays.filter(day => newSelectedDays.includes(day));
+    onChange?.(sortedDays);
   };
 
   const weekDays = ['월', '화', '수', '목', '금', '토', '일'];

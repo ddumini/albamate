@@ -3,6 +3,8 @@ import {
   FieldValues,
   Path,
   UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
 } from 'react-hook-form';
 
 import type { FormField } from '../constants/formFields';
@@ -13,7 +15,9 @@ interface AuthFormFieldsProps<T extends FieldValues> {
   fields: FormField[];
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
-  defaultValues?: Record<string, string>; // 선택적 prop으로 변경
+  defaultValues?: Record<string, string>;
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
 }
 
 /**
@@ -36,6 +40,8 @@ const AuthFormFields = <T extends FieldValues>({
   register,
   errors,
   defaultValues,
+  setValue,
+  watch,
 }: AuthFormFieldsProps<T>) => {
   const typedFields = createTypedFormFields<T>(fields);
 
@@ -50,10 +56,13 @@ const AuthFormFields = <T extends FieldValues>({
         <AuthFormItem<T>
           key={field.name}
           errors={errors}
+          field={field}
           label={field.label}
           name={field.name as Path<T>}
           register={register}
+          setValue={setValue}
           type={field.type}
+          watch={watch}
         />
       ))}
     </>

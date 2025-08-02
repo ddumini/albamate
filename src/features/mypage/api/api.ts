@@ -1,4 +1,4 @@
-import { useAxiosWithAuth } from '@/shared/lib/axios';
+import { axiosInstance } from '@/shared/lib/axios';
 import { EditPassword, PostApi, ScrapApi } from '@/shared/types/mypage';
 
 import {
@@ -7,7 +7,7 @@ import {
 } from '../schema/mypage.schema';
 
 const useMyPageApi = () => {
-  const authAxios = useAxiosWithAuth();
+  const authAxios = axiosInstance;
 
   return {
     // 내 정보 조회

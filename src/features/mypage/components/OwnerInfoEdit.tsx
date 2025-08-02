@@ -21,7 +21,10 @@ interface OwnerInfoEditProps {
 }
 
 const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
-  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(
+    userInfo?.imageUrl ?? undefined
+  );
+  const [imageFile, setImageFile] = useState<File>();
   const {
     register,
     handleSubmit,
@@ -44,30 +47,29 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   const api = useUploadImage();
 
   const handleImageChange = async (file: File) => {
+    setImageFile(file);
+  };
+
+  const onSubmit = async (data: UpdateOwnerMyProfile) => {
+    let finalImageUrl = imageUrl ?? null;
     try {
-      const response = await api.getImageUrl(file);
-      const uploadUrl = response.url;
-      setImageUrl(uploadUrl);
+      if (imageFile) {
+        const response = await api.getImageUrl(imageFile);
+        finalImageUrl = response.url;
+      }
     } catch (error) {
       alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
       console.error(error);
     }
-  };
-
-  const onSubmit = (data: UpdateOwnerMyProfile) => {
     updateProfile.mutate(
-      {
-        ...data,
-        imageUrl,
-        name: userInfo.name,
-      },
+      { ...data, imageUrl: finalImageUrl },
       {
         onSuccess: () => {
           alert('프로필이 성공적으로 수정되었습니다.');
           close();
         },
         onError: error => {
-          alert('수정 중 오류가 발생했습니다');
+          alert('수정 중 오류가 발생했습니다.');
           console.error(error);
         },
       }

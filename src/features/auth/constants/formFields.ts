@@ -1,10 +1,17 @@
+import {
+  applicantAccountInfoSchema,
+  applicantSignupSchema,
+  ownerAccountInfoSchema,
+  ownerSignupSchema,
+  signInSchema,
+} from '../schema/auth.schema';
 import type { AuthPageType, UserType } from '../types';
 
 // 폼 필드 타입 정의
 export interface FormField {
   name: string;
   label: string;
-  type: 'text' | 'email' | 'password' | 'tel' | 'number';
+  type: 'text' | 'email' | 'password' | 'tel' | 'number' | 'image' | 'address';
   required?: boolean;
   placeholder?: string;
 }
@@ -13,7 +20,7 @@ export interface FormField {
 export interface FormConfig {
   fields: FormField[];
   defaultValues: Record<string, string>;
-  validationSchema: Record<string, { required: string }>;
+  validationSchema: any; // Zod 스키마로 변경
 }
 
 /**
@@ -37,9 +44,9 @@ const SIGNIN_FIELDS: FormField[] = [
 ];
 
 /**
- * 회원가입 폼 필드 구성
+ * 지원자 회원가입 폼 필드 구성
  */
-const SIGNUP_FIELDS: FormField[] = [
+const APPLICANT_SIGNUP_FIELDS: FormField[] = [
   {
     name: 'email',
     label: '이메일',
@@ -55,45 +62,65 @@ const SIGNUP_FIELDS: FormField[] = [
     placeholder: '비밀번호를 입력해주세요',
   },
   {
-    name: 'confirmPassword',
+    name: 'passwordConfirmation',
     label: '비밀번호 확인',
     type: 'password',
     required: true,
     placeholder: '비밀번호를 다시 입력해주세요',
   },
+];
+
+/**
+ * 사장님 회원가입 폼 필드 구성
+ */
+const OWNER_SIGNUP_FIELDS: FormField[] = [
   {
-    name: 'name',
-    label: '이름',
-    type: 'text',
+    name: 'email',
+    label: '이메일',
+    type: 'email',
     required: true,
-    placeholder: '이름을 입력해주세요',
+    placeholder: '이메일을 입력해주세요',
   },
   {
-    name: 'nickname',
-    label: '닉네임',
-    type: 'text',
+    name: 'password',
+    label: '비밀번호',
+    type: 'password',
     required: true,
-    placeholder: '닉네임을 입력해주세요',
+    placeholder: '비밀번호를 입력해주세요',
   },
   {
-    name: 'phoneNumber',
-    label: '전화번호',
-    type: 'tel',
+    name: 'passwordConfirmation',
+    label: '비밀번호 확인',
+    type: 'password',
     required: true,
-    placeholder: '전화번호를 입력해주세요',
+    placeholder: '비밀번호를 다시 입력해주세요',
   },
 ];
 
 /**
- * 지원자 계정 정보 폼 필드 구성
+ * 지원자 계정 정보 폼 필드 구성 (회원가입 두 번째 단계)
  */
 const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
   {
+    name: 'imageUrl',
+    label: '프로필 이미지',
+    type: 'image',
+    required: false,
+    placeholder: '프로필 이미지를 선택해주세요',
+  },
+  {
     name: 'name',
     label: '이름',
     type: 'text',
     required: true,
     placeholder: '이름을 입력해주세요',
+  },
+  {
+    name: 'phoneNumber',
+    label: '연락처',
+    type: 'tel',
+    required: true,
+    placeholder: '연락처를 입력해주세요',
   },
   {
     name: 'nickname',
@@ -102,40 +129,46 @@ const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
     required: true,
     placeholder: '닉네임을 입력해주세요',
   },
-  {
-    name: 'phoneNumber',
-    label: '전화번호',
-    type: 'tel',
-    required: true,
-    placeholder: '전화번호를 입력해주세요',
-  },
-  {
-    name: 'location',
-    label: '위치',
-    type: 'text',
-    required: true,
-    placeholder: '위치를 입력해주세요',
-  },
 ];
 
 /**
- * 사장님 계정 정보 폼 필드 구성
+ * 사장님 계정 정보 폼 필드 구성 (회원가입 두 번째 단계)
  */
 const OWNER_ACCOUNT_FIELDS: FormField[] = [
-  ...APPLICANT_ACCOUNT_FIELDS, // 공통 필드
   {
-    name: 'storeName',
-    label: '매장명',
+    name: 'nickname',
+    label: '닉네임',
     type: 'text',
     required: true,
-    placeholder: '매장명을 입력해주세요',
+    placeholder: '닉네임을 입력해주세요',
+  },
+  {
+    name: 'storeName',
+    label: '가게 이름',
+    type: 'text',
+    required: true,
+    placeholder: '가게 이름을 입력해주세요',
   },
   {
     name: 'storePhoneNumber',
-    label: '매장 전화번호',
+    label: '가게 전화번호',
     type: 'tel',
     required: true,
-    placeholder: '매장 전화번호를 입력해주세요',
+    placeholder: '가게 전화번호를 입력해주세요',
+  },
+  {
+    name: 'ownerPhoneNumber',
+    label: '사장님 전화번호',
+    type: 'tel',
+    required: false,
+    placeholder: '사장님 전화번호를 입력해주세요 (선택사항)',
+  },
+  {
+    name: 'location',
+    label: '가게 위치',
+    type: 'address',
+    required: true,
+    placeholder: '가게 위치를 입력해주세요',
   },
 ];
 
@@ -160,7 +193,9 @@ export const getFormFields = (
     case 'signin':
       return SIGNIN_FIELDS;
     case 'signup':
-      return SIGNUP_FIELDS;
+      return userType === 'owner'
+        ? OWNER_SIGNUP_FIELDS
+        : APPLICANT_SIGNUP_FIELDS;
     case 'accountInfo':
       return userType === 'owner'
         ? OWNER_ACCOUNT_FIELDS
@@ -185,6 +220,7 @@ export const getFormDefaultValues = (
   const defaultValues: Record<string, string> = {};
 
   fields.forEach(field => {
+    // 이미지 필드는 빈 문자열로 설정 (null 대신)
     defaultValues[field.name] = '';
   });
 
@@ -192,7 +228,7 @@ export const getFormDefaultValues = (
 };
 
 /**
- * 폼 유효성 검사 스키마를 생성하는 함수
+ * 폼 유효성 검사 스키마를 생성하는 함수 (Zod 스키마 사용)
  *
  * @example
  * const validationSchema = getFormValidationSchema('signin');
@@ -201,19 +237,19 @@ export const getFormDefaultValues = (
 export const getFormValidationSchema = (
   pageType: AuthPageType,
   userType?: UserType
-): Record<string, { required: string }> => {
-  const fields = getFormFields(pageType, userType);
-  const validationSchema: Record<string, { required: string }> = {};
-
-  fields.forEach(field => {
-    if (field.required) {
-      validationSchema[field.name] = {
-        required: `${field.label}을(를) 입력해주세요.`,
-      };
-    }
-  });
-
-  return validationSchema;
+): any => {
+  switch (pageType) {
+    case 'signin':
+      return signInSchema;
+    case 'signup':
+      return userType === 'owner' ? ownerSignupSchema : applicantSignupSchema;
+    case 'accountInfo':
+      return userType === 'owner'
+        ? ownerAccountInfoSchema
+        : applicantAccountInfoSchema;
+    default:
+      return {};
+  }
 };
 
 /**
