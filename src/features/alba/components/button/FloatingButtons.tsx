@@ -8,16 +8,17 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
 import { useAuthSession } from '@/features/auth';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 interface Props {
-  onToggleOwner: () => void;
   formId: number;
 }
 
-const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
+const FloatingButtons = ({ formId }: Props) => {
   const { isAuthenticated, refreshSession } = useAuthSession();
   const { scrapAlba, cancelScrapAlba } = useAlbaListApi();
   const queryClient = useQueryClient();
+  const { showPopup } = usePopupStore();
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,13 +60,13 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
         // 스크랩 취소
         await cancelScrapAlba(formId);
         setIsBookmarked(false);
-        alert('스크랩을 취소했어요.');
+        showPopup('스크랩을 취소했어요.', 'error');
       } else {
         // 스크랩 시도
         try {
           await scrapAlba(formId);
           setIsBookmarked(true);
-          alert('스크랩했어요!');
+          showPopup('스크랩했어요!', 'success');
         } catch (error) {
           if (
             error instanceof Error &&
@@ -76,7 +77,7 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
             // 실제로는 이미 스크랩된 상태이므로 취소 동작 수행
             await cancelScrapAlba(formId);
             setIsBookmarked(false);
-            alert('스크랩을 취소했어요.');
+            showPopup('스크랩을 취소했어요.', 'error');
           } else {
             throw error;
           }
@@ -90,7 +91,7 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
       ]);
     } catch (error: any) {
       if (error?.response?.status !== 401) {
-        alert('요청 중 오류가 발생했습니다.');
+        showPopup('요청 중 오류가 발생했습니다.', 'error');
         console.error(error);
       }
     } finally {
@@ -115,7 +116,6 @@ const FloatingButtons = ({ onToggleOwner, formId }: Props) => {
         onClick={handleBookmarkToggle}
       />
       <FloatingButton type="share" />
-      <FloatingButton type="addAlbatalk" onClick={onToggleOwner} />
     </FloatingButtonContainer>
   );
 };

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import { cn } from '@/shared/lib/cn';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import { useDeleteAlbatalk } from '../../hooks/useAlbatalk';
 
@@ -20,14 +21,15 @@ const AlbatalkCardHeader = ({
   className,
   titleClassName,
 }: AlbatalkHeaderProps) => {
-  const router = useRouter();
 
+  const router = useRouter();
   const deleteMutation = useDeleteAlbatalk();
 
   const handleActionClick = async (option: string) => {
     if (option === 'edit') {
       // 수정 페이지로 이동
       router.push(`/addtalk?albatalkId=${albatalkId}`);
+      
     } else if (option === 'delete') {
       const isConfirmed = window.confirm('정말 이 게시글을 삭제하시겠습니까?');
 

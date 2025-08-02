@@ -7,7 +7,11 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { usePopupStore } from '@/shared/store/popupStore';
+import useApplicationStore from '@/shared/store/useApplicationStore';
 import useModalStore from '@/shared/store/useModalStore';
+
+import albaApi from '../../api/albaApi';
 
 type FormValues = {
   name: string;
@@ -22,6 +26,8 @@ interface ApplicationModalProps {
 const ApplicationModal = ({ id }: ApplicationModalProps) => {
   const { closeModal } = useModalStore();
   const router = useRouter();
+  const { setGuestApplication, setGuestMode } = useApplicationStore(); // Zustand hooks
+  const { showPopup } = usePopupStore();
 
   const {
     register,
@@ -29,10 +35,36 @@ const ApplicationModal = ({ id }: ApplicationModalProps) => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log('입력 데이터:', data);
-    closeModal();
-    router.push(`/myapply/${id}`);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await albaApi().verifyMyApplication(id, {
+        name: data.name,
+        phoneNumber: data.phone,
+        password: data.password,
+      });
+
+      const application = response.data;
+
+      // Zustand에 저장
+      setGuestApplication(application);
+      setGuestMode(true);
+
+      closeModal();
+      router.push(`/myapply/${id}`);
+    } catch (error) {
+      if (error instanceof Error && 'response' in error) {
+        const errorResponse = (error as any).response;
+        if (errorResponse?.status === 404) {
+          showPopup('일치하는 지원 정보가 없습니다.', 'error');
+        } else if (errorResponse?.status === 401) {
+          showPopup('비밀번호가 올바르지 않습니다.', 'error');
+        } else {
+          showPopup('지원자 정보를 확인할 수 없습니다.', 'error');
+        }
+      } else {
+        showPopup('네트워크 오류가 발생했습니다.', 'error');
+      }
+    }
   };
 
   return (

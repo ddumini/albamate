@@ -1,9 +1,11 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 
+import albaApi from '@/features/alba/api/albaApi';
 import Tooltip from '@/shared/components/common/tooltip/Tooltip';
 import {
   getExperienceLabel,
@@ -11,20 +13,51 @@ import {
   getStatusLabel,
 } from '@/shared/utils/application';
 
-import { mockApplications } from '../mocks/mockApplicationData';
+interface Applicant {
+  id: number;
+  applicantId: number;
+  name: string;
+  phoneNumber: string;
+  experienceMonths: number;
+  status: 'HIRED' | 'INTERVIEW_PENDING' | 'INTERVIEW_ACCEPTED' | 'REJECTED'; // 필요한 경우 추가
+  introduction: string;
+  resumeId: number;
+  resumeName: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-const ApplicationList = () => {
-  const [visibleCount, setVisibleCount] = useState(5); // 보여줄 개수
+interface ApplicantListProps {
+  formId: number;
+}
+
+const ApplicationList = ({ formId }: ApplicantListProps) => {
+  const [visibleCount, setVisibleCount] = useState(5);
+
+  const { getApplications } = albaApi();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['applications', formId],
+    queryFn: () => getApplications(formId),
+  });
+
+  // 매 렌더마다 새롭게 생성되는 불필요한 재계산 방지 및 구조 개선
+  const { applications, visibleApplications } = useMemo(() => {
+    const list: Applicant[] = data?.data?.data ?? [];
+    return {
+      applications: list,
+      visibleApplications: list.slice(0, visibleCount),
+    };
+  }, [data, visibleCount]);
+
+  const hasMore = visibleCount < applications.length;
 
   const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 5); // 5개씩 추가로 보여줌
+    setVisibleCount(prev => prev + 5);
   };
 
-  const visibleApplications = useMemo(() => {
-    return mockApplications.slice(0, visibleCount);
-  }, [visibleCount]);
-
-  const hasMore = visibleCount < mockApplications.length;
+  if (isLoading) return <div>지원자 정보를 불러오는 중입니다...</div>;
+  if (isError) return <div>지원자 정보를 불러오는 데 실패했습니다.</div>;
 
   return (
     <div className="max-w-640">
@@ -36,29 +69,25 @@ const ApplicationList = () => {
       <div className="BorderB-gray grid grid-cols-[1fr_2fr_1fr_1fr] px-16 py-16 text-gray-400">
         <div className="flex items-center px-4">이름</div>
         <div className="flex items-center px-4">전화번호</div>
-        <div>
-          <div className="flex items-center gap-8">
-            경력
-            <Image
-              alt="경력"
-              className="lg:h-32 lg:w-32"
-              height={24}
-              src="/icons/array-outlined-descending.svg"
-              width={24}
-            />
-          </div>
+        <div className="flex items-center gap-8">
+          경력
+          <Image
+            alt="경력"
+            className="lg:h-32 lg:w-32"
+            height={24}
+            src="/icons/array-outlined-descending.svg"
+            width={24}
+          />
         </div>
-        <div>
-          <div className="flex items-center gap-8">
-            상태
-            <Image
-              alt="상태"
-              className="lg:h-32 lg:w-32"
-              height={24}
-              src="/icons/array-outlined.svg"
-              width={24}
-            />
-          </div>
+        <div className="flex items-center gap-8">
+          상태
+          <Image
+            alt="상태"
+            className="lg:h-32 lg:w-32"
+            height={24}
+            src="/icons/array-outlined.svg"
+            width={24}
+          />
         </div>
       </div>
 
@@ -70,7 +99,7 @@ const ApplicationList = () => {
               <Tooltip content="지원자 상세 정보를 확인할 수 있습니다.">
                 <Link
                   className="hover:text-mint-500 text-left underline underline-offset-2"
-                  href={`/applications/${applicant.applicantId}`}
+                  href={`/application/${applicant.id}/form/${formId}`}
                 >
                   {applicant.name}
                 </Link>

@@ -12,7 +12,7 @@ export const getUserTypeFromPath = (pathname: string): UserType | undefined => {
   if (pathname.startsWith('/owner') || pathname.includes('/application/')) {
     return 'owner';
   }
-  if (pathname.startsWith('/applicant') || pathname.includes('/myapply/')) {
+  if (pathname.startsWith('/applicant')) {
     return 'applicant';
   }
   return undefined;
