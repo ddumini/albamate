@@ -25,7 +25,7 @@ export const useAddformMutation = () => {
         return;
       }
       queryClient.setQueryData(
-        ['myApplication', String(parseResponse.data.id)],
+        ['albaDetail', parseResponse.data.id],
         parseResponse.data
       );
       router.push(`/alba/${parseResponse.data.id}`);
@@ -58,7 +58,7 @@ export const useEditformMutation = () => {
         return;
       }
       queryClient.setQueryData(
-        ['myApplication', String(parseResponse.data.id)],
+        ['albaDetail', parseResponse.data.id],
         parseResponse.data
       );
       router.push(`/alba/${parseResponse.data.id}`);
