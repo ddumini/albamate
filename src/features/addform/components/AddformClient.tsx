@@ -9,6 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAddformWritingMenu } from '@/features/addform/hooks';
 import {
   useAddformMutation,
+  useEditformMutation,
   useImageMutation,
 } from '@/features/addform/queries/mutations';
 import {
@@ -146,6 +147,8 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     useImageMutation();
   const { mutate: addformMutate, isPending: isAddformPending } =
     useAddformMutation();
+  const { mutate: editformMutate, isPending: isEditformPending } =
+    useEditformMutation();
 
   const handleSubmit = async () => {
     try {
@@ -158,7 +161,11 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       ];
       setValue('imageUrls', imageUrls);
       localStorage.removeItem('addform-draft');
-      addformMutate(getValues());
+      if (formId) {
+        editformMutate({ formId: Number(formId), form: getValues() });
+      } else {
+        addformMutate(getValues());
+      }
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
     }
