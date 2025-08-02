@@ -2,7 +2,7 @@
 
 import PrimaryButton from '@common/button/PrimaryButton';
 import Modal from '@common/modal/Modal';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
@@ -45,13 +45,10 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
     );
   };
 
-  const dropDownItem = useMemo(
-    () => [
-      { label: '내 정보 수정', onClick: () => myInfoEdit() },
-      { label: '비밀번호 변경', onClick: () => pwChange() },
-    ],
-    []
-  );
+  const dropDownItem = [
+    { label: '내 정보 수정', onClick: () => myInfoEdit() },
+    { label: '비밀번호 변경', onClick: () => pwChange() },
+  ];
 
   return (
     <>
