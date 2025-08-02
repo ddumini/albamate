@@ -66,7 +66,9 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
 
             <div className="ml-4">
               <div className="text-sm text-gray-500">{label}</div>
-              <div className="text-base font-bold text-teal-500">{value}</div>
+              <div className="text-base font-bold text-teal-500">
+                {value || '미정'}
+              </div>
             </div>
           </div>
         ))}
@@ -94,7 +96,7 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
 
           <div>
             <div className="Text-gray text-xs">{label}</div>
-            <div className="Text-mint font-bold">{value}</div>
+            <div className="Text-mint font-bold">{value || '협의 가능'}</div>
           </div>
         </div>
       ))}

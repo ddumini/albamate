@@ -55,7 +55,7 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
                 </div>
               )}
             </div>
-            <div className="text-black">{value}</div>
+            <div className="text-black">{value || '없음'}</div>
           </div>
         ))}
       </div>
@@ -83,7 +83,7 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
               </div>
             )}
           </div>
-          <div>{value}</div>
+          <div>{value || '없음'}</div>
         </div>
       ))}
     </div>

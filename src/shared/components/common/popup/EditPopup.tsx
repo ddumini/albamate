@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import { usePopupStore } from '@/shared/store/popupStore';
+
 /**
  * @typedef {Object} EditPopupProps
  * @property {string} message - 팝업에 표시될 메시지
@@ -41,21 +43,15 @@ const iconSizes = {
  * @component
  * @param {EditPopupProps} props
  */
-const EditPopup = ({
-  message,
-  duration = 3000,
-  visible,
-  onClose,
-  type = 'success',
-  iconSrc,
-}: EditPopupProps) => {
-  const [shouldRender, setShouldRender] = useState(visible);
+const EditPopup = () => {
+  const { visible, message, type, duration, hidePopup } = usePopupStore();
+  const [isRender, setIsRender] = useState(visible);
   const [animationClass, setAnimationClass] = useState('');
 
   // visible 상태에 따라 등장 및 사라짐 애니메이션 처리
   useEffect(() => {
     if (visible) {
-      setShouldRender(true);
+      setIsRender(true);
       setAnimationClass('opacity-0 -translate-y-12');
 
       // requestAnimationFrame을 두 번 호출해 브라우저 렌더링 타이밍 맞춤
@@ -66,7 +62,7 @@ const EditPopup = ({
       });
     } else {
       setAnimationClass('opacity-0 -translate-y-12');
-      const timeout = setTimeout(() => setShouldRender(false), 500);
+      const timeout = setTimeout(() => setIsRender(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [visible]);
@@ -78,16 +74,16 @@ const EditPopup = ({
     const timer = setTimeout(() => {
       setAnimationClass('opacity-0 -translate-y-12');
       const hideTimer = setTimeout(() => {
-        setShouldRender(false);
-        onClose();
+        setIsRender(false);
+        hidePopup();
       }, 500);
       return () => clearTimeout(hideTimer);
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [visible, duration, onClose]);
+  }, [visible, duration, hidePopup]);
 
-  if (!shouldRender) return null;
+  if (!isRender) return null;
 
   const size = iconSizes[type];
 
@@ -103,7 +99,7 @@ const EditPopup = ({
           fill
           alt={`${type} 아이콘`}
           sizes={`${size.width}px`}
-          src={iconSrc ?? defaultIcons[type]}
+          src={defaultIcons[type]}
         />
       </div>
       <span className="flex-1">{message}</span>

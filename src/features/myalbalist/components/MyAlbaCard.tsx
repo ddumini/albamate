@@ -5,6 +5,8 @@ import PrivateWrapper from '@common/PrivateWrapper';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { usePopupStore } from '@/shared/store/popupStore';
+
 import { ApplicantMyAlbaItem, OwnerMyAlbaItem } from '../types/myalbalist';
 import ApplicantAlbaCard from './ApplicantAlbaCard';
 
@@ -15,6 +17,7 @@ interface Props {
 
 const MyAlbaCard = ({ item, isOwner }: Props) => {
   const router = useRouter();
+  const { showPopup } = usePopupStore();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 여부
   const [isp, setIsp] = useState(false); // PrivateWrapper 제어용 비공개 상태
@@ -31,7 +34,7 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
       onClick: () => {
         // TODO: 수정로직 구현
         const title = isOwnerItem(item) ? item.title : '';
-        alert(`${title} 수정 완료!`);
+        showPopup(`${title} 수정 완료!`, 'success');
       },
     },
     {
@@ -39,7 +42,7 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
       onClick: () => {
         // TODO: 삭제로직 구현
         const title = isOwnerItem(item) ? item.title : '';
-        alert(`${title} 삭제 완료!`);
+        showPopup(`${title} 삭제 완료!`, 'error');
       },
     },
   ];
