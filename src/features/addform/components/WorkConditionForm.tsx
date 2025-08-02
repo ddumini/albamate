@@ -56,7 +56,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
@@ -86,7 +86,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <TimePicker
-                defaultValue={timeRange}
+                value={timeRange}
                 onChange={range => {
                   field.onChange(range.workStartTime);
                   setValue('workEndTime', range.workEndTime as any, {
@@ -105,7 +105,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           control={control}
           name="workDays"
           render={({ field }) => (
-            <WeekPicker defaultValue={field.value} onChange={field.onChange} />
+            <WeekPicker value={field.value} onChange={field.onChange} />
           )}
         />
         <div className="px-10 py-8 lg:px-14 lg:py-16">
@@ -132,7 +132,10 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             className="pr-46 pl-24 lg:pr-60 lg:pl-32"
             id="hourlyWage"
             placeholder={`${process.env.NEXT_PUBLIC_MINIMUM_WAGE}`}
-            {...register('hourlyWage', { valueAsNumber: true })}
+            {...register('hourlyWage', {
+              setValueAs: value =>
+                value === '' || value === undefined ? undefined : Number(value),
+            })}
           />
           <span className="absolute top-14 right-30 text-lg font-medium text-black-400 lg:top-16 lg:right-40 lg:text-xl dark:text-gray-100">
             원

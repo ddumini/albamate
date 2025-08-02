@@ -21,7 +21,10 @@ interface WorkerInfoEditProps {
 }
 
 const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
-  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(
+    userInfo?.imageUrl ?? undefined
+  );
+  const [imageFile, setImageFile] = useState<File>();
   const {
     register,
     handleSubmit,
@@ -41,19 +44,22 @@ const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
   const { showPopup } = usePopupStore();
 
   const handleImageChange = async (file: File) => {
+    setImageFile(file);
+  };
+
+  const onSubmit = async (data: UpdateWorkerMyProfileRequest) => {
+    let finalImageUrl = imageUrl ?? null;
     try {
-      const response = await api.getImageUrl(file);
-      const uploadUrl = response.url;
-      setImageUrl(uploadUrl);
+      if (imageFile) {
+        const response = await api.getImageUrl(imageFile);
+        finalImageUrl = response.url;
+      }
     } catch (error) {
       showPopup('이미지 업로드에 실패했습니다. 다시 시도해주세요.', 'error');
       console.error(error);
     }
-  };
-
-  const onSubmit = (data: UpdateWorkerMyProfileRequest) => {
     updateProfile.mutate(
-      { ...data, imageUrl },
+      { ...data, imageUrl: finalImageUrl },
       {
         onSuccess: () => {
           showPopup('프로필이 성공적으로 수정되었습니다.', 'success');

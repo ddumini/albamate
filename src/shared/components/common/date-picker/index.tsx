@@ -42,7 +42,7 @@ interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
-  defaultValue?: DateRange;
+  value?: DateRange;
 }
 
 const DatePicker = ({
@@ -50,12 +50,10 @@ const DatePicker = ({
   placeholder = '시작일 - 종료일',
   disabled = false,
   className,
-  defaultValue,
+  value,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(
-    defaultValue
-  );
+  const dateRange = value;
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -95,7 +93,6 @@ const DatePicker = ({
 
   // 날짜 변경 처리
   const handleSelect = (range: DateRange | undefined) => {
-    setDateRange(range);
     onDateRangeChange?.(range);
     if (range?.from && range?.to) {
       setIsOpen(false);

@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 
 // 현재 창의 너비를 반환하는 커스텀 훅
 const useViewport = () => {
-  const getWindowWidth = () =>
-    typeof window !== 'undefined' ? window.innerWidth : null;
-  const [width, setWidth] = useState<number | null>(() => getWindowWidth());
+  const [width, setWidth] = useState<number | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;

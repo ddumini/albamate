@@ -36,7 +36,7 @@ interface InputDropdownOption {
 interface InputDropdownProps {
   options: InputDropdownOption[];
   placeholder?: string;
-  defaultValue?: string;
+  value?: string;
   name?: string; // form에서 사용할 name 속성 추가
   onChange?: (value: string) => void;
   required?: boolean; // 필수 필드 여부
@@ -51,13 +51,13 @@ const INPUT_STYLE =
 const InputDropdown = ({
   options,
   placeholder = '선택',
-  defaultValue = '',
+  value = '',
   name,
   onChange,
   required = false,
   className,
 }: InputDropdownProps) => {
-  const [inputValue, setInputValue] = useState(defaultValue);
+  const inputValue = value;
   const [directInputValue, setDirectInputValue] = useState('');
   const [isDirectInput, setIsDirectInput] = useState(false);
   const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
@@ -82,7 +82,6 @@ const InputDropdown = ({
   }, [inputValue, directInputValue, isDirectInput]);
 
   const handleSelect = (value: string) => {
-    setInputValue(value);
     setIsDirectInput(false);
     setCurrentPlaceholder(placeholder);
     setDirectInputValue('');
@@ -90,7 +89,6 @@ const InputDropdown = ({
   };
 
   const handleDirectInput = () => {
-    setInputValue('직접입력');
     setIsDirectInput(true);
     setCurrentPlaceholder('직접입력');
     onChange?.(directInputValue);
@@ -113,7 +111,9 @@ const InputDropdown = ({
         !isOpen && ''
       )}
     >
-      <span className="flex-1">{inputValue || currentPlaceholder}</span>
+      <span className="flex-1">
+        {isDirectInput ? currentPlaceholder : inputValue || currentPlaceholder}
+      </span>
     </div>
   );
 
