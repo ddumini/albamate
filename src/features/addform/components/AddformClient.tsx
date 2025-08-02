@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -14,8 +15,10 @@ import {
   CreateFormRequest,
   createFormRequestSchema,
 } from '@/features/addform/schema/addform.schema';
+import { useAlbaformDetailQuery } from '@/features/application/queries/queries';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import useViewport from '@/shared/hooks/useViewport';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
 
 import AddformButtons from './AddformButtons';
@@ -82,7 +85,9 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     getValues,
   } = methods;
 
+  //로컬 스토리지에서 임시저장 데이터 불러오기
   useEffect(() => {
+    if (formId) return;
     const draft = localStorage.getItem('addform-draft');
     if (draft) {
       const parsed = JSON.parse(draft);
@@ -97,7 +102,43 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       setUploadedImageUrls(imageUrls);
       showPopup('임시 저장한 데이터를 가져왔습니다', 'success');
     }
-  }, [setValue]);
+  }, [setValue, showPopup, formId]);
+
+  const { data: formData, isLoading: isFormLoading } = useAlbaformDetailQuery(
+    formId || ''
+  );
+  const { user } = useSessionUtils();
+  const router = useRouter();
+
+  //수정하기 페이지 로직
+  useEffect(() => {
+    if (!formId || !formData || !user) return;
+
+    //내가 만든 폼이 아니라면 리스트 페이지로 이동
+    const isOwner = formData.ownerId === user.id;
+    if (!isOwner) {
+      showPopup('접근 권한이 없습니다.', 'error');
+      router.replace('/albalist');
+      return;
+    }
+
+    const { imageUrls, ...formValues } = formData;
+    const allowedKeys = [
+      ...Object.keys(recruitContentDefault).filter(key => key !== 'imageUrls'),
+      ...Object.keys(recruitConditionDefault),
+      ...Object.keys(workContentDefault),
+    ];
+    Object.entries(formValues).forEach(([key, value]) => {
+      if (allowedKeys.includes(key)) {
+        setValue(
+          key as keyof CreateFormRequest,
+          value as CreateFormRequest[keyof CreateFormRequest],
+          { shouldDirty: true, shouldValidate: true }
+        );
+      }
+    });
+    setUploadedImageUrls(imageUrls || []);
+  }, [formId, formData, user, setValue, router, showPopup]);
 
   useAddformWritingMenu({ currentFiles, dirtyFields, setWritingMenu });
 
