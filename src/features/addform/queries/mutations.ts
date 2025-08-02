@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import { useAddformApi } from '@/features/addform/api';
@@ -11,6 +11,7 @@ import {
 
 export const useAddformMutation = () => {
   const { postAddform } = useAddformApi();
+  const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation({
     mutationFn: (form: CreateFormRequest) => postAddform(form),
@@ -23,6 +24,10 @@ export const useAddformMutation = () => {
         );
         return;
       }
+      queryClient.setQueryData(
+        ['myApplication', String(parseResponse.data.id)],
+        parseResponse.data
+      );
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {
@@ -34,8 +39,15 @@ export const useAddformMutation = () => {
 export const useEditformMutation = () => {
   const { editAddform } = useAddformApi();
   const router = useRouter();
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (form: CreateFormRequest) => editAddform(form),
+    mutationFn: ({
+      formId,
+      form,
+    }: {
+      formId: number;
+      form: CreateFormRequest;
+    }) => editAddform({ formId, form }),
     onSuccess: response => {
       const parseResponse = createFormResponseSchema.safeParse(response.data);
       if (!parseResponse.success) {
@@ -45,6 +57,10 @@ export const useEditformMutation = () => {
         );
         return;
       }
+      queryClient.setQueryData(
+        ['myApplication', String(parseResponse.data.id)],
+        parseResponse.data
+      );
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {
