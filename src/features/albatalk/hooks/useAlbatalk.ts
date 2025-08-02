@@ -5,16 +5,19 @@ import { axiosInstance } from '@/shared/lib/axios';
 
 import {
   addAlbatalkLike,
+  createAlbatalk,
   createComment,
+  deleteAlbatalk,
   deleteComment,
   fetchAlbatalkDetail,
   fetchAlbatalks,
-  // 댓글 관련 API 함수들
   fetchComments,
   removeAlbatalkLike,
+  updateAlbatalk,
   updateComment,
 } from '../api/albatalkApi';
 import type {
+  CreateAlbatalkParams,
   GetAlbatalksParams,
   GetCommentsParams,
 } from '../schemas/albatalk.schema';
@@ -49,7 +52,10 @@ export const useAlbatalks = (params: GetAlbatalksParams) => {
  * 게시글 상세 조회 훅
  * @returns
  */
-export const useAlbatalkDetail = (postId: number) => {
+export const useAlbatalkDetail = (
+  postId: number,
+  options?: { enabled?: boolean }
+) => {
   const authAxios = axiosInstance;
   const { data: session, status } = useSession(); // 세션과 상태 가져오기
 
@@ -59,9 +65,84 @@ export const useAlbatalkDetail = (postId: number) => {
   return useQuery({
     queryKey: albatalkKeys.detail(postId),
     queryFn: () => fetchAlbatalkDetail(postId, authAxios),
-    enabled: !isSessionLoading && hasAccessToken,
+    enabled: !isSessionLoading && hasAccessToken && options?.enabled !== false,
     staleTime: 1000 * 60 * 5, // 5분
     gcTime: 1000 * 60 * 10, // 10분
+  });
+};
+
+/**
+ * 게시글 작성 훅
+ */
+export const useCreateAlbatalk = () => {
+  const QueryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: (params: CreateAlbatalkParams) =>
+      createAlbatalk(params, authAxios),
+    onSuccess: () => {
+      QueryClient.invalidateQueries({
+        queryKey: albatalkKeys.lists(),
+      });
+    },
+    onError: error => {
+      console.error('알바토크 작성 실패: ', error);
+    },
+  });
+};
+
+/**
+ * 알바토크 수정 훅
+ */
+export const useUpdateAlbatalk = () => {
+  const queryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: ({
+      postId,
+      ...params
+    }: { postId: number } & CreateAlbatalkParams) =>
+      updateAlbatalk(postId, params, authAxios),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: albatalkKeys.detail(variables.postId),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: albatalkKeys.lists(),
+      });
+    },
+    onError: error => {
+      console.error('알바토크 수정 실패: ', error);
+    },
+  });
+};
+
+/**
+ * 게시글 삭제 훅
+ */
+export const useDeleteAlbatalk = () => {
+  const queryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: (postId: number) => deleteAlbatalk(postId, authAxios),
+    onSuccess: (_, postId) => {
+      queryClient.removeQueries({
+        queryKey: albatalkKeys.detail(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: albatalkKeys.lists(),
+      });
+      queryClient.removeQueries({
+        queryKey: albatalkKeys.comments(postId),
+      });
+    },
+    onError: error => {
+      console.error('알바토크 삭제 실패: ', error);
+    },
   });
 };
 

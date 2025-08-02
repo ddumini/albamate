@@ -36,7 +36,8 @@ const AlbaDropdown = ({ options }: Props) => {
           )}
           type="button"
           onClick={e => {
-            e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation(); // 중요!
             onClick();
           }}
         >

@@ -2,12 +2,12 @@ import AlbatalkListClient from '@/features/albatalk/components/albatalk-list/Alb
 import { SearchParamsSchema } from '@/features/albatalk/schemas/albatalk.schema';
 
 interface AlbaTalkPageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     cursor?: string;
     limit?: string;
     orderBy?: string;
     keyword?: string;
-  };
+  }>;
 }
 
 const AlbaTalkPage = async ({ searchParams }: AlbaTalkPageProps) => {

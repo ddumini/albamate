@@ -53,6 +53,19 @@ export const SearchParamsSchema = z.object({
   keyword: z.string().optional(),
 });
 
+// 알바토크 작성 파라미터 스키마
+export const CreateAlbatalkParamsSchema = z.object({
+  title: z
+    .string()
+    .min(1, '제목을 입력해주세요')
+    .max(50, '제목은 50글자 이하로 입력해주세요'),
+  content: z
+    .string()
+    .min(1, '내용을 입력해주세요')
+    .max(5000, '내용은 5000글자 이하로 입력해주세요.'),
+  imageUrl: z.string().nullable().optional(),
+});
+
 // Comment 스키마
 export const CommentSchema = z.object({
   id: z.number(),
@@ -107,6 +120,10 @@ export type AlbatalkDetailResponse = z.infer<
 >;
 export type GetAlbatalksParams = z.infer<typeof GetAlbatalksParamsSchema>;
 export type SearchParams = z.infer<typeof SearchParamsSchema>;
+export type CreateAlbatalkParams = z.infer<typeof CreateAlbatalkParamsSchema>;
+export type AlbatalkCreateResponse = z.infer<
+  typeof AlbatalkDetailResponseSchema
+>;
 
 export type Comment = z.infer<typeof CommentSchema>;
 export type CommentsResponse = z.infer<typeof CommentsResponseSchema>;
