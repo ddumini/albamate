@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { useImageMutation } from '@/features/addform/queries/mutations';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import {
   useAlbatalkDetail,
@@ -27,6 +28,7 @@ interface AddtalkClientProps {
 const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const { showPopup } = usePopupStore();
 
   const isEditMode = !!albatalkId;
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
@@ -97,10 +99,10 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
           postId: numericAlbatalkId,
           ...finalData, // 최종 데이터 사용
         });
-        alert('알바토크가 성공적으로 수정되었습니다!');
+        showPopup('알바토크가 성공적으로 수정되었습니다!', 'success');
       } else {
         await createMutation.mutateAsync(finalData); // 최종 데이터 사용
-        alert('알바토크가 성공적으로 등록되었습니다!');
+        showPopup('알바토크가 성공적으로 등록되었습니다!', 'success');
       }
 
       router.push('/albatalk');

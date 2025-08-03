@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Textarea from '@/shared/components/common/input/Textarea';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import { useCreateAlbatalkComment } from '../../hooks/useAlbatalk';
 
@@ -16,6 +17,7 @@ const CommentForm = ({ albatalkId, onSubmit }: CommentFormProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [content, setContent] = useState('');
   const createCommentMutation = useCreateAlbatalkComment();
+  const { showPopup } = usePopupStore();
 
   const handleSubmit = () => {
     const trimmedContent = content.trim();
@@ -27,9 +29,11 @@ const CommentForm = ({ albatalkId, onSubmit }: CommentFormProps) => {
         onSuccess: () => {
           setContent('');
           onSubmit?.(trimmedContent);
+          showPopup('댓글이 등록되었습니다.', 'success');
         },
         onError: error => {
           console.error('댓글 작성 실패: ', error);
+          showPopup('댓글 등록 중 오류가 발생했습니다.', 'error');
         },
       }
     );
