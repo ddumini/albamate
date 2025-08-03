@@ -151,3 +151,65 @@ export const useMyCommentsInfiniteQuery = ({
     enabled,
   });
 };
+
+export const useMyPostDelete = () => {
+  const api = useMyPageApi();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (postId: number) => api.getDeletePost(postId),
+    onSuccess: () => {
+      // 삭제 성공 시, 관련 데이터를 다시 가져오게 트리거
+      queryClient.invalidateQueries({ queryKey: ['myPosts'] });
+    },
+    onError: error => {
+      console.error('게시글 삭제 실패', error);
+    },
+  });
+};
+
+export const useMyCommentDelete = () => {
+  const api = useMyPageApi();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (commentId: number) => api.getDeleteComments(commentId),
+    onSuccess: () => {
+      // 삭제 성공 시, 관련 데이터를 다시 가져오게 트리거
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
+    },
+    onError: error => {
+      console.error('댓글 삭제 실패', error);
+    },
+  });
+};
+
+export const useMyScrapDelete = () => {
+  const api = useMyPageApi();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (formId: number) => api.getCancelScrap(formId),
+    onSuccess: () => {
+      // 삭제 성공 시, 관련 데이터를 다시 가져오게 트리거
+      queryClient.invalidateQueries({ queryKey: ['myScrap'] });
+    },
+    onError: error => {
+      console.error('스크랩 취소 실패', error);
+    },
+  });
+};
+
+// 내가 작성한 댓글 수정하기
+export const useUpdateMyCommentQuery = () => {
+  const queryClient = useQueryClient();
+  const api = useMyPageApi();
+
+  return useMutation({
+    mutationFn: async ({ id, content }: { id: number; content: string }) =>
+      await api.updateMyComment(id, content),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['myComments'] });
+    },
+  });
+};

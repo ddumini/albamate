@@ -20,7 +20,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
     <Link
       key={cardContent.id}
       className="Border-Card flex h-264 w-full cursor-pointer flex-col items-start justify-between rounded-2xl border border-line-100 p-24 shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg lg:w-full xl:max-w-476"
-      href={`/albatalks/${cardContent.id}`}
+      href={`/albatalk/${cardContent.id}`}
     >
       <section className="flex w-full items-center justify-between">
         <div className="inline-flex items-center">
