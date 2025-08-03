@@ -1,10 +1,10 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import { cn } from '@/shared/lib/cn';
-import { usePopupStore } from '@/shared/store/popupStore';
 
 import { useDeleteAlbatalk } from '../../hooks/useAlbatalk';
 
@@ -21,21 +21,24 @@ const AlbatalkCardHeader = ({
   className,
   titleClassName,
 }: AlbatalkHeaderProps) => {
-
   const router = useRouter();
   const deleteMutation = useDeleteAlbatalk();
+  const queryClient = useQueryClient();
 
   const handleActionClick = async (option: string) => {
     if (option === 'edit') {
       // 수정 페이지로 이동
       router.push(`/addtalk?albatalkId=${albatalkId}`);
-      
     } else if (option === 'delete') {
       const isConfirmed = window.confirm('정말 이 게시글을 삭제하시겠습니까?');
 
       if (isConfirmed) {
         try {
           await deleteMutation.mutateAsync(albatalkId);
+          // 알바톡 관련 모든 쿼리 무효화
+          queryClient.invalidateQueries({
+            queryKey: ['albatalks'],
+          });
           alert('게시글이 성공적으로 삭제되었습니다.');
 
           router.push('/albatalk');
@@ -50,7 +53,7 @@ const AlbatalkCardHeader = ({
   const menuOptions = [
     { label: '수정하기', onClick: () => handleActionClick('edit') },
     {
-      label: deleteMutation.isPending ? '삭제 중...' : '삭제하기',
+      label: '삭제하기',
       onClick: () => handleActionClick('delete'),
       disabled: deleteMutation.isPending,
     },
