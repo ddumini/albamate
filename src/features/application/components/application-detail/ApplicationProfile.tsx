@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
 import { getExperienceLabel } from '@/shared/utils/application';
 import { formatPhoneNumber } from '@/shared/utils/format';
 
+import { useResumeDownloadMutation } from '../../queries/queries';
 import { ApplicationResponse } from '../../types/application';
 
 interface ApplicationProfileProps {
@@ -13,16 +13,25 @@ interface ApplicationProfileProps {
 }
 
 const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
-  const { isOwner } = useSessionUtils();
-  const { name, phoneNumber, experienceMonths, resumeName, introduction } =
-    data;
+  const { name, phoneNumber, experienceMonths, introduction } = data;
   const { showPopup } = usePopupStore();
 
-  const handleDownloadResume = () => {
+  const downloadMutation = useResumeDownloadMutation({
+    onSuccess: () => {
+      showPopup('이력서 다운로드가 완료되었습니다.', 'success');
+    },
+    onError: () => {
+      showPopup('이력서 다운로드에 실패했습니다.', 'error');
+    },
+  });
+
+  const handleDownloadResume = async () => {
     if (!data.resumeId) {
       showPopup('다운로드에 필요한 정보가 부족합니다.', 'info');
       return;
     }
+
+    downloadMutation.mutate(data.resumeId);
   };
 
   return (
@@ -56,24 +65,20 @@ const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
           <div className="py-4">
             <div className="mb-4 py-14 text-gray-400">이력서</div>
             <div className="flex items-center justify-between rounded-lg bg-gray-50 p-14">
-              <span className="text-gray-700">
-                {resumeName || '이력서 없음'}
-              </span>
-              {isOwner && (
-                <button
-                  aria-label="이력서 다운로드"
-                  className="flex"
-                  type="button"
-                  onClick={handleDownloadResume}
-                >
-                  <Image
-                    alt="다운로드 아이콘"
-                    height={24}
-                    src="/icons/download.svg"
-                    width={24}
-                  />
-                </button>
-              )}
+              <span className="text-gray-700">{name}_이력서</span>
+              <button
+                aria-label="이력서 다운로드"
+                className="flex"
+                type="button"
+                onClick={handleDownloadResume}
+              >
+                <Image
+                  alt="다운로드 아이콘"
+                  height={24}
+                  src="/icons/download.svg"
+                  width={24}
+                />
+              </button>
             </div>
           </div>
 
