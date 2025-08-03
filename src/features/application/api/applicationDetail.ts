@@ -31,7 +31,7 @@ export const useApplicationDetailApi = () => {
       applicationId: string,
       data: { status: string }
     ) => {
-      return authAxios.patch(`/applications/${applicationId}`, data);
+      return authAxios.patch(`applications/${applicationId}`, data);
     },
   };
 };

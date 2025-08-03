@@ -69,11 +69,13 @@ const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
               <button
                 aria-label="이력서 다운로드"
                 className="flex"
+                disabled={downloadMutation.isPending}
                 type="button"
                 onClick={handleDownloadResume}
               >
                 <Image
                   alt="다운로드 아이콘"
+                  className={downloadMutation.isPending ? 'opacity-50' : ''}
                   height={24}
                   src="/icons/download.svg"
                   width={24}

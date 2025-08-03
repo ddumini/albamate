@@ -45,12 +45,17 @@ const ApplicationStateModal = ({
   });
 
   const handleStateSubmit = () => {
-    closeModal();
-
-    updateStatusMutation.mutate({
-      applicationId,
-      status: selected as ApplicationStatus,
-    });
+    updateStatusMutation.mutate(
+      {
+        applicationId,
+        status: selected as ApplicationStatus,
+      },
+      {
+        onSuccess: () => {
+          closeModal();
+        },
+      }
+    );
   };
 
   return (
