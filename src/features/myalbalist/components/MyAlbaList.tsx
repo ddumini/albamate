@@ -7,6 +7,7 @@ import FloatingFormButton from '@/features/albalist/components/FloatingFormButto
 import EmptyCard from '@/shared/components/common/EmptyCard';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import useViewport from '@/shared/hooks/useViewport';
 import { cn } from '@/shared/lib/cn';
 
 import {
@@ -24,6 +25,7 @@ interface MyAlbaListProps {
 }
 
 const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
+  const { isMobile, isTablet } = useViewport();
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] = useState('');
@@ -45,10 +47,17 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
     }));
   }, [debouncedSearchKeyword]);
 
+  // 반응형 limit 계산
+  const getLimit = useMemo(() => {
+    if (isMobile) return 3;
+    if (isTablet) return 4;
+    return 6; // 데스크탑
+  }, [isMobile, isTablet]);
+
   // 필터 상태를 API 파라미터로 변환
   const apiParams = useMemo(
-    () => convertFiltersToApiParams(filters, userRole === 'OWNER', 6),
-    [filters, userRole]
+    () => convertFiltersToApiParams(filters, userRole === 'OWNER', getLimit),
+    [filters, userRole, getLimit]
   );
 
   // 지원자용 무한 스크롤

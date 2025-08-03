@@ -12,7 +12,7 @@ const MyAlbaListPage = async () => {
   }
 
   return (
-    <InnerContainer size="md">
+    <InnerContainer className="pb-80" size="md">
       <MyAlbaList userRole={session.user.role} />
     </InnerContainer>
   );
