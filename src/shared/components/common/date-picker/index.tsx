@@ -118,6 +118,7 @@ const DatePicker = ({
         aria-label={`날짜 범위 선택: ${getDisplayText()}`}
         className={cn(
           'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
+          'dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700',
           isOpen && 'border-gray-200',
           dateRange?.from && dateRange?.to && 'text-black-400',
           disabled && 'cursor-not-allowed'

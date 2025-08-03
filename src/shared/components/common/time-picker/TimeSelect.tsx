@@ -53,7 +53,7 @@ const TimeSelect = ({
         <button
           aria-label={label}
           className={cn(
-            'flex h-54 w-150 items-center gap-8 rounded-lg border-1 border-transparent bg-background-200 px-14 text-lg transition-colors lg:h-64 lg:w-210 lg:gap-16 lg:text-xl',
+            'flex h-54 w-150 items-center gap-8 rounded-lg border-1 border-transparent bg-background-200 px-14 text-lg transition-colors lg:h-64 lg:w-210 lg:gap-16 lg:text-xl dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700',
             isOpen ? 'border-gray-200' : '',
             isSelected ? 'text-black' : 'text-gray-400', // 선택되지 않았으면 회색으로 표시
             className
@@ -62,7 +62,11 @@ const TimeSelect = ({
         >
           <Image
             alt="clock"
-            className={isSelected ? 'opacity-100' : 'opacity-50'} // 선택 여부에 따라 아이콘 투명도 조절
+            className={
+              isSelected
+                ? 'opacity-100 dark:invert-100'
+                : 'opacity-50 dark:invert-100'
+            } // 선택 여부에 따라 아이콘 투명도 조절
             height={24}
             src="/icons/clock.svg"
             width={24}
@@ -74,7 +78,7 @@ const TimeSelect = ({
             </span>
             <Image
               alt="arrow-down"
-              className="lg:h-36 lg:w-36"
+              className="lg:h-36 lg:w-36 dark:invert-100"
               height={24}
               src="/icons/drop-menu-down.svg"
               width={24}

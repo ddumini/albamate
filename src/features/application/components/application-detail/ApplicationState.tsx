@@ -15,12 +15,14 @@ interface ApplicationStateProps {
   status: ApplicationStatus;
   createdAt: string;
   recruitmentEndDate: string;
+  applicationId: string;
 }
 
 const ApplicationState = ({
   status,
   createdAt,
   recruitmentEndDate,
+  applicationId,
 }: ApplicationStateProps) => {
   const { isOwner } = useSessionUtils();
   // D-Day 계산
@@ -35,7 +37,12 @@ const ApplicationState = ({
   const { openModal } = useModalStore();
 
   const handleApplyStateModal = () => {
-    openModal(<ApplicationStateModal currentStatus={status} />);
+    openModal(
+      <ApplicationStateModal
+        applicationId={applicationId}
+        currentStatus={status}
+      />
+    );
   };
 
   return (

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { useAuthSession } from '@/features/auth';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import { Albatalk } from '../../schemas/albatalk.schema';
 import AlbatalkCardHeader from './AlbatalkCardHeader';
@@ -14,12 +15,13 @@ interface AlbatalkItemProps {
 const AlbatalkItem = ({ albatalk }: AlbatalkItemProps) => {
   const router = useRouter();
   const { isAuthenticated } = useAuthSession();
+  const { showPopup } = usePopupStore();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
-      alert('로그인이 필요한 페이지입니다.');
+      showPopup('로그인이 필요한 페이지입니다.', 'error');
       router.push('/signin');
       return;
     }
