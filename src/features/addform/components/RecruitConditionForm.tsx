@@ -62,7 +62,9 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
               <InputDropdown
                 name="numberOfPositions"
                 options={numberOfPositionsOptions}
-                value={field.value ? String(field.value) : undefined}
+                value={
+                  field.value != null ? String(field.value) + '명' : undefined
+                }
                 onChange={value => {
                   field.onChange(parseInt(value));
                 }}

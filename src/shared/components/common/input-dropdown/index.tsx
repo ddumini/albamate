@@ -46,7 +46,7 @@ interface InputDropdownProps {
 const BTN_STYLE =
   'w-full text-left px-24 h-54 text-lg font-regular text-black-100 cursor-pointer lg:text-xl lg:h-64 lg:px-32';
 const INPUT_STYLE =
-  'border-1 border-transparent text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 lg:text-xl lg:h-64 lg:px-32 min-w-none';
+  'border-1 border-transparent text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 lg:text-xl lg:h-64 lg:px-32 min-w-none dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700 caret-mint-300 outline-mint-300 focus:outline';
 
 const InputDropdown = ({
   options,
@@ -145,7 +145,7 @@ const InputDropdown = ({
             {selectInput(isOpen)}
             <Image
               alt="arrow-down"
-              className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36"
+              className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36 dark:invert-100"
               height={24}
               src="/icons/drop-menu-down.svg"
               width={24}
