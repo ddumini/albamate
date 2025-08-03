@@ -15,9 +15,12 @@ import {
   uploadResumeResponseSchema,
 } from '@/features/apply/schema/apply.schema';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 const ApplyForm = ({ formId }: { formId: string }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const { showPopup } = usePopupStore();
 
   const methods = useForm({
     resolver: zodResolver(createApplicationRequestSchema),
@@ -50,8 +53,10 @@ const ApplyForm = ({ formId }: { formId: string }) => {
         methods.setValue('resumeId', resume.data.resumeId);
         methods.setValue('resumeName', resume.data.resumeName);
         applyMutate({ formId: Number(formId), form: methods.getValues() });
+        showPopup('지원이 완료되었습니다.', 'success');
       } catch (error) {
         console.error('제출 중 오류 발생:', error);
+        showPopup('지원 중 오류가 발생했습니다.', 'error');
       }
   };
 
