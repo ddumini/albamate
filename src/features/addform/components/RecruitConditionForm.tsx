@@ -63,7 +63,7 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
                 name="numberOfPositions"
                 options={numberOfPositionsOptions}
                 value={
-                  field.value !== null ? String(field.value) + '명' : undefined
+                  field.value != null ? String(field.value) + '명' : undefined
                 }
                 onChange={value => {
                   field.onChange(parseInt(value));
