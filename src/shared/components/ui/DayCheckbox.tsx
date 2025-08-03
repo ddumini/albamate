@@ -84,7 +84,7 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
         <label
           aria-checked={checked}
           aria-disabled={disabled}
-          className={`flex h-48 w-38 cursor-pointer items-center justify-center rounded-xl bg-background-200 text-lg text-gray-500 transition-colors focus-within:ring-2 focus-within:ring-mint-300 focus-within:ring-offset-2 lg:h-64 lg:w-50 lg:rounded-2xl lg:text-xl ${
+          className={`flex h-48 w-38 cursor-pointer items-center justify-center rounded-xl bg-background-200 text-lg text-gray-500 transition-colors focus-within:ring-2 focus-within:ring-mint-300 focus-within:ring-offset-2 lg:h-64 lg:w-50 lg:rounded-2xl lg:text-xl dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700 ${
             disabled
               ? 'cursor-not-allowed opacity-50'
               : 'hover:bg-background-300'
