@@ -148,6 +148,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           <Input
             className="pr-46 pl-24 lg:pr-60 lg:pl-32"
             id="hourlyWage"
+            isInvalid={!!errors.hourlyWage}
             placeholder={`${process.env.NEXT_PUBLIC_MINIMUM_WAGE}`}
             {...register('hourlyWage', {
               setValueAs: value =>

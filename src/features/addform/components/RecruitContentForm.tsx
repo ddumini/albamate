@@ -47,6 +47,7 @@ const RecruitContentForm = ({
           {...register('title')}
           required
           id="title"
+          isInvalid={!!errors.title}
           placeholder="제목을 입력해주세요."
         />
         <ErrorMessage
@@ -61,6 +62,7 @@ const RecruitContentForm = ({
         <Textarea
           required
           id="description"
+          isInvalid={!!errors.description}
           maxLength={200}
           {...register('description')}
           placeholder="최대 200자까지 입력 가능합니다."
