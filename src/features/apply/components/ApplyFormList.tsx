@@ -49,9 +49,14 @@ const ApplyFormList = ({
         <Input
           {...register('name')}
           id="name"
+          isInvalid={!!errors.name}
           placeholder="이름을 입력해주세요."
           type="text"
           variant="solid"
+        />
+        <ErrorMessage
+          isVisible={!!errors.name}
+          message={errors.name?.message}
         />
       </li>
       <li className={itemStyle}>
@@ -61,9 +66,14 @@ const ApplyFormList = ({
         <Input
           {...register('phoneNumber')}
           id="phone"
+          isInvalid={!!errors.phoneNumber}
           placeholder="숫자만 입력해주세요."
           type="tel"
           variant="solid"
+        />
+        <ErrorMessage
+          isVisible={!!errors.phoneNumber}
+          message={errors.phoneNumber?.message}
         />
       </li>
       <li className={itemStyle}>
@@ -85,7 +95,9 @@ const ApplyFormList = ({
         />
       </li>
       <li className={itemStyle}>
-        <Label htmlFor="resume">이력서</Label>
+        <Label isRequired htmlFor="resume">
+          이력서
+        </Label>
         <div className="relative">
           <IconInput
             readOnly
@@ -116,13 +128,20 @@ const ApplyFormList = ({
         </div>
       </li>
       <li className={itemStyle}>
-        <Label htmlFor="introduction">자기소개</Label>
+        <Label isRequired htmlFor="introduction">
+          자기소개
+        </Label>
         <Textarea
           {...register('introduction')}
           id="introduction"
+          isInvalid={!!errors.introduction}
           maxLength={200}
           placeholder="최대 200자까지 입력 가능합니다."
           variant="solid"
+        />
+        <ErrorMessage
+          isVisible={!!errors.introduction}
+          message={errors.introduction?.message}
         />
       </li>
       <li className={itemStyle}>
@@ -132,6 +151,7 @@ const ApplyFormList = ({
         <Input
           {...register('password')}
           id="password"
+          isInvalid={!!errors.password}
           placeholder="비밀번호를 입력해주세요."
           type="password"
           variant="solid"

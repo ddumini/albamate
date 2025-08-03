@@ -5,7 +5,7 @@ export const inputStyle = {
     transition duration-200
   `,
   invalid:
-    'border border-error caret-error hover:border-error focus:border-error focus:outline-error',
+    'border border-error caret-error dark:caret-error hover:border-error focus:border-0 ',
 };
 
 export const inputVariants = {
