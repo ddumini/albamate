@@ -23,7 +23,6 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
   const { openModal } = useModalStore();
   const deleteFormMutation = useDeleteFormMutation();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isp, setIsp] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');

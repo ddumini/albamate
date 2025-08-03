@@ -15,7 +15,6 @@ export const useApplicantMyAlbalistQuery = (
     queryFn: async () => {
       try {
         const response = await myAlbalistApi.getApplicantMyAlbalist(params);
-        console.log('Applicant API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
         console.error('Applicant API 에러 상세:', error);
@@ -43,7 +42,6 @@ export const useOwnerMyAlbalistQuery = (
     queryFn: async () => {
       try {
         const response = await myAlbalistApi.getOwnerMyAlbalist(params);
-        console.log('Owner API 응답:', response.data);
         return response.data.data;
       } catch (error: any) {
         console.error('Owner API 에러 상세:', error);
