@@ -15,6 +15,7 @@ const useViewport = () => {
         setWidth(window.innerWidth);
       }, 150);
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => {
       clearTimeout(timeoutId);
