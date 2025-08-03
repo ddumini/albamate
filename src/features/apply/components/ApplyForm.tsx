@@ -80,6 +80,10 @@ const ApplyForm = ({ formId }: { formId: string }) => {
         ...resume?.data,
         realResumeName: selectedFile?.name,
       };
+      if (resume) {
+        methods.setValue('resumeId', resume.data.resumeId);
+        methods.setValue('resumeName', resume.data.resumeName);
+      }
       localStorage.setItem('apply-draft', JSON.stringify(draft));
       showPopup('알바폼이 임시 저장되었습니다.', 'success');
     } catch (error) {
