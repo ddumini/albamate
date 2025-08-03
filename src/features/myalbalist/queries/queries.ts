@@ -2,22 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
 import { myAlbalistApi } from '../api/api';
-
-export interface ApplicantQueryParams {
-  limit?: number;
-  cursor?: number;
-  status?: 'REJECTED' | 'INTERVIEW_PENDING' | 'INTERVIEW_COMPLETED' | 'HIRED';
-  keyword?: string;
-}
-
-export interface OwnerQueryParams {
-  limit?: number;
-  cursor?: number;
-  orderBy?: 'mostRecent' | 'highestWage' | 'mostApplied' | 'mostScrapped';
-  keyword?: string;
-  isPublic?: boolean;
-  isRecruiting?: boolean;
-}
+import { ApplicantQueryParams, OwnerQueryParams } from '../types/myalbalist';
 
 export const useApplicantMyAlbalistQuery = (
   params: ApplicantQueryParams = { limit: 10 },

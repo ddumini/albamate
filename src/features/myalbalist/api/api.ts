@@ -1,18 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios';
 
-interface PaginationParams {
-  page?: number;
-  limit?: number;
-}
-
-interface OwnerFilterParams extends PaginationParams {
-  status?: string;
-  keyword?: string;
-}
-
-interface ApplicantFilterParams extends PaginationParams {
-  keyword?: string;
-}
+import { ApplicantFilterParams, OwnerFilterParams } from '../types/myalbalist';
 
 // axiosInstance를 직접 사용하여 API 호출
 export const myAlbalistApi = {
