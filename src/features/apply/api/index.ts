@@ -25,6 +25,6 @@ export const postResume = (
 ): Promise<AxiosResponse<UploadResumeResponse>> => {
   const formData = new FormData();
   const newFileName = generateUniqueFileName(file);
-  formData.append('image', file, newFileName);
+  formData.append('file', file, newFileName);
   return axiosInstance.post(`/resume/upload`, formData);
 };

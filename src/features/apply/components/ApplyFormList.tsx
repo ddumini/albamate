@@ -15,11 +15,13 @@ import { cn } from '@/shared/lib/cn';
 
 const ApplyFormList = ({
   onFileChange,
+  uploadedFileName,
 }: {
   onFileChange: (file?: File) => void;
+  uploadedFileName?: string | null;
 }) => {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
-  const isFileSelected = selectedFileName !== '';
+  const isFileSelected = selectedFileName !== '' || !!uploadedFileName;
   const itemStyle = APPLY_FORM_STYLE.listItem;
 
   const {
@@ -81,8 +83,12 @@ const ApplyFormList = ({
           경력(개월 수)
         </Label>
         <Input
-          {...register('experienceMonths', { valueAsNumber: true })}
+          {...register('experienceMonths', {
+            setValueAs: value =>
+              value === '' || value === undefined ? undefined : Number(value),
+          })}
           id="career"
+          isInvalid={!!errors.experienceMonths}
           min={0}
           placeholder="숫자만 입력해주세요."
           step={1}
@@ -108,7 +114,7 @@ const ApplyFormList = ({
             placeholder="파일 업로드하기"
             position="right"
             src={isFileSelected ? '/icons/x-circle.svg' : '/icons/upload.svg'}
-            value={selectedFileName || ''}
+            value={selectedFileName || uploadedFileName || ''}
           />
           <InputFile
             accept=".pdf,.docx,.doc"
