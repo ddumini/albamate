@@ -80,7 +80,7 @@ const useMyPageApi = () => {
     // 내가 작성한 댓글 수정
     updateMyComment: (commentId: number, content: string) =>
       authAxios.patch(
-        `comments/${commentId}`,
+        `/comments/${commentId}`,
         { content },
         {
           headers: {

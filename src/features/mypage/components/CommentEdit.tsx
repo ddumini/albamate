@@ -18,6 +18,7 @@ const CommentEdit = ({ id, content, close }: CommentEditProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-10">
       <Textarea
+        required
         value={textareaValue}
         variant="solid"
         onChange={e => setTextareaValue(e.target.value)}
@@ -32,12 +33,19 @@ const CommentEdit = ({ id, content, close }: CommentEditProps) => {
         />
         <PrimaryButton
           className="w-1/2 p-6 text-lg"
+          disabled={textareaValue.trim().length === 0}
           label="수정하기"
           type="button"
           variant="solid"
           onClick={() => {
-            upDateMyComment.mutate({ id, content: textareaValue });
-            close();
+            upDateMyComment.mutate(
+              { id, content: textareaValue },
+              {
+                onSuccess: () => {
+                  close();
+                },
+              }
+            );
           }}
         />
       </div>
