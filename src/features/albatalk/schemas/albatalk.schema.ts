@@ -34,7 +34,7 @@ export const AlbatalkDetailResponseSchema = AlbatalkSchema.extend({
 // GetAlbatalksParams 스키마
 export const GetAlbatalksParamsSchema = z.object({
   limit: z.number(),
-  cursor: z.number().optional(),
+  cursor: z.number().optional().nullable(),
   orderBy: z.enum(['mostRecent', 'mostCommented', 'mostLiked']).optional(),
   keyword: z.string().optional(),
 });
