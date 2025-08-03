@@ -42,7 +42,8 @@ export const ROLE_ACCESS = {
   APPLICANT: {
     // 지원자가 접근 가능한 private 페이지들
     private: [
-      '/myapply', // 내 지원 목록
+      '/myalbalist', // 내 알바 지원 목록
+      '/myapply', // 내 지원 상세
       '/mypage', // 마이페이지
     ],
     // 지원자가 접근 가능한 public 페이지들 (모든 public 페이지 접근 가능)

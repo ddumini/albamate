@@ -76,10 +76,12 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
 
   const handleCardClick = () => {
     if (isOwner) {
-      router.push(`/albalist/${item.id}`);
+      // 사장님: 알바 상세 페이지로 이동
+      router.push(`/alba/${item.id}`);
     } else {
+      // 지원자: 내 지원서 상세 페이지로 이동
       const applicantItem = item as ApplicantMyAlbaItem;
-      router.push(`/albalist/${applicantItem.form.id}`);
+      router.push(`/myapply/${applicantItem.form.id}`);
     }
   };
 
