@@ -76,15 +76,16 @@ export const useAlbatalkDetail = (
  * 게시글 작성 훅
  */
 export const useCreateAlbatalk = () => {
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const authAxios = axiosInstance;
 
   return useMutation({
     mutationFn: (params: CreateAlbatalkParams) =>
       createAlbatalk(params, authAxios),
     onSuccess: () => {
-      QueryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+      queryClient.invalidateQueries({
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {
@@ -112,7 +113,8 @@ export const useUpdateAlbatalk = () => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {
@@ -135,7 +137,8 @@ export const useDeleteAlbatalk = () => {
         queryKey: albatalkKeys.detail(postId),
       });
       queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+        queryKey: ['albatalks'],
+        exact: false,
       });
       queryClient.removeQueries({
         queryKey: albatalkKeys.comments(postId),
@@ -162,8 +165,9 @@ export const useAddAlbatalkLike = () => {
         queryKey: albatalkKeys.detail(postId),
       });
       // 게시글 목록 쿼리 무효화
-      queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+      queryClient.refetchQueries({
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {
@@ -185,8 +189,9 @@ export const useRemoveAlbatalkLike = () => {
       queryClient.invalidateQueries({
         queryKey: albatalkKeys.detail(postId),
       });
-      queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+      queryClient.refetchQueries({
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {

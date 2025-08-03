@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import { Writer } from '@/features/albatalk/schemas/albatalk.schema';
 import { cn } from '@/shared/lib/cn';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import {
   useAddAlbatalkLike,
@@ -36,6 +37,7 @@ const AlbatalkMetaInfo = ({
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [isToggling, setIsToggling] = useState(false);
+  const { showPopup } = usePopupStore();
 
   const likeIconSrc = isLiked ? '/icons/like-active.svg' : '/icons/like.svg';
 
@@ -64,13 +66,21 @@ const AlbatalkMetaInfo = ({
     try {
       if (isLiked) {
         await removeLikeMutation.mutateAsync(albatalkId); // DELETE
+        showPopup('좋아요를 취소했습니다.', 'error');
       } else {
         await addLikeMutation.mutateAsync(albatalkId); // POST
+        showPopup('좋아요를 눌렀습니다.', 'success');
       }
     } catch (error) {
       setIsLiked(previousLiked);
       setLikeCount(previousCount);
       console.error('좋아요 토글 실패 : ', error);
+
+      if (isLiked) {
+        showPopup('좋아요 취소에 실패했습니다.', 'error');
+      } else {
+        showPopup('좋아요를 실패했습니다.', 'error');
+      }
     } finally {
       setIsToggling(false); // 토글 완료
     }

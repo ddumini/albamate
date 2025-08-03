@@ -68,7 +68,7 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
   const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
   useEffect(() => {
-    if (isEditMode && initialData && user?.id) {
+    if (isEditMode && initialData && user) {
       const isOwner = initialData.writer.id === user.id;
       if (!isOwner) {
         setHasAccessDenied(true);
@@ -77,7 +77,7 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
         return;
       }
     }
-  }, [isEditMode, initialData, user?.id, router, showPopup]);
+  }, [isEditMode, initialData, user, router, showPopup]);
 
   // 초기 데이터 설정
   useEffect(() => {

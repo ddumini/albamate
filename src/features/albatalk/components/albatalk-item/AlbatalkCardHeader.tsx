@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
@@ -26,7 +25,6 @@ const AlbatalkCardHeader = ({
 }: AlbatalkHeaderProps) => {
   const router = useRouter();
   const deleteMutation = useDeleteAlbatalk();
-  const queryClient = useQueryClient();
 
   const { user } = useSessionUtils();
   const isOwner = writerId === user?.id;
@@ -41,12 +39,6 @@ const AlbatalkCardHeader = ({
       if (isConfirmed) {
         try {
           await deleteMutation.mutateAsync(albatalkId);
-          // 알바톡 관련 모든 쿼리 무효화
-          queryClient.invalidateQueries({
-            queryKey: ['albatalks'],
-          });
-          alert('게시글이 성공적으로 삭제되었습니다.');
-
           router.push('/albatalk');
         } catch (error) {
           console.error('게시글 삭제 실패:', error);
