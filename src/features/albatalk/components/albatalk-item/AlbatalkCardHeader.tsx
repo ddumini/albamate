@@ -4,12 +4,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { cn } from '@/shared/lib/cn';
 
 import { useDeleteAlbatalk } from '../../hooks/useAlbatalk';
 
 interface AlbatalkHeaderProps {
   title: string;
+  writerId: number;
   albatalkId: number;
   className?: string;
   titleClassName?: string;
@@ -19,11 +21,15 @@ const AlbatalkCardHeader = ({
   title,
   albatalkId,
   className,
+  writerId,
   titleClassName,
 }: AlbatalkHeaderProps) => {
   const router = useRouter();
   const deleteMutation = useDeleteAlbatalk();
   const queryClient = useQueryClient();
+
+  const { user } = useSessionUtils();
+  const isOwner = writerId === user?.id;
 
   const handleActionClick = async (option: string) => {
     if (option === 'edit') {
@@ -69,7 +75,7 @@ const AlbatalkCardHeader = ({
       >
         {title}
       </h2>
-      <KebabMenuDropdown options={menuOptions} />
+      {isOwner && <KebabMenuDropdown options={menuOptions} />}
     </div>
   );
 };

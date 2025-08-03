@@ -35,7 +35,11 @@ const AlbatalkItem = ({ albatalk }: AlbatalkItemProps) => {
       onClick={handleClick}
     >
       <div className="min-w-0 flex-1">
-        <AlbatalkCardHeader albatalkId={albatalk.id} title={albatalk.title} />
+        <AlbatalkCardHeader
+          albatalkId={albatalk.id}
+          title={albatalk.title}
+          writerId={albatalk.writer.id}
+        />
         <p className="line-clamp-2 w-220 text-gray-500 dark:text-gray-300">
           {albatalk.content}
         </p>

@@ -16,6 +16,7 @@ const AlbatalkDetailHeader = ({ data }: AlbatalkDetailHeaderProps) => {
         className="border-b border-gray-200"
         title={title}
         titleClassName="pb-16 md:text-xl lg:text-2xl"
+        writerId={writer.id}
       />
       <AlbatalkMetaInfo
         isInteractive // 상호작용 가능
