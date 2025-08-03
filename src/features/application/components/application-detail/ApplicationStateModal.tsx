@@ -7,16 +7,23 @@ import { useState } from 'react';
 import RadioButton, {
   RadioOption,
 } from '@/shared/components/common/button/RadioButton';
+import { usePopupStore } from '@/shared/store/popupStore';
 import useModalStore from '@/shared/store/useModalStore';
+
+import { useUpdateApplicationStatusMutation } from '../../queries/queries';
+import { ApplicationStatus } from '../../types/application';
 
 interface ApplicationStateModalProps {
   currentStatus: string;
+  applicationId: string;
 }
 
 const ApplicationStateModal = ({
   currentStatus,
+  applicationId,
 }: ApplicationStateModalProps) => {
   const { closeModal } = useModalStore();
+  const { showPopup } = usePopupStore();
 
   const [selected, setSelected] = useState(currentStatus);
 
@@ -27,10 +34,23 @@ const ApplicationStateModal = ({
     { value: 'HIRED', label: '채용 완료' },
   ];
 
+  const updateStatusMutation = useUpdateApplicationStatusMutation({
+    onSuccess: () => {
+      showPopup('지원 상태가 변경되었습니다.', 'success');
+    },
+    onError: error => {
+      console.error('실패!', error);
+      showPopup('상태 변경에 실패했습니다.', 'error');
+    },
+  });
+
   const handleStateSubmit = () => {
-    // TODO: API 호출로 실제 상태 업데이트
-    // console.log('선택된 상태:', selected);
     closeModal();
+
+    updateStatusMutation.mutate({
+      applicationId,
+      status: selected as ApplicationStatus,
+    });
   };
 
   return (
@@ -64,6 +84,7 @@ const ApplicationStateModal = ({
         />
         <PrimaryButton
           className="h-58 w-full py-20 text-lg lg:text-xl"
+          disabled={updateStatusMutation.isPending}
           label="선택하기"
           type="button"
           variant="solid"
