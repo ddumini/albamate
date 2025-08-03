@@ -25,14 +25,14 @@ const CommentEdit = ({ id, content, close }: CommentEditProps) => {
       />
       <div className="flex w-full items-center justify-center gap-6">
         <PrimaryButton
-          className="w-1/2 p-6 text-lg"
+          className="w-1/2 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
           label="취소하기"
           type="button"
           variant="cancelSolid"
           onClick={() => close()}
         />
         <PrimaryButton
-          className="w-1/2 p-6 text-lg"
+          className="w-1/2 rounded py-16 text-lg font-semibold lg:w-314 lg:py-20 lg:text-2lg"
           disabled={textareaValue.trim().length === 0}
           label="수정하기"
           type="button"
