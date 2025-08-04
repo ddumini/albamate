@@ -25,6 +25,7 @@ export const createOwnerSchema = z.object({
   phoneNumber: z
     .string()
     .optional()
+    .nullable()
     .refine(val => !val || /^[0-9]+$/.test(val), {
       message: '숫자만 입력해주세요.',
     }),
