@@ -77,10 +77,10 @@ const AlbaCard = ({ item }: Props) => {
     try {
       if (prevScrapped) {
         await cancelScrapAlba(item.id);
-        showPopup(`${item.title} 스크랩 취소 완료!`, 'error');
+        showPopup(`스크랩 취소 완료!`, 'error');
       } else {
         await scrapAlba(item.id);
-        showPopup(`${item.title} 스크랩 완료!`, 'success');
+        showPopup(`스크랩 완료!`, 'success');
       }
 
       queryClient.invalidateQueries({ queryKey: ['albaList'] });
