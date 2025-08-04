@@ -26,7 +26,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
       console.log('containerWidth:', containerWidth, 'textWidth:', textWidth);
 
       if (textWidth > containerWidth) {
-        const duration = textWidth * 0.03;
+        const duration = textWidth * 0.02;
         setAnimationDuration(duration);
       } else {
         setAnimationDuration(null);
@@ -54,18 +54,19 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
         {title}
       </span>
 
-      {/* 애니메이션 텍스트 */}
-      <span
-        className={`inline-block will-change-transform ${animationDuration ? 'animate-marquee' : ''}`}
-        style={{
-          animationDuration: animationDuration
-            ? `${animationDuration}s`
-            : undefined,
-          paddingRight: animationDuration ? '100%' : 0,
-        }}
-      >
-        {title}
-      </span>
+      {animationDuration ? (
+        <div
+          className="animate-marquee flex w-fit gap-160 will-change-transform"
+          style={{
+            animationDuration: `${animationDuration}s`,
+          }}
+        >
+          <span>{title}</span>
+          <span>{title}</span> {/* 반복용 */}
+        </div>
+      ) : (
+        <span>{title}</span>
+      )}
     </div>
   );
 };
