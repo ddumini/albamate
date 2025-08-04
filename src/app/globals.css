@@ -57,8 +57,8 @@
   --breakpoint-xs: 23.4375rem; /* 375px */
 }
 
-/* 다크모드 토글 버튼 유틸리티 클래스 */
 @layer utilities {
+  /* 다크모드 토글 버튼 유틸리티 클래스 */
   .dark-light-toggle svg {
     transition:
       transform 0.3s ease,
@@ -69,6 +69,21 @@
   .dark-light-toggle:hover svg {
     fill: var(--btn-svg-hover, #10b981);
     transform: scale(1.1);
+  }
+
+  /* 텍스트 흐름 애니메이션 */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% + 375px));
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
   }
 }
 

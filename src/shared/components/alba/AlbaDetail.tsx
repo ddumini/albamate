@@ -67,8 +67,10 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
-      <div className="max-w-375 truncate text-2lg font-bold lg:max-w-624 lg:text-[26px]">
-        {title}
+      <div className="relative max-w-375 overflow-hidden text-2lg font-bold whitespace-nowrap lg:max-w-624 lg:text-[26px]">
+        <span className="hover:animation-none animate-marquee inline-block pr-[100%] will-change-transform">
+          {title}
+        </span>
       </div>
 
       {/* 5. 스크랩, 지원 현황 */}
