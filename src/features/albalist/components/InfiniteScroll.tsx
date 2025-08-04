@@ -13,6 +13,7 @@ interface InfiniteScrollProps {
   isLoadingMore: boolean;
   error: Error | null;
   loadMoreRef: React.RefObject<HTMLDivElement | null>;
+  onRetry?: () => void;
   children?: React.ReactNode;
 }
 
@@ -23,6 +24,7 @@ const InfiniteScroll = ({
   error,
   loadMoreRef,
   children,
+  onRetry,
 }: InfiniteScrollProps) => {
   // 에러 상태
   if (error) {
@@ -34,7 +36,7 @@ const InfiniteScroll = ({
         <button
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
           type="button"
-          onClick={() => window.location.reload()}
+          onClick={() => onRetry?.()}
         >
           새로고침
         </button>

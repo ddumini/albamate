@@ -79,6 +79,11 @@ const AlbaListPage = () => {
     }));
   }, []);
 
+  // 같은 값이지만 상태를 갱신하여 useInfiniteScroll 트리거
+  const handleRetry = useCallback(() => {
+    setFilters(prev => ({ ...prev }));
+  }, []);
+
   const handleSearchChange = useCallback(
     (value: string) => setSearchInput(value),
     []
@@ -105,6 +110,7 @@ const AlbaListPage = () => {
         isLoading={isLoading}
         isLoadingMore={isLoadingMore}
         loadMoreRef={loadMoreRef}
+        onRetry={handleRetry}
       >
         {isOwner && <FloatingFormButton />}
       </InfiniteScroll>
