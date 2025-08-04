@@ -12,7 +12,6 @@ import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import IconInput from '@/shared/components/common/input/IconInput';
 import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
-import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 
 import { FormField } from '../constants/formFields';
 
@@ -40,40 +39,6 @@ const AuthFormItem = <T extends FieldValues>({
   const fieldError = errors?.[name];
   const hasError = !!fieldError;
   const isRequired = field?.required ?? false;
-
-  // 이미지 타입인 경우 ProfileEdit 컴포넌트 렌더링
-  if (type === 'image') {
-    const currentImageUrl = watch?.(name);
-
-    return (
-      <div>
-        <Label className="sr-only" htmlFor={name} isRequired={isRequired}>
-          {label}
-        </Label>
-        <div className="mt-8 flex justify-center lg:mt-16">
-          <ProfileEdit
-            id={name}
-            imageUrl={currentImageUrl}
-            onError={errorMessage => {
-              // 에러 메시지를 폼 에러로 설정
-              if (setValue) {
-                setValue(name, '' as any);
-                setValue(`${name}Error` as Path<T>, errorMessage as any);
-              }
-            }}
-            onImageChange={file => {
-              // 파일명을 폼에 저장
-              setValue?.(name, file.name as any);
-            }}
-          />
-          <ErrorMessage
-            isVisible={hasError}
-            message={fieldError?.message as string}
-          />
-        </div>
-      </div>
-    );
-  }
 
   // 주소 타입인 경우 AddressSearchModal 컴포넌트 렌더링
   if (type === 'address') {

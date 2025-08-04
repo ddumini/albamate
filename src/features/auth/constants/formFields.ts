@@ -102,13 +102,6 @@ const OWNER_SIGNUP_FIELDS: FormField[] = [
  */
 const APPLICANT_ACCOUNT_FIELDS: FormField[] = [
   {
-    name: 'imageUrl',
-    label: '프로필 이미지',
-    type: 'image',
-    required: false,
-    placeholder: '프로필 이미지를 선택해주세요',
-  },
-  {
     name: 'name',
     label: '이름',
     type: 'text',
