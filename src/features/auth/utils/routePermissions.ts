@@ -45,7 +45,6 @@ export const ROLE_ACCESS = {
     private: [
       '/myalbalist', // 내 알바 지원 목록
       '/addtalk', // 알바토크 등록
-      '/myapply', // 내 지원 상세
       '/mypage', // 마이페이지
     ],
     // 지원자가 접근 가능한 public 페이지들 (모든 public 페이지 접근 가능)
@@ -81,7 +80,6 @@ export function getRouteGroup(
     pathname.startsWith('/addtalk') ||
     pathname.startsWith('/myalbalist') ||
     pathname.startsWith('/application') ||
-    pathname.startsWith('/myapply') ||
     pathname.startsWith('/mypage')
   ) {
     return 'private';

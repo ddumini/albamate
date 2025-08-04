@@ -157,8 +157,6 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
           />
         )}
       >
-        {userRole === 'OWNER' && <FloatingFormButton />}
-
         {/* 무한 스크롤 트리거 요소 */}
         {hasNextPage && (
           <div
@@ -178,6 +176,7 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
 
   return (
     <div className="mb-68">
+      {userRole === 'OWNER' && <FloatingFormButton />}
       <AlbaFilterBar
         isOwner={userRole === 'OWNER'}
         publicValue={filters.publicStatus}

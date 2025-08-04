@@ -17,8 +17,8 @@ import type {
 } from '@/features/auth/types';
 import { getAuthPageType } from '@/features/auth/utils/authUtils';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import EditPopup from '@/shared/components/common/popup/EditPopup';
 import { extractAuthErrorMessage } from '@/shared/lib/auth/error-messages';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import AuthFormFields from './AuthFormFields';
 
@@ -44,17 +44,7 @@ const AuthForm = () => {
   const authPageType = getAuthPageType(pathname);
   const authContext = useContext(AuthContext);
   const router = useRouter();
-
-  // 로그인 상태 관리
-  const [loginStatus, setLoginStatus] = useState<{
-    visible: boolean;
-    message: string;
-    type: 'success' | 'error';
-  }>({
-    visible: false,
-    message: '',
-    type: 'success',
-  });
+  const { showPopup } = usePopupStore();
 
   // 사용자 타입 (지원자/사장님)
   const userType = authContext?.userType;
@@ -137,18 +127,13 @@ const AuthForm = () => {
           if (result?.error) {
             console.error('로그인 실패:', result.error);
             const errorMessage = extractAuthErrorMessage(result);
-            setLoginStatus({
-              visible: true,
-              message: errorMessage || '로그인 중 오류가 발생했습니다.',
-              type: 'error',
-            });
+            showPopup(
+              errorMessage || '로그인 중 오류가 발생했습니다.',
+              'error'
+            );
           } else {
             // 로그인 성공 처리
-            setLoginStatus({
-              visible: true,
-              message: '로그인되었습니다.',
-              type: 'success',
-            });
+            showPopup('로그인되었습니다.', 'success');
 
             // 성공 메시지 표시 후 잠시 대기 후 리다이렉트
             setTimeout(() => {
@@ -192,12 +177,10 @@ const AuthForm = () => {
             const tempSignUpData = authContext?.tempSignUpData;
             if (!tempSignUpData) {
               console.error('임시 회원가입 데이터를 찾을 수 없습니다.');
-              setLoginStatus({
-                visible: true,
-                message:
-                  '회원가입 정보가 만료되었습니다. 다시 회원가입을 진행해주세요.',
-                type: 'error',
-              });
+              showPopup(
+                '회원가입 정보가 만료되었습니다. 다시 회원가입을 진행해주세요.',
+                'error'
+              );
               // 회원가입 페이지로 리다이렉트
               setTimeout(() => {
                 const signupUrl =
@@ -240,32 +223,26 @@ const AuthForm = () => {
                   } as any)) as any;
 
                   if (signInResult && !signInResult.error) {
-                    setLoginStatus({
-                      visible: true,
-                      message: '회원가입이 완료되었습니다!',
-                      type: 'success',
-                    });
+                    showPopup('회원가입이 완료되었습니다!', 'success');
                     setTimeout(() => {
                       router.push('/albalist');
                     }, 1500);
                   } else {
                     console.error('자동 로그인 실패:', signInResult?.error);
-                    setLoginStatus({
-                      visible: true,
-                      message: '회원가입이 완료되었습니다. 로그인해주세요.',
-                      type: 'success',
-                    });
+                    showPopup(
+                      '회원가입이 완료되었습니다. 로그인해주세요.',
+                      'success'
+                    );
                     setTimeout(() => {
                       router.push('/signin');
                     }, 1500);
                   }
                 } catch (signInError) {
                   console.error('자동 로그인 중 오류:', signInError);
-                  setLoginStatus({
-                    visible: true,
-                    message: '회원가입이 완료되었습니다. 로그인해주세요.',
-                    type: 'success',
-                  });
+                  showPopup(
+                    '회원가입이 완료되었습니다. 로그인해주세요.',
+                    'success'
+                  );
                   setTimeout(() => {
                     router.push('/signin');
                   }, 1500);
@@ -285,20 +262,15 @@ const AuthForm = () => {
                 console.error('회원가입 실패:', errorData);
                 const errorMessage =
                   errorData.error || '회원가입에 실패했습니다.';
-                setLoginStatus({
-                  visible: true,
-                  message: errorMessage,
-                  type: 'error',
-                });
+                showPopup(errorMessage, 'error');
               }
             } catch (error) {
               console.error('회원가입 중 오류 발생:', error);
               console.error('에러 상세:', error);
-              setLoginStatus({
-                visible: true,
-                message: '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.',
-                type: 'error',
-              });
+              showPopup(
+                '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.',
+                'error'
+              );
             }
           }
           break;
@@ -352,40 +324,25 @@ const AuthForm = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-16 lg:gap-32">
-          <AuthFormFields<AuthFormData>
-            defaultValues={formConfig.defaultValues}
-            errors={errors}
-            fields={formConfig.fields}
-            register={register}
-            setValue={setValue}
-            watch={watch}
-          />
-        </div>
-        <PrimaryButton
-          className="mt-24 h-58 w-full lg:mt-56"
-          disabled={!isFormComplete() || isSubmitting || isRedirecting}
-          label={getButtonText(
-            authPageType,
-            userType || undefined,
-            isSubmitting
-          )}
-          type="submit"
-          variant="solid"
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-16 lg:gap-32">
+        <AuthFormFields<AuthFormData>
+          defaultValues={formConfig.defaultValues}
+          errors={errors}
+          fields={formConfig.fields}
+          register={register}
+          setValue={setValue}
+          watch={watch}
         />
-      </form>
-
-      {/* 로그인 상태 메시지 팝업 */}
-      <EditPopup
-        duration={3000}
-        message={loginStatus.message}
-        type={loginStatus.type}
-        visible={loginStatus.visible}
-        onClose={() => setLoginStatus(prev => ({ ...prev, visible: false }))}
+      </div>
+      <PrimaryButton
+        className="mt-24 h-58 w-full lg:mt-56"
+        disabled={!isFormComplete() || isSubmitting || isRedirecting}
+        label={getButtonText(authPageType, userType || undefined, isSubmitting)}
+        type="submit"
+        variant="solid"
       />
-    </>
+    </form>
   );
 };
 
