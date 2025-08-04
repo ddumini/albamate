@@ -57,8 +57,11 @@ export const formatPhoneNumber = (phone: string): string => {
   if (!digits) return '-';
 
   if (digits.length === 10) {
-    // 10자리: 00-0000-0000
-    return digits.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+    // 10자리: 02(2자리) vs. 기타(3자리) 구분
+    if (digits.startsWith('02')) {
+      return digits.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+    }
+    return digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
   }
 
   if (digits.length === 11) {
