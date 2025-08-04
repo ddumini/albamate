@@ -152,7 +152,7 @@ const MyPageContent = () => {
     if (tabValue === 'scrap') setScrapOrderBy(sortOrderBy);
   }, [sortOrderBy, tabValue, setPostOrderBy, setScrapOrderBy]);
 
-  // if (isAuthLoading) return <LoadingSpinner size="lg" />;
+  if (isAuthLoading) return <LoadingSpinner size="lg" />;
 
   return (
     <div className="mb-40 w-full max-w-1480">

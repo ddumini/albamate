@@ -39,14 +39,13 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
     defaultValues: {
       nickname: userInfo?.nickname ?? '',
       storeName:
-        userInfo.storeName === 'undefined' || userInfo.storeName == null
-          ? ''
-          : userInfo.storeName,
+        userInfo?.storeName && userInfo.storeName !== 'undefined'
+          ? userInfo.storeName
+          : '',
       storePhoneNumber:
-        userInfo.storePhoneNumber === 'undefined' ||
-        userInfo.storePhoneNumber == null
-          ? ''
-          : userInfo.storePhoneNumber,
+        userInfo?.storePhoneNumber && userInfo.storePhoneNumber !== 'undefined'
+          ? userInfo.storePhoneNumber
+          : '',
       phoneNumber: userInfo.phoneNumber ?? '',
       location:
         userInfo.location === 'undefined' || userInfo.location == null
