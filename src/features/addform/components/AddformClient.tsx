@@ -163,10 +163,10 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       localStorage.removeItem('addform-draft');
       if (formId) {
         editformMutate({ formId: Number(formId), form: getValues() });
-        showPopup('알바폼 수정이 완료되었습니다.', 'error');
+        showPopup('알바폼 수정이 완료되었습니다.', 'success');
       } else {
         addformMutate(getValues());
-        showPopup('알바폼 생성이 완료되었습니다.', 'error');
+        showPopup('알바폼 생성이 완료되었습니다.', 'success');
       }
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
