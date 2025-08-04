@@ -1,3 +1,6 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface TitleMarqueeProps {
@@ -10,6 +13,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
   const [animationDuration, setAnimationDuration] = useState<number | null>(
     null
   );
+  const pathname = usePathname();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -17,7 +21,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
 
     if (container && measure) {
       const containerWidth = container.offsetWidth;
-      const textWidth = measure.offsetWidth; // 순수 텍스트 너비만 측정
+      const textWidth = measure.offsetWidth;
 
       console.log('containerWidth:', containerWidth, 'textWidth:', textWidth);
 
@@ -33,9 +37,11 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative max-w-345 overflow-hidden text-2lg font-bold whitespace-nowrap lg:text-xl"
+      className={`relative max-w-345 overflow-hidden text-2lg font-bold whitespace-nowrap lg:text-xl ${
+        pathname?.startsWith('/alba/') ? 'lg:max-w-500' : ''
+      }`}
     >
-      {/* 너비 측정용 숨겨진 텍스트 (화면에 안 보임) */}
+      {/* 너비 측정용 숨겨진 텍스트 */}
       <span
         ref={measureRef}
         className="invisible absolute whitespace-nowrap"
@@ -48,11 +54,9 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
         {title}
       </span>
 
-      {/* 애니메이션용 텍스트 */}
+      {/* 애니메이션 텍스트 */}
       <span
-        className={`inline-block will-change-transform ${
-          animationDuration ? 'animate-marquee' : ''
-        }`}
+        className={`inline-block will-change-transform ${animationDuration ? 'animate-marquee' : ''}`}
         style={{
           animationDuration: animationDuration
             ? `${animationDuration}s`
