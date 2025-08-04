@@ -56,7 +56,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
 
       {animationDuration ? (
         <div
-          className="animate-marquee flex w-fit gap-160 will-change-transform"
+          className="flex w-fit gap-160 will-change-transform hover:animate-marquee"
           style={{
             animationDuration: `${animationDuration}s`,
           }}

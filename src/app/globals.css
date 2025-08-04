@@ -55,6 +55,8 @@
 
   --breakpoint-3xl: 120rem;
   --breakpoint-xs: 23.4375rem; /* 375px */
+
+  --animate-marquee: marquee infinite linear;
 }
 
 @layer utilities {
@@ -82,9 +84,20 @@
   }
 
   .animate-marquee {
-    animation-name: marquee;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    animation: marquee linear infinite;
+  }
+
+  .paused {
+    animation-play-state: paused;
+  }
+
+  .running {
+    animation-play-state: running;
+  }
+
+  /* group-hover로 작동되도록 사용자 정의 variant도 추가 가능 */
+  .group:hover .group-hover\:running {
+    animation-play-state: running;
   }
 }
 
