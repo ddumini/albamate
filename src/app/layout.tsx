@@ -1,6 +1,6 @@
 import './globals.css';
 
-import GnbRenderer from '@common/gnb/GnbRenderer'; // dynamic 없이 일반 import
+// dynamic 없이 일반 import
 import ModalManager from '@common/modal/ModalManager';
 import { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
@@ -8,6 +8,7 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
 import { Providers } from '@/app/providers';
+import ClientGnbWrapper from '@/shared/components/common/gnb/ClientGnbWrapper';
 import EditPopup from '@/shared/components/common/popup/EditPopup';
 
 const pretendard = localFont({
@@ -40,9 +41,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <SessionProvider>
           <ThemeProvider enableSystem attribute="class" defaultTheme="system">
             <Providers>
-              <div className="mb-48">
-                <GnbRenderer />
-              </div>
+              <ClientGnbWrapper />
               {children}
               <ModalManager />
               <EditPopup />
