@@ -3,6 +3,7 @@ import { SORT_OPTIONS } from '@/shared/constants/mypageFilterOption';
 import { ContentType, SortOption } from '@/shared/types/mypage';
 
 import { useSessionUtils } from '../../../shared/lib/auth/use-session-utils';
+import { useSessionStore } from '../store/SessionState';
 import ScrapFilterControls from './FilterControl';
 import MyPageTop from './MyPageTop';
 
@@ -27,11 +28,12 @@ const MyPageHeader = ({
   onSelectSort,
 }: MyPageHeaderProps) => {
   const { isOwner } = useSessionUtils();
+  const user = useSessionStore(state => state.user);
 
   const tabOption = [
     { id: 'post', label: '내가 쓴 글' },
     { id: 'comment', label: '내가 쓴 댓글' },
-    !isOwner && { id: 'scrap', label: '스크랩' },
+    user?.role !== 'OWNER' ? { id: 'scrap', label: '스크랩' } : null,
   ].filter((item): item is TabOption => Boolean(item));
 
   const sortOption: SortOption[] = SORT_OPTIONS[tabValue as ContentType] || [];
@@ -67,7 +69,7 @@ const MyPageHeader = ({
   };
   return (
     <>
-      <MyPageTop isOwner={isOwner} />
+      <MyPageTop isOwner={user?.role ?? null} />
       <section
         className={`xl:mb-24 ${filterWrapClassName} flex flex-col justify-between xl:items-center`}
       >
