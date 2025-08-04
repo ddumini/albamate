@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
 import { useAuthSession } from '@/features/auth';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 
 const FloatingButtons = ({ formId }: Props) => {
   const { isAuthenticated, refreshSession } = useAuthSession();
+  const { isOwner } = useSessionUtils();
   const { scrapAlba, cancelScrapAlba } = useAlbaListApi();
   const queryClient = useQueryClient();
   const { showPopup } = usePopupStore();
@@ -106,15 +108,20 @@ const FloatingButtons = ({ formId }: Props) => {
     scrapAlba,
     cancelScrapAlba,
     queryClient,
+    showPopup,
   ]);
 
   return (
     <FloatingButtonContainer position="right-center">
-      <FloatingButton
-        isBookmarked={isBookmarked}
-        type="bookmark"
-        onClick={handleBookmarkToggle}
-      />
+      {/* 사장님이 아닌 경우만 스크랩 */}
+      {!isOwner && (
+        <FloatingButton
+          isBookmarked={isBookmarked}
+          type="bookmark"
+          onClick={handleBookmarkToggle}
+        />
+      )}
+
       <FloatingButton type="share" />
     </FloatingButtonContainer>
   );
