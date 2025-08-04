@@ -1,17 +1,14 @@
 'use client';
 
-import EmptyCard from '@common/EmptyCard';
-import ListWrapper from '@common/list/ListWrapper';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
-import type { AlbaItem } from '@/shared/types/alba';
 
-import { useAlbalistQuery } from '../queries/queries';
+import useInfiniteScroll from '../queries/useInfiniteScroll';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
-import AlbaCard from './AlbaCard';
 import AlbaFilterBar from './AlbaFilterBar';
+import InfiniteScroll from './InfiniteScroll';
 
 interface FilterState {
   recruitStatus?: string;
@@ -42,13 +39,17 @@ const AlbaListPage = () => {
   }, [debouncedSearchKeyword]);
 
   // 필터 → API 파라미터 변환
-  const apiParams = useMemo(
+  const infiniteApiParams = useMemo(
     () => convertFiltersToApiParams(filters, 10),
     [filters]
   );
 
-  // 데이터 쿼리
-  const { data, isLoading, error } = useAlbalistQuery(apiParams);
+  // 무한스크롤 쿼리
+  const { data, isLoading, isLoadingMore, error, hasNextPage, loadMore } =
+    useInfiniteScroll({
+      ...infiniteApiParams,
+      enabled: !isSessionLoading, // 세션 로딩 완료 후 데이터 로드
+    });
 
   const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
     setFilters(prev => ({
@@ -63,9 +64,6 @@ const AlbaListPage = () => {
   );
 
   if (isSessionLoading) return <div>로딩 중...</div>;
-  if (error) return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
-
-  const items: AlbaItem[] = data ?? [];
 
   return (
     <div className="mb-68">
@@ -78,24 +76,18 @@ const AlbaListPage = () => {
         onSearchChange={handleSearchChange}
       />
 
-      {items.length === 0 ? (
-        <EmptyCard
-          description="1분 만에 등록하고 알바를 구해보세요!"
-          title="등록된 알바폼이 없어요."
-          type="albaList"
-          wrapClassName="min-h-[60vh]"
-        />
-      ) : (
-        <ListWrapper
-          className="mb-68"
-          items={items}
-          renderItem={(item: AlbaItem) => (
-            <AlbaCard key={item.id} item={item} />
-          )}
-        >
-          {isOwner && <FloatingFormButton />}
-        </ListWrapper>
-      )}
+      <InfiniteScroll
+        data={data}
+        emptyDescription="1분 만에 등록하고 알바를 구해보세요!"
+        emptyTitle="등록된 알바폼이 없어요."
+        error={error}
+        hasNextPage={hasNextPage}
+        isLoading={isLoading}
+        isLoadingMore={isLoadingMore}
+        onLoadMore={loadMore}
+      >
+        {isOwner && <FloatingFormButton />}
+      </InfiniteScroll>
     </div>
   );
 };
