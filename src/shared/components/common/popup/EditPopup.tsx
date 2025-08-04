@@ -1,41 +1,40 @@
 'use client';
+
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import { usePopupStore } from '@/shared/store/popupStore';
 
-// 기본 아이콘 경로 설정
 const defaultIcons = {
   success: '/icons/check-circle.svg',
   error: '/icons/X-error-circle.svg',
   info: '/icons/info.svg',
 };
 
-// 아이콘 크기 설정 (기기별로 다르게 적용 가능)
 const iconSizes = {
   success: { width: 24, height: 24, lgWidth: 36, lgHeight: 36 },
   error: { width: 18, height: 18, lgWidth: 28, lgHeight: 28 },
   info: { width: 24, height: 24, lgWidth: 36, lgHeight: 36 },
 };
 
-/**
- * 화면 상단에 애니메이션과 함께 나타나는 상태 메시지 팝업 컴포넌트
- *
- * @component
- * @param {EditPopupProps} props
- */
 const EditPopup = () => {
   const { visible, message, type, duration, hidePopup } = usePopupStore();
-  const [isRender, setIsRender] = useState(visible);
+  const [isRender, setIsRender] = useState(false);
   const [animationClass, setAnimationClass] = useState('');
+  const [hasMounted, setHasMounted] = useState(false);
 
-  // visible 상태에 따라 등장 및 사라짐 애니메이션 처리
+  // 클라이언트에서 마운트된 후에 상태를 사용하도록 처리
   useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // hydration mismatch 방지를 위한 조건
+  useEffect(() => {
+    if (!hasMounted) return;
+
     if (visible) {
       setIsRender(true);
       setAnimationClass('opacity-0 -translate-y-12');
-
-      // requestAnimationFrame을 두 번 호출해 브라우저 렌더링 타이밍 맞춤
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setAnimationClass('opacity-90 translate-y-0');
@@ -46,11 +45,11 @@ const EditPopup = () => {
       const timeout = setTimeout(() => setIsRender(false), 500);
       return () => clearTimeout(timeout);
     }
-  }, [visible]);
+  }, [visible, hasMounted]);
 
   // 자동 닫힘 처리
   useEffect(() => {
-    if (!visible) return;
+    if (!visible || !hasMounted) return;
 
     const timer = setTimeout(() => {
       setAnimationClass('opacity-0 -translate-y-12');
@@ -62,9 +61,9 @@ const EditPopup = () => {
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [visible, duration, hidePopup]);
+  }, [visible, duration, hidePopup, hasMounted]);
 
-  if (!isRender) return null;
+  if (!hasMounted || !isRender) return null;
 
   const size = iconSizes[type];
 
