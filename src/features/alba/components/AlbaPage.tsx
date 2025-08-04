@@ -22,6 +22,8 @@ const AlbaPage = () => {
   const { openModal } = useModalStore();
 
   const [popupVisible, setPopupVisible] = useState(false);
+  const [hasShownInitialPopup, setHasShownInitialPopup] = useState(false); // ✅ 추가
+
   const { user, isOwner, isLoading: isSessionLoading } = useSessionUtils();
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -50,8 +52,12 @@ const AlbaPage = () => {
       openModal(<RecruitCloseModal />);
     }
 
-    setPopupVisible(true);
-  }, [item, openModal]);
+    // 딱 한 번만 뜨도록 제어
+    if (!hasShownInitialPopup) {
+      setPopupVisible(true);
+      setHasShownInitialPopup(true);
+    }
+  }, [item, openModal, hasShownInitialPopup]);
 
   if (!hasMounted) return null;
 
