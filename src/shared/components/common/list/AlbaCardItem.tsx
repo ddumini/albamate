@@ -14,6 +14,8 @@ import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
 
+import TitleMarquee from '../../ui/TitleMarquee';
+
 export interface DropdownOption {
   label: string;
   onClick: () => void;
@@ -127,9 +129,9 @@ const AlbaCardItem = ({
       </span>
 
       <div className="mt-12 ml-4 flex items-center gap-4">
-        <h3 className="flex-1 overflow-hidden text-2lg font-semibold text-ellipsis whitespace-nowrap text-black">
-          {title}
-        </h3>
+        <div className="flex-1">
+          <TitleMarquee title={title} />
+        </div>
         {!pathname.includes('my') &&
           (isScrapped ? (
             <Image
