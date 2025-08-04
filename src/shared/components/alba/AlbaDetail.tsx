@@ -3,10 +3,10 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import React from 'react';
 
-import { MockAlbaItem } from '@/features/alba/types/MockAlbaItem';
+import { AlbaItemDetail } from '@/shared/types/albaDetail';
 
 interface AlbaDetailProps {
-  item: MockAlbaItem;
+  item: AlbaItemDetail;
 }
 
 /**
@@ -52,7 +52,9 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         </div>
 
         {/* 2. 모집 날짜 범위 */}
-        <div className="Text-darkgray">{formattedStart} 등록</div>
+        <div className="dark:text-gray-400; text-gray-500">
+          {formattedStart} 등록
+        </div>
       </div>
 
       {/* 3. 가게 이름, 위치, 우대사항 */}
@@ -60,12 +62,14 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         <div className="font-semibold underline underline-offset-4">
           {storeName}
         </div>
-        <div className="Text-darkgray">{location}</div>
-        <div className="Text-darkgray">{`· ${preferred}`}</div>
+        <div className="dark:text-gray-400; text-gray-500">{location}</div>
+        <div className="dark:text-gray-400; text-gray-500">{`· ${preferred}`}</div>
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
-      <div className="text-2lg font-bold lg:text-[26px]">{title}</div>
+      <div className="max-w-375 truncate text-2lg font-bold lg:max-w-624 lg:text-[26px]">
+        {title}
+      </div>
 
       {/* 5. 스크랩, 지원 현황 */}
       <div className="mt-6 border-t border-b border-gray-100 py-4">
