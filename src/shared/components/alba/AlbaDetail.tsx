@@ -5,8 +5,6 @@ import React from 'react';
 
 import { AlbaItemDetail } from '@/shared/types/albaDetail';
 
-import TitleMarquee from '../ui/TitleMarquee';
-
 interface AlbaDetailProps {
   item: AlbaItemDetail;
 }
@@ -69,7 +67,9 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
-      <TitleMarquee title={title} />
+      <div className="relative max-w-375 text-2lg font-bold break-all lg:max-w-600 lg:text-[26px]">
+        {title}
+      </div>
 
       {/* 5. 스크랩, 지원 현황 */}
       <div className="mt-6 border-t border-b border-gray-100 py-4">
