@@ -82,23 +82,6 @@
       transform: translateX(-50%);
     }
   }
-
-  .animate-marquee {
-    animation: marquee linear infinite;
-  }
-
-  .paused {
-    animation-play-state: paused;
-  }
-
-  .running {
-    animation-play-state: running;
-  }
-
-  /* group-hover로 작동되도록 사용자 정의 variant도 추가 가능 */
-  .group:hover .group-hover\:running {
-    animation-play-state: running;
-  }
 }
 
 /* 전역 CSS 기본 설정 */

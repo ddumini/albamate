@@ -22,12 +22,13 @@ const AlbaPage = () => {
   const { openModal } = useModalStore();
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const { isOwner, isLoading: isSessionLoading } = useSessionUtils();
+  const [hasShownInitialPopup, setHasShownInitialPopup] = useState(false); // 추가
+
+  const { user, isOwner, isLoading: isSessionLoading } = useSessionUtils();
   const [hasMounted, setHasMounted] = useState(false);
 
   const { getAlbaDetail } = useAlbaListApi();
 
-  // React Query로 상세 데이터 조회
   const {
     data: item,
     isLoading,
@@ -35,15 +36,14 @@ const AlbaPage = () => {
   } = useQuery({
     queryKey: ['albaDetail', Number(formId)],
     queryFn: () => getAlbaDetail(Number(formId)).then(res => res.data),
-    staleTime: 1000 * 60 * 5, // 5분간 신선한 데이터로 간주
-    gcTime: 1000 * 60 * 10, // 10분간 캐시 유지
-    refetchOnWindowFocus: true, // 윈도우 포커스 시 리페치
-    refetchOnMount: true, // 컴포넌트 마운트 시 리페치
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
   useEffect(() => setHasMounted(true), []);
 
-  // 모집 마감 모달 띄우기
   useEffect(() => {
     if (!item) return;
 
@@ -52,12 +52,16 @@ const AlbaPage = () => {
       openModal(<RecruitCloseModal />);
     }
 
-    setPopupVisible(true);
-  }, [item, openModal]);
+    // 딱 한 번만 뜨도록 제어
+    if (!hasShownInitialPopup) {
+      setPopupVisible(true);
+      setHasShownInitialPopup(true);
+    }
+  }, [item, openModal, hasShownInitialPopup]);
 
   if (!hasMounted) return null;
 
-  if (isLoading) {
+  if (isLoading || isSessionLoading) {
     return <AlbaSkeleton />;
   }
 
@@ -68,6 +72,8 @@ const AlbaPage = () => {
       </div>
     );
   }
+
+  const isFormAuthor = isOwner && user?.id === item.ownerId;
 
   return (
     <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-40 pb-140 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
@@ -84,7 +90,7 @@ const AlbaPage = () => {
 
       <PageContent isOwner={isOwner} item={item} />
 
-      {isOwner && (
+      {isFormAuthor && (
         <div>
           <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
           <ApplicationList formId={Number(formId)} />

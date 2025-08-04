@@ -49,18 +49,30 @@ export const formatDateTime = (isoString: string): string => {
 /**
  * 전화번호를 하이픈(-)으로 구분된 형식으로 변환
  * @param phone 원본 전화번호 문자열
- * @param isOwnerPhone 사장님 번호 여부 (true면 3-4-4, false면 2-4-4)
- * @returns 하이픈(-) 구분된 전화번호
+ * @returns 하이픈(-) 구분된 전화번호 (길이에 따라 자동 처리)
  */
-export const formatPhoneNumber = (
-  phone: string,
-  isOwnerPhone = false
-): string => {
+export const formatPhoneNumber = (phone: string): string => {
   const digits = phone?.replace(/\D/g, '');
 
-  if (isOwnerPhone) {
-    return digits?.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-  } else {
-    return digits?.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+  if (!digits) return '-';
+
+  if (digits.length === 10) {
+    // 10자리: 02(2자리) vs. 기타(3자리) 구분
+    if (digits.startsWith('02')) {
+      return digits.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+    }
+    return digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
   }
+
+  if (digits.length === 11) {
+    // 11자리: 000-0000-0000
+    return digits.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  }
+
+  if (digits.length > 11) {
+    // 12자리 이상: 000-0000-xxxxx
+    return digits.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+  }
+
+  return phone; // 그 외는 원본 반환
 };

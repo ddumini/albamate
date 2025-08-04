@@ -34,15 +34,13 @@ interface ApplicantListProps {
 
 const ApplicationList = ({ formId }: ApplicantListProps) => {
   const [visibleCount, setVisibleCount] = useState(5);
-
   const { getApplications } = albaApi();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ['applications', formId],
     queryFn: () => getApplications(formId),
   });
 
-  // 매 렌더마다 새롭게 생성되는 불필요한 재계산 방지 및 구조 개선
   const { applications, visibleApplications } = useMemo(() => {
     const list: Applicant[] = data?.data?.data ?? [];
     return {
@@ -57,22 +55,34 @@ const ApplicationList = ({ formId }: ApplicantListProps) => {
     setVisibleCount(prev => prev + 5);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex justify-center">
         <LoadingSpinner size="sm" />
       </div>
     );
-  if (isError)
+  }
+
+  if (isError) {
+    console.error('지원자 목록 API 에러:', error);
+    return (
+      <div className="max-w-640 text-center text-error">
+        지원자 정보를 불러오는 중 오류가 발생했어요.
+      </div>
+    );
+  }
+
+  // 지원자가 아예 없을 경우
+  if (applications.length === 0) {
     return (
       <div className="max-w-640">
         <h2 className="mb-60 text-2lg font-bold lg:mb-120 lg:text-[26px]">
           지원 현황
         </h2>
-
-        <div className="text-center text-error">지원자가 아직 없어요!</div>
+        <div className="text-center text-gray-400">아직 지원자가 없어요.</div>
       </div>
     );
+  }
 
   return (
     <div className="max-w-640">
