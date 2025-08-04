@@ -1,22 +1,22 @@
 import EmptyCard from '@common/EmptyCard';
 import ListWrapper from '@common/list/ListWrapper';
-import { useEffect, useRef } from 'react';
 
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import type { AlbaItem } from '@/shared/types/alba';
 
 import AlbaCard from './AlbaCard';
 
-interface InfiniteScrollAlbaListProps {
+interface InfiniteScrollListProps {
   data: AlbaItem[];
   isLoading: boolean;
   isLoadingMore: boolean;
-  hasNextPage: boolean;
+  hasNextPage: boolean | undefined;
   error: Error | null;
-  onLoadMore: () => void;
+  loadMoreRef: React.RefObject<HTMLDivElement | null>;
   emptyTitle?: string;
   emptyDescription?: string;
   loadingText?: string;
-  children?: React.ReactNode; // FloatingFormButton 등
+  children?: React.ReactNode;
 }
 
 const InfiniteScroll = ({
@@ -25,45 +25,10 @@ const InfiniteScroll = ({
   isLoadingMore,
   hasNextPage,
   error,
-  onLoadMore,
+  loadMoreRef,
   loadingText = '로딩 중...',
   children,
-}: InfiniteScrollAlbaListProps) => {
-  const observerRef = useRef<HTMLDivElement>(null);
-  const loadMoreRef = useRef(onLoadMore);
-
-  // onLoadMore 함수 참조 업데이트
-  useEffect(() => {
-    loadMoreRef.current = onLoadMore;
-  }, [onLoadMore]);
-
-  // Intersection Observer로 무한스크롤 구현
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        const [entry] = entries;
-        if (entry?.isIntersecting && hasNextPage && !isLoadingMore) {
-          loadMoreRef.current();
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '100px', // 100px 전에 미리 로딩
-      }
-    );
-
-    const currentRef = observerRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [hasNextPage, isLoadingMore]);
-
+}: InfiniteScrollListProps) => {
   // 에러 상태
   if (error) {
     return (
@@ -113,18 +78,12 @@ const InfiniteScroll = ({
         {children}
       </ListWrapper>
 
-      {/* 무한스크롤 트리거 */}
-      <div ref={observerRef} className="flex h-10 items-center justify-center">
+      {/* 무한스크롤 트리거 - 공용 훅의 loadMoreRef 사용 */}
+      <div ref={loadMoreRef} className="flex h-10 items-center justify-center">
         {isLoadingMore && (
           <div className="flex items-center space-x-2">
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-            <span className="text-sm text-gray-600">
-              더 많은 알바를 불러오는 중...
-            </span>
+            <LoadingSpinner size="sm" />
           </div>
-        )}
-        {!hasNextPage && data.length > 0 && (
-          <div className="text-sm text-gray-500">모든 알바를 불러왔습니다.</div>
         )}
       </div>
     </div>
