@@ -5,11 +5,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useUploadImage } from '@/features/common/api';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import { usePopupStore } from '@/shared/store/popupStore';
 import { FormData } from '@/shared/types/mypage';
 
+import useMyPageApi from '../api/api';
 import { useUpdateMyProfileQuery } from '../queries';
 import {
   createOwnerSchema,
@@ -45,7 +45,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   });
 
   const updateProfile = useUpdateMyProfileQuery();
-  const api = useUploadImage();
+  const api = useMyPageApi();
   const { showPopup } = usePopupStore();
 
   const handleImageChange = async (file: File) => {
@@ -56,7 +56,7 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
     let finalImageUrl = imageUrl ?? null;
     try {
       if (imageFile) {
-        const response = await api.getImageUrl(imageFile);
+        const response = await api.updateImage(imageFile);
         finalImageUrl = response.url;
       }
     } catch (error) {

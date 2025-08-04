@@ -7,6 +7,7 @@ import React, { useMemo, useState } from 'react';
 
 import albaApi from '@/features/alba/api/albaApi';
 import Tooltip from '@/shared/components/common/tooltip/Tooltip';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import {
   getExperienceLabel,
   getStatusColor,
@@ -56,8 +57,22 @@ const ApplicationList = ({ formId }: ApplicantListProps) => {
     setVisibleCount(prev => prev + 5);
   };
 
-  if (isLoading) return <div>지원자 정보를 불러오는 중입니다...</div>;
-  if (isError) return <div>지원자 정보를 불러오는 데 실패했습니다.</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center">
+        <LoadingSpinner size="sm" />
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="max-w-640">
+        <h2 className="mb-60 text-2lg font-bold lg:mb-120 lg:text-[26px]">
+          지원 현황
+        </h2>
+
+        <div className="text-center text-error">지원자가 아직 없어요!</div>
+      </div>
+    );
 
   return (
     <div className="max-w-640">

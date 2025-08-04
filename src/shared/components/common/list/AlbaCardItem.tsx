@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 
 import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
@@ -56,6 +57,7 @@ const AlbaCardItem = ({
   const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
+  const { isOwner } = useSessionUtils();
 
   useClickOutside(dropdownRef, () => setOpen(false));
 
@@ -100,21 +102,23 @@ const AlbaCardItem = ({
       <div className="relative mt-12 flex items-center gap-8 text-sm">
         {getPublicLabel(isPublic)}
         {getStatusLabel(recruitmentEndDate)}
-
-        <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
-          <Image
-            alt="드롭다운 아이콘"
-            className="cursor-pointer"
-            height={24}
-            src="/icons/kebab-menu.svg"
-            width={24}
-            onClick={e => {
-              e.stopPropagation();
-              setOpen(prev => !prev);
-            }}
-          />
-          {open && <AlbaDropdown options={dropdownOptions} />}
-        </div>
+        {/* 사장님이 아닌 경우만 스크랩 */}
+        {!isOwner && (
+          <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
+            <Image
+              alt="드롭다운 아이콘"
+              className="cursor-pointer"
+              height={24}
+              src="/icons/kebab-menu.svg"
+              width={24}
+              onClick={e => {
+                e.stopPropagation();
+                setOpen(prev => !prev);
+              }}
+            />
+            {open && <AlbaDropdown options={dropdownOptions} />}
+          </div>
+        )}
       </div>
 
       <span className="Text-gray mt-8 block text-xs font-normal whitespace-nowrap lg:text-sm">

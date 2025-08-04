@@ -1,4 +1,4 @@
-export interface MockAlbaItem {
+export interface AlbaItem {
   id: number;
   ownerId: number;
   title: string;
