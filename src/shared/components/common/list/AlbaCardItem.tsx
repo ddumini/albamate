@@ -143,6 +143,7 @@ const AlbaCardItem = ({
           ) : (
             <Image
               alt="스크랩 안됨"
+              className="mr-3"
               height={20}
               src="/icons/bookmark-gray.svg"
               width={20}

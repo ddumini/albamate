@@ -33,7 +33,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative max-w-[375px] overflow-hidden text-2lg font-bold whitespace-nowrap lg:max-w-[624px] lg:text-[26px]"
+      className="relative max-w-345 overflow-hidden text-2lg font-bold whitespace-nowrap lg:text-xl"
     >
       {/* 너비 측정용 숨겨진 텍스트 (화면에 안 보임) */}
       <span
@@ -57,7 +57,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
           animationDuration: animationDuration
             ? `${animationDuration}s`
             : undefined,
-          paddingRight: animationDuration ? '100%' : undefined,
+          paddingRight: animationDuration ? '100%' : 0,
         }}
       >
         {title}
