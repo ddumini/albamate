@@ -4,25 +4,6 @@ import { useEffect, useState } from 'react';
 
 import { usePopupStore } from '@/shared/store/popupStore';
 
-/**
- * @typedef {Object} EditPopupProps
- * @property {string} message - 팝업에 표시될 메시지
- * @property {number} [duration=3000] - 팝업이 자동으로 사라지기까지의 시간 (ms)
- * @property {boolean} visible - 팝업이 보일지 여부
- * @property {() => void} onClose - 팝업이 닫힐 때 호출되는 콜백 함수
- * @property {'success' | 'error' | 'info'} [type='success'] - 팝업의 유형에 따라 아이콘 및 색상 스타일이 달라짐
- * @property {string} [iconSrc] - 아이콘 커스텀 경로 (기본 아이콘을 덮어쓸 수 있음)
- */
-
-interface EditPopupProps {
-  message: string;
-  duration?: number;
-  visible: boolean;
-  onClose: () => void;
-  type?: 'success' | 'error' | 'info';
-  iconSrc?: string;
-}
-
 // 기본 아이콘 경로 설정
 const defaultIcons = {
   success: '/icons/check-circle.svg',
