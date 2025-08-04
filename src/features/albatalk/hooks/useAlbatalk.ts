@@ -58,15 +58,11 @@ export const useAlbatalkDetail = (
   options?: { enabled?: boolean }
 ) => {
   const authAxios = axiosInstance;
-  const { data: session, status } = useSession(); // 세션과 상태 가져오기
-
-  const isSessionLoading = status === 'loading';
-  const hasAccessToken = !!session?.accessToken;
 
   return useQuery({
     queryKey: albatalkKeys.detail(postId),
     queryFn: () => fetchAlbatalkDetail(postId, authAxios),
-    enabled: !isSessionLoading && hasAccessToken && options?.enabled !== false,
+    enabled: options?.enabled !== false,
     staleTime: 1000 * 60 * 5, // 5분
     gcTime: 1000 * 60 * 10, // 10분
   });
@@ -235,11 +231,6 @@ export const useCreateAlbatalkComment = () => {
     mutationFn: ({ postId, content }: { postId: number; content: string }) =>
       createComment(postId, content, authAxios),
     onSuccess: (_, { postId }) => {
-      // 해당 게시글의 댓글 목록 무효화
-      queryClient.invalidateQueries({
-        queryKey: albatalkKeys.comments(postId),
-      });
-
       // 무한 스크롤 댓글 쿼리도 무효화
       queryClient.invalidateQueries({
         queryKey: ['albatalk', 'comments', postId, 'infinite'],
