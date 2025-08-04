@@ -3,22 +3,25 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
-import useInfiniteScroll from '../queries/useInfiniteScroll';
+import useAlbaListApi from '../api/albaListApi';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
 import AlbaFilterBar from './AlbaFilterBar';
 import InfiniteScroll from './InfiniteScroll';
 
 interface FilterState {
   recruitStatus?: string;
-  publicStatus?: string; // 사장님만 UI 노출
+  publicStatus?: string;
   sortStatus?: string;
   searchKeyword?: string;
 }
 
 const AlbaListPage = () => {
   const { isOwner, isLoading: isSessionLoading } = useSessionUtils();
+  const { getAlbas } = useAlbaListApi();
 
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
@@ -39,17 +42,35 @@ const AlbaListPage = () => {
   }, [debouncedSearchKeyword]);
 
   // 필터 → API 파라미터 변환
-  const infiniteApiParams = useMemo(
-    () => convertFiltersToApiParams(filters, 10),
+  const apiParams = useMemo(
+    () => convertFiltersToApiParams(filters, 6),
     [filters]
   );
 
-  // 무한스크롤 쿼리
-  const { data, isLoading, isLoadingMore, error, hasNextPage, loadMore } =
-    useInfiniteScroll({
-      ...infiniteApiParams,
-      enabled: !isSessionLoading, // 세션 로딩 완료 후 데이터 로드
-    });
+  // queryKey에서 객체를 문자열로 변환
+  const queryKey = useMemo(
+    () => ['albaList', 'infinite', JSON.stringify(apiParams)],
+    [apiParams]
+  );
+
+  // 공용 무한스크롤 훅 사용
+  const {
+    isLoading,
+    isError,
+    isFetchingNextPage: isLoadingMore,
+    loadMoreRef,
+    getData,
+    error,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey,
+    fetcher: async params => {
+      const response = await getAlbas(params);
+      return response.data;
+    },
+    initialParams: apiParams,
+    enabled: !isSessionLoading, // 세션 로딩 완료 후 데이터 로드
+  });
 
   const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
     setFilters(prev => ({
@@ -63,7 +84,7 @@ const AlbaListPage = () => {
     []
   );
 
-  if (isSessionLoading) return <div>로딩 중...</div>;
+  if (isSessionLoading) return <LoadingSpinner size="sm" />;
 
   return (
     <div className="mb-68">
@@ -77,14 +98,11 @@ const AlbaListPage = () => {
       />
 
       <InfiniteScroll
-        data={data}
-        emptyDescription="1분 만에 등록하고 알바를 구해보세요!"
-        emptyTitle="등록된 알바폼이 없어요."
-        error={error}
-        hasNextPage={hasNextPage}
+        data={getData()}
+        error={isError ? error : null}
         isLoading={isLoading}
         isLoadingMore={isLoadingMore}
-        onLoadMore={loadMore}
+        loadMoreRef={loadMoreRef}
       >
         {isOwner && <FloatingFormButton />}
       </InfiniteScroll>
