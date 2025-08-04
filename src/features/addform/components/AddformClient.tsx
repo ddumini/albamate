@@ -19,7 +19,6 @@ import {
 import { useAlbaformDetailQuery } from '@/features/application/queries/queries';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
-import useViewport from '@/shared/hooks/useViewport';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
 
@@ -42,8 +41,6 @@ const AddformClient = ({ formId }: { formId?: string }) => {
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
 
   const { showPopup } = usePopupStore();
-
-  const { isDesktop } = useViewport();
 
   const recruitContentDefault = {
     title: '',
@@ -217,20 +214,17 @@ const AddformClient = ({ formId }: { formId?: string }) => {
   return (
     <FormProvider {...methods}>
       <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
-        {isDesktop && (
-          <Sidebar
-            className="3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
-            currentMenu={currentMenu}
-            isEdit={!!formId}
-            isSubmitting={
-              isImagePending || isAddformPending || isEditformPending
-            }
-            writingMenu={writingMenu}
-            onMenuClick={handleMenuClick}
-            onSave={handleSave}
-            onSubmit={handleSubmit}
-          />
-        )}
+        <Sidebar
+          className="hidden lg:flex 3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
+          currentMenu={currentMenu}
+          isEdit={!!formId}
+          isSubmitting={isImagePending || isAddformPending || isEditformPending}
+          writingMenu={writingMenu}
+          onMenuClick={handleMenuClick}
+          onSave={handleSave}
+          onSubmit={handleSubmit}
+        />
+
         <div className="w-full max-w-375 shrink-0 lg:max-w-720 3xl:mx-auto">
           <header className="flex items-center justify-between px-24 py-20 lg:px-40 lg:py-35">
             <h1 className="text-xl font-semibold lg:text-3xl">
@@ -245,14 +239,14 @@ const AddformClient = ({ formId }: { formId?: string }) => {
               />
             </Link>
           </header>
-          {isDesktop || (
-            <TabMenu
-              className="mx-24 my-10"
-              currentMenu={currentMenu}
-              writingMenu={writingMenu}
-              onMenuClick={handleMenuClick}
-            />
-          )}
+
+          <TabMenu
+            className="mx-24 my-10 lg:hidden"
+            currentMenu={currentMenu}
+            writingMenu={writingMenu}
+            onMenuClick={handleMenuClick}
+          />
+
           <form>
             <RecruitContentForm
               className={currentMenu === 'recruitContent' ? '' : 'hidden'}
@@ -267,17 +261,16 @@ const AddformClient = ({ formId }: { formId?: string }) => {
               className={currentMenu === 'workCondition' ? '' : 'hidden'}
             />
           </form>
-          {isDesktop || (
-            <AddformButtons
-              className="mx-24 my-10"
-              isEdit={!!formId}
-              isSubmitting={
-                isImagePending || isAddformPending || isEditformPending
-              }
-              onSave={handleSave}
-              onSubmit={handleSubmit}
-            />
-          )}
+
+          <AddformButtons
+            className="mx-24 my-10 lg:hidden"
+            isEdit={!!formId}
+            isSubmitting={
+              isImagePending || isAddformPending || isEditformPending
+            }
+            onSave={handleSave}
+            onSubmit={handleSubmit}
+          />
         </div>
       </div>
     </FormProvider>
