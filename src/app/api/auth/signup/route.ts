@@ -42,8 +42,6 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    console.log(signUpData);
-
     // 백엔드 API로 회원가입 요청
     const response = await fetch(`${baseURL}auth/sign-up`, {
       method: 'POST',
