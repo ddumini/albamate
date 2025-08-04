@@ -77,13 +77,14 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-100% + 375px));
+      transform: translateX(-100%);
     }
   }
 
   .animate-marquee {
-    animation: marquee 20s linear infinite;
-    white-space: nowrap;
+    animation-name: marquee;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 }
 

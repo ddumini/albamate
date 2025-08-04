@@ -5,6 +5,8 @@ import React from 'react';
 
 import { AlbaItemDetail } from '@/shared/types/albaDetail';
 
+import TitleMarquee from '../ui/TitleMarquee';
+
 interface AlbaDetailProps {
   item: AlbaItemDetail;
 }
@@ -67,11 +69,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
-      <div className="relative max-w-375 overflow-hidden text-2lg font-bold whitespace-nowrap lg:max-w-624 lg:text-[26px]">
-        <span className="hover:animation-none animate-marquee inline-block pr-[100%] will-change-transform">
-          {title}
-        </span>
-      </div>
+      <TitleMarquee title={title} />
 
       {/* 5. 스크랩, 지원 현황 */}
       <div className="mt-6 border-t border-b border-gray-100 py-4">
