@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { useUploadImage } from '@/features/common/api';
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
+import { usePopupStore } from '@/shared/store/popupStore';
 import { FormData } from '@/shared/types/mypage';
 
 import { useUpdateMyProfileQuery } from '../queries';
@@ -21,7 +22,10 @@ interface OwnerInfoEditProps {
 }
 
 const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
-  const [imageUrl, setImageUrl] = useState(userInfo?.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(
+    userInfo?.imageUrl ?? undefined
+  );
+  const [imageFile, setImageFile] = useState<File>();
   const {
     register,
     handleSubmit,
@@ -42,32 +46,32 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
 
   const updateProfile = useUpdateMyProfileQuery();
   const api = useUploadImage();
+  const { showPopup } = usePopupStore();
 
   const handleImageChange = async (file: File) => {
-    try {
-      const response = await api.getImageUrl(file);
-      const uploadUrl = response.url;
-      setImageUrl(uploadUrl);
-    } catch (error) {
-      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
-      console.error(error);
-    }
+    setImageFile(file);
   };
 
-  const onSubmit = (data: UpdateOwnerMyProfile) => {
+  const onSubmit = async (data: UpdateOwnerMyProfile) => {
+    let finalImageUrl = imageUrl ?? null;
+    try {
+      if (imageFile) {
+        const response = await api.getImageUrl(imageFile);
+        finalImageUrl = response.url;
+      }
+    } catch (error) {
+      showPopup('이미지 업로드에 실패했습니다. 다시 시도해주세요.', 'error');
+      console.error(error);
+    }
     updateProfile.mutate(
-      {
-        ...data,
-        imageUrl,
-        name: userInfo.name,
-      },
+      { ...data, imageUrl: finalImageUrl },
       {
         onSuccess: () => {
-          alert('프로필이 성공적으로 수정되었습니다.');
+          showPopup('프로필이 성공적으로 수정되었습니다.', 'success');
           close();
         },
         onError: error => {
-          alert('수정 중 오류가 발생했습니다');
+          showPopup('수정 중 오류가 발생했습니다', 'error');
           console.error(error);
         },
       }

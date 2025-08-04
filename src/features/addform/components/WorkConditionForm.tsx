@@ -5,6 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import Checkbox from '@/shared/components/common/button/Checkbox';
 import DatePicker from '@/shared/components/common/date-picker';
+import AddressSearchModal from '@/shared/components/common/input/AddressSearchModal';
 import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import IconInput from '@/shared/components/common/input/IconInput';
 import Input from '@/shared/components/common/input/Input';
@@ -35,12 +36,28 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
         <Label isRequired htmlFor="location">
           근무 위치
         </Label>
-        <IconInput
-          alt="근무 위치"
-          id="location"
-          placeholder="위치를 입력해주세요."
-          src="/icons/pin-stroke.svg"
-          {...register('location')}
+        <Controller
+          control={control}
+          name="location"
+          render={({ field }) => (
+            <AddressSearchModal
+              currentAddress={field.value}
+              onAddressSelect={address => {
+                field.onChange(address);
+              }}
+            >
+              <IconInput
+                readOnly
+                alt="주소 검색"
+                className="w-full"
+                iconClassName="cursor-pointer"
+                inputClassName="cursor-pointer"
+                placeholder="주소를 검색해주세요"
+                src="/icons/pin-solid.svg"
+                value={field.value ?? ''}
+              />
+            </AddressSearchModal>
+          )}
         />
       </AddFormSection>
       <AddFormSection>
@@ -56,7 +73,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
@@ -86,7 +103,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <TimePicker
-                defaultValue={timeRange}
+                value={timeRange}
                 onChange={range => {
                   field.onChange(range.workStartTime);
                   setValue('workEndTime', range.workEndTime as any, {
@@ -105,7 +122,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           control={control}
           name="workDays"
           render={({ field }) => (
-            <WeekPicker defaultValue={field.value} onChange={field.onChange} />
+            <WeekPicker value={field.value} onChange={field.onChange} />
           )}
         />
         <div className="px-10 py-8 lg:px-14 lg:py-16">
@@ -131,8 +148,12 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           <Input
             className="pr-46 pl-24 lg:pr-60 lg:pl-32"
             id="hourlyWage"
+            isInvalid={!!errors.hourlyWage}
             placeholder={`${process.env.NEXT_PUBLIC_MINIMUM_WAGE}`}
-            {...register('hourlyWage', { valueAsNumber: true })}
+            {...register('hourlyWage', {
+              setValueAs: value =>
+                value === '' || value === undefined ? undefined : Number(value),
+            })}
           />
           <span className="absolute top-14 right-30 text-lg font-medium text-black-400 lg:top-16 lg:right-40 lg:text-xl dark:text-gray-100">
             원

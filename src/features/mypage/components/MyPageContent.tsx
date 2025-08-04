@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { CommentCardItem } from '@/shared/types/mypage';
+import { CommentsApi, PostApi, ScrapApi } from '@/shared/types/mypage';
 
-import { CommentsApi, PostApi, ScrapApi } from '../../../shared/types/mypage';
 import useMyPageApi from '../api/api';
 import useMyPageParams from '../hooks/useMyPageParams';
 import MyPageContentSection from './MyPageContentSection';
@@ -16,6 +18,8 @@ const MyPageContent = () => {
   const [publicValue, setPublicValue] = useState('');
   const [recruitValue, setRecruitValue] = useState('');
   const [sortOrderBy, setSortOrderBy] = useState('mostRecent');
+
+  const { isLoading: isAuthLoading } = useSessionUtils();
 
   const {
     limit,
@@ -148,6 +152,8 @@ const MyPageContent = () => {
     if (tabValue === 'scrap') setScrapOrderBy(sortOrderBy);
   }, [sortOrderBy, tabValue, setPostOrderBy, setScrapOrderBy]);
 
+  // if (isAuthLoading) return <LoadingSpinner size="lg" />;
+
   return (
     <div className="mb-40 w-full max-w-1480">
       <MyPageHeader
@@ -157,12 +163,18 @@ const MyPageContent = () => {
         onSelectRecruit={handleRecruitValue}
         onSelectSort={handleBasicOrderBy}
       />
-      <MyPageContentSection
-        comment={getFilterCommentData()}
-        post={getPostsData()}
-        scrap={getScrapData()}
-        tabValue={tabValue}
-      />
+      {isPostLoading || isScrapLoading || isCommentsLoading ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <LoadingSpinner size="lg" />
+        </div>
+      ) : (
+        <MyPageContentSection
+          comment={getFilterCommentData()}
+          post={getPostsData()}
+          scrap={getScrapData()}
+          tabValue={tabValue}
+        />
+      )}
 
       {/* 무한 스크롤 감지용 요소 */}
       <div ref={getActiveLoadMoreRef()} className="h-4 w-full" />

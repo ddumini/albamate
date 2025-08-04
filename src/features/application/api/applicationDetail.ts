@@ -18,5 +18,20 @@ export const useApplicationDetailApi = () => {
     getApplicationById: (applicationId: string) => {
       return authAxios.get(`applications/${applicationId}`);
     },
+
+    // 이력서 다운로드
+    downloadResume: (resumeId: string) => {
+      return authAxios.get(`${resumeId}/download`, {
+        responseType: 'blob',
+      });
+    },
+
+    // 지원 상태 수정 (사장님용)
+    updateApplicationStatus: (
+      applicationId: string,
+      data: { status: string }
+    ) => {
+      return authAxios.patch(`applications/${applicationId}`, data);
+    },
   };
 };

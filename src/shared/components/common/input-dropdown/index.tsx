@@ -36,7 +36,7 @@ interface InputDropdownOption {
 interface InputDropdownProps {
   options: InputDropdownOption[];
   placeholder?: string;
-  defaultValue?: string;
+  value?: string;
   name?: string; // form에서 사용할 name 속성 추가
   onChange?: (value: string) => void;
   required?: boolean; // 필수 필드 여부
@@ -46,18 +46,18 @@ interface InputDropdownProps {
 const BTN_STYLE =
   'w-full text-left px-24 h-54 text-lg font-regular text-black-100 cursor-pointer lg:text-xl lg:h-64 lg:px-32';
 const INPUT_STYLE =
-  'border-1 border-transparent text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 lg:text-xl lg:h-64 lg:px-32 min-w-none';
+  'border-1 border-transparent text-black-100 bg-background-200 h-54 w-full rounded-lg text-lg px-24 lg:text-xl lg:h-64 lg:px-32 min-w-none dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700 caret-mint-300 outline-mint-300 focus:outline';
 
 const InputDropdown = ({
   options,
   placeholder = '선택',
-  defaultValue = '',
+  value = '',
   name,
   onChange,
   required = false,
   className,
 }: InputDropdownProps) => {
-  const [inputValue, setInputValue] = useState(defaultValue);
+  const inputValue = value;
   const [directInputValue, setDirectInputValue] = useState('');
   const [isDirectInput, setIsDirectInput] = useState(false);
   const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
@@ -82,7 +82,6 @@ const InputDropdown = ({
   }, [inputValue, directInputValue, isDirectInput]);
 
   const handleSelect = (value: string) => {
-    setInputValue(value);
     setIsDirectInput(false);
     setCurrentPlaceholder(placeholder);
     setDirectInputValue('');
@@ -90,7 +89,6 @@ const InputDropdown = ({
   };
 
   const handleDirectInput = () => {
-    setInputValue('직접입력');
     setIsDirectInput(true);
     setCurrentPlaceholder('직접입력');
     onChange?.(directInputValue);
@@ -113,7 +111,9 @@ const InputDropdown = ({
         !isOpen && ''
       )}
     >
-      <span className="flex-1">{inputValue || currentPlaceholder}</span>
+      <span className="flex-1">
+        {isDirectInput ? currentPlaceholder : inputValue || currentPlaceholder}
+      </span>
     </div>
   );
 
@@ -145,7 +145,7 @@ const InputDropdown = ({
             {selectInput(isOpen)}
             <Image
               alt="arrow-down"
-              className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36"
+              className="absolute top-1/2 right-24 -translate-y-1/2 lg:right-32 lg:h-36 lg:w-36 dark:invert-100"
               height={24}
               src="/icons/drop-menu-down.svg"
               width={24}

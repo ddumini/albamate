@@ -17,10 +17,6 @@ const AlbatalkDetailContent = ({
 }: AlbatalkDetailContentProps) => {
   const [imageError, setImageError] = useState(false);
 
-  const handleImageError = () => {
-    setImageError(true);
-  };
-
   // 간단한 URL 유효성 검사
   const isValidImageUrl =
     imageUrl &&
@@ -35,7 +31,7 @@ const AlbatalkDetailContent = ({
           height={200}
           src={imageUrl}
           width={327}
-          onError={handleImageError}
+          onError={() => setImageError(true)}
         />
       )}
       {content}

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { usePopupStore } from '../store/popupStore';
+
 /**
  * 클립보드 복사 훅
  *
@@ -24,17 +26,18 @@ import { useState } from 'react';
 
 export const useCopy = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const { showPopup } = usePopupStore();
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
-      alert('주소가 클립보드에 복사되었습니다.'); // TODO: 토스트 메세지로 변경 가능
+      showPopup('주소가 클립보드에 복사되었습니다.', 'success'); // TODO: 토스트 메세지로 변경 가능
       setTimeout(() => setIsCopied(false), 2000);
       return true;
     } catch (err) {
       console.error('복사 실패:', err);
-      alert('복사에 실패했습니다.');
+      showPopup('복사에 실패했습니다.', 'error');
       return false;
     }
   };

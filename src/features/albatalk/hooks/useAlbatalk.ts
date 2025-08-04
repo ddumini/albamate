@@ -1,20 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { axiosInstance } from '@/shared/lib/axios';
 
 import {
   addAlbatalkLike,
+  createAlbatalk,
   createComment,
+  deleteAlbatalk,
   deleteComment,
   fetchAlbatalkDetail,
   fetchAlbatalks,
-  // 댓글 관련 API 함수들
   fetchComments,
   removeAlbatalkLike,
+  updateAlbatalk,
   updateComment,
 } from '../api/albatalkApi';
-import type {
+import {
+  CreateAlbatalkParams,
   GetAlbatalksParams,
   GetCommentsParams,
 } from '../schemas/albatalk.schema';
@@ -49,7 +53,10 @@ export const useAlbatalks = (params: GetAlbatalksParams) => {
  * 게시글 상세 조회 훅
  * @returns
  */
-export const useAlbatalkDetail = (postId: number) => {
+export const useAlbatalkDetail = (
+  postId: number,
+  options?: { enabled?: boolean }
+) => {
   const authAxios = axiosInstance;
   const { data: session, status } = useSession(); // 세션과 상태 가져오기
 
@@ -59,9 +66,87 @@ export const useAlbatalkDetail = (postId: number) => {
   return useQuery({
     queryKey: albatalkKeys.detail(postId),
     queryFn: () => fetchAlbatalkDetail(postId, authAxios),
-    enabled: !isSessionLoading && hasAccessToken,
+    enabled: !isSessionLoading && hasAccessToken && options?.enabled !== false,
     staleTime: 1000 * 60 * 5, // 5분
     gcTime: 1000 * 60 * 10, // 10분
+  });
+};
+
+/**
+ * 게시글 작성 훅
+ */
+export const useCreateAlbatalk = () => {
+  const queryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: (params: CreateAlbatalkParams) =>
+      createAlbatalk(params, authAxios),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['albatalks'],
+        exact: false,
+      });
+    },
+    onError: error => {
+      console.error('알바토크 작성 실패: ', error);
+    },
+  });
+};
+
+/**
+ * 알바토크 수정 훅
+ */
+export const useUpdateAlbatalk = () => {
+  const queryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: ({
+      postId,
+      ...params
+    }: { postId: number } & CreateAlbatalkParams) =>
+      updateAlbatalk(postId, params, authAxios),
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: albatalkKeys.detail(variables.postId),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ['albatalks'],
+        exact: false,
+      });
+    },
+    onError: error => {
+      console.error('알바토크 수정 실패: ', error);
+    },
+  });
+};
+
+/**
+ * 게시글 삭제 훅
+ */
+export const useDeleteAlbatalk = () => {
+  const queryClient = useQueryClient();
+  const authAxios = axiosInstance;
+
+  return useMutation({
+    mutationFn: (postId: number) => deleteAlbatalk(postId, authAxios),
+    onSuccess: (_, postId) => {
+      queryClient.removeQueries({
+        queryKey: albatalkKeys.detail(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['albatalks'],
+        exact: false,
+      });
+      queryClient.removeQueries({
+        queryKey: albatalkKeys.comments(postId),
+      });
+    },
+    onError: error => {
+      console.error('알바토크 삭제 실패: ', error);
+    },
   });
 };
 
@@ -80,8 +165,9 @@ export const useAddAlbatalkLike = () => {
         queryKey: albatalkKeys.detail(postId),
       });
       // 게시글 목록 쿼리 무효화
-      queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+      queryClient.refetchQueries({
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {
@@ -103,8 +189,9 @@ export const useRemoveAlbatalkLike = () => {
       queryClient.invalidateQueries({
         queryKey: albatalkKeys.detail(postId),
       });
-      queryClient.invalidateQueries({
-        queryKey: albatalkKeys.lists(),
+      queryClient.refetchQueries({
+        queryKey: ['albatalks'],
+        exact: false,
       });
     },
     onError: error => {
@@ -153,6 +240,11 @@ export const useCreateAlbatalkComment = () => {
         queryKey: albatalkKeys.comments(postId),
       });
 
+      // 무한 스크롤 댓글 쿼리도 무효화
+      queryClient.invalidateQueries({
+        queryKey: ['albatalk', 'comments', postId, 'infinite'],
+      });
+
       // 게시글 상세 정보도 무효화 (댓글 수 업데이트를 위해)
       queryClient.invalidateQueries({
         queryKey: albatalkKeys.detail(postId),
@@ -161,6 +253,26 @@ export const useCreateAlbatalkComment = () => {
     onError: error => {
       console.error('댓글 작성 실패:', error);
     },
+  });
+};
+
+/**
+ * 댓글 무한 스크롤 조회 훅
+ */
+export const useAlbatalkCommentsInfinite = (postId: number) => {
+  const authAxios = axiosInstance;
+  const { data: session, status } = useSession();
+
+  const isSessionLoading = status === 'loading';
+  const hasAccessToken = !!session?.accessToken;
+
+  return useInfiniteScroll({
+    mode: 'page',
+    queryKey: ['albatalk', 'comments', postId, 'infinite'],
+    fetcher: (params: GetCommentsParams) =>
+      fetchComments(postId, authAxios, params),
+    initialParams: { page: 1, pageSize: 6 },
+    enabled: !isSessionLoading && hasAccessToken,
   });
 };
 
@@ -185,6 +297,11 @@ export const useUpdateAlbatalkComment = () => {
       // 해당 게시글의 댓글 목록 무효화
       queryClient.invalidateQueries({
         queryKey: albatalkKeys.comments(postId),
+      });
+
+      // 무한 스크롤 댓글 쿼리도 무효화
+      queryClient.invalidateQueries({
+        queryKey: ['albatalk', 'comments', postId, 'infinite'],
       });
     },
     onError: error => {
@@ -212,6 +329,11 @@ export const useDeleteAlbatalkComment = () => {
       // 해당 게시글의 댓글 목록 무효화
       queryClient.invalidateQueries({
         queryKey: albatalkKeys.comments(postId),
+      });
+
+      // 무한 스크롤 댓글 쿼리도 무효화
+      queryClient.invalidateQueries({
+        queryKey: ['albatalk', 'comments', postId, 'infinite'],
       });
 
       // 게시글 상세 정보도 무효화 (댓글 수 업데이트를 위해)

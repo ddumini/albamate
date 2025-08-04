@@ -56,11 +56,11 @@ export const formatPhoneNumber = (
   phone: string,
   isOwnerPhone = false
 ): string => {
-  const digits = phone.replace(/\D/g, '');
+  const digits = phone?.replace(/\D/g, '');
 
   if (isOwnerPhone) {
-    return digits.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    return digits?.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   } else {
-    return digits.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+    return digits?.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
   }
 };

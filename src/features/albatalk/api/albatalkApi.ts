@@ -11,6 +11,8 @@ import {
   CommentResponseSchema,
   CommentsResponse,
   CommentsResponseSchema,
+  type CreateAlbatalkParams,
+  CreateAlbatalkParamsSchema,
   type GetAlbatalksParams,
   GetAlbatalksParamsSchema,
   GetCommentsParams,
@@ -50,6 +52,46 @@ export const fetchAlbatalkDetail = async (
   const response = await authAxios.get(`/posts/${postId}`);
 
   return AlbatalkDetailResponseSchema.parse(response.data);
+};
+
+/**
+ * 게시글 등록 API
+ * POST /posts
+ */
+export const createAlbatalk = async (
+  params: CreateAlbatalkParams,
+  authAxios: AxiosInstance
+): Promise<AlbatalkDetailResponse> => {
+  const validatedParams = CreateAlbatalkParamsSchema.parse(params);
+  const response = await authAxios.post('/posts', validatedParams);
+
+  return AlbatalkDetailResponseSchema.parse(response.data);
+};
+
+/**
+ * 게시글 수정 API
+ * PATCH /posts/{postId}
+ */
+export const updateAlbatalk = async (
+  postId: number,
+  params: CreateAlbatalkParams,
+  authAxios: AxiosInstance
+): Promise<AlbatalkDetailResponse> => {
+  const validatedParams = CreateAlbatalkParamsSchema.parse(params);
+  const response = await authAxios.patch(`/posts/${postId}`, validatedParams);
+
+  return AlbatalkDetailResponseSchema.parse(response.data);
+};
+
+/**
+ * 게시글 삭제 API
+ * DELETE /posts/{postId}
+ */
+export const deleteAlbatalk = async (
+  postId: number,
+  authAxios: AxiosInstance
+): Promise<void> => {
+  await authAxios.delete(`/posts/${postId}`);
 };
 
 /**

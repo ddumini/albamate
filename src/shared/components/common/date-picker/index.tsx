@@ -42,7 +42,7 @@ interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
-  defaultValue?: DateRange;
+  value?: DateRange;
 }
 
 const DatePicker = ({
@@ -50,12 +50,10 @@ const DatePicker = ({
   placeholder = '시작일 - 종료일',
   disabled = false,
   className,
-  defaultValue,
+  value,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(
-    defaultValue
-  );
+  const dateRange = value;
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -95,7 +93,6 @@ const DatePicker = ({
 
   // 날짜 변경 처리
   const handleSelect = (range: DateRange | undefined) => {
-    setDateRange(range);
     onDateRangeChange?.(range);
     if (range?.from && range?.to) {
       setIsOpen(false);
@@ -121,6 +118,7 @@ const DatePicker = ({
         aria-label={`날짜 범위 선택: ${getDisplayText()}`}
         className={cn(
           'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
+          'dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700',
           isOpen && 'border-gray-200',
           dateRange?.from && dateRange?.to && 'text-black-400',
           disabled && 'cursor-not-allowed'

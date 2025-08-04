@@ -1,11 +1,11 @@
 'use client';
 
 import AlbaCardItem from '@common/list/AlbaCardItem';
-import EditPopup from '@common/popup/EditPopup';
 import PrivateWrapper from '@common/PrivateWrapper';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { usePopupStore } from '@/shared/store/popupStore';
 import useModalStore from '@/shared/store/useModalStore';
 
 import { useDeleteFormMutation } from '../queries/queries';
@@ -21,12 +21,10 @@ interface Props {
 const MyAlbaCard = ({ item, isOwner }: Props) => {
   const router = useRouter();
   const { openModal } = useModalStore();
+  const { showPopup } = usePopupStore();
   const deleteFormMutation = useDeleteFormMutation();
 
   const [isp, setIsp] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
   const isOwnerItem = (
     item: ApplicantMyAlbaItem | OwnerMyAlbaItem
@@ -63,14 +61,10 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
   const handleDeleteForm = async (formId: number) => {
     try {
       await deleteFormMutation.mutateAsync(formId);
-      setToastMessage('알바폼이 성공적으로 삭제되었습니다.');
-      setToastType('success');
-      setShowToast(true);
+      showPopup('알바폼이 성공적으로 삭제되었습니다.', 'success');
     } catch (error) {
       console.error('알바폼 삭제 실패:', error);
-      setToastMessage('삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
-      setToastType('error');
-      setShowToast(true);
+      showPopup('삭제 중 오류가 발생했습니다. 다시 시도해주세요.', 'error');
     }
   };
 
@@ -86,30 +80,20 @@ const MyAlbaCard = ({ item, isOwner }: Props) => {
   };
 
   return (
-    <>
-      <PrivateWrapper isPrivate={isp}>
-        {isOwner ? (
-          <AlbaCardItem
-            dropdownOptions={applyScrapOptions}
-            item={item as OwnerMyAlbaItem}
-            onClick={handleCardClick}
-          />
-        ) : (
-          <ApplicantAlbaCard
-            item={item as ApplicantMyAlbaItem}
-            onClick={handleCardClick}
-          />
-        )}
-      </PrivateWrapper>
-
-      <EditPopup
-        duration={3000}
-        message={toastMessage}
-        type={toastType}
-        visible={showToast}
-        onClose={() => setShowToast(false)}
-      />
-    </>
+    <PrivateWrapper isPrivate={isp}>
+      {isOwner ? (
+        <AlbaCardItem
+          dropdownOptions={applyScrapOptions}
+          item={item as OwnerMyAlbaItem}
+          onClick={handleCardClick}
+        />
+      ) : (
+        <ApplicantAlbaCard
+          item={item as ApplicantMyAlbaItem}
+          onClick={handleCardClick}
+        />
+      )}
+    </PrivateWrapper>
   );
 };
 

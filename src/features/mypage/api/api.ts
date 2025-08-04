@@ -68,6 +68,30 @@ const useMyPageApi = () => {
           },
         })
         .then(res => res.data),
+
+    // 내가 작성한 게시글 삭제
+    getDeletePost: async (postId: number): Promise<void> =>
+      await authAxios.delete(`/posts/${postId}`),
+
+    // 내가 작성한 댓글 삭제
+    getDeleteComments: async (commentId: number): Promise<void> =>
+      await authAxios.delete(`/comments/${commentId}`),
+
+    // 내가 작성한 댓글 수정
+    updateMyComment: (commentId: number, content: string) =>
+      authAxios.patch(
+        `/comments/${commentId}`,
+        { content },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      ),
+
+    // 내 스크랩 취소
+    getCancelScrap: async (formId: number) =>
+      await authAxios.delete(`/forms/${formId}/scrap`),
   };
 };
 export default useMyPageApi;

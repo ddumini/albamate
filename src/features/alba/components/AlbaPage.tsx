@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import useModalStore from '@/shared/store/useModalStore';
 import { getDDayString } from '@/shared/utils/format';
 
@@ -20,7 +21,7 @@ const AlbaPage = () => {
   const { openModal } = useModalStore();
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isOwner, setIsOwner] = useState(true);
+  const { isOwner, isLoading: isSessionLoading } = useSessionUtils();
   const [hasMounted, setHasMounted] = useState(false);
 
   const { getAlbaDetail } = useAlbaListApi();
@@ -76,10 +77,7 @@ const AlbaPage = () => {
         onClose={() => setPopupVisible(false)}
       />
 
-      <FloatingButtons
-        formId={Number(formId)}
-        onToggleOwner={() => setIsOwner(prev => !prev)}
-      />
+      <FloatingButtons formId={Number(formId)} />
 
       <ImageCarousel />
 
@@ -88,7 +86,7 @@ const AlbaPage = () => {
       {isOwner && (
         <div>
           <div className="my-40 h-8 w-full bg-gray-50 lg:my-80 lg:h-12 dark:bg-gray-800" />
-          <ApplicationList />
+          <ApplicationList formId={Number(formId)} />
         </div>
       )}
     </div>

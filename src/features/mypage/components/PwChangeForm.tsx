@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { usePopupStore } from '@/shared/store/popupStore';
 import { EditPassword } from '@/shared/types/mypage';
 
 import { useUpdateMyPasswordQuery } from '../queries';
@@ -32,19 +33,20 @@ const PwChangeForm = ({ close }: PwChangeFormProps) => {
   });
 
   const updatePassword = useUpdateMyPasswordQuery();
+  const { showPopup } = usePopupStore();
 
   const onSubmit = (data: PasswordProps) => {
     const { checkNewPw, ...rquestData } = data;
     updatePassword.mutate(rquestData, {
       onSuccess: () => {
-        alert('비밀번호가 성공적으로 수정되었습니다.');
+        showPopup('비밀번호가 성공적으로 수정되었습니다.', 'success');
         close();
       },
       onError: error => {
         const axiosError = error as AxiosError<{ message?: string }>;
         const errorMessage =
           axiosError.response?.data?.message ?? '변경 중 오류가 발생했습니다.';
-        alert(errorMessage);
+        showPopup(errorMessage, 'error');
       },
     });
   };

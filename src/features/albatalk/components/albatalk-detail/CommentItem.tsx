@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import Textarea from '@/shared/components/common/input/Textarea';
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import { Comment } from '../../schemas/albatalk.schema';
 import AlbatalkMetaInfoUser from '../albatalk-item/AlbatalkMetaInfoUser';
@@ -19,6 +21,10 @@ interface CommentItemProps {
 const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { showPopup } = usePopupStore();
+
+  const { user } = useSessionUtils();
+  const isOwner = comment.writer.id === user?.id;
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
@@ -44,7 +50,7 @@ const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
     const newContent = textareaRef.current?.value || '';
 
     if (newContent.trim() === '') {
-      alert('댓글 내용을 입력해주세요.');
+      showPopup('댓글 내용을 입력해주세요.', 'info');
       return;
     }
     onEdit(comment.id, newContent);
@@ -66,7 +72,7 @@ const CommentItem = ({ comment, onEdit, onDelete }: CommentItemProps) => {
           createdAt={comment.createdAt}
           writer={comment.writer}
         />
-        <KebabMenuDropdown options={menuOptions} />
+        {isOwner && <KebabMenuDropdown options={menuOptions} />}
       </div>
 
       {isEditing ? (

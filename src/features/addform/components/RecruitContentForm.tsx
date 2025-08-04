@@ -1,9 +1,11 @@
 'use client';
 
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { CreateFormRequest } from '@/features/addform/schema/addform.schema';
 import DatePicker from '@/shared/components/common/date-picker';
+import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
 import Textarea from '@/shared/components/common/input/Textarea';
@@ -15,9 +17,13 @@ import AddFormSection from './AddFormSection';
 const RecruitContentForm = ({
   className,
   onImageChange,
+  uploadedImageUrls,
+  setUploadedImageUrls,
 }: {
   className?: string;
   onImageChange: (files: File[]) => void;
+  uploadedImageUrls: string[];
+  setUploadedImageUrls: Dispatch<SetStateAction<string[]>>;
 }) => {
   const {
     register,
@@ -41,7 +47,12 @@ const RecruitContentForm = ({
           {...register('title')}
           required
           id="title"
+          isInvalid={!!errors.title}
           placeholder="제목을 입력해주세요."
+        />
+        <ErrorMessage
+          isVisible={!!errors.title}
+          message={errors.title?.message}
         />
       </AddFormSection>
       <AddFormSection>
@@ -51,9 +62,14 @@ const RecruitContentForm = ({
         <Textarea
           required
           id="description"
+          isInvalid={!!errors.description}
           maxLength={200}
           {...register('description')}
           placeholder="최대 200자까지 입력 가능합니다."
+        />
+        <ErrorMessage
+          isVisible={!!errors.description}
+          message={errors.description?.message}
         />
       </AddFormSection>
       <AddFormSection>
@@ -69,7 +85,7 @@ const RecruitContentForm = ({
             };
             return (
               <DatePicker
-                defaultValue={selectedRange}
+                value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
                   setValue(
@@ -88,7 +104,12 @@ const RecruitContentForm = ({
       </AddFormSection>
       <AddFormSection>
         <Label htmlFor="uploadImage">이미지 첨부</Label>
-        <UploadMultipleImage id="uploadImage" onImageChange={onImageChange} />
+        <UploadMultipleImage
+          id="uploadImage"
+          setUploadedImageUrls={setUploadedImageUrls}
+          uploadedImageUrls={uploadedImageUrls}
+          onImageChange={onImageChange}
+        />
       </AddFormSection>
     </div>
   );

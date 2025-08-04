@@ -1,13 +1,14 @@
 'use client';
 
+import PrimaryButton from '@common/button/PrimaryButton';
+import { Slide } from '@common/imageCarousel/carousel';
+import ImageCarousel from '@common/imageCarousel/ImageCarousel';
 import { useRouter } from 'next/navigation';
 
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import AlbaDetail from '@/shared/components/alba/AlbaDetail';
-import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
-import { Slide } from '@/shared/components/common/imageCarousel/carousel';
-import ImageCarousel from '@/shared/components/common/imageCarousel/ImageCarousel';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
+import useApplicationStore from '@/shared/store/useApplicationStore';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
 import {
@@ -37,14 +38,14 @@ const ApplicationDetail = ({
     user,
   } = useSessionUtils();
 
-  // 공통: 알바폼 상세 조회
+  const { guestApplication, isGuestMode } = useApplicationStore();
+
   const {
     data: albaformData,
     isLoading: albaLoading,
     error: albaError,
   } = useAlbaformDetailQuery(formId);
 
-  // 지원자: 내 지원서 조회
   const {
     data: myApplicationData,
     isLoading: myAppLoading,
@@ -53,7 +54,6 @@ const ApplicationDetail = ({
     enabled: isApplicant && isAuthenticated,
   });
 
-  // 사장님용: 특정 지원서 조회
   const {
     data: ownerApplicationData,
     isLoading: ownerAppLoading,
@@ -62,12 +62,23 @@ const ApplicationDetail = ({
     enabled: isOwner && isAuthenticated && !!applicationId,
   });
 
-  // 최종 데이터 결정
-  const applicationData = isApplicant
-    ? myApplicationData
-    : ownerApplicationData;
-  const appLoading = isApplicant ? myAppLoading : ownerAppLoading;
-  const appError = isApplicant ? myAppError : ownerAppError;
+  let applicationData;
+  let appLoading;
+  let appError;
+
+  if (isGuestMode) {
+    applicationData = guestApplication;
+    appLoading = false;
+    appError = false;
+  } else if (isApplicant) {
+    applicationData = myApplicationData;
+    appLoading = myAppLoading;
+    appError = myAppError;
+  } else {
+    applicationData = ownerApplicationData;
+    appLoading = ownerAppLoading;
+    appError = ownerAppError;
+  }
 
   // 초기 렌더링 처리
   const isInitialRender =
@@ -76,12 +87,13 @@ const ApplicationDetail = ({
     !appLoading &&
     !isAuthenticated &&
     !isOwner &&
-    !isApplicant;
+    !isApplicant &&
+    !isGuestMode;
 
   const isLoading =
     sessionLoading || albaLoading || appLoading || isInitialRender;
 
-  // 1. 로딩 처리
+  // 1. 로딩
   if (isLoading) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -91,7 +103,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 2. 에러 처리 (인증보다 먼저)
+  // 2. 알바 폼 로드 에러
   if (albaError) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -101,8 +113,8 @@ const ApplicationDetail = ({
     );
   }
 
-  // 3. 인증 확인
-  if (!isAuthenticated) {
+  // 3. 로그인 안됨 & 게스트 아님
+  if (!isAuthenticated && !isGuestMode) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold text-gray-800">
@@ -113,7 +125,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 4. 알바폼 데이터 확인
+  // 4. 알바 폼 없음
   if (!albaformData) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -125,7 +137,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 5. 지원서 관련 에러 처리
+  // 5. 지원 내역 없음 (지원자)
   if (isApplicant && (appError || !applicationData)) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -144,7 +156,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 6. 사장님인데 지원서 데이터가 없는 경우
+  // 6. 지원서 없음 (사장님)
   if (isOwner && !applicationData) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -156,7 +168,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 7. 최종 안전성 체크
+  // 7. 일반 에러
   if (!applicationData) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -168,7 +180,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 권한 체크: 사장님인데 본인 공고가 아닌 경우
+  // 8. 사장님 접근 제한
   if (isOwner && Number(albaformData.ownerId) !== Number(user?.id)) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
@@ -189,7 +201,7 @@ const ApplicationDetail = ({
     );
   }
 
-  // 권한 체크: 지원자인데 본인 지원서가 아닌 경우
+  // 9. 지원자 접근 제한
   if (
     isApplicant &&
     applicationData &&
@@ -212,14 +224,13 @@ const ApplicationDetail = ({
     );
   }
 
-  // 이미지 처리
   const images =
     albaformData.imageUrls?.length > 0
       ? albaformData.imageUrls
       : ['/images/list-default.png'];
   const carouselSlides: Slide[] = createSlidesFromUrls(images);
 
-  // 8. 정상 렌더링
+  // 최종 렌더링
   return (
     <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-40 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
       <ImageCarousel showCounter interval={4000} slides={carouselSlides} />
@@ -231,6 +242,7 @@ const ApplicationDetail = ({
         </div>
         <div>
           <ApplicationState
+            applicationId={applicationData.id}
             createdAt={applicationData.createdAt}
             recruitmentEndDate={albaformData.recruitmentEndDate}
             status={applicationData.status}
