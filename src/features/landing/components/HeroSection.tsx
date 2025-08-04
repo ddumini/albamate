@@ -30,7 +30,7 @@ const HeroSection = () => {
     },
   ];
   return (
-    <LandingSection className="min-h-750 items-center justify-center gap-80 lg:min-h-1080 lg:justify-end lg:gap-50">
+    <LandingSection className="min-h-750 items-center justify-center gap-80 lg:min-h-1180 lg:justify-end lg:gap-50">
       <hgroup className="relative z-5 flex flex-col items-center">
         <motion.h1
           animate={{ opacity: 1, y: 0 }}

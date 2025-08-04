@@ -109,6 +109,9 @@ const DatePicker = ({
     return `${fromText} - ${toText}`;
   };
 
+  // 현재 연도 계산
+  const currentYear = new Date().getFullYear();
+
   return (
     <div ref={containerRef} className={cn('relative', className)}>
       <button
@@ -152,10 +155,12 @@ const DatePicker = ({
             fixedWeeks
             showOutsideDays
             captionLayout="dropdown"
+            fromYear={currentYear - 10} // 10년 전부터
             locale={ko}
             mode="range"
             numberOfMonths={1}
             selected={dateRange}
+            toYear={currentYear + 10} // 10년 후까지
             onSelect={handleSelect}
           />
         </div>

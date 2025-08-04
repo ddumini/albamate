@@ -29,7 +29,7 @@ export const useAlbaformDetailQuery = (
   const api = useApplicationDetailApi();
 
   return useQuery({
-    queryKey: ['albaformDetail', formId],
+    queryKey: ['albaDetail', Number(formId)],
     queryFn: async () => {
       const response = await api.getAlbaformDetail(formId);
       return response.data;

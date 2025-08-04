@@ -1,9 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
-
 import EmptyCard from '@/shared/components/common/EmptyCard';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 
@@ -17,8 +13,6 @@ interface AlbatalkDetailProps {
 }
 
 const AlbatalkDetail = ({ albatalkId }: AlbatalkDetailProps) => {
-  const router = useRouter();
-  const { status } = useSession();
   const {
     data: albatalk,
     isPending,
@@ -26,23 +20,12 @@ const AlbatalkDetail = ({ albatalkId }: AlbatalkDetailProps) => {
     error,
   } = useAlbatalkDetail(albatalkId);
 
-  // 로그인 상태 체크 및 리다이렉트
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/signin');
-    }
-  }, [status, router]);
-
-  if (status === 'loading') {
-    return <LoadingSpinner size="lg" />;
-  }
-
   if (isPending) {
-    return <LoadingSpinner size="lg" />;
-  }
-
-  if (status === 'unauthenticated') {
-    return <LoadingSpinner size="lg" />;
+    return (
+      <div className="flex justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if (isError) {

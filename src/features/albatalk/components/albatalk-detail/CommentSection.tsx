@@ -27,7 +27,13 @@ const CommentSection = ({ albatalkId }: CommentSectionProps) => {
   const totalCount =
     firstPage && 'totalItemCount' in firstPage ? firstPage.totalItemCount : 0;
 
-  if (isLoading) return <LoadingSpinner size="lg" />;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
 
   if (isError)
     return <div className="text-red-500">댓글을 불러오는데 실패했습니다.</div>;

@@ -1,5 +1,6 @@
 import { axiosInstance } from '@/shared/lib/axios';
 import { EditPassword, PostApi, ScrapApi } from '@/shared/types/mypage';
+import { generateUniqueFileName } from '@/shared/utils/generateUniqueFileName';
 
 import {
   UpdateOwnerMyProfile,
@@ -10,6 +11,14 @@ const useMyPageApi = () => {
   const authAxios = axiosInstance;
 
   return {
+    // 이미지 업로드
+    updateImage: (file: File) => {
+      const formData = new FormData();
+      const newFile = generateUniqueFileName(file);
+      formData.append('image', file, newFile);
+      return authAxios.post(`/images/upload`, formData).then(res => res.data);
+    },
+
     // 내 정보 조회
     getMyProfile: () => authAxios.get('/users/me'),
 

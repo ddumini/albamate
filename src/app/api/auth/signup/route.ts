@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
         password: body.password,
         role: body.role,
         name: '',
-        nickname: '',
-        phoneNumber: '',
+        nickname: body.nickname,
+        phoneNumber: body.phoneNumber,
         location: body.location,
         storeName: body.storeName,
         storePhoneNumber: body.storePhoneNumber,
@@ -31,9 +31,6 @@ export async function POST(request: NextRequest) {
         name: body.name,
         nickname: body.nickname,
         phoneNumber: body.phoneNumber,
-        location: body.location,
-        storeName: body.storeName,
-        storePhoneNumber: body.storePhoneNumber,
       };
     }
 
