@@ -17,7 +17,7 @@ export type UpdateWorkerMyProfileRequest = UpdateWorkerMyProfile;
 // Owner
 export const createOwnerSchema = z.object({
   nickname: z.string().min(1, '닉네임은 필수입니다.'),
-  storeName: z.string().min(1, '가게 이름은 필수입니다.'),
+  storeName: z.string().min(1, '가게 이름은 필수입니다.').nullable(),
   storePhoneNumber: z
     .string()
     .min(1, '연락처는 필수입니다.')
@@ -25,6 +25,7 @@ export const createOwnerSchema = z.object({
   phoneNumber: z
     .string()
     .optional()
+    .nullable()
     .refine(val => !val || /^[0-9]+$/.test(val), {
       message: '숫자만 입력해주세요.',
     }),

@@ -12,7 +12,7 @@ import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
 const MyPageTopButtons = ({ isOwner }: { isOwner: string | null }) => {
-  const { data: userInfo } = useMyProfileQuery();
+  const { data: userInfo, isLoading: myProfileLoading } = useMyProfileQuery();
   const { openModal, closeModal } = useModalStore();
 
   const infoComponent =
@@ -36,6 +36,8 @@ const MyPageTopButtons = ({ isOwner }: { isOwner: string | null }) => {
     { label: '내 정보 수정', onClick: () => myInfoEdit() },
     { label: '비밀번호 변경', onClick: () => pwChange() },
   ];
+
+  if (myProfileLoading) return null;
 
   return (
     <>

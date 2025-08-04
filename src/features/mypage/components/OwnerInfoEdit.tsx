@@ -4,6 +4,7 @@ import Input from '@common/input/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import z from 'zod';
 
 import ProfileEdit from '@/shared/components/common/profile/ProfileEdit';
 import { usePopupStore } from '@/shared/store/popupStore';
@@ -15,6 +16,7 @@ import {
   createOwnerSchema,
   UpdateOwnerMyProfile,
 } from '../schema/mypage.schema';
+import MyPageAddressSearchModal from './MyPageAddressSearchModal';
 
 interface OwnerInfoEditProps {
   userInfo: FormData;
@@ -30,17 +32,25 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateOwnerMyProfile>({
+    setValue,
+    watch,
+  } = useForm<z.infer<typeof createOwnerSchema>>({
     resolver: zodResolver(createOwnerSchema),
     defaultValues: {
-      nickname: userInfo?.nickname,
-      storeName: userInfo.storeName === 'undefined' ? '' : userInfo.storeName,
+      nickname: userInfo?.nickname ?? '',
+      storeName:
+        userInfo?.storeName && userInfo.storeName !== 'undefined'
+          ? userInfo.storeName
+          : '',
       storePhoneNumber:
-        userInfo.storePhoneNumber === 'undefined'
+        userInfo?.storePhoneNumber && userInfo.storePhoneNumber !== 'undefined'
+          ? userInfo.storePhoneNumber
+          : '',
+      phoneNumber: userInfo.phoneNumber ?? '',
+      location:
+        userInfo.location === 'undefined' || userInfo.location == null
           ? ''
-          : userInfo.storePhoneNumber,
-      phoneNumber: userInfo?.phoneNumber,
-      location: userInfo.location === 'undefined' ? '' : userInfo.location,
+          : userInfo.location,
     },
   });
 
@@ -150,16 +160,25 @@ const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
         <label className="mb-8 text-md" htmlFor="location">
           가게 위치 <span className="text-mint-100">*</span>
         </label>
-        <IconInput
-          alt="위치"
-          id="location"
-          placeholder="위치를 입력해주세요."
-          position="left"
-          src="/icons/pin-solid.svg"
-          variant="outlined"
-          {...register('location')}
-          isInvalid={!!errors.location}
-        />
+        <MyPageAddressSearchModal
+          currentAddress={watch('location') || ''}
+          onAddressSelect={(address: string) => {
+            setValue('location', address);
+          }}
+        >
+          <IconInput
+            readOnly
+            alt="위치"
+            id="location"
+            isInvalid={!!errors.location}
+            placeholder="위치를 입력해주세요."
+            position="left"
+            src="/icons/pin-solid.svg"
+            value={watch('location') || ''}
+            variant="outlined"
+            {...register('location')}
+          />
+        </MyPageAddressSearchModal>
         {errors.location && (
           <p className="text-sm text-red-500">{errors.location.message}</p>
         )}
