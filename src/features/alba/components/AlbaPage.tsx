@@ -22,7 +22,7 @@ const AlbaPage = () => {
   const { openModal } = useModalStore();
 
   const [popupVisible, setPopupVisible] = useState(false);
-  const [hasShownInitialPopup, setHasShownInitialPopup] = useState(false); // ✅ 추가
+  const [hasShownInitialPopup, setHasShownInitialPopup] = useState(false); // 추가
 
   const { user, isOwner, isLoading: isSessionLoading } = useSessionUtils();
   const [hasMounted, setHasMounted] = useState(false);

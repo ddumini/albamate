@@ -27,11 +27,11 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
     },
     {
       name: '가게 전화번호',
-      value: formatPhoneNumber(item.storePhoneNumber, false),
+      value: formatPhoneNumber(item.storePhoneNumber),
     },
     {
       name: '사장님 연락처',
-      value: formatPhoneNumber(item.phoneNumber, true),
+      value: formatPhoneNumber(item.phoneNumber),
     },
   ];
 
