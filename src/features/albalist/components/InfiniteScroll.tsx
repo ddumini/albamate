@@ -6,16 +6,12 @@ import type { AlbaItem } from '@/shared/types/alba';
 
 import AlbaCard from './AlbaCard';
 
-interface InfiniteScrollListProps {
+interface InfiniteScrollProps {
   data: AlbaItem[];
   isLoading: boolean;
   isLoadingMore: boolean;
-  hasNextPage: boolean | undefined;
   error: Error | null;
   loadMoreRef: React.RefObject<HTMLDivElement | null>;
-  emptyTitle?: string;
-  emptyDescription?: string;
-  loadingText?: string;
   children?: React.ReactNode;
 }
 
@@ -23,12 +19,10 @@ const InfiniteScroll = ({
   data,
   isLoading,
   isLoadingMore,
-  hasNextPage,
   error,
   loadMoreRef,
-  loadingText = '로딩 중...',
   children,
-}: InfiniteScrollListProps) => {
+}: InfiniteScrollProps) => {
   // 에러 상태
   if (error) {
     return (
@@ -51,7 +45,9 @@ const InfiniteScroll = ({
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="text-lg text-gray-600">{loadingText}</div>
+        <div className="text-lg text-gray-600">
+          <LoadingSpinner size="sm" />
+        </div>
       </div>
     );
   }
