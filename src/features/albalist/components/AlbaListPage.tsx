@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
-import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
@@ -11,6 +10,7 @@ import useAlbaListApi from '../api/albaListApi';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
 import AlbaFilterBar from './AlbaFilterBar';
 import InfiniteScroll from './InfiniteScroll';
+import AlbaListSkeleton from './skeleton/AlbaListSkeleton';
 
 interface FilterState {
   recruitStatus?: string;
@@ -84,7 +84,9 @@ const AlbaListPage = () => {
     []
   );
 
-  if (isSessionLoading) return <LoadingSpinner size="sm" />;
+  if (isSessionLoading) {
+    return <AlbaListSkeleton count={6} />;
+  }
 
   return (
     <div className="mb-68">

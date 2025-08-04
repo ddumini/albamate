@@ -1,10 +1,11 @@
 import EmptyCard from '@common/EmptyCard';
 import ListWrapper from '@common/list/ListWrapper';
 
-import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import type { AlbaItem } from '@/shared/types/alba';
 
 import AlbaCard from './AlbaCard';
+import AlbaCardSkeleton from './skeleton/AlbaCardSkeleton';
+import LoadMoreSkeleton from './skeleton/LoadMoreSkeleton';
 
 interface InfiniteScrollProps {
   data: AlbaItem[];
@@ -44,10 +45,10 @@ const InfiniteScroll = ({
   // 초기 로딩 상태
   if (isLoading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="text-lg text-gray-600">
-          <LoadingSpinner size="sm" />
-        </div>
+      <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <AlbaCardSkeleton key={`initial-loading-${index}`} />
+        ))}
       </div>
     );
   }
@@ -74,14 +75,15 @@ const InfiniteScroll = ({
         {children}
       </ListWrapper>
 
-      {/* 무한스크롤 트리거 - 공용 훅의 loadMoreRef 사용 */}
-      <div ref={loadMoreRef} className="flex h-10 items-center justify-center">
-        {isLoadingMore && (
-          <div className="flex items-center space-x-2">
-            <LoadingSpinner size="sm" />
-          </div>
-        )}
-      </div>
+      {/* 스켈레톤과 Observer 요소를 분리 */}
+      {isLoadingMore && <LoadMoreSkeleton />}
+
+      {/* Observer 전용 요소 - 항상 존재 */}
+      <div
+        ref={loadMoreRef}
+        className="h-1 w-full"
+        style={{ minHeight: '1px' }}
+      />
     </div>
   );
 };
