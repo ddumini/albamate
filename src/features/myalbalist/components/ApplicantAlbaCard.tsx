@@ -77,7 +77,9 @@ const ApplicantAlbaCard = ({ item, onClick }: Props) => {
           </p>
         </div>
 
-        <h3 className="Text-black text-lg font-semibold">{item.form.title}</h3>
+        <h3 className="Text-black line-clamp-1 text-lg font-semibold">
+          {item.form.title}
+        </h3>
         <p className="Text-gray line-clamp-1 lg:line-clamp-2 lg:min-h-48">
           {item.form.description}
         </p>

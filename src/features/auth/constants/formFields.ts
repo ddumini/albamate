@@ -150,7 +150,7 @@ const OWNER_ACCOUNT_FIELDS: FormField[] = [
     placeholder: '가게 전화번호를 입력해주세요',
   },
   {
-    name: 'ownerPhoneNumber',
+    name: 'phoneNumber',
     label: '사장님 전화번호',
     type: 'tel',
     required: false,

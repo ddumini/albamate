@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { axiosInstance } from '@/shared/lib/axios';
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
+    // 환경 변수에서 API URL 가져오기
+    const API_URL =
+      process.env.NEXT_PUBLIC_API_URL ||
+      'https://fe-project-albaform.vercel.app';
+    const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID || '15-3';
+    const baseURL = `${API_URL}${TEAM_ID}/`;
 
     // 사용자 타입에 따라 다른 데이터 구조 생성
     let signUpData;
@@ -31,14 +36,25 @@ export async function POST(request: NextRequest) {
         name: body.name,
         nickname: body.nickname,
         phoneNumber: body.phoneNumber,
+        location: body.location,
+        storeName: body.storeName,
+        storePhoneNumber: body.storePhoneNumber,
       };
     }
 
     // 백엔드 API로 회원가입 요청
-    const response = await axiosInstance.post('/auth/sign-up', signUpData);
+    const response = await fetch(`${baseURL}auth/sign-up`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signUpData),
+    });
 
-    if (response.status === 200) {
-      return NextResponse.json(response.data, { status: 200 });
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return NextResponse.json(responseData, { status: response.status });
     } else {
       return NextResponse.json(
         { error: '회원가입에 실패했습니다.' },
@@ -49,27 +65,18 @@ export async function POST(request: NextRequest) {
     console.error('회원가입 API 오류:', error);
     console.error('에러 상세:', {
       message: (error as any).message,
-      response: (error as any).response?.data,
-      status: (error as any).response?.status,
-      details: (error as any).response?.data?.details, // 추가
-      validationErrors: (error as any).response?.data?.validationErrors, // 추가
+      cause: (error as any).cause,
     });
 
-    // 백엔드에서 반환한 상세 오류 정보 사용
-    const backendError = (error as any).response?.data;
+    // 에러 메시지 처리
     const errorMessage =
-      backendError?.message ||
-      backendError?.error ||
-      (error as any).message ||
-      '회원가입 중 오류가 발생했습니다.';
+      (error as any).message || '회원가입 중 오류가 발생했습니다.';
 
     return NextResponse.json(
       {
         error: errorMessage,
-        details: backendError?.details, // 상세 오류 정보 포함
-        validationErrors: backendError?.validationErrors, // 검증 오류 포함
       },
-      { status: (error as any).response?.status || 500 }
+      { status: 500 }
     );
   }
 }

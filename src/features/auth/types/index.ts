@@ -18,7 +18,6 @@ export interface User {
   role: UserRole;
   storeName?: string;
   storePhoneNumber?: string;
-  ownerPhoneNumber?: string;
   phoneNumber?: string;
   location?: string;
   imageUrl?: string;
@@ -56,7 +55,7 @@ export interface OwnerAccountInfoFormData {
   nickname: string;
   storeName: string;
   storePhoneNumber: string;
-  ownerPhoneNumber?: string;
+  phoneNumber?: string;
   location: string;
 }
 

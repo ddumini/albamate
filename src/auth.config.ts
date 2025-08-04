@@ -9,8 +9,6 @@ import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
 import KakaoProvider from 'next-auth/providers/kakao';
 
-import { axiosInstance } from '@/shared/lib/axios';
-
 export const authConfig = {
   providers: [
     KakaoProvider({
@@ -70,17 +68,34 @@ export const authConfig = {
 
         // 로그인 처리
         try {
-          const res = await axiosInstance.post('/auth/sign-in', {
-            email,
-            password,
+          // 환경 변수에서 API URL 가져오기
+          const API_URL =
+            process.env.NEXT_PUBLIC_API_URL ||
+            'https://fe-project-albaform.vercel.app';
+          const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID || '15-3';
+          const baseURL = `${API_URL}${TEAM_ID}/`;
+
+          const response = await fetch(`${baseURL}auth/sign-in`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
           });
 
-          if (res.status !== 200) {
-            console.error('Auth API error:', res.status, res.statusText);
+          if (!response.ok) {
+            console.error(
+              'Auth API error:',
+              response.status,
+              response.statusText
+            );
             return null;
           }
 
-          const data = res.data;
+          const data = await response.json();
 
           if (userType) {
             const expectedRole = userType === 'owner' ? 'OWNER' : 'APPLICANT';
@@ -214,15 +229,28 @@ export const authConfig = {
  */
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
-    const response = await axiosInstance.post('/auth/refresh', {
-      refreshToken: token.refreshToken,
+    // 환경 변수에서 API URL 가져오기
+    const API_URL =
+      process.env.NEXT_PUBLIC_API_URL ||
+      'https://fe-project-albaform.vercel.app';
+    const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID || '15-3';
+    const baseURL = `${API_URL}${TEAM_ID}/`;
+
+    const response = await fetch(`${baseURL}auth/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refreshToken: token.refreshToken,
+      }),
     });
 
-    if (response.status !== 200) {
+    if (!response.ok) {
       throw new Error('토큰 갱신 실패');
     }
 
-    const refreshedTokens = response.data;
+    const refreshedTokens = await response.json();
 
     return {
       ...token,
