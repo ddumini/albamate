@@ -22,7 +22,7 @@ interface WorkerInfoEditProps {
 
 const WorkerInfoEdit = ({ userInfo, close }: WorkerInfoEditProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(
-    userInfo?.imageUrl ?? undefined
+    userInfo?.imageUrl ?? '/icons/user-profile.svg'
   );
   const [imageFile, setImageFile] = useState<File>();
   const {

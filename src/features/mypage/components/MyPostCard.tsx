@@ -41,7 +41,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
       <section className="flex w-full items-center justify-between">
         <div className="Text-gray flex items-center gap-16 text-lg font-normal">
           <div className="flex items-center gap-4">
-            <span className="relative inline-flex h-24 w-24 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
+            <span className="relative inline-flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full lg:h-36 lg:w-36">
               <Image
                 fill
                 alt="프로필 이미지"

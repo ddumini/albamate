@@ -23,7 +23,7 @@ interface OwnerInfoEditProps {
 
 const OwnerInfoEdit = ({ userInfo, close }: OwnerInfoEditProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(
-    userInfo?.imageUrl ?? undefined
+    userInfo?.imageUrl ?? '/icons/user-profile.svg'
   );
   const [imageFile, setImageFile] = useState<File>();
   const {
