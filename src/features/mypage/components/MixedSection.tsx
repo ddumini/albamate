@@ -3,6 +3,7 @@
 import EmptyCard from '@common/EmptyCard';
 import { useRouter } from 'next/navigation';
 
+import useModalStore from '@/shared/store/useModalStore';
 import {
   CommentCardItem,
   ContentType,
@@ -11,7 +12,14 @@ import {
   ScrapCardItem,
 } from '@/shared/types/mypage';
 
+import {
+  useMyCommentDelete,
+  useMyPostDelete,
+  useMyScrapDelete,
+} from '../queries';
+import renderModalContent from '../utils/renderModalContent';
 import CardSection from './CardSection';
+import CommentEdit from './CommentEdit';
 import MyCommentCard from './MyCommentCard';
 import MyPostCard from './MyPostCard';
 import MyScrapCard from './MyScrapCard';
@@ -39,6 +47,12 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
   const postCommentWrapStyle =
     'grid-rows-auto grid grid-cols-1 items-center gap-y-16 lg:grid-cols-2 lg:gap-x-25 lg:gap-y-45 xl:grid-cols-3';
 
+  const deletePost = useMyPostDelete();
+  const deleteComments = useMyCommentDelete();
+  const deleteScrap = useMyScrapDelete();
+
+  const { openModal, closeModal } = useModalStore();
+
   // Card 컴포넌트 Wrap 스타일 결정 함수
   const getCardWrapStyle = (item: CardInfoItem) => {
     if (!item) return;
@@ -47,21 +61,54 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
   };
 
   // 카드의 드롭다운 아이템 결정 함수
-  const getDropdownItems = (type: ContentType, id: number) => {
+  const getDropdownItems = (
+    type: ContentType,
+    id: number,
+    commentId?: number,
+    comment?: string
+  ) => {
     switch (type) {
       case 'post':
+        return [
+          {
+            label: '수정하기',
+            onClick: () => router.push(`/addtalk?albatalkId=${id}`),
+          },
+          {
+            label: '삭제하기',
+            onClick: () => deletePost.mutate(id),
+          },
+        ];
       case 'comment':
         return [
           {
             label: '수정하기',
-            onClick: () => router.push(`/albatalk/${id}`),
+            onClick: () => {
+              if (!comment || !commentId) return;
+              openModal(
+                renderModalContent(
+                  '댓글 수정하기',
+                  <CommentEdit
+                    close={closeModal}
+                    content={comment}
+                    id={commentId}
+                  />
+                )
+              );
+            },
           },
-          { label: '삭제하기', onClick: () => router.push(`/`) },
+          {
+            label: '삭제하기',
+            onClick: () => {
+              if (!commentId) return;
+              deleteComments.mutate(commentId);
+            },
+          },
         ];
       case 'scrap':
         return [
           { label: '지원하기', onClick: () => router.push(`/apply/${id}`) },
-          { label: '스크랩 취소', onClick: () => router.push(`/`) },
+          { label: '스크랩 취소', onClick: () => deleteScrap.mutate(id) },
         ];
     }
   };
@@ -88,7 +135,12 @@ const MixedSection = ({ cardInfo, type }: MixedSectionProps) => {
     return (
       <MyCommentCard
         cardContent={item}
-        dropdownItem={getDropdownItems('comment', item.post.id)}
+        dropdownItem={getDropdownItems(
+          'comment',
+          item.post.id,
+          item.id,
+          item.content
+        )}
       />
     );
   };
