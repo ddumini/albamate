@@ -5,14 +5,14 @@ import AlbaDetail from '@alba/AlbaDetail';
 
 import AlbaLocation from '@/features/alba/components/AlbaLocation';
 
-import { albaMockData } from '../mocks/mockData';
+import { AlbaItem } from '../types/AlbaItem';
 import AlbaCondition from './AlbaCondition';
 import AlbaContact from './AlbaContact';
 import AlbaInfo from './AlbaInfo';
 import ApplyButton from './button/ApplyButton';
 
 interface PageContentProps {
-  item: (typeof albaMockData)[0];
+  item: AlbaItem;
   isOwner: boolean;
 }
 

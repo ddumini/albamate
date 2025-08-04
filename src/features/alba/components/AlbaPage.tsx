@@ -15,6 +15,7 @@ import FloatingButtons from './button/FloatingButtons';
 import ImageCarousel from './ImageCarousel';
 import RecruitCloseModal from './modal/RecruitClosedModal';
 import PageContent from './PageContent';
+import AlbaSkeleton from './skeleton/AlbaSkeleton';
 
 const AlbaPage = () => {
   const { formId } = useParams();
@@ -57,7 +58,7 @@ const AlbaPage = () => {
   if (!hasMounted) return null;
 
   if (isLoading) {
-    return <div className="py-40 text-center">불러오는 중...</div>;
+    return <AlbaSkeleton />;
   }
 
   if (isError || !item) {

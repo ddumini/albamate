@@ -129,6 +129,7 @@ const AlbaCard = ({ item }: Props) => {
     cancelScrapAlba,
     queryClient,
     router,
+    showPopup,
   ]);
 
   const applyScrapOptions = [
