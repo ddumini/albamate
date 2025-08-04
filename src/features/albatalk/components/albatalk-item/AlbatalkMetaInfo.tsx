@@ -66,7 +66,7 @@ const AlbatalkMetaInfo = ({
     try {
       if (isLiked) {
         await removeLikeMutation.mutateAsync(albatalkId); // DELETE
-        showPopup('좋아요를 취소했습니다.', 'error');
+        showPopup('좋아요를 취소했습니다.', 'success');
       } else {
         await addLikeMutation.mutateAsync(albatalkId); // POST
         showPopup('좋아요를 눌렀습니다.', 'success');
