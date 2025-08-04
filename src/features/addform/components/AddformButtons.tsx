@@ -28,7 +28,7 @@ const AddformButtons = ({
       <PrimaryButton
         className="h-58 text-xl font-semibold lg:h-72"
         disabled={!isValid || isSubmitting}
-        label="수정하기"
+        label={isSubmitting ? '수정 중' : '수정하기'}
         type="button"
         variant="solid"
         onClick={onSubmit}
@@ -46,7 +46,7 @@ const AddformButtons = ({
       <PrimaryButton
         className="h-58 text-xl font-semibold lg:h-72"
         disabled={!isValid || isSubmitting}
-        label="등록하기"
+        label={isSubmitting ? '등록 중' : '등록하기'}
         type="button"
         variant="solid"
         onClick={onSubmit}

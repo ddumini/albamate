@@ -52,12 +52,17 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
                 className="w-full"
                 iconClassName="cursor-pointer"
                 inputClassName="cursor-pointer"
+                isInvalid={!!errors.location}
                 placeholder="주소를 검색해주세요"
                 src="/icons/pin-solid.svg"
                 value={field.value ?? ''}
               />
             </AddressSearchModal>
           )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.location}
+          message={errors.location?.message}
         />
       </AddFormSection>
       <AddFormSection>
@@ -73,6 +78,7 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <DatePicker
+                isInvalid={!!errors.workStartDate}
                 value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
@@ -89,6 +95,10 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             );
           }}
         />
+        <ErrorMessage
+          isVisible={!!errors.workStartDate}
+          message={errors.workStartDate?.message}
+        />
       </AddFormSection>
       <AddFormSection>
         <Label isRequired>근무 시간</Label>
@@ -103,6 +113,8 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             };
             return (
               <TimePicker
+                isEndInvalid={!!errors.workEndTime}
+                isStartInvalid={!!errors.workStartTime}
                 value={timeRange}
                 onChange={range => {
                   field.onChange(range.workStartTime);
@@ -115,6 +127,10 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
             );
           }}
         />
+        <ErrorMessage
+          isVisible={!!errors.workStartTime || !!errors.workEndTime}
+          message={errors.workStartTime?.message || errors.workEndTime?.message}
+        />
       </AddFormSection>
       <AddFormSection>
         <Label isRequired>근무 요일</Label>
@@ -122,8 +138,16 @@ const WorkConditionForm = ({ className }: { className?: string }) => {
           control={control}
           name="workDays"
           render={({ field }) => (
-            <WeekPicker value={field.value} onChange={field.onChange} />
+            <WeekPicker
+              isInValid={!!errors.workDays}
+              value={field.value}
+              onChange={field.onChange}
+            />
           )}
+        />
+        <ErrorMessage
+          isVisible={!!errors.workDays}
+          message={errors.workDays?.message}
         />
         <div className="px-10 py-8 lg:px-14 lg:py-16">
           <Controller

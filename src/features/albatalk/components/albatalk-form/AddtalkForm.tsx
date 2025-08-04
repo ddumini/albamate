@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
+import ErrorMessage from '@/shared/components/common/input/ErrorMessage';
 import Input from '@/shared/components/common/input/Input';
 import Label from '@/shared/components/common/input/Label';
 import Textarea from '@/shared/components/common/input/Textarea';
@@ -71,6 +72,11 @@ const AddtalkForm = ({ form, onImageFileChange }: AddtalkFormProps) => {
           id="title"
           placeholder="제목을 입력해주세요."
           {...register('title')}
+          isInvalid={!!errors.title}
+        />
+        <ErrorMessage
+          isVisible={!!errors.title}
+          message={errors.title?.message}
         />
       </section>
 
@@ -82,8 +88,13 @@ const AddtalkForm = ({ form, onImageFileChange }: AddtalkFormProps) => {
         <Textarea
           className="h-180 md:h-200 lg:h-240"
           id="content"
+          isInvalid={!!errors.content}
           placeholder="내용을 입력해주세요."
           {...register('content')}
+        />
+        <ErrorMessage
+          isVisible={!!errors.content}
+          message={errors.content?.message}
         />
       </section>
 

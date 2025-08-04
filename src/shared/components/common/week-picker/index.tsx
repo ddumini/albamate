@@ -5,9 +5,10 @@ import DayCheckbox from '@/shared/components/ui/DayCheckbox';
 interface WeekPickerProps {
   value?: string[];
   onChange?: (value: string[]) => void;
+  isInValid?: boolean;
 }
 
-const WeekPicker = ({ value = [], onChange }: WeekPickerProps) => {
+const WeekPicker = ({ value = [], onChange, isInValid }: WeekPickerProps) => {
   const selectedDays = value;
 
   const handleDayChange = (checked: boolean, value: string) => {
@@ -34,6 +35,7 @@ const WeekPicker = ({ value = [], onChange }: WeekPickerProps) => {
             aria-label={`${day}요일 선택`}
             checked={selectedDays.includes(day)}
             day={day}
+            isInvalid={isInValid}
             name="weekdays"
             value={day}
             onChange={handleDayChange}
