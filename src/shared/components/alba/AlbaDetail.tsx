@@ -21,10 +21,10 @@ interface AlbaDetailProps {
  * @date 2025-07-20
  *
  * @param {AlbaDetailProps} props
- * @param {MockAlbaItem} props.item - 알바 데이터 객체
+ * @param {AlbaItemDetail} props.item - 알바 데이터 객체
  *
  * @example
- * <AlbaState item={mockAlbaItem} />
+ * <AlbaState item={AlbaItemDetail} />
  */
 const AlbaDetail = ({ item }: AlbaDetailProps) => {
   const {
