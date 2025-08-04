@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import AlbaDescription from '@/shared/components/alba/AlbaDescription';
 import AlbaDetail from '@/shared/components/alba/AlbaDetail';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import useApplicationStore from '@/shared/store/useApplicationStore';
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
@@ -97,7 +98,7 @@ const ApplicationDetail = ({
   if (isLoading) {
     return (
       <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
-        <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600" />
+        <LoadingSpinner size="lg" />
         <p className="text-gray-600">데이터를 불러오는 중...</p>
       </div>
     );
