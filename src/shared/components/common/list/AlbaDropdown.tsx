@@ -26,7 +26,7 @@ interface Props {
  */
 const AlbaDropdown = ({ options }: Props) => {
   return (
-    <div className="absolute top-full right-0 z-30 mt-4 w-90 rounded-md border border-gray-200 bg-white p-4 shadow-md brightness-98 lg:w-110 dark:bg-gray-800">
+    <div className="absolute top-full right-0 z-30 mt-4 w-90 rounded-md border border-gray-200 bg-white p-4 shadow-md brightness-[0.98] lg:w-110 dark:bg-gray-800">
       {options.map(({ label, onClick }) => (
         <button
           key={label}

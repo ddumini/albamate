@@ -52,7 +52,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         </div>
 
         {/* 2. 모집 날짜 범위 */}
-        <div className="dark:text-gray-400; text-gray-500">
+        <div className="text-gray-500 dark:text-gray-400">
           {formattedStart} 등록
         </div>
       </div>
@@ -62,8 +62,8 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
         <div className="font-semibold underline underline-offset-4">
           {storeName}
         </div>
-        <div className="dark:text-gray-400; text-gray-500">{location}</div>
-        <div className="dark:text-gray-400; text-gray-500">{`· ${preferred}`}</div>
+        <div className="text-gray-500 dark:text-gray-400">{location}</div>
+        <div className="text-gray-500 dark:text-gray-400">{`· ${preferred}`}</div>
       </div>
 
       {/* 4. 알바 제목 (굵게) */}

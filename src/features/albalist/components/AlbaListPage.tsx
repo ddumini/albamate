@@ -23,7 +23,7 @@ interface FilterState {
 const AlbaListPage = ({ session }: { session: Session | null }) => {
   const { isLoading: isSessionLoading } = useSessionUtils();
   const { getAlbas } = useAlbaListApi();
-  const isOwner = session?.user.role === 'OWNER';
+  const isOwner = session?.user?.role === 'OWNER';
 
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
