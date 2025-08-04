@@ -54,7 +54,9 @@ const AlbaCardItem = ({
     applyCount,
     scrapCount,
   } = item;
-  const [imgSrc, setImgSrc] = useState(imageUrls?.[0] || '/icons/user.svg');
+  const [imgSrc, setImgSrc] = useState(
+    imageUrls?.[0] || '/iimages/list-default.svg'
+  );
   const [open, setOpen] = useState(false);
   const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
