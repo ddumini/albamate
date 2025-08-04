@@ -5,16 +5,16 @@ import ImageCarousel from '@common/imageCarousel/ImageCarousel';
 
 import { createSlidesFromUrls } from '@/shared/utils/carousel';
 
-const images = [
-  '/images/landing/albaform-clock.png',
-  '/images/landing/apply-girl.png',
-  '/images/landing/anywhere-application.png',
-];
+interface AlbaImageCarouselProps {
+  imageUrls: string[];
+}
 
-const sampleSlides: Slide[] = createSlidesFromUrls(images);
+const AlbaImageCarousel = ({ imageUrls }: AlbaImageCarouselProps) => {
+  const safeUrls =
+    imageUrls?.length > 0 ? imageUrls : ['/images/list-default.png'];
+  const slides: Slide[] = createSlidesFromUrls(safeUrls);
 
-const AlbaImageCarousel = () => (
-  <ImageCarousel showCounter interval={4000} slides={sampleSlides} />
-);
+  return <ImageCarousel showCounter interval={4000} slides={slides} />;
+};
 
 export default AlbaImageCarousel;

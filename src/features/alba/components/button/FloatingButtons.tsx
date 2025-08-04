@@ -41,7 +41,7 @@ const FloatingButtons = ({ formId }: Props) => {
     await refreshSession();
 
     if (!isAuthenticated) {
-      signOut({ callbackUrl: '/signin' });
+      await signOut({ callbackUrl: `${window.location.origin}/signin` });
       return;
     }
 
@@ -54,7 +54,11 @@ const FloatingButtons = ({ formId }: Props) => {
         await refreshSession();
       } catch (refreshError) {
         console.warn('세션 갱신 실패. 로그아웃을 진행합니다.');
-        signOut({ callbackUrl: '/signin', redirect: true });
+        signOut({
+          callbackUrl: `${window.location.origin}/signin`,
+          redirect: true,
+        });
+
         return;
       }
 

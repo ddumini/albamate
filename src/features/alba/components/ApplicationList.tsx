@@ -81,7 +81,7 @@ const ApplicationList = ({ formId }: ApplicantListProps) => {
       </h2>
 
       {/* 헤더 */}
-      <div className="BorderB-gray grid grid-cols-[1fr_2fr_1fr_1fr] px-16 py-16 text-gray-400">
+      <div className="grid grid-cols-[1fr_2fr_1fr_1fr] border-b border-gray-100 px-16 py-16 text-gray-400 dark:border-gray-400">
         <div className="flex items-center px-4">이름</div>
         <div className="flex items-center px-4">전화번호</div>
         <div className="flex items-center gap-8">

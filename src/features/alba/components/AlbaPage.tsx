@@ -70,17 +70,17 @@ const AlbaPage = () => {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-120 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
+    <div className="mx-auto flex w-full max-w-375 min-w-320 flex-col gap-40 py-40 pb-140 text-sm lg:max-w-7xl lg:gap-80 lg:text-lg">
       <ToastPopup
         applyCount={item.applyCount}
-        duration={5000}
+        duration={3000}
         visible={popupVisible}
         onClose={() => setPopupVisible(false)}
       />
 
       <FloatingButtons formId={Number(formId)} />
 
-      <ImageCarousel />
+      <ImageCarousel imageUrls={item.imageUrls} />
 
       <PageContent isOwner={isOwner} item={item} />
 

@@ -2,12 +2,11 @@ import Image from 'next/image';
 import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 저장한 경로에 따라 수정
+import { AlbaItemDetail } from '@/shared/types/albaDetail';
 import { formatDateLong, formatDateShort } from '@/shared/utils/format';
 
-import { MockAlbaItem } from '../types/MockAlbaItem';
-
 interface AlbaInfoProps {
-  item: MockAlbaItem;
+  item: AlbaItemDetail;
 }
 
 const getBorderClass = (idx: number) => {

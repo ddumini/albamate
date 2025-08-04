@@ -14,6 +14,8 @@ import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
 
+import TitleMarquee from '../../ui/TitleMarquee';
+
 export interface DropdownOption {
   label: string;
   onClick: () => void;
@@ -52,7 +54,9 @@ const AlbaCardItem = ({
     applyCount,
     scrapCount,
   } = item;
-  const [imgSrc, setImgSrc] = useState(imageUrls?.[0] || '/icons/user.svg');
+  const [imgSrc, setImgSrc] = useState(
+    imageUrls?.[0] || '/images/list-default.png'
+  );
   const [open, setOpen] = useState(false);
   const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -126,8 +130,10 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <h3 className="Text-black mt-12 ml-4 flex items-center gap-4 text-2lg font-semibold">
-        {title}
+      <div className="mt-12 ml-4 flex items-center gap-4">
+        <div className="flex-1">
+          <TitleMarquee title={title} />
+        </div>
         {!pathname.includes('my') &&
           (isScrapped ? (
             <Image
@@ -139,12 +145,13 @@ const AlbaCardItem = ({
           ) : (
             <Image
               alt="스크랩 안됨"
+              className="mr-3"
               height={20}
               src="/icons/bookmark-gray.svg"
               width={20}
             />
           ))}
-      </h3>
+      </div>
 
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (

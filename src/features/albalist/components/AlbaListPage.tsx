@@ -1,5 +1,6 @@
 'use client';
 
+import { Session } from 'next-auth';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
@@ -19,9 +20,10 @@ interface FilterState {
   searchKeyword?: string;
 }
 
-const AlbaListPage = () => {
-  const { isOwner, isLoading: isSessionLoading } = useSessionUtils();
+const AlbaListPage = ({ session }: { session: Session | null }) => {
+  const { isLoading: isSessionLoading } = useSessionUtils();
   const { getAlbas } = useAlbaListApi();
+  const isOwner = session?.user?.role === 'OWNER';
 
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');

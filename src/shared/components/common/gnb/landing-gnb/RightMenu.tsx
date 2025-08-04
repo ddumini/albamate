@@ -16,7 +16,7 @@ const RightMenu = () => {
   return (
     <div className="flex items-center gap-12 md:gap-16 lg:gap-20">
       <PrimaryButton
-        className="BG-solid-mint rounded-sm px-4 py-2 text-sm text-white shadow-lg hover:brightness-95 active:brightness-90 md:px-8 md:py-4 md:text-md lg:px-16 lg:py-6 lg:text-lg"
+        className="rounded-sm bg-mint-400 px-4 py-2 text-sm text-white shadow-lg hover:brightness-95 active:brightness-90 md:px-8 md:py-4 md:text-md lg:px-16 lg:py-6 lg:text-lg"
         label="로그인"
         type="button"
         variant="solid"
