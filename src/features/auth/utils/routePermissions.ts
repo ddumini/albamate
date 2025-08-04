@@ -32,6 +32,7 @@ export const ROLE_ACCESS = {
     // 사장님이 접근 가능한 private 페이지들
     private: [
       '/addform', // 알바폼 등록
+      '/addtalk', // 알바토크 등록
       '/myalbalist', // 내 알바 목록
       '/application', // 지원자 관리
       '/mypage', // 마이페이지
@@ -43,6 +44,7 @@ export const ROLE_ACCESS = {
     // 지원자가 접근 가능한 private 페이지들
     private: [
       '/myalbalist', // 내 알바 지원 목록
+      '/addtalk', // 알바토크 등록
       '/myapply', // 내 지원 상세
       '/mypage', // 마이페이지
     ],
@@ -76,6 +78,7 @@ export function getRouteGroup(
   // private 라우트 그룹 확인
   if (
     pathname.startsWith('/addform') ||
+    pathname.startsWith('/addtalk') ||
     pathname.startsWith('/myalbalist') ||
     pathname.startsWith('/application') ||
     pathname.startsWith('/myapply') ||
