@@ -22,7 +22,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
       console.log('containerWidth:', containerWidth, 'textWidth:', textWidth);
 
       if (textWidth > containerWidth) {
-        const duration = textWidth * 0.02;
+        const duration = textWidth * 0.03;
         setAnimationDuration(duration);
       } else {
         setAnimationDuration(null);
