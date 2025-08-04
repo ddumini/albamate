@@ -28,6 +28,7 @@ export const useAddformMutation = () => {
         ['albaDetail', parseResponse.data.id],
         parseResponse.data
       );
+      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {
@@ -61,6 +62,7 @@ export const useEditformMutation = () => {
         ['albaDetail', parseResponse.data.id],
         parseResponse.data
       );
+      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {
