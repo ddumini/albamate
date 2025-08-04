@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
         password: body.password,
         role: body.role,
         name: '',
-        nickname: '',
-        phoneNumber: '',
+        nickname: body.nickname,
+        phoneNumber: body.phoneNumber,
         location: body.location,
         storeName: body.storeName,
         storePhoneNumber: body.storePhoneNumber,
@@ -41,6 +41,8 @@ export async function POST(request: NextRequest) {
         storePhoneNumber: body.storePhoneNumber,
       };
     }
+
+    console.log(signUpData);
 
     // 백엔드 API로 회원가입 요청
     const response = await fetch(`${baseURL}auth/sign-up`, {
