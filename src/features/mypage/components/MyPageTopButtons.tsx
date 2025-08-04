@@ -5,14 +5,14 @@ import PrimaryButton from '@common/button/PrimaryButton';
 import KebabMenuDropdown from '@/shared/components/common/kebabMenuDropdown';
 import useModalStore from '@/shared/store/useModalStore';
 
-import renderModalContent from '../hooks/renderModalContent';
 import { useMyProfileQuery } from '../queries';
+import renderModalContent from '../utils/renderModalContent';
 import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
 const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
-  const { data: userInfo, isPending } = useMyProfileQuery();
+  const { data: userInfo } = useMyProfileQuery();
   const { openModal, closeModal } = useModalStore();
 
   const infoComponent = isOwner ? (

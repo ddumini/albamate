@@ -12,12 +12,12 @@ import {
   ScrapCardItem,
 } from '@/shared/types/mypage';
 
-import renderModalContent from '../hooks/renderModalContent';
 import {
   useMyCommentDelete,
   useMyPostDelete,
   useMyScrapDelete,
 } from '../queries';
+import renderModalContent from '../utils/renderModalContent';
 import CardSection from './CardSection';
 import CommentEdit from './CommentEdit';
 import MyCommentCard from './MyCommentCard';
