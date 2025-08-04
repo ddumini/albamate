@@ -23,18 +23,20 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
       href={`/albatalk/${cardContent.id}`}
     >
       <section className="flex w-full items-center justify-between">
-        <div className="inline-flex items-center">
+        <div className="inline-flex w-full items-center">
           <span className="relative inline-flex h-24 w-24 items-center justify-center lg:h-36 lg:w-36">
             <Image fill alt="제목" sizes="36px" src="/icons/apply-list.svg" />
           </span>
-          <h3 className="Text-black text-lg font-medium">
+          <h3 className="Text-black overflow-hidden text-lg font-medium text-ellipsis whitespace-nowrap">
             {cardContent.title}
           </h3>
         </div>
         <KebabMenuDropdown options={dropdownItem} />
       </section>
-      <section>
-        <p className="Text-gray text-lg font-normal">{cardContent.content}</p>
+      <section className="w-full">
+        <p className="Text-gray w-full overflow-hidden text-lg font-normal text-ellipsis whitespace-nowrap">
+          {cardContent.content}
+        </p>
       </section>
       <section className="flex w-full items-center justify-between">
         <div className="Text-gray flex items-center gap-16 text-lg font-normal">
@@ -51,7 +53,7 @@ const MyPostCard = ({ cardContent, dropdownItem }: MyPostCardProps) => {
                 }
               />
             </span>
-            <span className="text-xs lg:text-lg">
+            <span className="w-full overflow-hidden text-xs text-ellipsis whitespace-nowrap lg:text-lg">
               {cardContent.writer.nickname}
             </span>
           </div>

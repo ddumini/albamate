@@ -22,21 +22,21 @@ const MyCommentCard = ({ cardContent, dropdownItem }: MyCommentCardProps) => {
       href={`/albatalk/${cardContent.post.id}`}
     >
       <section className="flex w-full items-center justify-between">
-        <div className="inline-flex items-center">
+        <div className="inline-flex w-full items-center">
           <span className="relative inline-flex h-24 w-24 items-center justify-center lg:h-36 lg:w-36">
             <Image fill alt="제목" sizes="36px" src="/icons/apply-list.svg" />
           </span>
-          <h3 className="Text-black text-xs font-medium lg:text-lg">
+          <h3 className="Text-black overflow-hidden text-xs font-medium text-ellipsis whitespace-nowrap lg:text-lg">
             {cardContent.post.title}
           </h3>
         </div>
         <KebabMenuDropdown options={dropdownItem} />
       </section>
-      <section className="inline-flex flex-col gap-40">
-        <p className="Text-gray text-xs font-normal lg:text-lg">
+      <section className="inline-flex w-full flex-col gap-40">
+        <p className="Text-gray overflow-hidden text-xs font-normal text-ellipsis whitespace-nowrap lg:text-lg">
           {cardContent.post.content}
         </p>
-        <p className="Text-black text-md font-semibold lg:text-2lg">
+        <p className="Text-black overflow-hidden text-md font-semibold text-ellipsis whitespace-nowrap lg:text-2lg">
           {cardContent.content}
         </p>
       </section>
