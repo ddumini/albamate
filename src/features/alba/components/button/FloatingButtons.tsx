@@ -41,7 +41,7 @@ const FloatingButtons = ({ formId }: Props) => {
     await refreshSession();
 
     if (!isAuthenticated) {
-      signOut({ callbackUrl: '/signin' });
+      await signOut({ callbackUrl: `${window.location.origin}/signin` });
       return;
     }
 
