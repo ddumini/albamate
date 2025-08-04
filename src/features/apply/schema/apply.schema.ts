@@ -10,14 +10,19 @@ export const createApplicationRequestSchema = z.object({
     }),
   introduction: z
     .string()
+    .min(1, { error: '자기소개를 입력 해주세요.' })
     .max(200, { error: '최대 200자까지 입력 가능합니다.' }),
   resumeName: z.string(),
   resumeId: z.number(),
   experienceMonths: z
     .number({ error: '숫자만 입력해주세요.' })
     .min(0, { error: '0 이상의 숫자를 입력해주세요.' }),
-  phoneNumber: z.string(),
-  name: z.string(),
+  phoneNumber: z
+    .string()
+    .regex(/^\d+$/, { error: '숫자만 입력해주세요.' })
+    .min(10, { error: '휴대폰 번호는 최소 10자리 이상이어야 합니다.' })
+    .max(11, { error: '휴대폰 번호는 최대 11자리까지 입력 가능합니다.' }),
+  name: z.string().min(1, { error: '이름을 입력 해주세요.' }),
 });
 
 export const createApplicationResponseSchema = createApplicationRequestSchema

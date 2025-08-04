@@ -36,7 +36,7 @@ export const useApplyMutation = () => {
       // 회원은 지원 상세 페이지로, 비회원은 알바폼 상세 페이지로
       if (parseResponse.data.applicantId) {
         queryClient.setQueryData(
-          ['myApplication', variables.formId],
+          ['myApplication', String(variables.formId)],
           parseResponse.data
         );
         router.push(`/myapply/${variables.formId}`);

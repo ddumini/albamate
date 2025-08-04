@@ -163,11 +163,14 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       localStorage.removeItem('addform-draft');
       if (formId) {
         editformMutate({ formId: Number(formId), form: getValues() });
+        showPopup('알바폼 수정이 완료되었습니다.', 'success');
       } else {
         addformMutate(getValues());
+        showPopup('알바폼 생성이 완료되었습니다.', 'success');
       }
     } catch (error) {
       console.error('제출 중 오류 발생:', error);
+      showPopup('알바폼 생성 중 오류가 발생했습니다.', 'error');
     }
   };
 
@@ -197,6 +200,7 @@ const AddformClient = ({ formId }: { formId?: string }) => {
       showPopup('알바폼이 임시 저장되었습니다.', 'success');
     } catch (error) {
       console.error('임시 저장 중 오류 발생:', error);
+      showPopup('임시 저장 중 오류가 발생했습니다.', 'error');
     }
   };
 
