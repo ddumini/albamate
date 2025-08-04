@@ -1,6 +1,7 @@
 'use client';
 
 import EmptyCard from '@/shared/components/common/EmptyCard';
+import { usePopupStore } from '@/shared/store/popupStore';
 
 import {
   useDeleteAlbatalkComment,
@@ -17,6 +18,7 @@ interface CommentListProps {
 const CommentList = ({ comments, albatalkId }: CommentListProps) => {
   const updateCommentMutation = useUpdateAlbatalkComment();
   const deleteCommentMutation = useDeleteAlbatalkComment();
+  const { showPopup } = usePopupStore();
 
   // 댓글 수정 로직을 처리하는 함수
   const handleEditComment = (commentId: number, newContent: string) => {
@@ -25,6 +27,7 @@ const CommentList = ({ comments, albatalkId }: CommentListProps) => {
       content: newContent,
       postId: albatalkId,
     });
+    showPopup('댓글 수정이 완료되었습니다.', 'success');
   };
 
   // 댓글 삭제 로직을 처리하는 함수
@@ -33,6 +36,7 @@ const CommentList = ({ comments, albatalkId }: CommentListProps) => {
       commentId,
       postId: albatalkId,
     });
+    showPopup('댓글 삭제가 완료되었습니다.', 'success');
   };
 
   if (comments.length === 0) {
