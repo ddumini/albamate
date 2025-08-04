@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getFormConfig } from '@/features/auth/constants/formFields';
@@ -58,11 +58,6 @@ const AuthForm = () => {
 
   // 사용자 타입 (지원자/사장님)
   const userType = authContext?.userType;
-  const isOwner = authContext?.isOwner || false;
-  const isApplicant = authContext?.isApplicant || false;
-
-  // 쿼리 파라미터에서 role 가져오기
-  const roleFromQuery = searchParams.get('type');
 
   // 폼 구성 가져오기
   const formConfig = getFormConfig(authPageType, userType || undefined);
@@ -73,13 +68,39 @@ const AuthForm = () => {
     formState: { isValid, errors, isSubmitting }, // isSubmitting 추가
     watch,
     setValue,
+    trigger, // trigger 추가
   } = useForm<AuthFormData>({
-    mode: 'onBlur', // onChange에서 onBlur로 변경
+    mode: 'onChange', // onBlur에서 onChange로 변경
     defaultValues: formConfig.defaultValues,
     resolver: zodResolver(formConfig.validationSchema),
   });
 
   const formValues = watch();
+
+  // 브라우저 자동완성 감지
+  useEffect(() => {
+    const handleAnimationStart = (e: AnimationEvent) => {
+      if (e.animationName === 'onAutoFillStart') {
+        // 자동완성이 시작되면 폼 상태를 강제로 업데이트
+        trigger();
+      }
+    };
+
+    const handleAnimationEnd = (e: AnimationEvent) => {
+      if (e.animationName === 'onAutoFillCancel') {
+        // 자동완성이 취소되면 폼 상태를 강제로 업데이트
+        trigger();
+      }
+    };
+
+    document.addEventListener('animationstart', handleAnimationStart);
+    document.addEventListener('animationend', handleAnimationEnd);
+
+    return () => {
+      document.removeEventListener('animationstart', handleAnimationStart);
+      document.removeEventListener('animationend', handleAnimationEnd);
+    };
+  }, [trigger]);
 
   // 필수 필드가 모두 채워졌는지 확인하는 함수
   const isFormComplete = () => {
@@ -104,8 +125,6 @@ const AuthForm = () => {
 
           // 현재 URL 정보를 포함하여 signIn 호출
           const currentUrl = window.location.href;
-          console.log('현재 URL:', currentUrl);
-          console.log('현재 사용자 타입:', userType);
 
           const result = await signIn('credentials', {
             email: signInData.email,
@@ -198,11 +217,8 @@ const AuthForm = () => {
               ...accountData,
             };
 
-            console.log('최종 회원가입 데이터:', finalSignUpData);
-
             // 회원가입 API 직접 호출
             try {
-              console.log('회원가입 API 요청 시작');
               const response = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: {
@@ -211,11 +227,7 @@ const AuthForm = () => {
                 body: JSON.stringify(finalSignUpData),
               });
 
-              console.log('회원가입 API 응답 상태:', response.status);
-
               if (response.ok) {
-                console.log('회원가입 성공');
-
                 // 임시 데이터 삭제
                 authContext?.setTempSignUpData(null);
 
@@ -228,7 +240,6 @@ const AuthForm = () => {
                   } as any)) as any;
 
                   if (signInResult && !signInResult.error) {
-                    console.log('자동 로그인 성공');
                     setLoginStatus({
                       visible: true,
                       message: '회원가입이 완료되었습니다!',
@@ -262,7 +273,6 @@ const AuthForm = () => {
               } else {
                 // 응답 텍스트를 먼저 가져와서 JSON 파싱 시도
                 const responseText = await response.text();
-                console.log('회원가입 API 응답 텍스트:', responseText);
 
                 let errorData;
                 try {
@@ -290,14 +300,6 @@ const AuthForm = () => {
                 type: 'error',
               });
             }
-          } else {
-            // 일반 계정 정보 업데이트
-            console.log(
-              '계정 정보 데이터:',
-              accountData,
-              '사용자 타입:',
-              userType
-            );
           }
           break;
         }
@@ -362,15 +364,14 @@ const AuthForm = () => {
             watch={watch}
           />
         </div>
-        {/* TODO: 로딩 상태 추가 (isSubmitting) */}
         <PrimaryButton
           className="mt-24 h-58 w-full lg:mt-56"
-          disabled={!isFormComplete() || isSubmitting || isRedirecting} // isSubmitting 추가
+          disabled={!isFormComplete() || isSubmitting || isRedirecting}
           label={getButtonText(
             authPageType,
             userType || undefined,
             isSubmitting
-          )} // isSubmitting 전달
+          )}
           type="submit"
           variant="solid"
         />

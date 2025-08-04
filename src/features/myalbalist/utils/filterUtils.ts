@@ -1,4 +1,8 @@
-import { ApplicantQueryParams, OwnerQueryParams } from '../queries/queries';
+import {
+  ApplicantQueryParams,
+  FilterState,
+  OwnerQueryParams,
+} from '../types/myalbalist';
 
 // 사장님용 정렬 옵션 매핑
 export const mapOwnerSortToApi = (sortValue: string): string | undefined => {
@@ -44,52 +48,37 @@ export const mapPublicStatusToApi = (
 
 // 필터 상태를 API 파라미터로 변환
 export const convertFiltersToApiParams = (
-  filters: {
-    recruitStatus?: string;
-    publicStatus?: string;
-    sortStatus?: string;
-    searchKeyword?: string;
-  },
+  filters: FilterState,
   isOwner: boolean,
-  limit: number = 10
+  limit: number = 10,
+  cursor?: number | null
 ): ApplicantQueryParams | OwnerQueryParams => {
+  const baseParams = {
+    limit,
+    ...(cursor !== undefined && { cursor }),
+  };
+
   if (isOwner) {
-    // 사장님용 파라미터
-    const params: OwnerQueryParams = {
-      limit,
-    };
-
-    if (filters.searchKeyword) {
-      params.keyword = filters.searchKeyword;
-    }
-    if (filters.sortStatus && filters.sortStatus !== 'total') {
-      params.orderBy = mapOwnerSortToApi(
-        filters.sortStatus
-      ) as OwnerQueryParams['orderBy'];
-    }
-    if (filters.recruitStatus && filters.recruitStatus !== 'total') {
-      params.isRecruiting = mapRecruitStatusToApi(filters.recruitStatus);
-    }
-    if (filters.publicStatus && filters.publicStatus !== 'total') {
-      params.isPublic = mapPublicStatusToApi(filters.publicStatus);
-    }
-
-    return params;
+    return {
+      ...baseParams,
+      ...(filters.searchKeyword && { keyword: filters.searchKeyword }),
+      ...(filters.sortStatus && {
+        orderBy: mapOwnerSortToApi(filters.sortStatus),
+      }),
+      ...(filters.publicStatus && {
+        isPublic: mapPublicStatusToApi(filters.publicStatus),
+      }),
+      ...(filters.recruitStatus && {
+        isRecruiting: mapRecruitStatusToApi(filters.recruitStatus),
+      }),
+    } as OwnerQueryParams;
   } else {
-    // 지원자용 파라미터
-    const params: ApplicantQueryParams = {
-      limit,
-    };
-
-    if (filters.searchKeyword) {
-      params.keyword = filters.searchKeyword;
-    }
-    if (filters.sortStatus && filters.sortStatus !== 'total') {
-      params.status = mapApplicantStatusToApi(
-        filters.sortStatus
-      ) as ApplicantQueryParams['status'];
-    }
-
-    return params;
+    return {
+      ...baseParams,
+      ...(filters.searchKeyword && { keyword: filters.searchKeyword }),
+      ...(filters.recruitStatus && {
+        status: mapApplicantStatusToApi(filters.recruitStatus),
+      }),
+    } as ApplicantQueryParams;
   }
 };

@@ -4,35 +4,28 @@ import ListWrapper from '@common/list/ListWrapper';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
-import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
+import EmptyCard from '@/shared/components/common/EmptyCard';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import useViewport from '@/shared/hooks/useViewport';
 import { cn } from '@/shared/lib/cn';
 
 import {
-  type ApplicantQueryParams,
-  type OwnerQueryParams,
-  useApplicantMyAlbalistQuery,
-  useOwnerMyAlbalistQuery,
-} from '../queries/queries';
+  fetchApplicantMyAlbalist,
+  fetchOwnerMyAlbalist,
+} from '../queries/infiniteQueries';
 import { ApplicantMyAlbaItem, OwnerMyAlbaItem } from '../types/myalbalist';
+import { FilterState } from '../types/myalbalist';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
 import MyAlbaCard from './MyAlbaCard';
 import AlbaFilterBar from './MyAlbaFilterBar';
 
-interface FilterState {
-  recruitStatus?: string;
-  publicStatus?: string;
-  sortStatus?: string;
-  searchKeyword?: string;
+interface MyAlbaListProps {
+  userRole?: 'OWNER' | 'APPLICANT';
 }
 
-const AlbaListPage = () => {
-  const {
-    isOwner,
-    user,
-    isLoading: isSessionLoading,
-    session,
-    isAuthenticated,
-  } = useSessionUtils();
+const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
+  const { isMobile, isTablet } = useViewport();
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearchKeyword, setDebouncedSearchKeyword] = useState('');
@@ -41,7 +34,7 @@ const AlbaListPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchKeyword(searchInput);
-    }, 500); // 500ms 디바운스
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [searchInput]);
@@ -54,46 +47,59 @@ const AlbaListPage = () => {
     }));
   }, [debouncedSearchKeyword]);
 
-  // 필터 상태를 API 파라미터로 변환 (limit 포함)
+  // 반응형 limit 계산
+  const getLimit = useMemo(() => {
+    if (isMobile) return 3;
+    if (isTablet) return 4;
+    return 6; // 데스크탑
+  }, [isMobile, isTablet]);
+
+  // 필터 상태를 API 파라미터로 변환
   const apiParams = useMemo(
-    () => convertFiltersToApiParams(filters, isOwner, 10),
-    [filters, isOwner]
+    () => convertFiltersToApiParams(filters, userRole === 'OWNER', getLimit),
+    [filters, userRole, getLimit]
   );
 
-  // 지원자용 쿼리 (enabled 옵션으로 조건부 실행)
+  // 지원자용 무한 스크롤
+  const applicantInfiniteQuery = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: [
+      'applicantMyAlbalist',
+      ...Object.values(apiParams).filter(Boolean),
+    ],
+    fetcher: fetchApplicantMyAlbalist,
+    initialParams: apiParams,
+    enabled: userRole === 'APPLICANT',
+  });
+
+  // 사장님용 무한 스크롤
+  const ownerInfiniteQuery = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: ['ownerMyAlbalist', ...Object.values(apiParams).filter(Boolean)],
+    fetcher: fetchOwnerMyAlbalist,
+    initialParams: apiParams,
+    enabled: userRole === 'OWNER',
+  });
+
+  // 현재 사용자 역할에 맞는 쿼리 선택
+  const currentQuery =
+    userRole === 'OWNER' ? ownerInfiniteQuery : applicantInfiniteQuery;
   const {
-    data: applicantData,
-    isLoading: isApplicantLoading,
-    error: applicantError,
-    refetch: refetchApplicant,
-  } = useApplicantMyAlbalistQuery(
-    !isOwner ? (apiParams as ApplicantQueryParams) : { limit: 10 }
-  );
-
-  // 사장님용 쿼리 (enabled 옵션으로 조건부 실행)
-  const {
-    data: ownerData,
-    isLoading: isOwnerLoading,
-    error: ownerError,
-    refetch: refetchOwner,
-  } = useOwnerMyAlbalistQuery(
-    isOwner ? (apiParams as OwnerQueryParams) : { limit: 10 }
-  );
-
-  // 현재 사용자 역할에 맞는 데이터 선택
-  const currentData = isOwner ? ownerData : applicantData;
-  const isLoadingData = isOwner ? isOwnerLoading : isApplicantLoading;
-  const error = isOwner ? ownerError : applicantError;
+    data,
+    isLoading,
+    isError,
+    hasNextPage,
+    isFetchingNextPage,
+    loadMoreRef,
+    getData,
+  } = currentQuery;
 
   // 필터 변경 핸들러
   const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
-    setFilters(prev => {
-      const updated = {
-        ...prev,
-        ...newFilters,
-      };
-      return updated;
-    });
+    setFilters(prev => ({
+      ...prev,
+      ...newFilters,
+    }));
   }, []);
 
   // 검색 입력 변경 핸들러
@@ -101,43 +107,79 @@ const AlbaListPage = () => {
     setSearchInput(value);
   }, []);
 
-  // 초기 로딩 (세션 로딩)일 때만 전체 페이지 로딩
-  if (isSessionLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  // 사용자 정보가 없을 때 처리
-  if (!user) {
-    return <div>로그인이 필요합니다.</div>;
-  }
-
   // 에러 처리
-  if (error) {
-    console.error('쿼리 에러:', error);
+  if (isError) {
+    console.error('쿼리 에러:', isError);
     return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
-  // 데이터 처리 로직 개선
-  let items: (ApplicantMyAlbaItem | OwnerMyAlbaItem)[] = [];
+  // 데이터 처리
+  const items = getData();
 
-  if (currentData) {
-    if (Array.isArray(currentData)) {
-      items = currentData;
-    } else if (currentData.data && Array.isArray(currentData.data)) {
-      items = currentData.data;
-    } else if (currentData.items && Array.isArray(currentData.items)) {
-      items = currentData.items;
-    } else {
-      console.warn('예상하지 못한 데이터 구조:', currentData);
-      items = [];
+  const renderContent = () => {
+    // 초기 로딩 중일 때
+    if (isLoading) {
+      return (
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <LoadingSpinner size="lg" />
+        </div>
+      );
     }
-  }
+
+    // 데이터가 없는 경우
+    if (!items || items.length === 0) {
+      return userRole === 'APPLICANT' ? (
+        <EmptyCard
+          description="알바폼을 둘러보고 지원해보세요!"
+          title="지원한 알바폼이 없어요."
+          type="albaList"
+        />
+      ) : (
+        <EmptyCard
+          description="1분 만에 등록하고 알바를 구해보세요!"
+          title="등록된 알바폼이 없어요."
+          type="albaList"
+        />
+      );
+    }
+
+    return (
+      <ListWrapper
+        className={cn(
+          userRole !== 'OWNER' && '!gap-y-10 md:!gap-y-20 lg:!gap-y-40'
+        )}
+        items={items}
+        renderItem={(item: ApplicantMyAlbaItem | OwnerMyAlbaItem) => (
+          <MyAlbaCard
+            key={`${item.id}`}
+            isOwner={userRole === 'OWNER'}
+            item={item}
+          />
+        )}
+      >
+        {userRole === 'OWNER' && <FloatingFormButton />}
+
+        {/* 무한 스크롤 트리거 요소 */}
+        {hasNextPage && (
+          <div
+            ref={loadMoreRef}
+            className="absolute right-0 -bottom-70 left-0 flex flex-col items-center justify-center"
+          >
+            {isFetchingNextPage ? (
+              <LoadingSpinner size="sm" />
+            ) : (
+              <div className="h-4" /> // 트리거용 빈 공간
+            )}
+          </div>
+        )}
+      </ListWrapper>
+    );
+  };
 
   return (
     <div className="mb-68">
-      {/* 필터바는 항상 렌더링 (로딩 상태와 무관) */}
       <AlbaFilterBar
-        isOwner={isOwner}
+        isOwner={userRole === 'OWNER'}
         publicValue={filters.publicStatus}
         recruitValue={filters.recruitStatus}
         searchValue={searchInput}
@@ -146,21 +188,9 @@ const AlbaListPage = () => {
         onSearchChange={handleSearchChange}
       />
 
-      {/* 
-        TODO: 추후 스켈레톤 로딩 구현
-        - 로딩 중일 때 리스트 부분만 스켈레톤 표시
-      */}
-      <ListWrapper
-        className={cn(!isOwner && '!gap-y-10 md:!gap-y-20 lg:!gap-y-40')}
-        items={items}
-        renderItem={(item: ApplicantMyAlbaItem | OwnerMyAlbaItem) => (
-          <MyAlbaCard key={`${item.id}`} isOwner={isOwner} item={item} />
-        )}
-      >
-        {isOwner && <FloatingFormButton />}
-      </ListWrapper>
+      {renderContent()}
     </div>
   );
 };
 
-export default AlbaListPage;
+export default MyAlbaList;

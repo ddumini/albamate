@@ -242,7 +242,7 @@ const ApplicationDetail = ({
         </div>
         <div>
           <ApplicationState
-            applicationId={ applicationData.id}
+            applicationId={applicationData.id}
             createdAt={applicationData.createdAt}
             recruitmentEndDate={albaformData.recruitmentEndDate}
             status={applicationData.status}
