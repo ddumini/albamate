@@ -126,8 +126,10 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <h3 className="Text-black mt-12 ml-4 flex items-center gap-4 text-2lg font-semibold">
-        {title}
+      <div className="mt-12 ml-4 flex items-center gap-4">
+        <h3 className="flex-1 overflow-hidden text-2lg font-semibold text-ellipsis whitespace-nowrap text-black">
+          {title}
+        </h3>
         {!pathname.includes('my') &&
           (isScrapped ? (
             <Image
@@ -144,7 +146,7 @@ const AlbaCardItem = ({
               width={20}
             />
           ))}
-      </h3>
+      </div>
 
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (
