@@ -32,7 +32,10 @@ export const useApplyMutation = () => {
         );
         return;
       }
-
+      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
+      queryClient.invalidateQueries({
+        queryKey: ['albaDetail', variables.formId],
+      });
       // 회원은 지원 상세 페이지로, 비회원은 알바폼 상세 페이지로
       if (parseResponse.data.applicantId) {
         queryClient.setQueryData(

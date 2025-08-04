@@ -145,7 +145,7 @@ const ApplyForm = ({ formId }: { formId: string }) => {
               isResumePending ||
               isApplyPending
             }
-            label="작성 완료"
+            label={isResumePending || isApplyPending ? '제출 중' : '작성 완료'}
             type="button"
             variant="solid"
             onClick={handleSubmit}

@@ -85,6 +85,7 @@ const RecruitContentForm = ({
             };
             return (
               <DatePicker
+                isInvalid={!!errors.recruitmentStartDate}
                 value={selectedRange}
                 onDateRangeChange={range => {
                   field.onChange(range?.from ? range.from.toISOString() : '');
@@ -100,6 +101,10 @@ const RecruitContentForm = ({
               />
             );
           }}
+        />
+        <ErrorMessage
+          isVisible={!!errors.recruitmentStartDate}
+          message={errors.recruitmentStartDate?.message}
         />
       </AddFormSection>
       <AddFormSection>

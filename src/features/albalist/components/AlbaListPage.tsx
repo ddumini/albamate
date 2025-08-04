@@ -1,27 +1,29 @@
 'use client';
 
-import EmptyCard from '@common/EmptyCard';
-import ListWrapper from '@common/list/ListWrapper';
+import { Session } from 'next-auth';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
-import type { AlbaItem } from '@/shared/types/alba';
 
-import { useAlbalistQuery } from '../queries/queries';
+import useAlbaListApi from '../api/albaListApi';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
-import AlbaCard from './AlbaCard';
 import AlbaFilterBar from './AlbaFilterBar';
+import InfiniteScroll from './InfiniteScroll';
+import AlbaListSkeleton from './skeleton/AlbaListSkeleton';
 
 interface FilterState {
   recruitStatus?: string;
-  publicStatus?: string; // 사장님만 UI 노출
+  publicStatus?: string;
   sortStatus?: string;
   searchKeyword?: string;
 }
 
-const AlbaListPage = () => {
-  const { isOwner, isLoading: isSessionLoading } = useSessionUtils();
+const AlbaListPage = ({ session }: { session: Session | null }) => {
+  const { isLoading: isSessionLoading } = useSessionUtils();
+  const { getAlbas } = useAlbaListApi();
+  const isOwner = session?.user?.role === 'OWNER';
 
   const [filters, setFilters] = useState<FilterState>({});
   const [searchInput, setSearchInput] = useState('');
@@ -43,12 +45,34 @@ const AlbaListPage = () => {
 
   // 필터 → API 파라미터 변환
   const apiParams = useMemo(
-    () => convertFiltersToApiParams(filters, 10),
+    () => convertFiltersToApiParams(filters, 6),
     [filters]
   );
 
-  // 데이터 쿼리
-  const { data, isLoading, error } = useAlbalistQuery(apiParams);
+  // queryKey에서 객체를 문자열로 변환
+  const queryKey = useMemo(
+    () => ['albaList', 'infinite', JSON.stringify(apiParams)],
+    [apiParams]
+  );
+
+  // 공용 무한스크롤 훅 사용
+  const {
+    isLoading,
+    isError,
+    isFetchingNextPage: isLoadingMore,
+    loadMoreRef,
+    getData,
+    error,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey,
+    fetcher: async params => {
+      const response = await getAlbas(params);
+      return response.data;
+    },
+    initialParams: apiParams,
+    enabled: !isSessionLoading, // 세션 로딩 완료 후 데이터 로드
+  });
 
   const handleFilterChange = useCallback((newFilters: Partial<FilterState>) => {
     setFilters(prev => ({
@@ -57,15 +81,19 @@ const AlbaListPage = () => {
     }));
   }, []);
 
+  // 같은 값이지만 상태를 갱신하여 useInfiniteScroll 트리거
+  const handleRetry = useCallback(() => {
+    setFilters(prev => ({ ...prev }));
+  }, []);
+
   const handleSearchChange = useCallback(
     (value: string) => setSearchInput(value),
     []
   );
 
-  if (isSessionLoading) return <div>로딩 중...</div>;
-  if (error) return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
-
-  const items: AlbaItem[] = data ?? [];
+  if (isSessionLoading) {
+    return <AlbaListSkeleton count={6} />;
+  }
 
   return (
     <div className="mb-68">
@@ -78,24 +106,16 @@ const AlbaListPage = () => {
         onSearchChange={handleSearchChange}
       />
 
-      {items.length === 0 ? (
-        <EmptyCard
-          description="1분 만에 등록하고 알바를 구해보세요!"
-          title="등록된 알바폼이 없어요."
-          type="albaList"
-          wrapClassName="min-h-[60vh]"
-        />
-      ) : (
-        <ListWrapper
-          className="mb-68"
-          items={items}
-          renderItem={(item: AlbaItem) => (
-            <AlbaCard key={item.id} item={item} />
-          )}
-        >
-          {isOwner && <FloatingFormButton />}
-        </ListWrapper>
-      )}
+      <InfiniteScroll
+        data={getData()}
+        error={isError ? error : null}
+        isLoading={isLoading}
+        isLoadingMore={isLoadingMore}
+        loadMoreRef={loadMoreRef}
+        onRetry={handleRetry}
+      >
+        {isOwner && <FloatingFormButton />}
+      </InfiniteScroll>
     </div>
   );
 };

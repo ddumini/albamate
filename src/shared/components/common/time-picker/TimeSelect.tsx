@@ -36,6 +36,7 @@ interface TimeSelectProps {
   isSelected?: boolean; // 선택 여부 추가
   placeholder?: string; // 플레이스홀더 추가
   className?: string;
+  isInvalid?: boolean;
 }
 
 const TimeSelect = ({
@@ -45,6 +46,7 @@ const TimeSelect = ({
   isSelected = false, // 기본값 false
   placeholder = '00:00', // 기본값 '00:00'
   className,
+  isInvalid,
 }: TimeSelectProps) => {
   return (
     <Dropdown
@@ -56,6 +58,8 @@ const TimeSelect = ({
             'flex h-54 w-150 items-center gap-8 rounded-lg border-1 border-transparent bg-background-200 px-14 text-lg transition-colors lg:h-64 lg:w-210 lg:gap-16 lg:text-xl dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700',
             isOpen ? 'border-gray-200' : '',
             isSelected ? 'text-black' : 'text-gray-400', // 선택되지 않았으면 회색으로 표시
+            isInvalid &&
+              'border border-error caret-error hover:border-error focus:border-0 dark:caret-error',
             className
           )}
           type="button" // ESLint 에러 해결

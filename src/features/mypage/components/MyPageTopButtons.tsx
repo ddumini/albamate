@@ -11,15 +11,16 @@ import OwnerInfoEdit from './OwnerInfoEdit';
 import PwChangeForm from './PwChangeForm';
 import WorkerInfoEdit from './WorkerInfoEdit';
 
-const MyPageTopButtons = ({ isOwner }: { isOwner: boolean }) => {
+const MyPageTopButtons = ({ isOwner }: { isOwner: string | null }) => {
   const { data: userInfo } = useMyProfileQuery();
   const { openModal, closeModal } = useModalStore();
 
-  const infoComponent = isOwner ? (
-    <OwnerInfoEdit close={closeModal} userInfo={userInfo?.data} />
-  ) : (
-    <WorkerInfoEdit close={closeModal} userInfo={userInfo?.data} />
-  );
+  const infoComponent =
+    isOwner === 'OWNER' ? (
+      <OwnerInfoEdit close={closeModal} userInfo={userInfo?.data} />
+    ) : (
+      <WorkerInfoEdit close={closeModal} userInfo={userInfo?.data} />
+    );
 
   const myInfoEdit = () => {
     openModal(renderModalContent('내 정보 수정', <>{infoComponent}</>));

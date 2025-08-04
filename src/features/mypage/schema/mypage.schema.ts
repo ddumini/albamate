@@ -34,22 +34,24 @@ export const createOwnerSchema = z.object({
 
 export type UpdateOwnerMyProfile = z.infer<typeof createOwnerSchema>;
 
+const passwordRegex =
+  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
 export const passwordSchema = z
   .object({
     currentPassword: z
       .string()
       .min(8, '현재 비밀번호는 최소 8자 이상이어야 합니다.')
       .regex(
-        /^([a-z]|[A-Z]|[0-9]|[!@#$%^&*])+$/,
-        '영문, 숫자, 특수문자(!@#$%^&*)만 사용할 수 있습니다.'
+        passwordRegex,
+        '영문, 숫자, 특수문자(!@#$%^&*)를 모두 포함해야 합니다.'
       ),
 
     newPassword: z
       .string()
       .min(8, '새 비밀번호는 최소 8자 이상이어야 합니다.')
       .regex(
-        /^([a-z]|[A-Z]|[0-9]|[!@#$%^&*])+$/,
-        '영문, 숫자, 특수문자(!@#$%^&*)만 사용할 수 있습니다.'
+        passwordRegex,
+        '영문, 숫자, 특수문자(!@#$%^&*)를 모두 포함해야 합니다.'
       ),
 
     checkNewPw: z.string(),

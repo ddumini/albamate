@@ -9,9 +9,12 @@ import { useRef, useState } from 'react';
 
 import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
+
+import TitleMarquee from '../../ui/TitleMarquee';
 
 export interface DropdownOption {
   label: string;
@@ -51,11 +54,14 @@ const AlbaCardItem = ({
     applyCount,
     scrapCount,
   } = item;
-  const [imgSrc, setImgSrc] = useState(imageUrls?.[0] || '/icons/user.svg');
+  const [imgSrc, setImgSrc] = useState(
+    imageUrls?.[0] || '/images/list-default.png'
+  );
   const [open, setOpen] = useState(false);
   const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
+  const { isOwner } = useSessionUtils();
 
   useClickOutside(dropdownRef, () => setOpen(false));
 
@@ -82,6 +88,8 @@ const AlbaCardItem = ({
     },
   ];
 
+  const isIcon = !isOwner && !pathname.includes('my');
+
   return (
     <div
       className="Border-Card BG-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
@@ -100,21 +108,23 @@ const AlbaCardItem = ({
       <div className="relative mt-12 flex items-center gap-8 text-sm">
         {getPublicLabel(isPublic)}
         {getStatusLabel(recruitmentEndDate)}
-
-        <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
-          <Image
-            alt="드롭다운 아이콘"
-            className="cursor-pointer"
-            height={24}
-            src="/icons/kebab-menu.svg"
-            width={24}
-            onClick={e => {
-              e.stopPropagation();
-              setOpen(prev => !prev);
-            }}
-          />
-          {open && <AlbaDropdown options={dropdownOptions} />}
-        </div>
+        {/* 사장님이 아닌 경우만 스크랩 */}
+        {!isOwner && (
+          <div ref={dropdownRef} className="relative ml-auto flex-shrink-0">
+            <Image
+              alt="드롭다운 아이콘"
+              className="cursor-pointer"
+              height={24}
+              src="/icons/kebab-menu.svg"
+              width={24}
+              onClick={e => {
+                e.stopPropagation();
+                setOpen(prev => !prev);
+              }}
+            />
+            {open && <AlbaDropdown options={dropdownOptions} />}
+          </div>
+        )}
       </div>
 
       <span className="Text-gray mt-8 block text-xs font-normal whitespace-nowrap lg:text-sm">
@@ -122,9 +132,11 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <h3 className="Text-black mt-12 ml-4 flex items-center gap-4 text-2lg font-semibold">
-        {title}
-        {!pathname.includes('my') &&
+      <div className="mt-12 ml-4 flex items-center gap-4">
+        <div className="flex-1">
+          <TitleMarquee title={title} />
+        </div>
+        {isIcon &&
           (isScrapped ? (
             <Image
               alt="스크랩 완료"
@@ -135,12 +147,13 @@ const AlbaCardItem = ({
           ) : (
             <Image
               alt="스크랩 안됨"
+              className="mr-3"
               height={20}
               src="/icons/bookmark-gray.svg"
               width={20}
             />
           ))}
-      </h3>
+      </div>
 
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (

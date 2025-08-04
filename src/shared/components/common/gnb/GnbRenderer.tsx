@@ -15,7 +15,10 @@ const GnbRenderer = () => {
     return <AuthGnb />;
   }
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <div className="h-72 w-full animate-pulse rounded-md bg-gray-50 dark:bg-gray-800" />
+    );
 
   return isAuthenticated ? <MainGnb /> : <LandingGnb />;
 };

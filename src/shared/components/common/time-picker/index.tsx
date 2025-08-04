@@ -28,9 +28,17 @@ interface TimePickerProps {
     workStartTime: string | null;
     workEndTime: string | null;
   }) => void;
+  isStartInvalid?: boolean;
+  isEndInvalid?: boolean;
 }
 
-const TimePicker = ({ className, value, onChange }: TimePickerProps) => {
+const TimePicker = ({
+  className,
+  value,
+  onChange,
+  isStartInvalid,
+  isEndInvalid,
+}: TimePickerProps) => {
   const startTime = value?.workStartTime || null;
   const endTime = value?.workEndTime || null;
   // 표시용 값 (선택되지 않았으면 '00:00', 선택되었으면 실제 값)
@@ -52,6 +60,7 @@ const TimePicker = ({ className, value, onChange }: TimePickerProps) => {
   return (
     <div className={cn('flex gap-27 lg:gap-36', className)}>
       <TimeSelect
+        isInvalid={isStartInvalid}
         isSelected={isStartTimeSelected}
         label="근무 시작"
         placeholder="00:00"
@@ -59,6 +68,7 @@ const TimePicker = ({ className, value, onChange }: TimePickerProps) => {
         onChange={handleStartTimeChange}
       />
       <TimeSelect
+        isInvalid={isEndInvalid}
         isSelected={isEndTimeSelected}
         label="근무 종료"
         placeholder="00:00"

@@ -2,16 +2,15 @@ import React from 'react';
 
 import useViewport from '@/shared/hooks/useViewport'; // 너가 만든 훅 경로 맞게 수정
 import { cn } from '@/shared/lib/cn';
+import { AlbaItemDetail } from '@/shared/types/albaDetail';
 import {
   formatDateLong,
   formatPhoneNumber,
   getDDayString,
 } from '@/shared/utils/format';
 
-import { MockAlbaItem } from '../types/MockAlbaItem';
-
 interface AlbaContactProps {
-  item: MockAlbaItem;
+  item: AlbaItemDetail;
 }
 
 const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
@@ -28,11 +27,11 @@ const AlbaContact: React.FC<AlbaContactProps> = ({ item }) => {
     },
     {
       name: '가게 전화번호',
-      value: formatPhoneNumber(item.storePhoneNumber, false),
+      value: formatPhoneNumber(item.storePhoneNumber),
     },
     {
       name: '사장님 연락처',
-      value: formatPhoneNumber(item.phoneNumber, true),
+      value: formatPhoneNumber(item.phoneNumber),
     },
   ];
 

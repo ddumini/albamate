@@ -31,6 +31,7 @@ interface DayCheckboxProps {
   disabled?: boolean;
   required?: boolean;
   ariaLabel?: string;
+  isInvalid?: boolean;
 }
 
 const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
@@ -44,6 +45,7 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
       disabled = false,
       required = false,
       ariaLabel: ariaLabel,
+      isInvalid,
       ...props
     },
     ref
@@ -88,7 +90,7 @@ const DayCheckbox = forwardRef<HTMLInputElement, DayCheckboxProps>(
             disabled
               ? 'cursor-not-allowed opacity-50'
               : 'hover:bg-background-300'
-          } peer-checked:bg-mint-300 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-checked:dark:bg-mint-400`}
+          } ${isInvalid && 'border border-error caret-error hover:border-error focus:border-0 dark:caret-error'} peer-checked:bg-mint-300 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-checked:dark:bg-mint-400`}
           htmlFor={inputId}
           id={descriptionId}
           role="checkbox"

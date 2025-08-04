@@ -86,6 +86,7 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="gender"
           render={({ field }) => (
             <InputDropdown
+              isInvalid={!!errors.gender}
               name="gender"
               options={genderOptions}
               value={field.value ? String(field.value) : undefined}
@@ -107,6 +108,7 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="education"
           render={({ field }) => (
             <InputDropdown
+              isInvalid={!!errors.education}
               name="education"
               options={educationOptions}
               value={field.value ? String(field.value) : undefined}
@@ -128,6 +130,7 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="age"
           render={({ field }) => (
             <InputDropdown
+              isInvalid={!!errors.age}
               name="age"
               options={ageOptions}
               value={field.value ? String(field.value) : undefined}
@@ -146,6 +149,7 @@ const RecruitConditionForm = ({ className }: { className?: string }) => {
           name="preferred"
           render={({ field }) => (
             <InputDropdown
+              isInvalid={!!errors.preferred}
               name="preferred"
               options={preferredOptions}
               value={field.value ? String(field.value) : undefined}

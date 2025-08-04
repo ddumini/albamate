@@ -139,7 +139,12 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
 
   // 로딩상태
   if (isEditMode && (isLoading || hasAccessDenied)) {
-    return <LoadingSpinner size="lg" />;
+    return (
+      <div className="flex min-h-[400px] flex-col items-center justify-center gap-4">
+        <LoadingSpinner size="lg" />
+        <p className="text-gray-600">데이터를 불러오는 중...</p>
+      </div>
+    );
   }
 
   // 에러 상태

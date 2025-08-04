@@ -55,10 +55,12 @@
 
   --breakpoint-3xl: 120rem;
   --breakpoint-xs: 23.4375rem; /* 375px */
+
+  --animate-marquee: marquee infinite linear;
 }
 
-/* 다크모드 토글 버튼 유틸리티 클래스 */
 @layer utilities {
+  /* 다크모드 토글 버튼 유틸리티 클래스 */
   .dark-light-toggle svg {
     transition:
       transform 0.3s ease,
@@ -69,6 +71,16 @@
   .dark-light-toggle:hover svg {
     fill: var(--btn-svg-hover, #10b981);
     transform: scale(1.1);
+  }
+
+  /* 텍스트 흐름 애니메이션 */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 }
 
@@ -96,15 +108,6 @@
   @apply bg-white dark:bg-neutral-900;
 }
 
-.BG-ToggleButton {
-  /* 토글 버튼 전용 클래스 */
-  @apply bg-gray-50 dark:bg-gray-500;
-}
-
-.BorderB-gray {
-  @apply border-b border-gray-100 dark:border-gray-400;
-}
-
 .Border-Card {
   @apply border-2 border-mint-100/50 dark:border-mint-400/50;
 }
@@ -117,18 +120,6 @@
   @apply bg-mint-100 hover:bg-mint-200 dark:bg-mint-300 dark:hover:bg-mint-400;
 }
 
-.BG-lightmint {
-  @apply bg-mint-50 dark:bg-mint-400;
-}
-
-.BG-mint-disabled {
-  @apply cursor-not-allowed bg-gray-400;
-}
-
-.BG-solid-mint {
-  @apply bg-mint-400;
-}
-
 .BG-error {
   @apply bg-error dark:bg-red-400;
 }
@@ -139,10 +130,6 @@
 
 .Text-gray {
   @apply text-gray-400 dark:text-gray-200;
-}
-
-.Text-darkgray {
-  @apply text-gray-500 dark:text-gray-400;
 }
 
 .Text-white {
@@ -158,22 +145,10 @@
   @apply text-error dark:text-red-400;
 }
 
-.Text-btn {
-  @apply text-mint-400 dark:text-mint-300;
-}
-
-.Text-deepmint {
-  @apply text-mint-400 dark:text-mint-300;
-}
-
 .Text-mint {
   @apply text-mint-300 dark:text-mint-400;
 }
 
 .Border-mint {
   @apply border border-mint-300 dark:border-mint-400;
-}
-
-.BG-drag-hovered {
-  @apply bg-mint-100;
 }
