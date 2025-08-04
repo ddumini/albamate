@@ -41,6 +41,7 @@ interface InputDropdownProps {
   onChange?: (value: string) => void;
   required?: boolean; // 필수 필드 여부
   className?: string; // 추가 커스텀 클래스
+  isInvalid?: boolean;
 }
 
 const BTN_STYLE =
@@ -56,6 +57,7 @@ const InputDropdown = ({
   onChange,
   required = false,
   className,
+  isInvalid,
 }: InputDropdownProps) => {
   const inputValue = value;
   const [directInputValue, setDirectInputValue] = useState('');
@@ -108,7 +110,9 @@ const InputDropdown = ({
         // 드롭다운이 열려있을 때는 border만 표시
         isOpen && 'border-gray-200 focus:ring-0 focus:outline-none',
         // 드롭다운이 닫혀있을 때는 기본 포커스 스타일 허용
-        !isOpen && ''
+        !isOpen && '',
+        isInvalid &&
+          'border border-error caret-error hover:border-error focus:border-0 dark:caret-error'
       )}
     >
       <span className="flex-1">

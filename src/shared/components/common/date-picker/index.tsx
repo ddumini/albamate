@@ -43,6 +43,7 @@ interface DatePickerProps {
   disabled?: boolean;
   className?: string;
   value?: DateRange;
+  isInvalid?: boolean;
 }
 
 const DatePicker = ({
@@ -51,6 +52,7 @@ const DatePicker = ({
   disabled = false,
   className,
   value,
+  isInvalid,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dateRange = value;
@@ -123,6 +125,8 @@ const DatePicker = ({
           'flex h-54 w-full items-center gap-8 rounded-lg border border-transparent bg-background-200 px-14 text-lg text-gray-400 lg:h-64 lg:text-xl',
           'dark:bg-gray-800 dark:text-gray-100 dark:caret-mint-350 dark:outline-mint-350 dark:hover:bg-gray-700',
           isOpen && 'border-gray-200',
+          isInvalid &&
+            'border border-error caret-error hover:border-error focus:border-0 dark:caret-error',
           dateRange?.from && dateRange?.to && 'text-black-400',
           disabled && 'cursor-not-allowed'
         )}

@@ -18,6 +18,7 @@ import {
 } from '@/features/addform/schema/addform.schema';
 import { useAlbaformDetailQuery } from '@/features/application/queries/queries';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import useViewport from '@/shared/hooks/useViewport';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
@@ -204,6 +205,15 @@ const AddformClient = ({ formId }: { formId?: string }) => {
     }
   };
 
+  if (isFormLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4">
+        <LoadingSpinner size="lg" />
+        <p className="text-gray-600">폼을 불러오는 중...</p>
+      </div>
+    );
+  }
+
   return (
     <FormProvider {...methods}>
       <div className="relative flex w-full justify-center lg:pt-40 lg:pl-20">
@@ -212,7 +222,9 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             className="3xl:absolute 3xl:left-1/2 3xl:-ml-360 3xl:-translate-x-full"
             currentMenu={currentMenu}
             isEdit={!!formId}
-            isSubmitting={isImagePending || isAddformPending}
+            isSubmitting={
+              isImagePending || isAddformPending || isEditformPending
+            }
             writingMenu={writingMenu}
             onMenuClick={handleMenuClick}
             onSave={handleSave}
@@ -259,7 +271,9 @@ const AddformClient = ({ formId }: { formId?: string }) => {
             <AddformButtons
               className="mx-24 my-10"
               isEdit={!!formId}
-              isSubmitting={isImagePending || isAddformPending}
+              isSubmitting={
+                isImagePending || isAddformPending || isEditformPending
+              }
               onSave={handleSave}
               onSubmit={handleSubmit}
             />

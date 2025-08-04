@@ -22,7 +22,10 @@ export const createApplicationRequestSchema = z.object({
     .regex(/^\d+$/, { error: '숫자만 입력해주세요.' })
     .min(10, { error: '휴대폰 번호는 최소 10자리 이상이어야 합니다.' })
     .max(11, { error: '휴대폰 번호는 최대 11자리까지 입력 가능합니다.' }),
-  name: z.string().min(1, { error: '이름을 입력 해주세요.' }),
+  name: z
+    .string()
+    .min(1, { error: '이름을 입력 해주세요.' })
+    .max(10, { error: '최대 10자까지 입력 가능합니다.' }),
 });
 
 export const createApplicationResponseSchema = createApplicationRequestSchema
