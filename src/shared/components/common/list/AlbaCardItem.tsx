@@ -88,6 +88,8 @@ const AlbaCardItem = ({
     },
   ];
 
+  const isIcon = !isOwner && !pathname.includes('my');
+
   return (
     <div
       className="Border-Card BG-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
@@ -134,7 +136,7 @@ const AlbaCardItem = ({
         <div className="flex-1">
           <TitleMarquee title={title} />
         </div>
-        {!pathname.includes('my') &&
+        {isIcon &&
           (isScrapped ? (
             <Image
               alt="스크랩 완료"
