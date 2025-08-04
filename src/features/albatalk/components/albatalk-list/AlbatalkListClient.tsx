@@ -6,8 +6,9 @@ import { useState } from 'react';
 import FloatingButton from '@/shared/components/common/button/FloatingButton';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import EmptyCard from '@/shared/components/common/EmptyCard';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 
-import { useAlbatalks } from '../../hooks/useAlbatalk';
+import { fetchAlbatalks } from '../../api/albatalkApi';
 import type { GetAlbatalksParams } from '../../schemas/albatalk.schema';
 import AlbatalkItem from '../albatalk-item';
 import AlbatalkFilterBar from './AlbatalkFilterBar';
@@ -17,7 +18,7 @@ interface AlbatalkListClientProps {
 }
 
 const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
-  const ALBATALKS_FETCH_LIMIT = 9;
+  const ALBATALKS_FETCH_LIMIT = 6;
 
   const [params, setParams] = useState<GetAlbatalksParams>(
     initialParams || {
@@ -26,7 +27,30 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
     }
   );
 
-  const { data, isLoading, error, isError, refetch } = useAlbatalks(params);
+  const {
+    isLoading,
+    error,
+    isError,
+    isFetchingNextPage,
+    loadMoreRef,
+    getData,
+    refetch,
+  } = useInfiniteScroll({
+    mode: 'cursor',
+    queryKey: [
+      'albatalks',
+      params.limit,
+      params.orderBy || 'mostRecent',
+      params.keyword || '',
+    ],
+    fetcher: async (fetchParams: GetAlbatalksParams) => {
+      const { cursor, ...otherParams } = fetchParams;
+      const apiParams = cursor ? { ...otherParams, cursor } : otherParams;
+      return await fetchAlbatalks(apiParams);
+    },
+    initialParams: params,
+    enabled: true,
+  });
 
   const handleParamsChange = (newParams: Partial<GetAlbatalksParams>) => {
     setParams(prev => {
@@ -78,7 +102,7 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
     );
   }
 
-  const albatalks = data?.data || [];
+  const albatalks = getData();
 
   return (
     <div className="mx-auto max-w-1480 pb-128">
@@ -94,6 +118,16 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
           <AlbatalkItem key={albatalk.id} albatalk={albatalk} />
         ))}
       </section>
+
+      {/* 무한 스크롤 감지용 요소 */}
+      <div ref={loadMoreRef} className="h-4 w-full" />
+
+      {/* 다음 페이지 로딩 상태 표시 */}
+      {isFetchingNextPage && (
+        <div className="flex justify-center py-4">
+          <div className="text-gray-500">더 많은 데이터를 불러오는 중...</div>
+        </div>
+      )}
 
       {albatalks.length === 0 && (
         <EmptyCard

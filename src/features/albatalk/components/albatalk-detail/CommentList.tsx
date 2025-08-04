@@ -38,7 +38,11 @@ const CommentList = ({ comments, albatalkId }: CommentListProps) => {
   if (comments.length === 0) {
     return (
       <div className="my-100 flex flex-col gap-32 self-center text-center">
-        <EmptyCard type="albaTalkComment" />
+        <EmptyCard
+          description="댓글을 등록하고 의견을 공유해보세요"
+          title="등록된 댓글이 없어요."
+          type="albaTalkComment"
+        />
       </div>
     );
   }

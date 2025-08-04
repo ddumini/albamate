@@ -1,48 +1,50 @@
 'use client';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 
-import { useAlbatalkComments } from '../../hooks/useAlbatalk';
-import { CommentsResponse } from '../../schemas/albatalk.schema';
+import { useAlbatalkCommentsInfinite } from '../../hooks/useAlbatalk';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import CommentStatus from './CommentStatus';
 
 interface CommentSectionProps {
   albatalkId: number;
-  initialComments?: CommentsResponse;
 }
 
-const CommentSection = ({
-  albatalkId,
-  initialComments,
-}: CommentSectionProps) => {
+const CommentSection = ({ albatalkId }: CommentSectionProps) => {
   const {
-    data: commentsResponse,
-    isPending,
+    getData,
+    isLoading,
     isError,
-    error,
-  } = useAlbatalkComments(albatalkId, { page: 1, pageSize: 10 });
+    loadMoreRef,
+    hasNextPage,
+    isFetchingNextPage,
+    data,
+  } = useAlbatalkCommentsInfinite(albatalkId);
 
-  const currentComments = commentsResponse || initialComments;
+  const comments = getData(); // 모든 댓글 가져오기
+  // 타입 가드로 안전하게 접근
+  const firstPage = data?.pages?.[0];
+  const totalCount =
+    firstPage && 'totalItemCount' in firstPage ? firstPage.totalItemCount : 0;
 
-  if (isPending && !initialComments) {
-    return <LoadingSpinner size="lg" />;
-  }
+  if (isLoading) return <LoadingSpinner size="lg" />;
 
-  if (isError) {
-    console.error('댓글 조회 에러:', error);
+  if (isError)
     return <div className="text-red-500">댓글을 불러오는데 실패했습니다.</div>;
-  }
-
-  if (!currentComments) {
-    return <div>댓글 데이터를 불러올 수 없습니다.</div>;
-  }
 
   return (
     <div className="flex flex-col gap-24 lg:gap-40">
-      <CommentStatus count={currentComments.totalItemCount} />
+      <CommentStatus count={totalCount} />
       <CommentForm albatalkId={albatalkId} />
-      <CommentList albatalkId={albatalkId} comments={currentComments.data} />
+      <CommentList albatalkId={albatalkId} comments={comments} />
+
+      {/* 무한 스크롤 트리거 */}
+      {hasNextPage && <div ref={loadMoreRef} className="h-4 w-full" />}
+      {isFetchingNextPage && (
+        <div className="flex justify-center py-16">
+          <LoadingSpinner size="sm" />
+        </div>
+      )}
     </div>
   );
 };

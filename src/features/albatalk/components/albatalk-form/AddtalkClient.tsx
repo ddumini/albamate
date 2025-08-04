@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { useImageMutation } from '@/features/addform/queries/mutations';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
+import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
 
 import {
@@ -29,9 +30,11 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const { showPopup } = usePopupStore();
+  const { user } = useSessionUtils();
 
   const isEditMode = !!albatalkId;
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [hasAccessDenied, setHasAccessDenied] = useState(false);
 
   // 이미지 파일 변경 핸들러
   const handleImageFileChange = (file: File | null) => {
@@ -63,6 +66,18 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
   const imageMutation = useImageMutation();
 
   const isSubmitting = createMutation.isPending || updateMutation.isPending;
+
+  useEffect(() => {
+    if (isEditMode && initialData && user) {
+      const isOwner = initialData.writer.id === user.id;
+      if (!isOwner) {
+        setHasAccessDenied(true);
+        showPopup('접근 권한이 없습니다.', 'error');
+        router.replace('/albatalk');
+        return;
+      }
+    }
+  }, [isEditMode, initialData, user, router, showPopup]);
 
   // 초기 데이터 설정
   useEffect(() => {
@@ -123,7 +138,7 @@ const AddtalkClient = ({ albatalkId }: AddtalkClientProps) => {
   };
 
   // 로딩상태
-  if (isEditMode && isLoading) {
+  if (isEditMode && (isLoading || hasAccessDenied)) {
     return <LoadingSpinner size="lg" />;
   }
 
