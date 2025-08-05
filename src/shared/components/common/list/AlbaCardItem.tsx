@@ -132,27 +132,28 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <div className="mt-12 ml-4 flex items-center gap-4">
-        <div className="mr-8 min-w-0 flex-1">
-          <TitleMarquee title={title} />
+      <div className="mt-12 ml-4 flex items-center">
+        <div className="flex min-w-0 items-center">
+          <div className="mr-4 min-w-0">
+            <TitleMarquee title={title} />
+          </div>
+          {isIcon &&
+            (isScrapped ? (
+              <Image
+                alt="스크랩 완료"
+                height={24}
+                src="/icons/bookmark-mint.svg"
+                width={24}
+              />
+            ) : (
+              <Image
+                alt="스크랩 안됨"
+                height={24}
+                src="/icons/bookmark-gray.svg"
+                width={24}
+              />
+            ))}
         </div>
-        {isIcon &&
-          (isScrapped ? (
-            <Image
-              alt="스크랩 완료"
-              height={20}
-              src="/icons/bookmark-mint.svg"
-              width={20}
-            />
-          ) : (
-            <Image
-              alt="스크랩 안됨"
-              className="mr-3"
-              height={20}
-              src="/icons/bookmark-gray.svg"
-              width={20}
-            />
-          ))}
       </div>
 
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-600 lg:h-45 dark:bg-gray-800">
