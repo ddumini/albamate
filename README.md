@@ -1,7 +1,7 @@
 
 
 # <img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/78d711a5-fa6a-499b-8eee-d160d233072c" /> AlbaMate
-<img width="240" height="200" alt="image" src="https://github.com/user-attachments/assets/15facc5b-29e4-44bd-b79a-b340a0ff669f" /> <img width="240" height="200" alt="image" src="https://github.com/user-attachments/assets/dc6a76f7-e70f-4935-bae6-17740fe1dce6" />
+<img width="240" height="200" alt="image" src="https://github.com/user-attachments/assets/dc6a76f7-e70f-4935-bae6-17740fe1dce6" />
 
 
 
