@@ -112,19 +112,6 @@ src/
 
 ---
 
-### <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/78d711a5-fa6a-499b-8eee-d160d233072c" /> 브랜치 네이밍 컨벤션
-
-| 브랜치 종류 | 규칙 | 예시 |
-|-------------|------|------|
-| 기능 개발 | `feature/{작업-설명}` | `feature/login-ui` |
-| 리팩토링 | `refactor/{작업-설명}` | `refactor/list-card` |
-| 버그 수정 | `fix/{버그-설명}` | `fix/modal-open-bug` |
-| 핫픽스 | `hotfix/{긴급수정-설명}` | `hotfix/build-error` |
-| 문서 수정 | `docs/{문서-설명}` | `docs/readme-update` |
-| 환경 설정 | `chore/{작업-설명}` | `chore/biome-setup` |
-
----
-
 ### <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/78d711a5-fa6a-499b-8eee-d160d233072c" /> Git Flow
 
 #### 🔀 기본 브랜치 전략
