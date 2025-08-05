@@ -1,32 +1,38 @@
 @import 'tailwindcss';
 
+/* 다크모드 클래스 사용을 위한 custom-varient 선언 */
+@custom-variant dark (&:is(.dark *));
+
 /* === Tailwind v4 테마 설정 === */
 @theme {
-  --color-black-100: hsl(0, 0, 42);
-  --color-black-200: hsl(0, 0, 32);
-  --color-black-300: hsl(0, 0, 22);
-  --color-black-400: hsl(0, 0, 12);
-  --color-black-500: hsl(0, 0, 2);
-  --color-gray-50: hsl(0, 0, 100);
-  --color-gray-100: hsl(0, 0, 87);
-  --color-gray-200: hsl(0, 0, 77);
-  --color-gray-300: hsl(0, 0, 67);
-  --color-gray-400: hsl(0, 0, 60);
-  --color-gray-500: hsl(0, 0, 50);
-  --color-blue-100: hsl(234, 19, 40);
-  --color-blue-200: hsl(234, 18, 30);
-  --color-blue-300: hsl(234, 18, 20);
-  --color-background-100: hsl(0, 0, 99);
-  --color-background-200: hsl(0, 0, 97);
-  --color-background-300: hsl(0, 0, 94);
-  --color-line-100: hsl(0, 0, 95);
-  --color-line-100: hsl(0, 0, 95);
-  --color-error: hsl(15, 100, 49);
-  --color-mint-50: hsl(171, 86, 88);
-  --color-mint-100: hsl(171, 86, 68);
-  --color-mint-200: hsl(171, 86, 58);
-  --color-mint-300: hsl(171, 86, 48);
-  --color-mint-400: hsl(171, 86, 38);
+  --color-black-100: hsl(0, 0%, 42%);
+  --color-black-200: hsl(0, 0%, 32%);
+  --color-black-300: hsl(0, 0%, 22%);
+  --color-black-400: hsl(0, 0%, 12%);
+  --color-black-500: hsl(0, 0%, 2%);
+  --color-gray-25: hsl(0, 0%, 97%);
+  --color-gray-50: hsl(0, 0%, 93%);
+  --color-gray-100: hsl(0, 0%, 87%);
+  --color-gray-200: hsl(0, 0%, 77%);
+  --color-gray-300: hsl(0, 0%, 67%);
+  --color-gray-400: hsl(0, 0%, 60%);
+  --color-gray-500: hsl(0, 0%, 50%);
+  --color-blue-100: hsl(234, 19%, 40%);
+  --color-blue-200: hsl(234, 18%, 30%);
+  --color-blue-300: hsl(234, 18%, 20%);
+  --color-background-100: hsl(0, 0%, 99%);
+  --color-background-200: hsl(0, 0%, 97%);
+  --color-background-300: hsl(0, 0%, 94%);
+  --color-line-100: hsl(0, 0%, 95%);
+  --color-line-200: hsl(0, 0%, 90%);
+  --color-error: hsl(15, 100%, 49%);
+  --color-red-450: hsl(15, 100%, 55%);
+  --color-mint-50: hsl(171, 86%, 88%);
+  --color-mint-100: hsl(171, 86%, 68%);
+  --color-mint-200: hsl(171, 86%, 58%);
+  --color-mint-300: hsl(171, 86%, 48%);
+  --color-mint-350: hsl(171, 86%, 43%);
+  --color-mint-400: hsl(171, 86%, 38%);
 
   --text-xs: 0.75rem;
   --text-xs--line-height: 1.25rem;
@@ -47,6 +53,102 @@
 
   --spacing: 0.0625rem;
 
-  --breakpoint-tablet: 48rem;
-  --breakpoint-pc: 80rem;
+  --breakpoint-3xl: 120rem;
+  --breakpoint-xs: 23.4375rem; /* 375px */
+
+  --animate-marquee: marquee infinite linear;
+}
+
+@layer utilities {
+  /* 다크모드 토글 버튼 유틸리티 클래스 */
+  .dark-light-toggle svg {
+    transition:
+      transform 0.3s ease,
+      fill 0.5s ease,
+      opacity 0.5s ease-in-out;
+  }
+
+  .dark-light-toggle:hover svg {
+    fill: var(--btn-svg-hover, #10b981);
+    transform: scale(1.1);
+  }
+
+  /* 텍스트 흐름 애니메이션 */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* 전역 CSS 기본 설정 */
+@layer base {
+  html {
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+      'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI',
+      'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      sans-serif;
+  }
+
+  body {
+    -ms-overflow-style: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+/* 커스텀 유틸리티 클래스 선언(필요한 경우 아래와 같이 추가해주세요!) */
+.BG-white {
+  @apply bg-white dark:bg-neutral-900;
+}
+
+.Border-Card {
+  @apply border-2 border-mint-100/50 dark:border-mint-400/50;
+}
+
+.BG-Card {
+  @apply bg-mint-100/5 hover:bg-mint-100/2 dark:bg-mint-400/4 dark:hover:bg-mint-400/2;
+}
+
+.BG-mint {
+  @apply bg-mint-100 hover:bg-mint-200 dark:bg-mint-300 dark:hover:bg-mint-400;
+}
+
+.BG-error {
+  @apply bg-error dark:bg-red-400;
+}
+
+.Text-black {
+  @apply text-neutral-800 dark:text-gray-100;
+}
+
+.Text-gray {
+  @apply text-gray-400 dark:text-gray-200;
+}
+
+.Text-white {
+  @apply text-white dark:text-neutral-800;
+}
+
+.Text-white-gray {
+  /* 라이트 모드:흰색 - 다크모드:밝은 회색 */
+  @apply text-white dark:text-gray-50;
+}
+
+.Text-error {
+  @apply text-error dark:text-red-400;
+}
+
+.Text-mint {
+  @apply text-mint-300 dark:text-mint-400;
+}
+
+.Border-mint {
+  @apply border border-mint-300 dark:border-mint-400;
 }

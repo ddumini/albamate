@@ -11,7 +11,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   // 1. 무시할 경로 지정 (.eslintignore 대체)
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.next'] },
 
   // 2. JavaScript + TypeScript 추천 규칙
   js.configs.recommended,
@@ -47,6 +47,7 @@ export default tseslint.config(
       'prefer-const': 'warn', // 재할당 없는 let은 const로
       'no-nested-ternary': 'warn', // 삼항 연산자 중첩 금지
       'no-unused-vars': 'off', // TypeScript에서는 @typescript-eslint/no-unused-vars 사용
+      'react/prop-types': 'off',
 
       // ✅ TypeScript 규칙
       '@typescript-eslint/no-unused-vars': [
@@ -171,6 +172,7 @@ export default tseslint.config(
 
       // ✅ JSX 접근성
       'jsx-a11y/alt-text': 'warn', // <img>에는 alt 속성 필수
+      'react/button-has-type': 'error', // button 태그에 type 속성 필수
 
       // ✅ React Refresh
       'react-refresh/only-export-components': [

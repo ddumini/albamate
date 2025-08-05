@@ -1,5 +1,11 @@
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
+
 const Loading = () => {
-  return <div>로딩페이지입니다</div>;
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <LoadingSpinner size="lg" />
+    </div>
+  );
 };
 
 export default Loading;
