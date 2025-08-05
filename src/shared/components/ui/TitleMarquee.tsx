@@ -35,7 +35,7 @@ const TitleMarquee = ({ title }: TitleMarqueeProps) => {
   return (
     <div
       ref={containerRef}
-      className={`relative max-w-345 overflow-hidden text-2lg font-bold whitespace-nowrap lg:text-xl ${
+      className={`relative w-full overflow-hidden text-2lg font-bold whitespace-nowrap lg:text-xl ${
         pathname?.startsWith('/alba/') ? 'lg:max-w-500' : ''
       }`}
     >
