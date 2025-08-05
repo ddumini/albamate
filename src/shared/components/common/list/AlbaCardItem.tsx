@@ -133,7 +133,7 @@ const AlbaCardItem = ({
       </span>
 
       <div className="mt-12 ml-4 flex items-center gap-4">
-        <div className="flex-1">
+        <div className="mr-8 min-w-0 flex-1">
           <TitleMarquee title={title} />
         </div>
         {isIcon &&
