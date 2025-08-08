@@ -19,11 +19,11 @@ const Logo = ({ withText = true, className = '' }: LogoProps) => {
       href="/"
     >
       <div className="relative mr-16 h-22 w-22 md:mr-12 md:h-24 md:w-24 lg:h-36 lg:w-36">
-        <Image fill alt="로고 심볼" src={symbolSrc} />
+        <Image alt="로고 심볼" height={36} src={symbolSrc} width={36} />
       </div>
       {withText && (
         <div className="relative hidden h-24 w-124 md:flex lg:h-36 lg:w-200">
-          <Image fill alt="로고 텍스트" src={logoSrc} />
+          <Image alt="로고 텍스트" height={36} src={logoSrc} width={200} />
         </div>
       )}
     </Link>
