@@ -40,9 +40,9 @@ const AnywhereSection = () => {
             <Image
               alt="파일 아이콘"
               className="h-69 w-74 lg:h-137 lg:w-147"
-              height={69}
+              height={137}
               src="/images/landing/anywhere-icon01.png"
-              width={74}
+              width={147}
             />
           </motion.div>
           <motion.div
@@ -71,9 +71,9 @@ const AnywhereSection = () => {
             <Image
               alt="메일 아이콘"
               className="h-67 w-79 lg:h-133 lg:w-157"
-              height={67}
+              height={133}
               src="/images/landing/anywhere-icon02.png"
-              width={79}
+              width={157}
             />
           </motion.div>
         </LandingSectionImage>

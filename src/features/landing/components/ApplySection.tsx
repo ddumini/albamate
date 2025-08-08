@@ -57,11 +57,9 @@ const ApplySection = () => {
                 <Image
                   alt={`apply-${idx + 1}`}
                   className="h-28 w-28 md:h-35 md:w-35 lg:h-70 lg:w-70"
-                  height={28}
-                  loading="lazy"
-                  quality={90}
+                  height={70}
                   src={`/images/landing/apply-icon0${idx + 1}.png`}
-                  width={28}
+                  width={70}
                 />
               </motion.li>
             ))}
@@ -75,10 +73,10 @@ const ApplySection = () => {
             <Image
               alt="여성 지원자 캐릭터"
               className="h-144 w-222 md:h-180 md:w-277 lg:h-360 lg:w-555"
-              height={144}
+              height={360}
               loading="lazy"
               src="/images/landing/apply-girl.png"
-              width={222}
+              width={555}
             />
           </motion.div>
         </LandingSectionImage>

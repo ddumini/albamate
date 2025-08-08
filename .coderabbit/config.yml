@@ -1,7 +1,0 @@
-review:
-  enable: true
-  approve_automatically: true
-  rules:
-    - pattern: '**/*'
-      approve: true
-      comment: true
