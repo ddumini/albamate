@@ -89,12 +89,12 @@ const AlbaCardItem = ({
   const isIcon = !isOwner && !pathname.includes('my');
 
   return (
-    <div className="cursor-pointer flex-col gap-8" onClick={onClick}>
+    <div className="group cursor-pointer flex-col gap-8" onClick={onClick}>
       <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-2xl shadow-[0_1px_4px_0_rgba(130,130,130,0.08)]">
         <Image
           fill
           alt="알바 이미지"
-          className="object-cover"
+          className="object-cover object-center transition-all duration-600 group-hover:scale-103"
           src={imgSrc}
           onError={() => setImgSrc('/images/list-default.png')}
         />
@@ -143,11 +143,11 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <p className="mt-12 line-clamp-2 min-h-52 text-2lg leading-26 font-semibold lg:min-h-64 lg:text-xl lg:leading-32">
+      <p className="mt-12 line-clamp-2 text-2lg leading-26 font-semibold [text-decoration-thickness:1px] underline-offset-4 group-hover:underline md:min-h-52 lg:min-h-64 lg:text-xl lg:leading-32 dark:text-gray-100">
         {title}
       </p>
 
-      <div className="mt-20 flex h-40 w-full justify-center rounded-lg border border-line-100 bg-background-100 text-xs text-gray-900 lg:h-45 dark:bg-gray-800">
+      <div className="mt-20 flex h-40 w-full justify-center rounded-lg border border-line-100 bg-background-100 text-xs text-gray-900 lg:h-45 dark:border-line-100/50 dark:bg-transparent">
         {stats.map((stat, idx) => (
           <span
             key={stat.label}
@@ -155,7 +155,7 @@ const AlbaCardItem = ({
               'relative flex flex-1 items-center justify-center whitespace-nowrap',
               !stat.isDeadline && 'dark:text-gray-100',
               idx !== stats.length - 1 &&
-                'after:absolute after:top-1/2 after:right-0 after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100',
+                'after:absolute after:top-1/2 after:right-0 after:h-14 after:w-1 after:-translate-y-1/2 after:bg-gray-100 dark:after:bg-gray-100/50',
               stat.isDeadline && dDayClass
             )}
           >

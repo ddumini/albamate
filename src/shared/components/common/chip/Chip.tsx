@@ -9,17 +9,17 @@ interface ChipProps {
 
 const Chip = ({ label, variant = 'default', active = false }: ChipProps) => {
   const baseClasses = `
-    flex rounded-sm font-medium border items-center gap-4 transition-all
+    flex rounded-sm font-medium items-center gap-4 transition-all
     text-xs px-8 h-28
     lg:text-md md:text-sm flex-shrink-0 lg:h-32
   `;
 
   const variants = {
-    default: 'bg-white text-gray-500 border-gray-300',
+    default: 'bg-white text-gray-500',
     filled: active
-      ? 'text-mint-300 bg-mint-50/50 dark:bg-mint-50/10 border-mint-300'
+      ? 'text-mint-400 bg-mint-50/50 dark:bg-mint-50/10'
       : 'bg-white text-gray-400 border-gray-200',
-    icon: 'bg-white text-gray-600 border-gray-300',
+    icon: 'bg-white text-gray-600',
   };
 
   return (
