@@ -14,8 +14,6 @@ import { cn } from '@/shared/lib/cn';
 import { AlbaItem } from '@/shared/types/alba';
 import { formatDateLong } from '@/shared/utils/format';
 
-import TitleMarquee from '../../ui/TitleMarquee';
-
 export interface DropdownOption {
   label: string;
   onClick: () => void;
@@ -91,21 +89,18 @@ const AlbaCardItem = ({
   const isIcon = !isOwner && !pathname.includes('my');
 
   return (
-    <div
-      className="Border-Card BG-Card cursor-pointer flex-col gap-8 rounded-2xl p-24 transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
-      onClick={onClick}
-    >
-      <div className="rounded-2lg relative flex aspect-[1/0.637] w-full justify-end overflow-hidden">
+    <div className="cursor-pointer flex-col gap-8" onClick={onClick}>
+      <div className="relative flex aspect-[1/0.637] w-full justify-end overflow-hidden rounded-2xl shadow-[0_1px_4px_0_rgba(130,130,130,0.08)]">
         <Image
           fill
           alt="알바 이미지"
-          className="rounded-lg object-cover"
+          className="object-cover"
           src={imgSrc}
           onError={() => setImgSrc('/images/list-default.png')}
         />
       </div>
 
-      <div className="relative mt-12 flex items-center gap-8 text-sm">
+      <div className="relative mt-24 flex items-center gap-8 text-sm">
         {getPublicLabel(isPublic)}
         {getStatusLabel(recruitmentEndDate)}
         {/* 사장님이 아닌 경우만 스크랩 */}
@@ -125,6 +120,22 @@ const AlbaCardItem = ({
             {open && <AlbaDropdown options={dropdownOptions} />}
           </div>
         )}
+        {isIcon &&
+          (isScrapped ? (
+            <Image
+              alt="스크랩 완료"
+              height={24}
+              src="/icons/bookmark-mint.svg"
+              width={24}
+            />
+          ) : (
+            <Image
+              alt="스크랩 안됨"
+              height={24}
+              src="/icons/bookmark-gray.svg"
+              width={24}
+            />
+          ))}
       </div>
 
       <span className="Text-gray mt-8 block text-xs font-normal whitespace-nowrap lg:text-sm">
@@ -132,31 +143,11 @@ const AlbaCardItem = ({
         {formatDateLong(recruitmentEndDate)}
       </span>
 
-      <div className="mt-12 ml-4 flex items-center">
-        <div className="flex min-w-0 items-center">
-          <div className="mr-4 min-w-0">
-            <TitleMarquee title={title} />
-          </div>
-          {isIcon &&
-            (isScrapped ? (
-              <Image
-                alt="스크랩 완료"
-                height={24}
-                src="/icons/bookmark-mint.svg"
-                width={24}
-              />
-            ) : (
-              <Image
-                alt="스크랩 안됨"
-                height={24}
-                src="/icons/bookmark-gray.svg"
-                width={24}
-              />
-            ))}
-        </div>
-      </div>
+      <p className="mt-12 line-clamp-2 min-h-52 text-2lg leading-26 font-semibold lg:min-h-64 lg:text-xl lg:leading-32">
+        {title}
+      </p>
 
-      <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 text-xs text-gray-900 lg:h-45 dark:bg-gray-800">
+      <div className="mt-20 flex h-40 w-full justify-center rounded-lg border border-line-100 bg-background-100 text-xs text-gray-900 lg:h-45 dark:bg-gray-800">
         {stats.map((stat, idx) => (
           <span
             key={stat.label}
