@@ -109,9 +109,9 @@ const AlbaCardItem = ({
             <Image
               alt="드롭다운 아이콘"
               className="cursor-pointer"
-              height={24}
+              height={32}
               src="/icons/kebab-menu.svg"
-              width={24}
+              width={32}
               onClick={e => {
                 e.stopPropagation();
                 setOpen(prev => !prev);

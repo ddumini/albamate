@@ -1,11 +1,11 @@
 import EmptyCard from '@common/EmptyCard';
 import ListWrapper from '@common/list/ListWrapper';
 
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import type { AlbaItem } from '@/shared/types/alba';
 
 import AlbaCard from './AlbaCard';
 import AlbaCardSkeleton from './skeleton/AlbaCardSkeleton';
-import LoadMoreSkeleton from './skeleton/LoadMoreSkeleton';
 
 interface InfiniteScrollProps {
   data: AlbaItem[];
@@ -78,7 +78,7 @@ const InfiniteScroll = ({
       </ListWrapper>
 
       {/* 스켈레톤과 Observer 요소를 분리 */}
-      {isLoadingMore && <LoadMoreSkeleton />}
+      {isLoadingMore && <LoadingSpinner className="mx-auto" size="lg" />}
 
       {/* Observer 전용 요소 - 항상 존재 */}
       <div
