@@ -85,7 +85,6 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   const currentQuery =
     userRole === 'OWNER' ? ownerInfiniteQuery : applicantInfiniteQuery;
   const {
-    data,
     isLoading,
     isError,
     hasNextPage,

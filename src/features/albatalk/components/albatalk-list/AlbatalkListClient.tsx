@@ -6,6 +6,7 @@ import { useState } from 'react';
 import FloatingButton from '@/shared/components/common/button/FloatingButton';
 import PrimaryButton from '@/shared/components/common/button/PrimaryButton';
 import EmptyCard from '@/shared/components/common/EmptyCard';
+import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 
 import { fetchAlbatalks } from '../../api/albatalkApi';
@@ -125,7 +126,7 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
       {/* 다음 페이지 로딩 상태 표시 */}
       {isFetchingNextPage && (
         <div className="flex justify-center py-4">
-          <div className="text-gray-500">더 많은 데이터를 불러오는 중...</div>
+          <LoadingSpinner size="lg" />
         </div>
       )}
 

@@ -184,7 +184,7 @@ const MyPageContent = () => {
         isFetchingNextComments ||
         isFetchingNextScrap) && (
         <div className="flex justify-center py-4">
-          <div className="text-gray-500">더 많은 데이터를 불러오는 중...</div>
+          <LoadingSpinner size="lg" />
         </div>
       )}
     </div>
