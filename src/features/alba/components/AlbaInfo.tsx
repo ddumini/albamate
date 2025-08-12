@@ -11,21 +11,17 @@ interface AlbaInfoProps {
 
 const getBorderClass = (idx: number) => {
   if (idx === 0) {
-    // 1번 요소: 오른쪽 선 + 아래쪽 선, 선을 요소에서 8px 떨어뜨림
     return `
-      after:absolute after:top-0 after:right-[-32px] after:h-[calc(100%+40px)] after:w-[1px] after:bg-gray-100 dark:after:bg-gray-200
-      before:absolute before:bottom-[-8px] before:left-[-28px] before:h-[1px] before:w-[calc(100%+120px)] before:bg-gray-100 dark:before:bg-gray-200 
+      border-b border-r border-gray-100 dark:border-gray-200 pt-0 
     `;
   }
   if (idx === 1) {
-    // 2번 요소: 아래쪽 선만 (좌측으로 8px 더 확장)
-    return `after:absolute after:bottom-[-8px] after:left-[-80px] after:h-[1px] after:w-[calc(100%+100px)] after:bg-gray-100 dark:after:bg-gray-200`;
+    return `border-b border-gray-100 dark:border-gray-200 pt-0`;
   }
   if (idx === 2) {
-    // 3번 요소: 오른쪽 선만 (위쪽으로 8px 더 확장)
-    return `after:absolute after:top-[-26px] after:right-[-32px] after:h-[calc(100%+36px)] after:w-[1px] after:bg-gray-100 dark:after:bg-gray-200`;
+    return `border-r border-gray-100 dark:border-gray-200 items-end`;
   }
-  return '';
+  return 'items-end';
 };
 
 const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
@@ -52,21 +48,24 @@ const AlbaInfo: React.FC<AlbaInfoProps> = ({ item }) => {
   if (isDesktop) {
     // 데스크탑 레이아웃 (하나의 박스에 모두 표시)
     return (
-      <div className="grid h-336 max-w-640 grid-cols-2 gap-36 rounded-lg border border-gray-50 bg-gray-25 p-40">
+      <div className="grid grid-cols-2 rounded-lg border border-gray-50 bg-gray-25 px-24 py-40">
         {Info.map(({ label, value, img }, idx) => (
           <div
             key={label}
-            className={`relative mx-30 flex items-center justify-start gap-20 p-4 ${getBorderClass(idx)}`}
+            className={`relative flex h-130 justify-center ${getBorderClass(idx)}`}
           >
-            <div className="relative h-36 w-36 flex-shrink-0 lg:h-40 lg:w-40">
-              <div className="absolute inset-[-5px] rounded-3xl bg-gray-50 dark:bg-gray-100" />
-              <Image fill alt="icon" objectFit="cover" src={img} />
-            </div>
+            <div className="flex h-108 w-250 gap-20 pt-16 pl-24">
+              <div className="relative flex flex-shrink-0 items-center justify-center rounded-full bg-gray-50 lg:h-56 lg:w-56 dark:bg-gray-100">
+                <div className="relative h-24 w-24 lg:h-36 lg:w-36">
+                  <Image fill alt="icon" src={img} />
+                </div>
+              </div>
 
-            <div className="ml-4">
-              <div className="text-sm text-gray-500">{label}</div>
-              <div className="text-base font-bold text-teal-500">
-                {value || '미정'}
+              <div className="ml-4">
+                <div className="mb-8 text-sm text-gray-500">{label}</div>
+                <div className="text-base font-bold text-teal-500">
+                  {value || '미정'}
+                </div>
               </div>
             </div>
           </div>

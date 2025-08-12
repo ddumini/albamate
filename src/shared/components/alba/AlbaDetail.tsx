@@ -67,7 +67,7 @@ const AlbaDetail = ({ item }: AlbaDetailProps) => {
       </div>
 
       {/* 4. 알바 제목 (굵게) */}
-      <div className="relative max-w-375 text-2lg font-bold break-all lg:max-w-600 lg:text-[26px]">
+      <div className="relative max-w-375 text-2lg leading-24 font-bold break-all lg:max-w-600 lg:text-[26px] lg:leading-32">
         {title}
       </div>
 
