@@ -1,5 +1,6 @@
 'use client';
 
+import AlbaListSkeleton from '@common/list/AlbaListSkeleton';
 import { Session } from 'next-auth';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -11,7 +12,6 @@ import useAlbaListApi from '../api/albaListApi';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
 import AlbaFilterBar from './AlbaFilterBar';
 import InfiniteScroll from './InfiniteScroll';
-import AlbaListSkeleton from './skeleton/AlbaListSkeleton';
 
 interface FilterState {
   recruitStatus?: string;

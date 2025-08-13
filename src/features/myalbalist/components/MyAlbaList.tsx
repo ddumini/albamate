@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import FloatingFormButton from '@/features/albalist/components/FloatingFormButton';
 import EmptyCard from '@/shared/components/common/EmptyCard';
+import AlbaListSkeleton from '@/shared/components/common/list/AlbaListSkeleton';
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import useViewport from '@/shared/hooks/useViewport';
@@ -118,11 +119,7 @@ const MyAlbaList = ({ userRole }: MyAlbaListProps) => {
   const renderContent = () => {
     // 초기 로딩 중일 때
     if (isLoading) {
-      return (
-        <div className="flex min-h-[60vh] items-center justify-center">
-          <LoadingSpinner size="lg" />
-        </div>
-      );
+      return <AlbaListSkeleton count={3} hasFilterBar={false} />;
     }
 
     // 데이터가 없는 경우

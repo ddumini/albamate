@@ -1,6 +1,5 @@
+import AlbaCardSkeleton from '@common/list/AlbaCardSkeleton';
 import { useMemo } from 'react';
-
-import AlbaCardSkeleton from './AlbaCardSkeleton';
 
 const LoadMoreSkeleton = () => {
   const skeletonKeys = useMemo(

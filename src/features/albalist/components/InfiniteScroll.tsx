@@ -1,11 +1,11 @@
 import EmptyCard from '@common/EmptyCard';
+import AlbaListSkeleton from '@common/list/AlbaListSkeleton';
 import ListWrapper from '@common/list/ListWrapper';
 
 import LoadingSpinner from '@/shared/components/ui/LoadingSpinner';
 import type { AlbaItem } from '@/shared/types/alba';
 
 import AlbaCard from './AlbaCard';
-import AlbaCardSkeleton from './skeleton/AlbaCardSkeleton';
 
 interface InfiniteScrollProps {
   data: AlbaItem[];
@@ -46,13 +46,7 @@ const InfiniteScroll = ({
 
   // 초기 로딩 상태
   if (isLoading) {
-    return (
-      <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <AlbaCardSkeleton key={`initial-loading-${index}`} />
-        ))}
-      </div>
-    );
+    return <AlbaListSkeleton count={6} hasFilterBar={false} />;
   }
 
   // 빈 상태
