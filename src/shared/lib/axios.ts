@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { getSession, signOut } from 'next-auth/react';
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'https://fe-project-albaform.vercel.app';
+  process.env.NEXT_PUBLIC_API_URL || 'https://albamate-ddumin.vercel.app';
 const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID || '15-3';
 
 const baseURL = `${API_URL}${TEAM_ID}/`;
