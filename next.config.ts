@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'albamate-ddumin.vercel.app',
+        hostname: 'fe-project-albaform.vercel.app',
         port: '',
         pathname: '/**',
       },
