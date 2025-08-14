@@ -16,14 +16,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'fe-project-albaform.vercel.app',
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
         port: '',
-        pathname: '/**',
-      },
-      // 추후 실제 이미지 넣으며 삭제 예정
-      {
-        protocol: 'https',
-        hostname: 'example.com',
         pathname: '/**',
       },
     ],
