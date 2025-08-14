@@ -118,7 +118,7 @@ const createResponseInterceptor = (instance: AxiosInstance) => ({
 
 export const axiosInstance = axios.create({
   baseURL,
-  withCredentials: !isDevelopment,
+  withCredentials: false,
 });
 
 // 공통 인터셉터 적용
